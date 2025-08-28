@@ -17,11 +17,17 @@
 
     /* Linting */
     "strict": true,
+    "noImplicitAny": true, // any 타입 금지
+    "strictNullChecks": true, // null 체크
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
+  },
+  "baseUrl": ".",
+  "paths": {
+    "@/*": ["./src/*"]
   },
   "include": ["src"]
 }
