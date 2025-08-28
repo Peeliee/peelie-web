@@ -43,10 +43,12 @@ export default [
       react: { version: 'detect' },
     },
     rules: {
-      // React 17+ / 19
+      // import React 강제 안함
       'react/react-in-jsx-scope': 'off',
+      // tsx 확장
       'react/jsx-filename-extension': ['warn', { extensions: ['.tsx', '.jsx'] }],
       'react/function-component-definition': 'off',
+      // import 할 때 확장자 강제x
       'import/extensions': 'off',
       // Vite 자산 import 절대경로 허용
       'import/no-absolute-path': 'off',
@@ -57,6 +59,33 @@ export default [
         {
           devDependencies: true,
           packageDir: __dirname,
+        },
+      ],
+      // import 정렬 오버라이드
+      'import/order': [
+        'error',
+        {
+          groups: [
+            'builtin', // fs, path 등
+            'external', // react, react-router-dom 등
+            'internal', // @/ 경로 alias
+            'parent', // ../
+            'sibling', // ./foo
+            'index', // ./index
+          ],
+          pathGroups: [
+            {
+              pattern: '@/**', // alias 패턴
+              group: 'internal', // internal 그룹으로 분류
+              position: 'after', // external 뒤에 위치
+            },
+          ],
+          pathGroupsExcludedImportTypes: ['builtin'], // builtin은 pathGroups 적용 제외
+          'newlines-between': 'never', // 그룹 간 줄바꿈 강제 안 함
+          alphabetize: {
+            order: 'asc',
+            caseInsensitive: true,
+          },
         },
       ],
     },

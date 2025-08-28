@@ -1,9 +1,8 @@
-import HomePage from '@/pages/Home/HomePage';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import App from '../App';
+import HomePage from '@/pages/Home/HomePage';
 import TestPage from '@/pages/Test/TestPage';
-
-import PATH from '../../shared/constants/path';
+import PATH from '@/shared/constants/path';
+import App from '../App';
 
 const AppRouter = () => {
   const router = createBrowserRouter([
