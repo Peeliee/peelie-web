@@ -47,8 +47,11 @@ export default [
       'react/react-in-jsx-scope': 'off',
       'react/jsx-filename-extension': ['warn', { extensions: ['.tsx', '.jsx'] }],
       'react/function-component-definition': 'off',
+      'import/extensions': 'off',
       // Vite 자산 import 절대경로 허용
       'import/no-absolute-path': 'off',
+      // 블록 형태 유지 (불필요한 줄괄호 에러처리 x)
+      'arrow-body-style': 'off',
       'import/no-extraneous-dependencies': [
         'error',
         {
