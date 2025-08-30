@@ -1,3 +1,6 @@
+// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
+import storybook from 'eslint-plugin-storybook';
+
 import globals from 'globals';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import tseslint from 'typescript-eslint';
@@ -14,12 +17,8 @@ const compat = new FlatCompat({
 
 export default [
   // 글로벌 ignore
-  { ignores: ['dist', 'node_modules'] },
-
-  // 에어비앤비
-  ...compat.extends('airbnb'),
-
-  // TS 프로젝트 인식 + 경로 alias 해석 + 글로벌 환경만 지정 (규칙 추가 없음)
+  { ignores: ['dist', 'node_modules'] }, // 에어비앤비
+  ...compat.extends('airbnb'), // TS 프로젝트 인식 + 경로 alias 해석 + 글로벌 환경만 지정 (규칙 추가 없음)
   {
     files: ['src/**/*.{ts,tsx}'],
     languageOptions: {
@@ -54,6 +53,8 @@ export default [
       'import/no-absolute-path': 'off',
       // 블록 형태 유지 (불필요한 줄괄호 에러처리 x)
       'arrow-body-style': 'off',
+      // props spreading 허용
+      'react/jsx-props-no-spreading': 'off',
       'import/no-extraneous-dependencies': [
         'error',
         {
@@ -89,11 +90,8 @@ export default [
         },
       ],
     },
-  },
-
-  // 선택: Vite HMR 규칙(원래 쓰던 거면 유지)
+  }, // 선택: Vite HMR 규칙(원래 쓰던 거면 유지)
   reactRefresh.configs.vite,
-
   {
     files: ['vite.config.{ts,js}'],
     languageOptions: {
@@ -117,9 +115,7 @@ export default [
     rules: {
       'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     },
-  },
-
-  // eslint 설정 파일엔 lint 규칙 미적용
+  }, // eslint 설정 파일엔 lint 규칙 미적용
   {
     files: ['eslint.config.js'],
     languageOptions: {
@@ -133,5 +129,31 @@ export default [
       'no-unused-vars': 'off',
     },
   },
+  {
+    files: ['.storybook/**/*.{ts,tsx}'],
+    languageOptions: {
+      parser: tseslint.parser,
+      parserOptions: {
+        project: ['./.storybook/tsconfig.json'], // 핵심: .storybook tsconfig로 파싱
+        tsconfigRootDir: __dirname,
+        ecmaVersion: 2020,
+        sourceType: 'module',
+      },
+      globals: { ...globals.node },
+    },
+    settings: {
+      'import/resolver': {
+        node: { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
+        typescript: { project: ['./.storybook/tsconfig.json'] }, // 여기도 지정
+      },
+    },
+    rules: {
+      // 스토리북/테스트 세팅 파일은 devDeps 허용
+      'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+      // 확장자 강제 끔(원한다면 켜고 아래처럼 .ts 붙여라)
+      'import/extensions': 'off',
+    },
+  },
   ...compat.extends('prettier'),
+  ...storybook.configs['flat/recommended'],
 ];

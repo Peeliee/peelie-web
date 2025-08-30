@@ -17,8 +17,8 @@
 
     /* Linting */
     "strict": true,
-    "noImplicitAny": true, // any 타입 금지
-    "strictNullChecks": true, // null 체크
+    "noImplicitAny": true,
+    "strictNullChecks": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
