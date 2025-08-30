@@ -7,6 +7,12 @@ export interface ApiResponseType<T> {
   data: T;
 }
 
+export interface ApiResponseTypeWithNoData {
+  status: number;
+  success: boolean;
+  message: string;
+}
+
 export interface ApiErrorMessage {
   status: number;
   success: boolean;
