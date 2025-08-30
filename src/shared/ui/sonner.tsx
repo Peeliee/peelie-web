@@ -1,4 +1,5 @@
 import { useTheme } from 'next-themes';
+import React from 'react';
 import { Toaster as Sonner, type ToasterProps } from 'sonner';
 
 const Toaster = ({ ...props }: ToasterProps) => {
@@ -20,4 +21,4 @@ const Toaster = ({ ...props }: ToasterProps) => {
   );
 };
 
-export { Toaster };
+export default Toaster;
