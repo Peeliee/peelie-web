@@ -1,12 +1,12 @@
 import { useState, useEffect, type ReactNode, Children } from 'react';
 
-import { Carousel, CarouselContent, CarouselItem } from '@/shared/ui/carousel';
-import type { CarouselApi } from '@/shared/ui/carousel';
+import { Carousel, CarouselContent, CarouselItem } from '@/shared/ui/common/carousel';
+import type { CarouselApi } from '@/shared/ui/common/carousel';
 import { cn } from '@/shared/lib/utils';
 
 type CarouselVariant = 'full' | 'peek' | 'peekSmall';
 
-interface FullScreenCarouselProps {
+interface CarouselWrapperProps {
   children: ReactNode;
   variant: CarouselVariant;
 }
@@ -14,18 +14,21 @@ interface FullScreenCarouselProps {
 /**
  * 한 페이지에 하나의 children 만 보여주는 컴포넌트입니다.
  * @useage
- * <FullScreenCarousel variant="full">
+ * <CarouselWrapper variant="full | peek | peekSmall">
  *  <Component1 />
  *  <Component2 />
  *  ...
- * </FullScreenCarousel>
+ * </CarouselWrapper>
  */
-export function FullScreenCarousel({ children, variant }: FullScreenCarouselProps) {
+export function CarouselWrapper({ children, variant }: CarouselWrapperProps) {
   const [api, setApi] = useState<CarouselApi | null>(null);
   const [current, setCurrent] = useState(0);
 
   const slides = Children.toArray(children);
   const isPeekMode = variant === 'peek' || variant === 'peekSmall';
+
+  const spacerBasis =
+    variant === 'peek' ? 'basis-[10%]' : variant === 'peekSmall' ? 'basis-[15%]' : '';
 
   useEffect(() => {
     if (!api) return;
@@ -53,7 +56,9 @@ export function FullScreenCarousel({ children, variant }: FullScreenCarouselProp
         }}
       >
         <CarouselContent>
-          {isPeekMode && <div className="basis-[15%] shrink-0 pointer-events-none" aria-hidden />}
+          {isPeekMode && (
+            <div className={cn(`${spacerBasis} shrink-0 pointer-events-none`)} aria-hidden />
+          )}
 
           {slides.map((child, i) => {
             const isActive = i === current;
@@ -73,7 +78,9 @@ export function FullScreenCarousel({ children, variant }: FullScreenCarouselProp
               </CarouselItem>
             );
           })}
-          {isPeekMode && <div className="basis-[15%] shrink-0 pointer-events-none" aria-hidden />}
+          {isPeekMode && (
+            <div className={cn(`${spacerBasis} shrink-0 pointer-events-none`)} aria-hidden />
+          )}
         </CarouselContent>
       </Carousel>
 

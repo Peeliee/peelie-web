@@ -1,4 +1,4 @@
-import { FullScreenCarousel } from '@/widgets/FullScreenCarousel/FullScreenCarousel';
+import { CarouselWrapper } from '@/shared/ui/common/Carousel/CarouselWrapper';
 import MockImg from '@/assets/mockImg.svg?react';
 
 const HomePage = () => {
@@ -7,12 +7,12 @@ const HomePage = () => {
       홈페이지
       <div className="w-full max-w-4xl mx-auto">
         {/* 임시 캐러셀 */}
-        <FullScreenCarousel variant="peekSmall">
+        <CarouselWrapper variant="peek">
           <MockImg />
           <MockImg />
           <MockImg />
           <MockImg />
-        </FullScreenCarousel>
+        </CarouselWrapper>
       </div>
     </div>
   );
