@@ -1,7 +1,10 @@
 import { CarouselWrapper } from '@/shared/ui/common/Carousel/CarouselWrapper';
 import MockImg from '@/assets/mockImg.svg?react';
+import { useKakaoAuthCode } from '@/features/auth/hooks/useKakaoAuthCode';
 
 const HomePage = () => {
+  useKakaoAuthCode();
+
   return (
     <div style={{ color: 'black' }}>
       홈페이지
