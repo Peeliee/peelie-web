@@ -7,11 +7,11 @@ const HomePage = () => {
       홈페이지
       <div className="w-full max-w-4xl mx-auto">
         {/* 임시 캐러셀 */}
-        <FullScreenCarousel>
-          <MockImg className="w-100" />
-          <MockImg className="w-100" />
-          <MockImg className="w-100" />
-          <MockImg className="w-100" />
+        <FullScreenCarousel variant="peekSmall">
+          <MockImg />
+          <MockImg />
+          <MockImg />
+          <MockImg />
         </FullScreenCarousel>
       </div>
     </div>

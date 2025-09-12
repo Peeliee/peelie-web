@@ -19,4 +19,13 @@ export const Default: Story = {
       <MockImg className="w-100" />,
     ],
   },
+  decorators: [
+    (Story) => (
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <div style={{ width: '390px', border: '1px solid #ccc' }}>
+          <Story />
+        </div>
+      </div>
+    ),
+  ],
 };
