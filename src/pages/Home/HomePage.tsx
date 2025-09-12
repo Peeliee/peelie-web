@@ -7,7 +7,7 @@ const HomePage = () => {
       홈페이지
       <div className="w-full max-w-4xl mx-auto">
         {/* 임시 캐러셀 */}
-        <CarouselWrapper variant="peek">
+        <CarouselWrapper variant="peekSmall">
           <MockImg />
           <MockImg />
           <MockImg />
