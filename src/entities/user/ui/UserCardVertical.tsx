@@ -5,7 +5,7 @@ interface UserCardVerticalProps {
   imageSrc?: string;
   name: string;
   personality: string; // 교류 성향
-  discription: string; // 한줄 소개
+  description: string; // 한줄 소개
   onClick?: () => void;
 }
 
@@ -27,7 +27,7 @@ export const UserCardVertical = ({
   imageSrc,
   name,
   personality,
-  discription,
+  description,
   onClick,
 }: UserCardVerticalProps) => {
   return (
@@ -52,7 +52,7 @@ export const UserCardVertical = ({
 
       {/* 한줄 소개 */}
       <span>한줄소개</span>
-      {discription && <div className="text-sm text-gray-500 text-center">{discription}</div>}
+      {description && <div className="text-sm text-gray-500 text-center">{description}</div>}
     </div>
   );
 };

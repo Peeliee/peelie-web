@@ -24,9 +24,28 @@ const HomePage = () => {
           <MockImg />
           <MockImg />
           <MockImg />
+           {/* <UserCardVertical
+          imageSrc="/김용희.png"
+          name="김용희"
+          personality="신중형"
+          description="대화를 통해 배우고, 나누며 성장하고 싶습니다."
+        />
+         <UserCardVertical
+          imageSrc="/김용희.png"
+          name="김용희"
+          personality="신중형"
+          description="대화를 통해 배우고, 나누며 성장하고 싶습니다."
+        />
+         <UserCardVertical
+          imageSrc="/김용희.png"
+          name="김용희"
+          personality="신중형"
+          description="대화를 통해 배우고, 나누며 성장하고 싶습니다."
+        /> */}
+
         </CarouselWrapper>
         <OnboardingQuestionForm />
-
+       
         <UserCardHorizontal onClick={() => console.log('clicked')}>
           <UserCardImage src="/profile.png" />
           <div>
@@ -40,7 +59,7 @@ const HomePage = () => {
           imageSrc="/김용희.png"
           name="김용희"
           personality="신중형"
-          discription="대화를 통해 배우고, 나누며 성장하고 싶습니다."
+          description="대화를 통해 배우고, 나누며 성장하고 싶습니다."
         />
       </div>
     </div>
