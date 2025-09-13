@@ -6,9 +6,11 @@ import {
   UserCardHorizontal,
   UserCardImage,
   UserCardName,
-  UserCardInfo,
+  UserCardDescription,
   UserCardPersonality,
-} from '@/entities/user/ui/UserHorizontalCard';
+} from '@/entities/user/ui/UserCardHorizontal';
+import { UserCardVertical } from '@/entities/user/ui/UserCardVertical';
+
 const HomePage = () => {
   useKakaoAuthCode();
 
@@ -29,10 +31,17 @@ const HomePage = () => {
           <UserCardImage src="/profile.png" />
           <div>
             <UserCardName>김용희</UserCardName>
-            <UserCardInfo>대화를 통해 배우고 성장하고 싶습니다</UserCardInfo>
+            <UserCardDescription>대화를 통해 배우고 성장하고 싶습니다</UserCardDescription>
           </div>
           <UserCardPersonality>신속형</UserCardPersonality>
         </UserCardHorizontal>
+
+        <UserCardVertical
+          imageSrc="/김용희.png"
+          name="김용희"
+          personality="신중형"
+          discription="대화를 통해 배우고, 나누며 성장하고 싶습니다."
+        />
       </div>
     </div>
   );

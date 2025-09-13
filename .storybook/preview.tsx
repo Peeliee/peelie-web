@@ -1,5 +1,5 @@
 import type { Preview } from '@storybook/react-vite';
-import "../src/global.css"
+import '../src/global.css';
 
 const preview: Preview = {
   parameters: {
@@ -17,6 +17,9 @@ const preview: Preview = {
       test: 'todo',
     },
   },
+  decorators: [
+    (Story) => <div className="flex justify-center items-start p-8 bg-gray-50">{Story()}</div>,
+  ],
 };
 
 export default preview;

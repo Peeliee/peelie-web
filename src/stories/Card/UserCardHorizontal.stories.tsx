@@ -3,14 +3,14 @@ import {
   UserCardHorizontal,
   UserCardImage,
   UserCardName,
-  UserCardInfo,
+  UserCardDescription,
   UserCardEditProfile,
   UserCardPersonality,
-} from '@/entities/user/ui/UserHorizontalCard';
+} from '@/entities/user/ui/UserCardHorizontal';
 import { Button } from '@/shared/ui/common/button';
 
 const meta: Meta<typeof UserCardHorizontal> = {
-  title: 'Entities/User/UserCardHorizontal',
+  title: 'Entities/User/UserHorizontalCard',
   component: UserCardHorizontal,
   tags: ['autodocs'],
   parameters: {
@@ -32,11 +32,11 @@ type Story = StoryObj<typeof UserCardHorizontal>;
 // 프로필 버전
 export const ProfileCard: Story = {
   render: () => (
-    <UserCardHorizontal onClick={() => console.log('카드 클릭')}>
+    <UserCardHorizontal onClick={() => alert('클릭')}>
       <UserCardImage />
       <div className="flex flex-col">
         <UserCardName>김용희</UserCardName>
-        <UserCardInfo>대화를 통해 배우고, 나누며 성장하고 싶습니다.</UserCardInfo>
+        <UserCardDescription>대화를 통해 배우고, 나누며 성장하고 싶습니다.</UserCardDescription>
       </div>
       <UserCardEditProfile>
         <Button size="sm" variant="outline">
@@ -50,13 +50,13 @@ export const ProfileCard: Story = {
 // 교류 성향 버전
 export const PersonalityCard: Story = {
   render: () => (
-    <UserCardHorizontal onClick={() => console.log('카드 클릭')}>
+    <UserCardHorizontal onClick={() => alert('클릭')}>
       <UserCardImage />
       <div className="flex flex-col">
         <div className="flex items-center gap-2">
           <UserCardName>김용희</UserCardName>
         </div>
-        <UserCardInfo>대화를 통해 배우고, 나누며 성장하고 싶습니다.</UserCardInfo>
+        <UserCardDescription>대화를 통해 배우고, 나누며 성장하고 싶습니다.</UserCardDescription>
       </div>
       <UserCardPersonality>신중형</UserCardPersonality>
     </UserCardHorizontal>

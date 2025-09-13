@@ -17,7 +17,7 @@ interface UserCardHorizontalProps {
  *   <UserCardImage src="/avatar.png" />
  *   <div className="flex flex-col">
  *     <UserCardName>김용희</UserCardName>
- *     <UserCardInfo>대화를 통해 배우고, 성장하고 싶습니다.</UserCardInfo>
+ *     <UserCardDescription>대화를 통해 배우고, 성장하고 싶습니다.</UserCardDescription>
  *   </div>
  *   <UserCardPersonality>신중형</UserCardPersonality>
  * </UserCardHorizontal>
@@ -44,7 +44,7 @@ const UserCardName = ({ children }: { children: ReactNode }) => {
 };
 
 // 한줄소개
-const UserCardInfo = ({ children }: { children: React.ReactNode }) => {
+const UserCardDescription = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="text-sm text-gray-500">
       한줄소개 <br />
@@ -71,7 +71,7 @@ export {
   UserCardHorizontal,
   UserCardImage,
   UserCardName,
-  UserCardInfo,
+  UserCardDescription,
   UserCardEditProfile,
   UserCardPersonality,
 };
