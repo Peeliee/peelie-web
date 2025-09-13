@@ -1,6 +1,7 @@
 import { CarouselWrapper } from '@/shared/ui/common/Carousel/CarouselWrapper';
 import MockImg from '@/assets/mockImg.svg?react';
 import { useKakaoAuthCode } from '@/features/auth/hooks/useKakaoAuthCode';
+import { OnboardingQuestionForm } from '@/widgets/OnboardingQuestionForm/OnboardingQuestionForm';
 
 const HomePage = () => {
   useKakaoAuthCode();
@@ -16,6 +17,7 @@ const HomePage = () => {
           <MockImg />
           <MockImg />
         </CarouselWrapper>
+        <OnboardingQuestionForm />
       </div>
     </div>
   );
