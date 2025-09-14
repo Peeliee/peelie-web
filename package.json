@@ -11,6 +11,10 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
+  "packageManager": "pnpm@10.10.0",
+  "engines": {
+    "node": ">=22.11.0 <24.0.0"
+  },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.3",
     "class-variance-authority": "^0.7.1",
