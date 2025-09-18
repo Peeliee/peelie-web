@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { UserCardVertical } from '@/entities/user/ui/UserCardVertical';
 
 const meta: Meta<typeof UserCardVertical> = {
-  title: 'Entities/User/UserCardVertical',
+  title: 'Card/UserCardVertical',
   component: UserCardVertical,
   tags: ['autodocs'],
 };

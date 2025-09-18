@@ -10,7 +10,7 @@ import {
 import { Button } from '@/shared/ui/common/button';
 
 const meta: Meta<typeof UserCardHorizontal> = {
-  title: 'Entities/User/UserHorizontalCard',
+  title: 'Card/UserHorizontalCard',
   component: UserCardHorizontal,
   tags: ['autodocs'],
   parameters: {

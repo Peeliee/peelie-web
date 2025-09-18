@@ -3,7 +3,7 @@ import { CarouselWrapper } from '@/shared/ui/common/Carousel/CarouselWrapper';
 import MockImg from '@/assets/mockImg.svg?react';
 
 const meta: Meta<typeof CarouselWrapper> = {
-  title: 'shared/ui/Carousel/CarouselWrapper',
+  title: 'Carousel/CarouselWrapper',
   component: CarouselWrapper,
   tags: ['autodocs'],
   argTypes: {
