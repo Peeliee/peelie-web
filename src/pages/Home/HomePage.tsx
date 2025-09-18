@@ -10,6 +10,7 @@ import {
   UserCardPersonality,
 } from '@/entities/user/ui/UserCardHorizontal';
 import { UserCardVertical } from '@/entities/user/ui/UserCardVertical';
+import { StepTab, StepTabs } from '@/features/user/ui/StepTabs';
 
 const HomePage = () => {
   useKakaoAuthCode();
@@ -24,7 +25,7 @@ const HomePage = () => {
           <MockImg />
           <MockImg />
           <MockImg />
-           {/* <UserCardVertical
+          {/* <UserCardVertical
           imageSrc="/김용희.png"
           name="김용희"
           personality="신중형"
@@ -42,10 +43,9 @@ const HomePage = () => {
           personality="신중형"
           description="대화를 통해 배우고, 나누며 성장하고 싶습니다."
         /> */}
-
         </CarouselWrapper>
         <OnboardingQuestionForm />
-       
+
         <UserCardHorizontal onClick={() => console.log('clicked')}>
           <UserCardImage src="/profile.png" />
           <div>
@@ -62,6 +62,11 @@ const HomePage = () => {
           description="대화를 통해 배우고, 나누며 성장하고 싶습니다."
         />
       </div>
+      <StepTabs>
+        <StepTab title="STEP 1">1단계정보</StepTab>
+        <StepTab title="STEP 2">2단계정보</StepTab>
+        <StepTab title="STEP 3" locked>3단계정보</StepTab>
+      </StepTabs>
     </div>
   );
 };
