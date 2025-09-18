@@ -10,6 +10,27 @@ interface StepTabsProps {
   children: React.ReactElement<StepTabProps>[];
 }
 
+/**
+ * StepTabs 컴포넌트
+ *
+ * - 여러 개의 StepTab을 받아 탭 UI를 렌더링.
+ * - 클릭 시 해당 StepTab의 children을 보여줌.
+ * - locked가 true인 StepTab은 클릭하면 "잠겨있어요" alert 출력.
+ *
+ * @example
+ * <StepTabs>
+ *   <StepTab title="STEP 1">
+ *     <div>첫 번째 내용</div>
+ *   </StepTab>
+ *   <StepTab title="STEP 2">
+ *     <div>두 번째 내용 (잠김)</div>
+ *   </StepTab>
+ *   <StepTab title="STEP 3" locked>
+ *     <div>세 번째 내용</div>
+ *   </StepTab>
+ * </StepTabs>
+ * 
+ */
 const StepTab = (_props: StepTabProps) => {
   return null;
 };
