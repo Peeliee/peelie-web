@@ -69,6 +69,9 @@ importers:
       '@tailwindcss/vite':
         specifier: ^4.1.12
         version: 4.1.12(vite@7.1.3(@types/node@24.3.0)(jiti@2.5.1)(lightningcss@1.30.1))
+      '@types/kakao-js-sdk':
+        specifier: ^1.39.5
+        version: 1.39.5
       '@types/node':
         specifier: ^24.3.0
         version: 24.3.0
@@ -978,6 +981,9 @@ packages:
 
   '@types/json5@0.0.29':
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
+
+  '@types/kakao-js-sdk@1.39.5':
+    resolution: {integrity: sha512-+u+sfAq2ZcBM4yF3zE/FDxaNq85DeLkKh8K6jP9GQwGdbIJ/IGwoAQEfkbG5tL5XHOP30b3KeHmxDFG2n1E96Q==}
 
   '@types/mdx@2.0.13':
     resolution: {integrity: sha512-+OWZQfAYyio6YkJb3HLxDrvnx6SWWDbC0zVPfBRzUk0/nqoDyf6dNxQi3eArPe8rJ473nobTMQ/8Zk+LxJ+Yuw==}
@@ -3817,6 +3823,8 @@ snapshots:
   '@types/json-schema@7.0.15': {}
 
   '@types/json5@0.0.29': {}
+
+  '@types/kakao-js-sdk@1.39.5': {}
 
   '@types/mdx@2.0.13': {}
 

@@ -1,4 +1,5 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import LoginPage from '@/pages/Login/LoginPage';
 import HomePage from '@/pages/Home/HomePage';
 import TestPage from '@/pages/Test/TestPage';
 import PATH from '@/shared/constants/path';
@@ -11,6 +12,7 @@ const AppRouter = () => {
       element: <App />,
       children: [
         { path: '', element: <HomePage /> },
+        { path: 'login', element: <LoginPage /> },
         {
           path: 'test/:id',
           element: <TestPage />,
