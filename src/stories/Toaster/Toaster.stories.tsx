@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ThemeProvider } from 'next-themes';
 import { toast } from 'sonner';
-import Toaster from '@/shared/ui/sonner';
+import Toaster from '@/shared/ui/common/sonner';
 
 const meta: Meta<typeof Toaster> = {
   title: 'Feedback/Toaster',

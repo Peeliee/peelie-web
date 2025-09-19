@@ -18,7 +18,12 @@ const compat = new FlatCompat({
 export default [
   // 글로벌 ignore
   { ignores: ['dist', 'node_modules'] }, // 에어비앤비
-  ...compat.extends('airbnb'), // TS 프로젝트 인식 + 경로 alias 해석 + 글로벌 환경만 지정 (규칙 추가 없음)
+  /**
+   *  @TODO : aribnb config 너무 화나서 일단 껐습니다.........
+   *  @TODO : flat config 하지말고 나중에 그냥 깃헙에서 소스 그대로 가져오는거 어떤지 고민중. 
+   * 에어비앤비규칙 뭐있는지 모름 사실
+   *  */
+  // ...compat.extends('airbnb'), // TS 프로젝트 인식 + 경로 alias 해석 + 글로벌 환경만 지정 (규칙 추가 없음)
   {
     files: ['src/**/*.{ts,tsx}'],
     languageOptions: {
