@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { OnboardingQuestion } from '@/features/onboarding/ui/OnboardingQuestion';
 
 const meta: Meta<typeof OnboardingQuestion> = {
-  title: 'Features/Onboarding/Question',
+  title: 'Onboarding/Question',
   component: OnboardingQuestion,
   tags: ['autodocs'],
   args: {
