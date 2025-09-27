@@ -9,6 +9,8 @@ type CarouselVariant = 'full' | 'peek' | 'peekSmall';
 interface CarouselWrapperProps {
   children: ReactNode;
   variant: CarouselVariant;
+  onChange?: (index: number) => void;
+  showIndicator?: boolean;
 }
 
 /**
@@ -20,7 +22,12 @@ interface CarouselWrapperProps {
  *  ...
  * </CarouselWrapper>
  */
-export function CarouselWrapper({ children, variant }: CarouselWrapperProps) {
+export function CarouselWrapper({
+  children,
+  variant,
+  onChange,
+  showIndicator = true,
+}: CarouselWrapperProps) {
   const [api, setApi] = useState<CarouselApi | null>(null);
   const [current, setCurrent] = useState(0);
 
@@ -34,7 +41,9 @@ export function CarouselWrapper({ children, variant }: CarouselWrapperProps) {
     if (!api) return;
 
     const onSelect = () => {
-      setCurrent(api.selectedScrollSnap());
+      const index = api.selectedScrollSnap();
+      setCurrent(index);
+      onChange?.(index);
     };
 
     api.on('select', onSelect);
@@ -43,7 +52,7 @@ export function CarouselWrapper({ children, variant }: CarouselWrapperProps) {
     return () => {
       api.off('select', onSelect);
     };
-  }, [api, slides.length]);
+  }, [api, slides.length, onChange]);
 
   return (
     <div className="w-full">
@@ -84,16 +93,18 @@ export function CarouselWrapper({ children, variant }: CarouselWrapperProps) {
         </CarouselContent>
       </Carousel>
 
-      <div className="flex justify-center">
-        {slides.map((_, index) => (
-          <div
-            key={index}
-            className={`w-2 h-2 rounded-full transition-colors duration-200 mr-3 ${
-              index === current ? 'bg-orange-500' : 'bg-orange-200'
-            }`}
-          />
-        ))}
-      </div>
+      {showIndicator && (
+        <div className="flex justify-center">
+          {slides.map((_, index) => (
+            <div
+              key={index}
+              className={`w-2 h-2 rounded-full transition-colors duration-200 mr-3 ${
+                index === current ? 'bg-orange-500' : 'bg-orange-200'
+              }`}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

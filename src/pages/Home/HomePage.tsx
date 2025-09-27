@@ -67,9 +67,10 @@ const HomePage = () => {
       <StepTabs>
         <StepTab title="STEP 1">1단계정보</StepTab>
         <StepTab title="STEP 2">2단계정보</StepTab>
-        <StepTab title="STEP 3" locked>3단계정보</StepTab>
+        <StepTab title="STEP 3" locked>
+          3단계정보
+        </StepTab>
       </StepTabs>
-
       {/* 테스트용: QR 공유 모달 버튼. 모달 버튼 나중에 이동 */}
       <div className="mt-6">
         <QrModal

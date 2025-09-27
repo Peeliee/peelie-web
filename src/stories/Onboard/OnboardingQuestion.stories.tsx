@@ -1,9 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { OnboardingQuestion } from '@/features/onboarding/ui/OnboardingQuestion';
+import {
+  OnboardingObjectQuestion,
+  OnboardingSubjectQuestion,
+} from '@/features/onboarding/ui/OnboardingQuestion';
 
-const meta: Meta<typeof OnboardingQuestion> = {
+const meta: Meta<typeof OnboardingObjectQuestion> = {
   title: 'Onboarding/Question',
-  component: OnboardingQuestion,
+  component: OnboardingObjectQuestion,
   tags: ['autodocs'],
   args: {
     level: 0,
@@ -22,11 +25,21 @@ const meta: Meta<typeof OnboardingQuestion> = {
 };
 export default meta;
 
-type Story = StoryObj<typeof OnboardingQuestion>;
+type Story = StoryObj<typeof OnboardingObjectQuestion>;
 
-export const Question: Story = {
+export const ObjectQuestion: Story = {
   args: {
     title: '영화는 어떻게 즐기는 편인가요?',
     onAnswer: (val: string) => console.log(val),
+  },
+};
+
+export const SubjectQuestion: StoryObj<typeof OnboardingSubjectQuestion> = {
+  render: (args) => <OnboardingSubjectQuestion {...args} />,
+  args: {
+    level: 1,
+    title: '좋아하는 영화를 한 줄로 적어주세요',
+    placeholder: '예) F1',
+    onAnswer: (val: string) => console.log('답변:', val),
   },
 };

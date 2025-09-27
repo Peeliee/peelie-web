@@ -11,5 +11,9 @@ export const KakaoLoginButton = () => {
       redirectUri: REDIRECT_URI,
     });
   };
-  return <button onClick={handleLogin}>카카오로그인</button>;
+  return (
+    <button className="w-full py-3 bg-yellow-300 rounded-lg" onClick={handleLogin}>
+      카카오로그인
+    </button>
+  );
 };
