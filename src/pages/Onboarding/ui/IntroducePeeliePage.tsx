@@ -23,7 +23,7 @@ const IntroducePeeliePage = () => {
 
       <Link
         to="/select-category"
-        className="block w-full py-4 bg-orange-400 text-white rounded-full text-center font-medium hover:bg-orange-500 active:bg-orange-600"
+        className="block w-full py-4 bg-orange-400 text-white rounded-full text-center font-medium active:bg-orange-500"
       >
         시작하기
       </Link>
