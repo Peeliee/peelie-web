@@ -5,6 +5,7 @@ import SelectCategoryPage from '@/pages/Onboarding/ui/SelectCategoryPage';
 import CategoryQuestionPage from '@/pages/Onboarding/ui/CategoryQuestionPage';
 import IntroduceInteractionStylePage from '@/pages/Onboarding/ui/IntroduceInteractionStylePage';
 import SelectInteractionStylePage from '@/pages/Onboarding/ui/SelectInteractionStylePage';
+import FinishOnboardingPage from '@/pages/Onboarding/ui/FinishOnboardingPage';
 
 import HomePage from '@/pages/Home/HomePage';
 import TestPage from '@/pages/Test/TestPage';
@@ -24,6 +25,7 @@ const AppRouter = () => {
         { path: 'category-question', element: <CategoryQuestionPage /> },
         { path: 'interaction-style', element: <IntroduceInteractionStylePage /> },
         { path: 'select-style', element: <SelectInteractionStylePage /> },
+        { path: 'finish-onboarding/:id', element: <FinishOnboardingPage /> },
         {
           path: 'test/:id',
           element: <TestPage />,

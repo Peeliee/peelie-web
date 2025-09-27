@@ -9,7 +9,7 @@ type CarouselVariant = 'full' | 'peek' | 'peekSmall';
 interface CarouselWrapperProps {
   children: ReactNode;
   variant: CarouselVariant;
-  onChange: (index: number) => void;
+  onChange?: (index: number) => void;
   showIndicator?: boolean;
 }
 
