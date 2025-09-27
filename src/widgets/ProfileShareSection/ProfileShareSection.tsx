@@ -1,12 +1,13 @@
 import { QrModal } from '@/features/user/ui/QrModal';
+import { cn } from '@/shared/lib/utils';
 
 interface ProfileShareSectionProps {
-  onShareClick?: () => void;
+  className?: string;
 }
 
-export const ProfileShareSection = ({ onShareClick }: ProfileShareSectionProps) => {
+export const ProfileShareSection = ({ className }: ProfileShareSectionProps) => {
   return (
-    <div className="w-full border-b border-gray-200">
+    <div className={cn('w-full border-b border-gray-200', className)}>
       <h2 className="px-4 py-3 font-semibold text-black">프로필 공유하기</h2>
       <div className="px-4 pb-4">
         <QrModal
