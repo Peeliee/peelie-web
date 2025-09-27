@@ -5,8 +5,8 @@ import { cn } from '@/shared/lib/utils';
 
 const IntroduceInteractionStylePage = () => {
   return (
-    <div className="w-full flex flex-col justify-center items-center px-6 py-10">
-      <div className="text-center mb-8">
+    <div className="min-h-screen w-full flex flex-col justify-center items-center px-6 py-10">
+      <div className="text-center">
         <h1 className="text-xl font-bold mb-2">교류 성향을 선택해요</h1>
         <p className="text-gray-500 text-sm">
           당신의 교류 성향을 알려주세요.
@@ -15,12 +15,12 @@ const IntroduceInteractionStylePage = () => {
         </p>
       </div>
 
-      <InteractionStyleGroup className='mt-30' />
+      <InteractionStyleGroup className="mt-30" />
 
       <Link
         to="/select-style"
         className={cn(
-          'fixed bottom-10 left-6 right-6 py-4 rounded-full text-center font-medium',
+          'fixed bottom-10 left-6 right-6 py-4 rounded-full text-center font-medium z-9999',
           'bg-orange-400 text-white active:bg-orange-500',
         )}
       >
