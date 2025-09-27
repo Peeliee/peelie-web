@@ -1,20 +1,9 @@
-import { CarouselWrapper } from '@/shared/ui/common/Carousel/CarouselWrapper';
-import MockImg from '@/assets/mockImg.svg?react';
-import { useKakaoAuthCode } from '@/features/auth/hooks/useKakaoAuthCode';
-import { OnboardingQuestionForm } from '@/widgets/OnboardingQuestionForm/OnboardingQuestionForm';
-import {
-  UserCardHorizontal,
-  UserCardImage,
-  UserCardName,
-  UserCardDescription,
-  UserCardPersonality,
-} from '@/entities/user/ui/UserCardHorizontal';
-import { UserCardVertical } from '@/entities/user/ui/UserCardVertical';
-import { StepTab, StepTabs } from '@/features/user/ui/StepTabs';
-import { QrModal } from '@/features/qr-scanner/ui/QrModal';
 import { useNavigate } from 'react-router-dom';
-import { LogalModal } from './LogoutModal';
-/* todo: QR 공유 테스트 modal 나중에 지우기 */
+import { useKakaoAuthCode } from '@/features/auth/hooks/useKakaoAuthCode';
+import { GlobalNavigationBar } from '@/widgets/GlobalNavigationBar/ui/GlobalNavigationBar';
+import { ProfileShareSection } from '@/widgets/ProfileShareSection/ProfileShareSection';
+import { RandomUserCarousel } from '@/widgets/RandomUserCarousel/RandomUserCarousel';
+
 const HomePage = () => {
   const navigate = useNavigate();
   useKakaoAuthCode();
@@ -23,7 +12,7 @@ const HomePage = () => {
     <div style={{ color: 'black' }}>
       <div className="flex justify-center">
         <button
-          className="bg-amber-400 rounded-3xl p-10 mt-5"
+          className="bg-amber-400 rounded-3xl p-3 mt-0"
           onClick={() => {
             navigate('/login');
           }}
@@ -31,73 +20,15 @@ const HomePage = () => {
           로그인페이지로 이동하기 버튼
         </button>
       </div>
-      <div className="w-full max-w-4xl mx-auto">
-        {/* 임시 캐러셀 */}
-        <CarouselWrapper variant="peekSmall">
-          <MockImg />
-          <MockImg />
-          <MockImg />
-          <MockImg />
-          {/* <UserCardVertical
-          imageSrc="/김용희.png"
-          name="김용희"
-          personality="신중형"
-          description="대화를 통해 배우고, 나누며 성장하고 싶습니다."
-        />
-         <UserCardVertical
-          imageSrc="/김용희.png"
-          name="김용희"
-          personality="신중형"
-          description="대화를 통해 배우고, 나누며 성장하고 싶습니다."
-        />
-         <UserCardVertical
-          imageSrc="/김용희.png"
-          name="김용희"
-          personality="신중형"
-          description="대화를 통해 배우고, 나누며 성장하고 싶습니다."
-        /> */}
-        </CarouselWrapper>
-        <OnboardingQuestionForm />
+      <ProfileShareSection className="mb-5" />
 
-        <UserCardHorizontal onClick={() => console.log('clicked')}>
-          <UserCardImage src="/profile.png" />
-          <div>
-            <UserCardName>김용희</UserCardName>
-            <UserCardDescription>대화를 통해 배우고 성장하고 싶습니다</UserCardDescription>
-          </div>
-          <UserCardPersonality>신속형</UserCardPersonality>
-        </UserCardHorizontal>
+      <div className="px-4 py-3">
+        <p className="text-sm text-gray-500">지금 가까워질 수 있는</p>
+        <h2 className="font-semibold text-black">오늘의 랜덤 추천 친구</h2>
+      </div>
+      <RandomUserCarousel />
 
-        <UserCardVertical
-          imageSrc="/김용희.png"
-          name="김용희"
-          personality="신중형"
-          description="대화를 통해 배우고, 나누며 성장하고 싶습니다."
-        />
-      </div>
-      <StepTabs>
-        <StepTab title="STEP 1">1단계정보</StepTab>
-        <StepTab title="STEP 2">2단계정보</StepTab>
-        <StepTab title="STEP 3" locked>
-          3단계정보
-        </StepTab>
-      </StepTabs>
-      {/* 테스트용: QR 공유 모달 버튼. 모달 버튼 나중에 이동 */}
-      <div className="mt-6">
-        <QrModal
-          url="https://www.figma.com"
-          triggerLabel="QR 공유 테스트"
-          title="QR을 스캔해주세요"
-          description="교류하고자 하는 친구에게 나의 QR을 보여주세요."
-          tagText="적극적인 교류자"
-          userName="유지원"
-        />
-      </div>
-
-      {/* 테스트용: 로그아웃 모달 */}
-      <div className="mt-4">
-        <LogalModal />
-      </div>
+      <GlobalNavigationBar />
     </div>
   );
 };

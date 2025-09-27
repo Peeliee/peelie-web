@@ -19,6 +19,10 @@ export default defineConfig({
       '@': path.resolve(dirname, './src'),
     },
   },
+  server: {
+    host: true,
+    port: 5173,
+  },
   test: {
     projects: [
       {

@@ -94,7 +94,7 @@ export function CarouselWrapper({
       </Carousel>
 
       {showIndicator && (
-        <div className="flex justify-center">
+        <div className="flex justify-center mt-3">
           {slides.map((_, index) => (
             <div
               key={index}
