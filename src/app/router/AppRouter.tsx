@@ -1,5 +1,7 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import LoginPage from '@/pages/Login/LoginPage';
+import IntroducePeeliePage from '@/pages/Onboarding/ui/IntroducePeeliePage';
+import SelectCategoryPage from '@/pages/Onboarding/ui/SelectCategoryPage';
 import HomePage from '@/pages/Home/HomePage';
 import TestPage from '@/pages/Test/TestPage';
 import PATH from '@/shared/constants/path';
@@ -13,6 +15,8 @@ const AppRouter = () => {
       children: [
         { path: '', element: <HomePage /> },
         { path: 'login', element: <LoginPage /> },
+        { path: 'intro-peelie', element: <IntroducePeeliePage /> },
+        { path: 'select-category', element: <SelectCategoryPage /> },
         {
           path: 'test/:id',
           element: <TestPage />,
