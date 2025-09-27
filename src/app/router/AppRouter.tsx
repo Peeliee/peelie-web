@@ -3,6 +3,9 @@ import LoginPage from '@/pages/Login/LoginPage';
 import IntroducePeeliePage from '@/pages/Onboarding/ui/IntroducePeeliePage';
 import SelectCategoryPage from '@/pages/Onboarding/ui/SelectCategoryPage';
 import CategoryQuestionPage from '@/pages/Onboarding/ui/CategoryQuestionPage';
+import IntroduceInteractionStylePage from '@/pages/Onboarding/ui/IntroduceInteractionStylePage';
+import SelectInteractionStylePage from '@/pages/Onboarding/ui/SelectInteractionStylePage';
+
 import HomePage from '@/pages/Home/HomePage';
 import TestPage from '@/pages/Test/TestPage';
 import PATH from '@/shared/constants/path';
@@ -19,6 +22,8 @@ const AppRouter = () => {
         { path: 'intro-peelie', element: <IntroducePeeliePage /> },
         { path: 'select-category', element: <SelectCategoryPage /> },
         { path: 'category-question', element: <CategoryQuestionPage /> },
+        { path: 'interaction-style', element: <IntroduceInteractionStylePage /> },
+        { path: 'select-style', element: <SelectInteractionStylePage /> },
         {
           path: 'test/:id',
           element: <TestPage />,

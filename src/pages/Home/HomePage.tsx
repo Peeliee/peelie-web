@@ -12,7 +12,6 @@ import {
 import { UserCardVertical } from '@/entities/user/ui/UserCardVertical';
 import { StepTab, StepTabs } from '@/features/user/ui/StepTabs';
 import { QrModal } from '@/features/qr-scanner/ui/QrModal';
-import { CategoryCard } from '@/entities/category/ui/CategoryCard';
 
 /* todo: QR 공유 테스트 modal 나중에 지우기 */
 const HomePage = () => {
@@ -83,7 +82,6 @@ const HomePage = () => {
           userName="유지원"
         />
       </div>
-      <CategoryCard icon={MockImg} label="카테고리" />
     </div>
   );
 };
