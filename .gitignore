@@ -31,3 +31,4 @@ storybook-static/
 # SSH keys
 key
 key.pub
+.vercel

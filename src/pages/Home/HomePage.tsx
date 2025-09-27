@@ -12,14 +12,25 @@ import {
 import { UserCardVertical } from '@/entities/user/ui/UserCardVertical';
 import { StepTab, StepTabs } from '@/features/user/ui/StepTabs';
 import { QrModal } from '@/features/qr-scanner/ui/QrModal';
+import { useNavigate } from 'react-router-dom';
 import { LogalModal } from './LogoutModal';
-/* todo: QR 공유 테스트 modal 나중에 지우기 */ 
+/* todo: QR 공유 테스트 modal 나중에 지우기 */
 const HomePage = () => {
+  const navigate = useNavigate();
   useKakaoAuthCode();
 
   return (
     <div style={{ color: 'black' }}>
-      홈페이지
+      <div className="flex justify-center">
+        <button
+          className="bg-amber-400 rounded-3xl p-10 mt-5"
+          onClick={() => {
+            navigate('/login');
+          }}
+        >
+          로그인페이지로 이동하기 버튼
+        </button>
+      </div>
       <div className="w-full max-w-4xl mx-auto">
         {/* 임시 캐러셀 */}
         <CarouselWrapper variant="peekSmall">
