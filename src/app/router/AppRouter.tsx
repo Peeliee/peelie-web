@@ -6,12 +6,13 @@ import CategoryQuestionPage from '@/pages/Onboarding/ui/CategoryQuestionPage';
 import IntroduceInteractionStylePage from '@/pages/Onboarding/ui/IntroduceInteractionStylePage';
 import SelectInteractionStylePage from '@/pages/Onboarding/ui/SelectInteractionStylePage';
 import FinishOnboardingPage from '@/pages/Onboarding/ui/FinishOnboardingPage';
+import FriendPage from '@/pages/Friend/FriendPage';
 
 import HomePage from '@/pages/Home/HomePage';
+import MyPage from '@/pages/mypage/MyPage';
 import PATH from '@/shared/constants/path';
 import App from '../App';
 import { GNBLayout } from '@/widgets/GlobalNavigationBar/GNBLayout';
-import MyPage from '@/pages/mypage/MyPage';
 
 const AppRouter = () => {
   const router = createBrowserRouter([
@@ -27,7 +28,7 @@ const AppRouter = () => {
         { path: 'interaction-style', element: <IntroduceInteractionStylePage /> },
         { path: 'select-style', element: <SelectInteractionStylePage /> },
         { path: 'finish-onboarding/:id', element: <FinishOnboardingPage /> },
-
+        { path: 'friend/:id', element: <FriendPage /> },
         // GNB 있는 페이지
         {
           element: <GNBLayout />,

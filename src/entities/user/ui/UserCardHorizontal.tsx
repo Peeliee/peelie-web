@@ -4,7 +4,7 @@ import { cn } from '@/shared/lib/utils';
 interface UserCardHorizontalProps {
   className?: string;
   children: ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 /**
