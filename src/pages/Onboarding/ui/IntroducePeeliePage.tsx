@@ -5,7 +5,7 @@ import { CarouselWrapper } from '@/shared/ui/common/Carousel/CarouselWrapper';
 
 const IntroducePeeliePage = () => {
   return (
-    <div className="flex flex-col justify-between items-center px-6 py-10">
+    <div className="flex flex-col justify-between items-center py-10">
       {/* 상단 로고/텍스트 */}
       <div className="w-full text-left">
         <h1 className="text-xl font-bold">Peelie는</h1>
@@ -14,16 +14,16 @@ const IntroducePeeliePage = () => {
       {/* 캐러셀 */}
 
       <CarouselWrapper variant="full">
-        <MockImg />
-        <MockImg />
-        <MockImg />
+        <MockImg className="w-80 h-80" />
+        <MockImg className="w-80 h-80" />
+        <MockImg className="w-80 h-80" />
       </CarouselWrapper>
 
       {/* 시작하기 버튼 */}
 
       <Link
         to="/select-category"
-        className="block w-full py-4 bg-orange-400 text-white rounded-full text-center font-medium active:bg-orange-500"
+        className="block py-4 fixed bottom-10 left-6 right-6 bg-orange-400 text-white rounded-full text-center font-medium active:bg-orange-500"
       >
         시작하기
       </Link>
