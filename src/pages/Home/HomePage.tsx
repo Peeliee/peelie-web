@@ -20,8 +20,12 @@ const HomePage = () => {
           로그인페이지로 이동하기 버튼
         </button>
       </div>
-      <ProfileShareSection className='mb-5' />
+      <ProfileShareSection className="mb-5" />
 
+      <div className="px-4 py-3">
+        <p className="text-sm text-gray-500">지금 가까워질 수 있는</p>
+        <h2 className="font-semibold text-black">오늘의 랜덤 추천 친구</h2>
+      </div>
       <RandomUserCarousel />
 
       <GlobalNavigationBar />
