@@ -17,12 +17,11 @@ const FinishOnboardingPage = () => {
       <div className="mb-10">
         <h1 className="text-xl font-bold leading-relaxed">
           당신의 캐릭터는 <br />
-          적극적인 <span className="text-orange-500">{style.title}</span>에요!
+          <span className="text-orange-500">{style.title}</span>에요!
         </h1>
         <p className="mt-4 text-gray-500 text-sm">
           {style.desc}
-          <br />
-          예) 사교적인 {style.title}은 어느 사람이든 관심있게 어쩌구저쩌구 특징
+          <br />예 : {style.title}은 어느 사람이든 관심있게 어쩌구저쩌구 특징
         </p>
       </div>
 
