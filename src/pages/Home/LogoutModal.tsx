@@ -1,10 +1,18 @@
 import { ConfirmModal } from "@/shared/ui/common/AlertDIalog/confirmModal"
+import { AlertDialogAction, AlertDialogCancel } from "@/shared/ui/common/alert-dialog"
 import { Button } from "@/shared/ui/common/button"
-import { toast } from "sonner"
+import { toast } from "sonner" // 버튼 test용
 
 export function LogalModal() {
-    //로그아웃 로직
+    // TODO: 로그아웃 로직 추가 예정
+  const handleLogout = () => {
+    toast.success("로그아웃 실행!"); // ✅ 로그아웃 버튼 테스트용
+  };
 
+  const handleCancel = () => {
+    toast.message("취소 선택됨"); // ✅ 취소 버튼 테스트용
+  };
+  
  return (
     <ConfirmModal>
       <ConfirmModal.Trigger>
@@ -16,15 +24,19 @@ export function LogalModal() {
           <ConfirmModal.Title>로그아웃 하시겠어요?</ConfirmModal.Title>
         </ConfirmModal.Header>
 
-        {/* ✅ 같은 Footer/Cancel, 텍스트만 교체 */}
         <ConfirmModal.Footer>
-          <ConfirmModal.Cancel>취소</ConfirmModal.Cancel>
-          <ConfirmModal.Confirm
+          <AlertDialogCancel 
+            className="min-w-[96px] bg-gray-200 text-gray-700 hover:bg-gray-300"
+            onClick={handleCancel}
+          >
+            취소
+          </AlertDialogCancel>
+          <AlertDialogAction 
             className="min-w-[96px] bg-orange-500 text-white hover:bg-orange-600"
-            onClick={() => toast.message("로그아웃 처리")}
+            onClick={handleLogout}
           >
             로그아웃
-          </ConfirmModal.Confirm>
+          </AlertDialogAction>
         </ConfirmModal.Footer>
       </ConfirmModal.Content>
     </ConfirmModal>

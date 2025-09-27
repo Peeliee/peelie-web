@@ -75,64 +75,15 @@ function Description({ children, className }: { children: React.ReactNode; class
   );
 }
 
-// Confirm
-function Confirm({ children, className, onClick, ...rest }: { 
-  children: React.ReactNode; 
-  className?: string;
-  onClick?: (e: React.MouseEvent) => void;
-  [key: string]: any;
-}) {
-  const handleClick = (e: React.MouseEvent) => {
-    if (onClick) {
-      onClick(e);
-    }
-    // AlertDialogAction의 기본 동작(모달 닫기)을 막지 않음
-  };
-
-  return (
-    <AlertDialogAction
-      className={cn("min-w-[96px] bg-blue-500 text-white hover:bg-blue-600", className)}
-      onClick={handleClick}
-      {...rest}
-    >
-      {children}
-    </AlertDialogAction>
-  );
-}
-  
-
 // Footer
 function Footer({ children, className }: { children: React.ReactNode; className?: string }) {
     return (
-      <AlertDialogFooter className={cn("w-full flex gap-2 justify-end", className)}>
+      <AlertDialogFooter className={cn("w-full flex flex-col-reverse gap-2 sm:flex-row sm:justify-end", className)}>
+        {/* 모바일: flex-col-reverse로 세로 배치, 취소가 아래 , 데스크톱: sm:flex-row sm:justify-end로 가로 배치, 오른쪽 정렬
+       */}
         {children}
       </AlertDialogFooter>
     );
-}
-  
-  // Cancel
-function Cancel({ children, className, onClick, ...rest }: { 
-  children: React.ReactNode; 
-  className?: string;
-  onClick?: (e: React.MouseEvent) => void;
-  [key: string]: any;
-}) {
-  const handleClick = (e: React.MouseEvent) => {
-    if (onClick) {
-      onClick(e);
-    }
-    // AlertDialogCancel의 기본 동작(모달 닫기)을 막지 않음
-  };
-
-  return (
-    <AlertDialogCancel
-      className={cn("min-w-[96px] bg-gray-200 text-gray-700 hover:bg-gray-300", className)}
-      onClick={handleClick}
-      {...rest}
-    >
-      {children}
-    </AlertDialogCancel>
-  );
 }
 
 export const ConfirmModal = Object.assign(Root, {
@@ -142,6 +93,4 @@ export const ConfirmModal = Object.assign(Root, {
   Title,
   Description,
   Footer,
-  Cancel,
-  Confirm,
 })
