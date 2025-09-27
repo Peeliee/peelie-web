@@ -11,20 +11,20 @@ import { QRCodeSVG } from "qrcode.react";
 
 type QrModalProps = {
   url: string;
-  triggerLabel?: string;
-  title?: string;
-  description?: string;
-  tagText?: string;
-  userName?: string;
+  triggerLabel: string;
+  title: string;
+  description: string;
+  tagText: string;
+  userName: string;
 };
 
 export function QrModal({
   url,
-  triggerLabel = "QR 공유",
-  title = "QR을 스캔해주세요",
-  description = "교류하고자 하는 친구에게 나의 QR을 보여주세요.",
-  tagText = "적극적인 교류자",
-  userName = "유지원",
+  triggerLabel,
+  title,
+  description,
+  tagText,
+  userName,
 }: QrModalProps) {
   return (
     <Dialog>
