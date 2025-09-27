@@ -5,9 +5,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from "@/shared/ui/common/dialog";
-import { Button } from "@/shared/ui/common/button";
-import { QRCodeSVG } from "qrcode.react";
+} from '@/shared/ui/common/dialog';
+import { QRCodeSVG } from 'qrcode.react';
 
 type QrModalProps = {
   url: string;
@@ -29,7 +28,14 @@ export function QrModal({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">{triggerLabel}</Button>
+        <button
+          className={`
+            w-full rounded-3xl py-3 font-medium
+            bg-orange-400
+          `}
+        >
+          {triggerLabel}
+        </button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[360px] overflow-hidden p-0">
         <div className="bg-[linear-gradient(180deg,#F98A2B_0%,#FFB24D_100%)] p-6 sm:p-8 text-center">
