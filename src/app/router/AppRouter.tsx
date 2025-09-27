@@ -8,17 +8,18 @@ import SelectInteractionStylePage from '@/pages/Onboarding/ui/SelectInteractionS
 import FinishOnboardingPage from '@/pages/Onboarding/ui/FinishOnboardingPage';
 
 import HomePage from '@/pages/Home/HomePage';
-import TestPage from '@/pages/Test/TestPage';
 import PATH from '@/shared/constants/path';
 import App from '../App';
+import { GNBLayout } from '@/widgets/GlobalNavigationBar/GNBLayout';
+import MyPage from '@/pages/mypage/MyPage';
 
 const AppRouter = () => {
   const router = createBrowserRouter([
     {
       path: PATH.HOME,
       element: <App />,
+      // GNB 없는 페이지
       children: [
-        { path: '', element: <HomePage /> },
         { path: 'login', element: <LoginPage /> },
         { path: 'intro-peelie', element: <IntroducePeeliePage /> },
         { path: 'select-category', element: <SelectCategoryPage /> },
@@ -26,9 +27,14 @@ const AppRouter = () => {
         { path: 'interaction-style', element: <IntroduceInteractionStylePage /> },
         { path: 'select-style', element: <SelectInteractionStylePage /> },
         { path: 'finish-onboarding/:id', element: <FinishOnboardingPage /> },
+
+        // GNB 있는 페이지
         {
-          path: 'test/:id',
-          element: <TestPage />,
+          element: <GNBLayout />,
+          children: [
+            { path: '', element: <HomePage /> },
+            { path: 'mypage', element: <MyPage /> },
+          ],
         },
       ],
     },

@@ -57,22 +57,21 @@ export const OnboardingQuestionForm = ({ onChange }: OnboardingQuestionFormProps
             title="영화를 볼 때, 특히 어떤 요소를 보나요?"
             options={['스토리/각본', '연출/영상미', '배우/캐릭터', '음악', '세계관']}
             onAnswer={(val) => handleAnswer('L2', val)}
-          />
-          {' '}
+          />{' '}
         </motion.div>
       )}
 
       {answers.L2 && (
-       <motion.div
+        <motion.div
           initial={{ marginTop: -20, opacity: 0, height: 0 }}
           animate={{ marginTop: 0, opacity: 1, height: 'auto' }}
         >
-        <OnboardingObjectQuestion
-          level={3}
-          title="영화에서 기억에 남는 경험은 어떤 유형인가요?"
-          options={['스케일', '연출', '추억']}
-          onAnswer={(val) => handleAnswer('L3', val)}
-        />
+          <OnboardingObjectQuestion
+            level={3}
+            title="영화에서 기억에 남는 경험은 어떤 유형인가요?"
+            options={['스케일', '연출', '추억']}
+            onAnswer={(val) => handleAnswer('L3', val)}
+          />
         </motion.div>
       )}
 
@@ -81,11 +80,11 @@ export const OnboardingQuestionForm = ({ onChange }: OnboardingQuestionFormProps
           initial={{ marginTop: -20, opacity: 0, height: 0 }}
           animate={{ marginTop: 0, opacity: 1, height: 'auto' }}
         >
-        <OnboardingSubjectQuestion
-          level={4}
-          title="즐겨본 영화에 대한 한마디를 적어주세요!"
-          onAnswer={(val) => handleAnswer('L4', val)}
-        />
+          <OnboardingSubjectQuestion
+            level={4}
+            title="즐겨본 영화에 대한 한마디를 적어주세요!"
+            onAnswer={(val) => handleAnswer('L4', val)}
+          />
         </motion.div>
       )}
     </div>
