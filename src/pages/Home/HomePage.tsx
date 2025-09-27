@@ -11,7 +11,8 @@ import {
 } from '@/entities/user/ui/UserCardHorizontal';
 import { UserCardVertical } from '@/entities/user/ui/UserCardVertical';
 import { StepTab, StepTabs } from '@/features/user/ui/StepTabs';
-
+import { QrModal } from '@/features/qr-scanner/ui/QrModal';
+/* todo: QR 공유 테스트 modal 나중에 지우기 */ 
 const HomePage = () => {
   useKakaoAuthCode();
 
@@ -67,6 +68,18 @@ const HomePage = () => {
         <StepTab title="STEP 2">2단계정보</StepTab>
         <StepTab title="STEP 3" locked>3단계정보</StepTab>
       </StepTabs>
+
+      {/* 테스트용: QR 공유 모달 버튼. 모달 버튼 나중에 이동 */}
+      <div className="mt-6">
+        <QrModal
+          url="https://www.figma.com"
+          triggerLabel="QR 공유 테스트"
+          title="QR을 스캔해주세요"
+          description="교류하고자 하는 친구에게 나의 QR을 보여주세요."
+          tagText="적극적인 교류자"
+          userName="유지원"
+        />
+      </div>
     </div>
   );
 };
