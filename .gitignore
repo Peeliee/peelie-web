@@ -27,3 +27,7 @@ dist-ssr
 *storybook.log
 storybook-static
 storybook-static/
+
+# SSH keys
+key
+key.pub
