@@ -33,15 +33,15 @@ export const UserCardVertical = ({
   return (
     <div
       onClick={onClick}
-      className={cn('flex flex-col w-60 items-center gap-2 rounded-xl border p-4', className)}
+      className={cn('flex flex-col items-center gap-2 rounded-xl border p-4', className)}
     >
       {/* 프로필 이미지 */}
-      <div className="w-24 h-24 bg-gray-200">
-        {imageSrc && <img src={imageSrc} alt={`${name} 프로필`} className="w-full h-full" />}
+      <div className="w-full h-full bg-gray-200">
+        {imageSrc && <img src={imageSrc} alt={`${name} 프로필`} />}
       </div>
 
       {/* 이름, 성향 */}
-      <div className="flex items-center gap-2">
+      <div className="flex w-full items-center justify-between gap-2 pt-8">
         <span className="font-bold text-lg">{name}</span>
         {personality && (
           <span className="px-2 py-0.5 text-xs rounded-full bg-gray-200 text-gray-700">
@@ -51,8 +51,8 @@ export const UserCardVertical = ({
       </div>
 
       {/* 한줄 소개 */}
-      <span>한줄소개</span>
-      {description && <div className="text-sm text-gray-500 text-center">{description}</div>}
+      <span className="justify-start w-full pt-5">한줄소개</span>
+      {description && <div className="text-sm text-gray-500 text-start">{description}</div>}
     </div>
   );
 };

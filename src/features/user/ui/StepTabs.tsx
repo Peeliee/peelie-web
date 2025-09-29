@@ -16,7 +16,7 @@ interface StepTabsProps {
  * - 여러 개의 StepTab을 받아 탭 UI를 렌더링.
  * - 클릭 시 해당 StepTab의 children을 보여줌.
  * - locked가 true인 StepTab은 클릭하면 "잠겨있어요" alert 출력.
- * - StepTabs 는 StepTab 만 children 으로 받게 하기 위해 ReactElement 로 타입을 제한하였습니다. 
+ * - StepTabs 는 StepTab 만 children 으로 받게 하기 위해 ReactElement 로 타입을 제한하였습니다.
  *
  * @example
  * <StepTabs>
@@ -30,9 +30,9 @@ interface StepTabsProps {
  *     <div>세 번째 내용</div>
  *   </StepTab>
  * </StepTabs>
- * 
+ *
  */
-const StepTab = (_props: StepTabProps) => {
+const StepTab: React.FC<StepTabProps> = () => {
   return null;
 };
 
