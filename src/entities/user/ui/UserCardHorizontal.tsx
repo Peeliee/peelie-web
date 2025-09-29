@@ -67,11 +67,17 @@ const UserCardDescription = ({
 const UserCardEditProfile = ({
   children,
   className,
+  onClick,
 }: {
   children: React.ReactNode;
   className?: string;
+  onClick: () => void;
 }) => {
-  return <div className={cn('ml-auto', className)}>{children}</div>;
+  return (
+    <button onClick={onClick} className={cn('ml-auto text-xs border-2 p-2 rounded-2xl', className)}>
+      {children}
+    </button>
+  );
 };
 
 // 교류 성향
