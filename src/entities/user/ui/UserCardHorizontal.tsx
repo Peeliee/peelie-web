@@ -9,7 +9,7 @@ interface UserCardHorizontalProps {
 
 /**
  * 사용자 정보를 가로 레이아웃으로 보여주는 카드
- * 
+ *
  * UserCardEditProfile, UserCardPersonality 같은 하위 컴포넌트를 조합해서 사용.
  *
  * @example
@@ -34,19 +34,29 @@ const UserCardHorizontal = ({ className, children, onClick }: UserCardHorizontal
   );
 };
 
-const UserCardImage = ({ src }: { src?: string }) => {
-  return <div className="w-12 h-12 bg-gray-200 overflow-hidden">{src && <img src={src} />}</div>;
+const UserCardImage = ({ src, className }: { src?: string; className?: string }) => {
+  return (
+    <div className={cn('w-12 h-12 bg-gray-200 overflow-hidden', className)}>
+      {src && <img src={src} />}
+    </div>
+  );
 };
 
 // 이름
-const UserCardName = ({ children }: { children: ReactNode }) => {
-  return <div className="font-bold">{children}</div>;
+const UserCardName = ({ children, className }: { children: ReactNode; className?: string }) => {
+  return <div className={cn('font-bold', className)}>{children}</div>;
 };
 
 // 한줄소개
-const UserCardDescription = ({ children }: { children: React.ReactNode }) => {
+const UserCardDescription = ({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => {
   return (
-    <div className="text-sm text-gray-500">
+    <div className={cn('text-sm text-gray-500', className)}>
       한줄소개 <br />
       {children}
     </div>
@@ -54,14 +64,31 @@ const UserCardDescription = ({ children }: { children: React.ReactNode }) => {
 };
 
 // 프로필 수정
-const UserCardEditProfile = ({ children }: { children: React.ReactNode }) => {
-  return <div className="ml-auto">{children}</div>;
+const UserCardEditProfile = ({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => {
+  return <div className={cn('ml-auto', className)}>{children}</div>;
 };
 
 // 교류 성향
-const UserCardPersonality = ({ children }: { children: React.ReactNode }) => {
+const UserCardPersonality = ({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => {
   return (
-    <div className="px-2 py-0.5 ml-auto text-xs rounded-full bg-gray-200 text-gray-700">
+    <div
+      className={cn(
+        'px-2 py-0.5 ml-auto text-xs rounded-full bg-gray-200 text-gray-700',
+        className,
+      )}
+    >
       {children}
     </div>
   );
