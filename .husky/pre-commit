@@ -1,0 +1,7 @@
+#!/bin/sh
+
+echo "Running lint/format..."
+pnpm lint-staged || exit 1
+
+# echo "Running tests..."
+# pnpm test || exit 1

@@ -29,7 +29,7 @@ StepTabs 컴포넌트
     lockStep1: { control: 'boolean', description: 'STEP 1 잠금 여부' },
     lockStep2: { control: 'boolean', description: 'STEP 2 잠금 여부' },
     lockStep3: { control: 'boolean', description: 'STEP 3 잠금 여부' },
-  } as any,
+  } as Meta['argTypes'],
 };
 export default meta;
 

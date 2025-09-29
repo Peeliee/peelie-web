@@ -7,7 +7,6 @@ import {
   UserCardEditProfile,
   UserCardPersonality,
 } from '@/entities/user/ui/UserCardHorizontal';
-import { Button } from '@/shared/ui/common/button';
 
 const meta: Meta<typeof UserCardHorizontal> = {
   title: 'Card/UserHorizontalCard',
@@ -32,17 +31,13 @@ type Story = StoryObj<typeof UserCardHorizontal>;
 // 프로필 버전
 export const ProfileCard: Story = {
   render: () => (
-    <UserCardHorizontal onClick={() => alert('클릭')}>
+    <UserCardHorizontal>
       <UserCardImage />
       <div className="flex flex-col">
         <UserCardName>김용희</UserCardName>
         <UserCardDescription>대화를 통해 배우고, 나누며 성장하고 싶습니다.</UserCardDescription>
       </div>
-      <UserCardEditProfile>
-        <Button size="sm" variant="outline">
-          프로필 수정하기
-        </Button>
-      </UserCardEditProfile>
+      <UserCardEditProfile onClick={() => alert('수정 클릭')}>프로필 수정하기</UserCardEditProfile>
     </UserCardHorizontal>
   ),
 };
