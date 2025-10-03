@@ -7,6 +7,7 @@ import IntroduceInteractionStylePage from '@/pages/Onboarding/ui/IntroduceIntera
 import SelectInteractionStylePage from '@/pages/Onboarding/ui/SelectInteractionStylePage';
 import FinishOnboardingPage from '@/pages/Onboarding/ui/FinishOnboardingPage';
 import FriendPage from '@/pages/Friend/FriendPage';
+import { FriendList } from '@/pages/FriendList/FriendList';
 
 import HomePage from '@/pages/Home/HomePage';
 import MyPage from '@/pages/mypage/MyPage';
@@ -34,6 +35,7 @@ const AppRouter = () => {
           element: <GNBLayout />,
           children: [
             { path: '', element: <HomePage /> },
+            { path: 'friends', element: <FriendList /> }, // 친구 목록
             { path: 'mypage', element: <MyPage /> },
           ],
         },
