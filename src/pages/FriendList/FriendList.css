@@ -48,7 +48,8 @@
 .bottom-nav {
   position: fixed;
   bottom: 0;
-  left: 0; right: 0;
+  left: 0;
+  right: 0;
   background: white;
   display: flex;
   justify-content: space-around;
@@ -85,16 +86,16 @@
     max-width: 1200px;
     margin: 0 auto;
   }
-  
+
   .friend-card {
     margin: 0;
   }
-  
+
   .header {
     max-width: 1200px;
     margin: 0 auto;
   }
-  
+
   .bottom-nav {
     max-width: 1200px;
     left: 50%;
@@ -104,22 +105,25 @@
 
 .friend-card {
   display: flex;
-  background: #f5f5f5;
-  border-radius: 12px;
-  padding: 12px;
-  margin: 12px 16px;
+  background: #d9d9d9;
+  border-radius: 18px;
+  padding: 17px;
+  margin: 12px auto;
   cursor: pointer;
   transition: background-color 0.2s;
+  height: 117px;
+  width: 349px;
+  max-width: calc(100vw - 32px);
 }
 
 .friend-card:hover {
-  background: #eeeeee;
+  background: #c7c7c7;
 }
 
 .avatar {
-  width: 60px;
-  height: 60px;
-  background: #ccc;
+  width: 83px;
+  height: 83px;
+  background: #c7c7c7;
   border-radius: 50%;
   flex-shrink: 0;
 }
@@ -129,25 +133,7 @@
   flex: 1;
 }
 
-/* 3단계: 텍스트와 배지 꾸미기 */
-.info h2 {
-  font-size: 16px;
-  margin: 0 0 4px 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 600;
-  color: #333;
-}
-
-.badge {
-  background: #ddd;
-  border-radius: 999px;
-  padding: 2px 8px;
-  font-size: 12px;
-  color: #666;
-  font-weight: 500;
-}
+/* 3단계: 텍스트와 배지 꾸미는 css 제거 */
 
 .tagline {
   color: #333;

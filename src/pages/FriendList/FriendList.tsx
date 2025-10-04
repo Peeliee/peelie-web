@@ -55,16 +55,18 @@ export const FriendList = () => {
       {/* 친구 목록 */}
       <main className="main">
         {friends.map((friend) => (
-          <section 
+          <section
             key={friend.id}
             className="friend-card"
             onClick={() => handleFriendClick(friend.id)}
           >
             <div className="avatar"></div>
             <div className="info">
-              <h2>
-                {friend.name} 
-                <span className="badge">{friend.personality}</span>
+              <h2 className="flex items-center gap-6">
+                {friend.name}
+                <span className="px-2 py-0.5 text-xs bg-gray-200 text-gray-700 rounded-full">
+                  {friend.personality}
+                </span>
               </h2>
               <p className="tagline">{friend.tagline}</p>
               <p className="bio">{friend.bio}</p>
@@ -75,9 +77,15 @@ export const FriendList = () => {
 
       {/* 하단 네비게이션 */}
       <nav className="bottom-nav">
-        <a href="#" className="nav-item active">친구목록</a>
-        <a href="#" className="nav-item">홈</a>
-        <a href="#" className="nav-item">마이페이지</a>
+        <a href="#" className="nav-item active">
+          친구목록
+        </a>
+        <a href="#" className="nav-item">
+          홈
+        </a>
+        <a href="#" className="nav-item">
+          마이페이지
+        </a>
       </nav>
     </div>
   );
