@@ -80,7 +80,7 @@ const UserCardEditProfile = ({
   );
 };
 
-// 교류 성향
+// 교류 성향 배지
 const UserCardPersonality = ({
   children,
   className,
@@ -91,7 +91,7 @@ const UserCardPersonality = ({
   return (
     <div
       className={cn(
-        'px-2 py-0.5 ml-auto text-xs rounded-full bg-gray-200 text-gray-700',
+        'px-2 py-0.5 ml-auto text-xs rounded-full bg-gray-200 text-gray-700 whitespace-nowrap',
         className,
       )}
     >

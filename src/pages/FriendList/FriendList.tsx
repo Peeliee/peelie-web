@@ -1,11 +1,21 @@
-import './FriendList.css';
+import {
+  UserCardHorizontal,
+  UserCardImage,
+  UserCardName,
+  UserCardPersonality,
+  UserCardDescription,
+} from '@/entities/user/ui/UserCardHorizontal';
+
+import { GlobalNavigationBar } from '@/widgets/GlobalNavigationBar/ui/GlobalNavigationBar';
+
+import { useNavigate } from 'react-router-dom';
 
 export interface Friend {
   id: number;
   name: string;
-  tagline: string;
-  bio: string;
+  description: string;
   personality: string;
+  imageSrc?: string;
 }
 
 export interface FriendListProps {
@@ -17,38 +27,45 @@ export interface FriendListProps {
 const defaultFriends: Friend[] = [
   {
     id: 1,
-    name: '김용희',
-    tagline: '한줄소개',
-    bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
+    name: '김나은',
+    imageSrc: 'nature.jpeg',
+    description: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
     personality: '신중형',
   },
   {
     id: 2,
-    name: '박민수',
-    tagline: '한줄소개',
-    bio: '새로운 사람들과의 만남을 좋아합니다.',
-    personality: '활발형',
+    name: '유지원',
+    imageSrc: 'nature.jpeg',
+    description: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
+    personality: '균형형',
   },
   {
     id: 3,
-    name: '이지은',
-    tagline: '한줄소개',
-    bio: '영화와 음악을 사랑하는 사람입니다.',
-    personality: '감성형',
+    name: '김용희',
+    imageSrc: 'nature.jpeg',
+    description: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
+    personality: '빠른 연결형',
   },
   {
     id: 4,
-    name: '최현우',
-    tagline: '한줄소개',
-    bio: '운동과 여행을 즐기는 활동적인 사람입니다.',
-    personality: '활동형',
+    name: '신재현',
+    imageSrc: 'nature.jpeg',
+    description: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
+    personality: '신중형',
   },
   {
     id: 5,
-    name: '정수진',
-    tagline: '한줄소개',
-    bio: '책과 카페를 좋아하는 조용한 사람입니다.',
-    personality: '신중형',
+    name: '강희구',
+    imageSrc: 'nature.jpeg',
+    description: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
+    personality: '균형형',
+  },
+  {
+    id: 6,
+    name: '권두환',
+    imageSrc: 'nature.jpeg',
+    description: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
+    personality: '빠른 연결형',
   },
 ];
 
@@ -57,14 +74,15 @@ export const FriendList = ({
   onFriendClick,
   onSortClick,
 }: FriendListProps) => {
-  const handleFriendClick = (friendId: number) => {
+  const navigate = useNavigate();
+  const handleFriendClick = (id: number) => {
     if (onFriendClick) {
-      onFriendClick(friendId);
+      onFriendClick(id);
     } else {
-      console.log(`친구 ${friendId} 클릭됨`);
+      navigate(`/friend/${id}`); // FriendPage로 이동
     }
   };
-
+  //todo: 정렬 기능 추가 후 btn에 추가 (우선수위 늦음)
   const handleSortClick = () => {
     if (onSortClick) {
       onSortClick();
@@ -74,48 +92,32 @@ export const FriendList = ({
   return (
     <div className="friend-list-page">
       {/* 헤더 */}
-      <header className="header">
-        <h1>Peelie</h1>
-        <button className="sort-button" onClick={handleSortClick}>
+      <header className="flex w-full items-center justify-between p-4">
+        <h1>친구목록</h1>
+        <button className="flex cursor-pointer items-center gap-1" onClick={handleSortClick}>
           최근 교류순
         </button>
       </header>
 
       {/* 친구 목록 */}
-      <main className="main">
+      <div className="p-4 pb-20">
         {friends.map((friend) => (
-          <section
+          <UserCardHorizontal
             key={friend.id}
-            className="friend-card"
             onClick={() => handleFriendClick(friend.id)}
+            className="flex h-[117px] justify-center items-center gap-[30px] self-stretch rounded-[18px] bg-gray-300 mb-3 cursor-pointer hover:shadow-lg hover:scale-105 transition-all duration-200"
           >
-            <div className="avatar"></div>
-            <div className="info">
-              <h2 className="flex items-center gap-6">
-                {friend.name}
-                <span className="px-2 py-0.5 text-xs bg-gray-200 text-gray-700 rounded-full">
-                  {friend.personality}
-                </span>
-              </h2>
-              <p className="tagline">{friend.tagline}</p>
-              <p className="bio">{friend.bio}</p>
+            <UserCardImage src={friend.imageSrc} />
+            <div className="flex flex-col flex-1">
+              <UserCardName>{friend.name}</UserCardName>
+              <UserCardDescription>{friend.description}</UserCardDescription>
             </div>
-          </section>
+            <UserCardPersonality>{friend.personality}</UserCardPersonality>
+          </UserCardHorizontal>
         ))}
-      </main>
+      </div>
 
-      {/* 하단 네비게이션 */}
-      <nav className="bottom-nav">
-        <a href="#" className="nav-item active">
-          친구목록
-        </a>
-        <a href="#" className="nav-item">
-          홈
-        </a>
-        <a href="#" className="nav-item">
-          마이페이지
-        </a>
-      </nav>
+      <GlobalNavigationBar />
     </div>
   );
 };
