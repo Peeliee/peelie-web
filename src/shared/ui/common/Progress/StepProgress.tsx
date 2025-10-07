@@ -4,7 +4,7 @@ interface StepProgressProps {
   currentStep: number;
 }
 
-export function StepProgress({ currentStep }: StepProgressProps) {
+export const StepProgress = ({ currentStep }: StepProgressProps) => {
   // 내부에서 색상 정의
   const stepColors = [
     'var(--color-peelie-primary-900)',
@@ -55,12 +55,12 @@ export function StepProgress({ currentStep }: StepProgressProps) {
         />
       </div>
 
-      {/* Step Labels */}
+      {/* Step 라벨 */}
       <div className="flex justify-between mt-2 detail-regular">
         {labels.map((label, i) => (
           <div key={i} className="flex flex-col items-center gap-1">
             <div
-              className="w-1 h-1 rounded-full transition-colors bg-gray-200"
+              className="w-1 h-1 rounded-full transition-colors bg-peelie-gray-200"
               style={{ backgroundColor: i + 1 <= currentStep ? stepColors[i] : undefined }}
             />
             <span
@@ -80,4 +80,4 @@ export function StepProgress({ currentStep }: StepProgressProps) {
       </div>
     </div>
   );
-}
+};
