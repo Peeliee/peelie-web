@@ -3,6 +3,7 @@ import { useKakaoAuthCode } from '@/features/auth/hooks/useKakaoAuthCode';
 import { GlobalNavigationBar } from '@/widgets/GlobalNavigationBar/ui/GlobalNavigationBar';
 import { ProfileShareSection } from '@/widgets/ProfileShareSection/ProfileShareSection';
 import { RandomUserCarousel } from '@/widgets/RandomUserCarousel/RandomUserCarousel';
+import { Button } from '@/shared/ui/common/button';
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -19,6 +20,9 @@ const HomePage = () => {
         >
           로그인페이지로 이동하기 버튼
         </button>
+        <Button variant="error" buttonType="ghost" size="extraLarge">
+          텍스트
+        </Button>
       </div>
       <ProfileShareSection className="mb-5" />
 

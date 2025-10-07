@@ -173,20 +173,18 @@ body {
   /* ===========================
      Positive Colors
   ============================ */
-  --color-peelie-positive-50: #ffffff;
-  --color-peelie-positive-100: #efffee;
-  --color-peelie-positive-200: #d8ffd7;
-  --color-peelie-positive-300: #00c400;
-  --color-peelie-positive-400: #049105;
+  --color-peelie-positive-50: #efffee;
+  --color-peelie-positive-100: #d8ffd7;
+  --color-peelie-positive-600: #00c400;
+  --color-peelie-positive-700: #049105;
 
   /* ===========================
      Warning Colors
   ============================ */
-  --color-peelie-warning-50: #ffffff;
-  --color-peelie-warning-100: #fff1f1;
-  --color-peelie-warning-200: #ffdfdf;
-  --color-peelie-warning-300: #ef2b2a;
-  --color-peelie-warning-400: #c70e0f;
+  --color-peelie-warning-50: #fff1f1;
+  --color-peelie-warning-100: #ffdfdf;
+  --color-peelie-warning-600: #ef2b2a;
+  --color-peelie-warning-700: #c70e0f;
 
   /* Etc */
   --color-peelie-black: #000000;
@@ -243,6 +241,9 @@ body {
   --radius-200: 5px;
   --radius-300: 7px;
   --radius-400: 12px;
+
+  /* --------- etc --------- */
+  --opacity-32: 0.32;
 }
 
 @layer components {
