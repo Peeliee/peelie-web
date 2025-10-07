@@ -4,7 +4,7 @@ import FriendListIcon from '@/assets/friendListIcon.svg?react';
 import HomeIcon from '@/assets/homeIcon.svg?react';
 
 const GNB_ITEMS = [
-  { to: '/friends-list', label: '친구목록', icon: <FriendListIcon /> },
+  { to: '/friends', label: '친구목록', icon: <FriendListIcon /> },
   { to: '/', label: '홈', icon: <HomeIcon /> },
   { to: '/mypage', label: '마이페이지', icon: <HomeIcon /> },
 ];
