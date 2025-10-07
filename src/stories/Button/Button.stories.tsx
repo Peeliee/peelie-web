@@ -9,11 +9,11 @@ const meta = {
     docs: {
       description: {
         component: `
-        버튼 컴포넌트입니다.
-        variant : primary, inactive, secondary, error
-        buttonType : fill, outline, ghost
-        state : default, pressed, disabled
-        size : small, medium, large, extraLarge
+        Button 컴포넌트입니다.
+- **variant**: 색상 계열 지정 (\`primary\`, \`inactive\`, \`secondary\`, \`error\`)
+- **buttonType**: 스타일 타입 지정 (\`fill\`, \`outline\`, \`ghost\`)
+- **state**: 버튼 상태 (\`default\`, \`pressed\`, \`disabled\`)
+- **size**: 버튼 크기 (\`small\`, \`medium\`, \`large\`, \`extraLarge\`)
         `,
       },
     },

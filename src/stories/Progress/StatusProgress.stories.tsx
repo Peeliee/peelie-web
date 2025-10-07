@@ -9,9 +9,7 @@ const meta: Meta<typeof StatusProgress> = {
     docs: {
       description: {
         component: `
-### StatusProgress
-
-다단계 상태 표시용 Progress Bar 컴포넌트입니다.  
+XX력 표시를 위한 Progress Bar 컴포넌트입니다.  
 4개의 구간으로 구성되어 있으며, \`currentStep\`에 따라 색상이 순차적으로 활성화됩니다.
 
 - **Props**

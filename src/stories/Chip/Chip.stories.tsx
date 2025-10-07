@@ -11,14 +11,12 @@ const meta = {
       description: {
         component: `
         Chip 컴포넌트입니다.
-        variant : primary, secondary, red
-        buttonType : subtle, outline, default
-        size : small, medium, large
+- **variant**: 색상 계열 지정 (\`primary\`, \`secondary\`, \`red\`)
+- **chipType**: 스타일 타입 지정 (\`default\`, \`outline\`, \`subtle\`)
+- **size**: 크기 지정 (\`small\`, \`medium\`, \`large\`)
+- **leftIcon / rightIcon**: 양쪽 아이콘 표시 여부 (선택적)
 
-        --- optional ---
-        leftIcon, rightIcon
-        
-        leftIcon 과 rightIcon 여부를 설정해서 양쪽에 아이콘 배치가 가능합니다.
+아이콘이 필요할 경우 \`leftIcon\`, \`rightIcon\`을 true로 설정하면 표시됩니다.
         `,
       },
     },

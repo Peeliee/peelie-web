@@ -10,8 +10,8 @@ const meta = {
       description: {
         component: `
         Badge 컴포넌트입니다.
-        variant : primary, secondary, red, gray, green
-        buttonType : fill, outline, ghost
+- **variant**: 색상 계열 지정 (\`primary\`, \`secondary\`, \`red\`, \`gray\`, \`green\`)
+- **badgeType**: 스타일 타입 지정 (\`fill\`, \`outline\`, \`ghost\`)
         `,
       },
     },

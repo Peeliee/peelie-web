@@ -9,11 +9,14 @@ const meta = {
     docs: {
       description: {
         component: `
-        그라데이션 ProgressBar 컴포넌트입니다.  
-        
+그라데이션 ProgressBar 컴포넌트입니다.
+
+4개의 구간으로 구성되어 있으며, \`currentStep\`에 따라 색상이 순차적으로 활성화됩니다. 
+
+- **Props**
     - \`currentStep\`: 현재 단계 (1~4)
 
-    색상
+- **색상**
     - Step1: \`peelie-primary-900\`
     - Step2: \`peelie-primary-600\`
     - Step3: \`peelie-positive-600\`

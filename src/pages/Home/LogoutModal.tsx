@@ -7,7 +7,7 @@ export function LogalModal() {
   return (
     <ConfirmModal>
       <ConfirmModal.Trigger>
-        <Button variant="outline">로그아웃 모달 열기</Button>
+        <Button variant="primary">로그아웃 모달 열기</Button>
       </ConfirmModal.Trigger>
 
       <ConfirmModal.Content>
