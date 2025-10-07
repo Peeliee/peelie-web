@@ -4,6 +4,8 @@ import { GlobalNavigationBar } from '@/widgets/GlobalNavigationBar/ui/GlobalNavi
 import { ProfileShareSection } from '@/widgets/ProfileShareSection/ProfileShareSection';
 import { RandomUserCarousel } from '@/widgets/RandomUserCarousel/RandomUserCarousel';
 import { Button } from '@/shared/ui/common/button';
+import { Chip } from '@/shared/ui/common/Chip/Chip';
+import PlusIcon from '@/assets/examplePlusIcon.svg?react';
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -20,9 +22,18 @@ const HomePage = () => {
         >
           로그인페이지로 이동하기 버튼
         </button>
-        <Button variant="error" buttonType="ghost" size="extraLarge">
+        <Button variant="error" buttonType="fill" size="extraLarge">
           텍스트
         </Button>
+        <Chip
+          variant="primary"
+          chipType="outline"
+          size="large"
+          leftIcon={<PlusIcon />}
+          rightIcon={<PlusIcon />}
+        >
+          Chip
+        </Chip>
       </div>
       <ProfileShareSection className="mb-5" />
 

@@ -252,28 +252,28 @@ body {
   ============================ */
 
   /* Heading */
-  .font-heading-1-medium {
+  .heading-1-medium {
     font-family: var(--font-family-pretendard);
     font-size: var(--font-heading-1);
     line-height: var(--line-height-heading-1);
     font-weight: var(--font-weight-medium);
   }
 
-  .font-heading-2-medium {
+  .heading-2-medium {
     font-family: var(--font-family-pretendard);
     font-size: var(--font-heading-2);
     line-height: var(--line-height-heading-2);
     font-weight: var(--font-weight-medium);
   }
 
-  .font-heading-3-medium {
+  .heading-3-medium {
     font-family: var(--font-family-pretendard);
     font-size: var(--font-heading-3);
     line-height: var(--line-height-heading-3);
     font-weight: var(--font-weight-medium);
   }
 
-  .font-heading-4-medium {
+  .heading-4-medium {
     font-family: var(--font-family-pretendard);
     font-size: var(--font-heading-4);
     line-height: var(--line-height-heading-4);
@@ -281,28 +281,28 @@ body {
   }
 
   /* Body */
-  .font-body-1-bold {
+  .body-1-bold {
     font-family: var(--font-family-pretendard);
     font-size: var(--font-body-1);
     line-height: var(--line-height-body-1);
     font-weight: var(--font-weight-bold);
   }
 
-  .font-body-1-regular {
+  .body-1-regular {
     font-family: var(--font-family-pretendard);
     font-size: var(--font-body-1);
     line-height: var(--line-height-body-1);
     font-weight: var(--font-weight-regular);
   }
 
-  .font-body-2-bold {
+  .body-2-bold {
     font-family: var(--font-family-pretendard);
     font-size: var(--font-body-2);
     line-height: var(--line-height-body-2);
     font-weight: var(--font-weight-bold);
   }
 
-  .font-body-2-regular {
+  .body-2-regular {
     font-family: var(--font-family-pretendard);
     font-size: var(--font-body-2);
     line-height: var(--line-height-body-2);
@@ -310,14 +310,14 @@ body {
   }
 
   /* Details */
-  .font-detail-regular {
+  .detail-regular {
     font-family: var(--font-family-pretendard);
     font-size: var(--font-detail);
     line-height: var(--line-height-detail);
     font-weight: var(--font-weight-regular);
   }
 
-  .font-detail-bold {
+  .detail-bold {
     font-family: var(--font-family-pretendard);
     font-size: var(--font-detail);
     line-height: var(--line-height-detail);
