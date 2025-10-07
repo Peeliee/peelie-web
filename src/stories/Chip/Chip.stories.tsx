@@ -3,7 +3,7 @@ import { Chip } from '@/shared/ui/common/Chip/Chip';
 import PlusIcon from '@/assets/examplePlusIcon.svg?react';
 
 const meta = {
-  title: 'Shared/Chip',
+  title: 'Atomic/Chip',
   component: Chip,
   tags: ['autodocs'],
   parameters: {

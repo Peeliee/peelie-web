@@ -3,9 +3,7 @@ import { useKakaoAuthCode } from '@/features/auth/hooks/useKakaoAuthCode';
 import { GlobalNavigationBar } from '@/widgets/GlobalNavigationBar/ui/GlobalNavigationBar';
 import { ProfileShareSection } from '@/widgets/ProfileShareSection/ProfileShareSection';
 import { RandomUserCarousel } from '@/widgets/RandomUserCarousel/RandomUserCarousel';
-import { Button } from '@/shared/ui/common/button';
-import { Chip } from '@/shared/ui/common/Chip/Chip';
-import PlusIcon from '@/assets/examplePlusIcon.svg?react';
+import { TextInput } from '@/shared/ui/common/TextInput/TextInput';
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -22,18 +20,10 @@ const HomePage = () => {
         >
           로그인페이지로 이동하기 버튼
         </button>
-        <Button variant="error" buttonType="fill" size="extraLarge">
-          텍스트
-        </Button>
-        <Chip
-          variant="primary"
-          chipType="outline"
-          size="large"
-          leftIcon={<PlusIcon />}
-          rightIcon={<PlusIcon />}
-        >
-          Chip
-        </Chip>
+      </div>
+
+      <div className="px-3">
+        <TextInput label="label" placeholder="text" error errorText="error" />
       </div>
       <ProfileShareSection className="mb-5" />
 
