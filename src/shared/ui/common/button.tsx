@@ -63,7 +63,7 @@ const buttonVariants = cva(
         variant: 'primary',
         buttonType: 'ghost',
         class: cn(
-          'bg-none text-peelie-primary-600',
+          'bg-transparent text-peelie-primary-600',
           'disabled:opacity-32',
           'active:text-peelie-primary-700',
         ),
@@ -93,7 +93,7 @@ const buttonVariants = cva(
         variant: 'inactive',
         buttonType: 'ghost',
         class: cn(
-          'bg-none text-peelie-gray-900',
+          'bg-transparent text-peelie-gray-900',
           'disabled:opacity-32',
           'active:text-peelie-gray-950',
         ),
@@ -123,7 +123,7 @@ const buttonVariants = cva(
         variant: 'secondary',
         buttonType: 'ghost',
         class: cn(
-          'bg-none text-peelie-secondary-200',
+          'bg-transparent text-peelie-secondary-200',
           'disabled:opacity-32',
           'active:text-peelie-secondary-300',
         ),
@@ -153,7 +153,7 @@ const buttonVariants = cva(
         variant: 'error',
         buttonType: 'ghost',
         class: cn(
-          'bg-none text-peelie-error-200',
+          'bg-transparent text-peelie-error-200',
           'disabled:opacity-32',
           'active:text-peelie-error-300',
         ),
