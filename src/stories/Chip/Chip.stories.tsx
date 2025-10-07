@@ -15,6 +15,9 @@ const meta = {
         buttonType : subtle, outline, default
         size : small, medium, large
 
+        --- optional ---
+        leftIcon, rightIcon
+        
         leftIcon 과 rightIcon 여부를 설정해서 양쪽에 아이콘 배치가 가능합니다.
         `,
       },

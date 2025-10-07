@@ -3,7 +3,7 @@ import { useKakaoAuthCode } from '@/features/auth/hooks/useKakaoAuthCode';
 import { GlobalNavigationBar } from '@/widgets/GlobalNavigationBar/ui/GlobalNavigationBar';
 import { ProfileShareSection } from '@/widgets/ProfileShareSection/ProfileShareSection';
 import { RandomUserCarousel } from '@/widgets/RandomUserCarousel/RandomUserCarousel';
-import { TextInput } from '@/shared/ui/common/TextInput/TextInput';
+import { StepProgress } from '@/shared/ui/common/Progress/StepProgress';
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -22,8 +22,8 @@ const HomePage = () => {
         </button>
       </div>
 
-      <div className="px-3">
-        <TextInput label="label" placeholder="text" error errorText="error" />
+      <div className="px-3 mt-10">
+        <StepProgress currentStep={4} />
       </div>
       <ProfileShareSection className="mb-5" />
 

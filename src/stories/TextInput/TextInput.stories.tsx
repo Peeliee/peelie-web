@@ -10,7 +10,7 @@ const meta: Meta<typeof TextInput> = {
       description: {
         component: `
         TextInput 컴포넌트입니다.
-        
+
         label: 상단 라벨 텍스트
         placeholder: 입력 안내 문구
 
