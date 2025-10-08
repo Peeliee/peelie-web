@@ -22,10 +22,7 @@ export const StepProgress = ({ currentStep }: StepProgressProps) => {
       <div className="relative h-1.5 w-full bg-gray-200 rounded-full overflow-hidden">
         {/* 전체 gradient */}
         <div
-          className={cn(
-            'absolute inset-0 h-2 rounded-full',
-            // 'bg-gradient-to-r from-peelie-primary-900 via-peelie-primary-600 via-peelie-positive-600 to-peelie-secondary-200',
-          )}
+          className={cn('absolute inset-0 h-2 rounded-full')}
           style={{
             background: `
                 linear-gradient(
@@ -65,10 +62,7 @@ export const StepProgress = ({ currentStep }: StepProgressProps) => {
             />
             <span
               key={i}
-              className={cn(
-                'transition-colors',
-                i + 1 <= currentStep ? 'font-medium' : 'text-gray-400',
-              )}
+              className={cn('transition-colors', { 'text-peelie-gray-200': i + 1 > currentStep })}
               style={{
                 color: i + 1 <= currentStep ? stepColors[i] : undefined,
               }}

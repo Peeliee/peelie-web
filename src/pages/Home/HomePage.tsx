@@ -24,7 +24,7 @@ const HomePage = () => {
       </div>
 
       <div className="px-3 mt-10">
-        <StepProgress currentStep={4} />
+        <StepProgress currentStep={2} />
         <StatusProgress currentStep={2} />
       </div>
       <ProfileShareSection className="mb-5" />
