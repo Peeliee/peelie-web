@@ -4,27 +4,29 @@ import { CATEGORY_LIST } from '@/shared/constants/category';
 import { cn } from '@/shared/lib/utils';
 
 interface CategorySelectGridProps {
-  onChange?: (selected: string[]) => void;
+  onChange: (selected: number[]) => void;
   className?: string;
 }
 
 export const CategorySelectGrid = ({ onChange, className }: CategorySelectGridProps) => {
   const maxSelect = 3;
-  const [selected, setSelected] = useState<string[]>([]);
+  const [selected, setSelected] = useState<number[]>([]);
+  console.log(selected);
+  const handleSelect = (id: number) => {
+    setSelected((prev) => {
+      let next: number[];
 
-  const handleSelect = (id: string) => {
-    let next: string[];
-
-    if (selected.includes(id)) {
-      next = selected.filter((s) => s !== id);
-    } else if (selected.length < maxSelect) {
-      next = [...selected, id];
-    } else {
-      next = selected;
-    }
-
-    setSelected(next);
-    onChange?.(next);
+      if (prev.includes(id)) {
+        next = prev.filter((s) => s !== id);
+      } else if (prev.length < maxSelect) {
+        next = [...prev, id];
+      } else {
+        next = prev;
+      }
+      const sorted = [...next].sort((a, b) => a - b);
+      onChange(sorted);
+      return sorted;
+    });
   };
 
   return (
