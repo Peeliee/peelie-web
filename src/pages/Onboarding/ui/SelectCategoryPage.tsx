@@ -4,8 +4,8 @@ import { useState } from 'react';
 import { CategorySelectGrid } from '@/features/category/ui/CategorySelectGrid';
 
 const SelectCategoryPage = () => {
-  const [selected, setSelected] = useState<string[]>([]);
-
+  const [selected, setSelected] = useState<number[]>([]);
+  console.log(selected);
   return (
     <div className="min-h-screen flex flex-col px-6 py-10 justify-between">
       <div className="text-center">
@@ -22,7 +22,7 @@ const SelectCategoryPage = () => {
         </p>
       </div>
 
-      <CategorySelectGrid onChange={setSelected} className='mb-15' />
+      <CategorySelectGrid onChange={setSelected} className="mb-15" />
 
       <Link
         to="/category-question"

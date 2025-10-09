@@ -1,0 +1,16 @@
+// shared/api/errorCodes.ts
+export const API_ERROR_CODE = {
+  VALIDATION_ERROR: 'VALIDATION_ERROR',
+  UNAUTHORIZED: 'UNAUTHORIZED',
+  FORBIDDEN: 'FORBIDDEN',
+  NOT_FOUND: 'NOT_FOUND',
+  INTERNAL_SERVER_ERROR: 'INTERNAL_SERVER_ERROR',
+
+  // TODO: 추후 작업할 프론트 전용 (네트워크 예외)
+  //   NETWORK_ERROR: 'NETWORK_ERROR',
+  //   TIMEOUT_ERROR: 'TIMEOUT_ERROR',
+  //   INVALID_RESPONSE: 'INVALID_RESPONSE',
+  //   UNKNOWN_ERROR: 'UNKNOWN_ERROR',
+} as const;
+
+export type ApiErrorCode = keyof typeof API_ERROR_CODE;

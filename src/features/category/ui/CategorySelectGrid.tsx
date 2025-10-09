@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CategoryCard } from '@/entities/category/ui/CategoryCard';
 import { CATEGORY_LIST } from '@/shared/constants/category';
 import { cn } from '@/shared/lib/utils';
@@ -11,7 +11,7 @@ interface CategorySelectGridProps {
 export const CategorySelectGrid = ({ onChange, className }: CategorySelectGridProps) => {
   const maxSelect = 3;
   const [selected, setSelected] = useState<number[]>([]);
-  console.log(selected);
+
   const handleSelect = (id: number) => {
     setSelected((prev) => {
       let next: number[];
@@ -24,10 +24,13 @@ export const CategorySelectGrid = ({ onChange, className }: CategorySelectGridPr
         next = prev;
       }
       const sorted = [...next].sort((a, b) => a - b);
-      onChange(sorted);
       return sorted;
     });
   };
+
+  useEffect(() => {
+    onChange(selected);
+  }, [selected, onChange]);
 
   return (
     <div className={cn('grid grid-cols-3 gap-4 mt-8', className)}>
