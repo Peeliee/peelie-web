@@ -6,16 +6,17 @@ import type {
 
 export const getCategoryQuestion = {
   mainQuestion: async (categoryId: number) => {
-    const response = api.get(`questionnaire/categories/${categoryId}`)
-      .json<CategoryMainQuestionResponseDTO>;
+    const response = await api
+      .get(`questionnaire/categories/${categoryId}`)
+      .json<CategoryMainQuestionResponseDTO>();
 
     return response;
   },
 
   subQuestion: async (categoryId: number, subCategoryId: number) => {
-    const response = api.get(
-      `questionnaire/categories/${categoryId}/subcategories/${subCategoryId}/questions`,
-    ).json<CategorySubQuestionResponseDTO>;
+    const response = await api
+      .get(`questionnaire/categories/${categoryId}/subcategories/${subCategoryId}/questions`)
+      .json<CategorySubQuestionResponseDTO>();
 
     return response;
   },

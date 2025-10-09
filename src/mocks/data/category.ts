@@ -1,4 +1,7 @@
-import type { CategoryMainQuestion } from '@/entities/category/model/category.type';
+import type {
+  CategoryMainQuestion,
+  CategorySubQuestion,
+} from '@/entities/category/model/category.type';
 
 export const categoryMainQuestionMock: {
   data: Record<number, CategoryMainQuestion>;
@@ -82,6 +85,96 @@ export const categoryMainQuestionMock: {
         { id: 4, name: '자유롭고 즉흥적' },
       ],
     },
+  },
+  delay: 500,
+};
+
+export const CategorySubQuestionMock: {
+  data: Record<number, CategorySubQuestion[]>;
+  delay: number;
+} = {
+  data: {
+    1: [
+      {
+        questionId: 1,
+        level: 'L1',
+        type: 'CHOICE',
+        content: '주로 어떤 장르의 영화를 즐기시나요?',
+        options: [
+          {
+            optionId: 1,
+            content: '액션/스릴러',
+          },
+          {
+            optionId: 2,
+            content: '로맨스/멜로',
+          },
+          {
+            optionId: 3,
+            content: '코미디/가족',
+          },
+          {
+            optionId: 4,
+            content: 'SF/판타지',
+          },
+        ],
+      },
+      {
+        questionId: 2,
+        level: 'L2',
+        type: 'CHOICE',
+        content: '영화를 볼 때, 특히 어떤 요소를 보시나요?',
+        options: [
+          {
+            optionId: 5,
+            content: '스토리/각본',
+          },
+          {
+            optionId: 6,
+            content: '연출/영상미',
+          },
+          {
+            optionId: 7,
+            content: '배우/캐릭터',
+          },
+          {
+            optionId: 8,
+            content: '음악',
+          },
+        ],
+      },
+      {
+        questionId: 3,
+        level: 'L3',
+        type: 'CHOICE',
+        content: '영화에서 기억에 남은 경험은 어떤 유형인가요?',
+        options: [
+          {
+            optionId: 9,
+            content: '극장에서 느낀 압도적인 스케일 (IMAX, 사운드 등)',
+          },
+          {
+            optionId: 10,
+            content: '감정을 크게 흔든 스토리/메시지',
+          },
+          {
+            optionId: 11,
+            content: '인생의 가치관에 영향을 준 영화',
+          },
+          {
+            optionId: 12,
+            content: '사람들과 함께 보며 공유한 추억 (친구/연인/가족)',
+          },
+        ],
+      },
+      {
+        questionId: 4,
+        level: 'L4',
+        type: 'TEXT',
+        content: '즐겨 본 영화에 대한 한마디를 적어주세요!',
+        options: [],
+      },
+    ],
   },
   delay: 500,
 };
