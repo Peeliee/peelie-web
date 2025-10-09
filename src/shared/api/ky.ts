@@ -12,13 +12,13 @@ const errorInterceptor = async (error: KyHttpError): Promise<ExtendedKyHttpError
 /** 개발 환경에서만 로그 출력 */
 const logOnDev = (message: string) => {
   if (import.meta.env.MODE === 'development') {
-    // eslint-disable-next-line no-console
+     
     console.log(message);
   }
 };
 
 const api = ky.create({
-  prefixUrl: import.meta.env.VITE_API_URL, // TODO: 추후 url 고치기
+  prefixUrl: import.meta.env.VITE_API_BASE_URL, // TODO: 추후 url 고치기
   credentials: 'include',
   timeout: 5000,
   retry: 2,

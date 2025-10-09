@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { CategoryCard } from '@/entities/category/ui/CategoryCard';
-import { CATEGORY_LIST } from '@/shared/constants/category';
+import { CATEGORY_LIST } from '@/shared/constants/categoryList';
 import { cn } from '@/shared/lib/utils';
 
 interface CategorySelectGridProps {
