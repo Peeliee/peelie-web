@@ -1,14 +1,55 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { cn } from '@/shared/lib/utils';
+import { useQuery } from '@tanstack/react-query';
+import { useGetAllSubQuestions } from '@/entities/category/api/category.queries';
 import { OnboardingQuestionForm } from '@/widgets/OnboardingQuestionForm/OnboardingQuestionForm';
+import { categoryKeys } from '@/entities/category/api/category.queries';
+import { cn } from '@/shared/lib/utils';
 
-const CategoryQuestionPage = () => {
-  const [answers, setAnswers] = useState<Record<string, string>>({});
+interface CategoryQuestionPageProps {
+  selected: number[];
+  onNext: () => void;
+}
 
+const CategoryQuestionPage = ({ selected, onNext }: CategoryQuestionPageProps) => {
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const currentCategoryId = selected[currentIndex];
+
+  // main 질문
+  const { data: mainQuestion, isLoading: isMainLoading } = useQuery(
+    categoryKeys.mainQuestion(currentCategoryId),
+  );
+
+  // sub 질문
+  const { subQuestions, isLoading: isSubLoading } = useGetAllSubQuestions(currentCategoryId);
+
+  const [answers, setAnswers] = useState<Record<number, Record<string, string>>>({});
+
+  const handleAnswersChange = (categoryId: number, newAnswers: Record<string, string>) => {
+    setAnswers((prev) => ({
+      ...prev,
+      [categoryId]: newAnswers,
+    }));
+  };
+
+  const handleNext = async () => {
+    const isLast = currentIndex === selected.length - 1;
+
+    if (isLast) {
+      console.log('최종 저장:', answers);
+      onNext();
+    } else {
+      setCurrentIndex((prev) => prev + 1);
+    }
+  };
+
+  const currentAnswers = answers[currentCategoryId] || {};
   const totalQuestions = 5;
-  const answeredCount = Object.keys(answers).length;
-  const isCompleted = answeredCount >= totalQuestions;
+  const answeredCount = Object.keys(currentAnswers).length;
+  const isCompleted = answeredCount >= totalQuestions && totalQuestions > 0;
+
+  if (isSubLoading || isMainLoading || !mainQuestion || !subQuestions) {
+    return <div className="text-center mt-20">질문 불러오는 중...</div>;
+  }
 
   return (
     <div className="min-h-screen w-full flex flex-col px-6 py-10 pb-24">
@@ -21,10 +62,18 @@ const CategoryQuestionPage = () => {
         </p>
       </div>
 
-      <OnboardingQuestionForm onChange={setAnswers} />
+      {subQuestions && (
+        <OnboardingQuestionForm
+          mainQuestion={mainQuestion.data}
+          subQuestions={subQuestions}
+          isSubLoading={isSubLoading}
+          onChange={(newAnswers) => handleAnswersChange(currentCategoryId, newAnswers)}
+          initialAnswers={currentAnswers}
+        />
+      )}
 
-      <Link
-        to="/interaction-style"
+      <button
+        onClick={handleNext}
         className={cn(
           'fixed bottom-10 left-6 right-6 py-4 rounded-full text-center font-medium',
           isCompleted
@@ -33,7 +82,7 @@ const CategoryQuestionPage = () => {
         )}
       >
         계속하기
-      </Link>
+      </button>
     </div>
   );
 };

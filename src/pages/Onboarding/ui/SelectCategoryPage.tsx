@@ -1,10 +1,25 @@
-import { Link } from 'react-router-dom';
 import { useState } from 'react';
-
 import { CategorySelectGrid } from '@/features/category/ui/CategorySelectGrid';
+import { usePrefetchCategoryMainQuestion } from '@/entities/category/api/category.queries';
 
-const SelectCategoryPage = () => {
-  const [selected, setSelected] = useState<string[]>([]);
+interface SelectCategoryPageProps {
+  onNext: (selectedIds: number[]) => void;
+}
+
+const SelectCategoryPage = ({ onNext }: SelectCategoryPageProps) => {
+  const [selected, setSelected] = useState<number[]>([]);
+  const prefetchMainQuestion = usePrefetchCategoryMainQuestion();
+
+  const handleSelect = (newSelected: number[]) => {
+    setSelected(newSelected);
+    newSelected.forEach((id) => prefetchMainQuestion(id));
+  };
+
+  const handleNext = () => {
+    if (selected.length >= 3) {
+      onNext(selected);
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col px-6 py-10 justify-between">
@@ -22,10 +37,10 @@ const SelectCategoryPage = () => {
         </p>
       </div>
 
-      <CategorySelectGrid onChange={setSelected} className='mb-15' />
+      <CategorySelectGrid onChange={handleSelect} className="mb-15" />
 
-      <Link
-        to="/category-question"
+      <button
+        onClick={handleNext}
         className={`block w-full py-4 rounded-full text-center font-medium
           ${
             selected.length < 3
@@ -34,7 +49,7 @@ const SelectCategoryPage = () => {
           }`}
       >
         계속하기
-      </Link>
+      </button>
     </div>
   );
 };

@@ -1,12 +1,17 @@
-import { useParams, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { INTERACTION_STYLES } from '@/shared/constants/interactionStyle';
 import MockImg from '@/assets/mockImg.svg?react';
 import { cn } from '@/shared/lib/utils';
 
-const FinishOnboardingPage = () => {
-  const { id } = useParams<{ id: string }>();
-  const style = id ? INTERACTION_STYLES[Number(id)] : null;
+interface FinishOnboardingPageProps {
+  interactionType: string;
+}
 
+const FinishOnboardingPage = ({ interactionType }: FinishOnboardingPageProps) => {
+  const navigate = useNavigate();
+
+  const style = INTERACTION_STYLES.find((s) => s.id === Number(interactionType));
+  console.log(interactionType);
   if (!style) {
     return <div>잘못된 접근</div>;
   }
@@ -31,15 +36,15 @@ const FinishOnboardingPage = () => {
       </div>
 
       {/* 하단 버튼 */}
-      <Link
-        to="/"
+      <button
+        onClick={() => navigate('/', { replace: true })}
         className={cn(
           'fixed bottom-10 left-6 right-6 py-4 rounded-full text-center font-medium',
           'bg-orange-400 text-white active:bg-orange-500',
         )}
       >
         계속하기
-      </Link>
+      </button>
     </div>
   );
 };

@@ -1,9 +1,12 @@
 // 온보딩 맨 첫 페이지입니다.
-import { Link } from 'react-router-dom';
 import MockImg from '@/assets/mockImg.svg?react';
 import { CarouselWrapper } from '@/shared/ui/common/Carousel/CarouselWrapper';
 
-const IntroducePeeliePage = () => {
+interface IntroducePeeliePageProps {
+  onNext: () => void;
+}
+
+const IntroducePeeliePage = ({ onNext }: IntroducePeeliePageProps) => {
   return (
     <div className="flex flex-col justify-between items-center py-10">
       {/* 상단 로고/텍스트 */}
@@ -21,12 +24,12 @@ const IntroducePeeliePage = () => {
 
       {/* 시작하기 버튼 */}
 
-      <Link
-        to="/select-category"
+      <button
+        onClick={onNext}
         className="block py-4 fixed bottom-10 left-6 right-6 bg-orange-400 text-white rounded-full text-center font-medium active:bg-orange-500"
       >
         시작하기
-      </Link>
+      </button>
     </div>
   );
 };

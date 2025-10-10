@@ -1,9 +1,11 @@
-import { Link } from 'react-router-dom';
-
 import InteractionStyleGroup from '@/assets/interactionStyleGroup.svg?react';
 import { cn } from '@/shared/lib/utils';
 
-const IntroduceInteractionStylePage = () => {
+interface IntroduceInteractionStylePageProps {
+  onNext: () => void;
+}
+
+const IntroduceInteractionStylePage = ({ onNext }: IntroduceInteractionStylePageProps) => {
   return (
     <div className="min-h-screen w-full flex flex-col justify-center items-center px-6 py-10">
       <div className="text-center">
@@ -17,15 +19,15 @@ const IntroduceInteractionStylePage = () => {
 
       <InteractionStyleGroup className="mt-30" />
 
-      <Link
-        to="/select-style"
+      <button
+        onClick={onNext}
         className={cn(
           'fixed bottom-10 left-6 right-6 py-4 rounded-full text-center font-medium z-9999',
           'bg-orange-400 text-white active:bg-orange-500',
         )}
       >
         계속하기
-      </Link>
+      </button>
     </div>
   );
 };

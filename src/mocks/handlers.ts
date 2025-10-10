@@ -1,3 +1,3 @@
-// import { http, HttpResponse } from 'msw';
+import { categoryHandlers } from './handlers/categoryHandlers';
 
-export const handlers = [];
+export const handlers = [...categoryHandlers];

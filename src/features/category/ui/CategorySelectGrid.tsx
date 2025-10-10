@@ -1,31 +1,36 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CategoryCard } from '@/entities/category/ui/CategoryCard';
-import { CATEGORY_LIST } from '@/shared/constants/category';
+import { CATEGORY_LIST } from '@/shared/constants/categoryList';
 import { cn } from '@/shared/lib/utils';
 
 interface CategorySelectGridProps {
-  onChange?: (selected: string[]) => void;
+  onChange: (selected: number[]) => void;
   className?: string;
 }
 
 export const CategorySelectGrid = ({ onChange, className }: CategorySelectGridProps) => {
   const maxSelect = 3;
-  const [selected, setSelected] = useState<string[]>([]);
+  const [selected, setSelected] = useState<number[]>([]);
 
-  const handleSelect = (id: string) => {
-    let next: string[];
+  const handleSelect = (id: number) => {
+    setSelected((prev) => {
+      let next: number[];
 
-    if (selected.includes(id)) {
-      next = selected.filter((s) => s !== id);
-    } else if (selected.length < maxSelect) {
-      next = [...selected, id];
-    } else {
-      next = selected;
-    }
-
-    setSelected(next);
-    onChange?.(next);
+      if (prev.includes(id)) {
+        next = prev.filter((s) => s !== id);
+      } else if (prev.length < maxSelect) {
+        next = [...prev, id];
+      } else {
+        next = prev;
+      }
+      const sorted = [...next].sort((a, b) => a - b);
+      return sorted;
+    });
   };
+
+  useEffect(() => {
+    onChange(selected);
+  }, [selected, onChange]);
 
   return (
     <div className={cn('grid grid-cols-3 gap-4 mt-8', className)}>

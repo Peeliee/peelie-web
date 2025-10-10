@@ -20,6 +20,16 @@ export default meta;
 
 type Story = StoryObj<typeof OnboardingQuestionForm>;
 
+const mockMainQuestion = {
+  categoryId: 1,
+  categoryName: '예시 카테고리',
+  categoryQuestion: '이것은 메인 질문입니다.',
+  subCategoryNames: [
+    { id: 1, name: '서브카테고리1' },
+    { id: 2, name: '서브카테고리2' },
+  ],
+};
+
 export const Default: Story = {
-  render: () => <OnboardingQuestionForm />,
+  render: () => <OnboardingQuestionForm mainQuestion={mockMainQuestion} />,
 };
