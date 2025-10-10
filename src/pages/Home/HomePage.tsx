@@ -21,6 +21,14 @@ const HomePage = () => {
         >
           로그인페이지로 이동하기 버튼
         </button>
+        <button
+          className="bg-amber-400 rounded-3xl p-3 mt-0"
+          onClick={() => {
+            navigate('/onboarding');
+          }}
+        >
+          온보딩 이동하기 버튼
+        </button>
       </div>
 
       <div className="px-3 mt-10">
