@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useGetAllSubQuestions } from '@/entities/category/api/category.queries';
-import { OnboardingQuestionForm } from '@/widgets/OnboardingQuestionForm/OnboardingQuestionForm';
+import { OnboardingQuestionForm } from '@/widgets/onboarding/OnboardingQuestionForm';
 import { categoryKeys } from '@/entities/category/api/category.queries';
 import { cn } from '@/shared/lib/utils';
 
