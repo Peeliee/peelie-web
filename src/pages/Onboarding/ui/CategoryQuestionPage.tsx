@@ -1,12 +1,15 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 // import { useQuery } from '@tanstack/react-query';
 import { useGetAllSubQuestions } from '@/entities/category/api/category.queries';
 import { OnboardingQuestionForm } from '@/widgets/OnboardingQuestionForm/OnboardingQuestionForm';
-
 import { cn } from '@/shared/lib/utils';
 
-const CategoryQuestionPage = () => {
+interface CategoryQuestionPageProps {
+  selected: number[];
+  onNext: () => void;
+}
+
+const CategoryQuestionPage = ({ onNext }: CategoryQuestionPageProps) => {
   // const selected = [1, 2, 3]; // TODO : 나중에 이전 단계에서 주입
 
   const subQuestionData = useGetAllSubQuestions(1);
@@ -31,8 +34,8 @@ const CategoryQuestionPage = () => {
 
       <OnboardingQuestionForm onChange={setAnswers} />
 
-      <Link
-        to="/interaction-style"
+      <button
+        onClick={onNext}
         className={cn(
           'fixed bottom-10 left-6 right-6 py-4 rounded-full text-center font-medium',
           isCompleted
@@ -41,7 +44,7 @@ const CategoryQuestionPage = () => {
         )}
       >
         계속하기
-      </Link>
+      </button>
     </div>
   );
 };

@@ -29,6 +29,9 @@ importers:
       '@use-funnel/react-router':
         specifier: ^0.0.5
         version: 0.0.5(react-router@7.8.2(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)
+      '@use-funnel/react-router-dom':
+        specifier: ^0.0.14
+        version: 0.0.14(react-router-dom@7.8.2(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -1344,6 +1347,12 @@ packages:
     resolution: {integrity: sha512-IikmJCqiQxbqxMAKdIEvX4MiuaM4nu0mfuAdnbI4CKf1FFLy/c4GHGKHW2+zm4aQAdEtxCuwou/wOwDhrTSWbg==}
     peerDependencies:
       react: '>=16.8'
+
+  '@use-funnel/react-router-dom@0.0.14':
+    resolution: {integrity: sha512-bQtSvV8lqwDdytabVEkaL5H/LyckQwvnCyUQdY4lSeN1RXdXtQEyhUV0Z2bnigMkt0Qd6iOxIVn1zwoYMK6oEw==}
+    peerDependencies:
+      react: '>=16.8'
+      react-router-dom: '>=6'
 
   '@use-funnel/react-router@0.0.5':
     resolution: {integrity: sha512-xo4LRQvl3+KK+ZlMovBUrOOCYcsJIiwy4TphK0Bi59YfX9p2hgoNy56ciUTgBw3aZU7uVTPztyAMWnvYx5LvXg==}
@@ -4082,6 +4091,12 @@ snapshots:
   '@use-funnel/core@0.0.12(react@19.1.1)':
     dependencies:
       react: 19.1.1
+
+  '@use-funnel/react-router-dom@0.0.14(react-router-dom@7.8.2(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)':
+    dependencies:
+      '@use-funnel/core': 0.0.12(react@19.1.1)
+      react: 19.1.1
+      react-router-dom: 7.8.2(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
 
   '@use-funnel/react-router@0.0.5(react-router@7.8.2(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react@19.1.1)':
     dependencies:

@@ -1,11 +1,6 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import LoginPage from '@/pages/Login/LoginPage';
-import IntroducePeeliePage from '@/pages/Onboarding/ui/IntroducePeeliePage';
-import SelectCategoryPage from '@/pages/Onboarding/ui/SelectCategoryPage';
-import CategoryQuestionPage from '@/pages/Onboarding/ui/CategoryQuestionPage';
-import IntroduceInteractionStylePage from '@/pages/Onboarding/ui/IntroduceInteractionStylePage';
-import SelectInteractionStylePage from '@/pages/Onboarding/ui/SelectInteractionStylePage';
-import FinishOnboardingPage from '@/pages/Onboarding/ui/FinishOnboardingPage';
+import OnboardingPage from '@/pages/Onboarding/OnboardingPage';
 import FriendPage from '@/pages/Friend/FriendPage';
 import { FriendList } from '@/pages/FriendList/FriendList';
 
@@ -23,12 +18,7 @@ const AppRouter = () => {
       // GNB 없는 페이지
       children: [
         { path: 'login', element: <LoginPage /> },
-        { path: 'intro-peelie', element: <IntroducePeeliePage /> },
-        { path: 'select-category', element: <SelectCategoryPage /> },
-        { path: 'category-question', element: <CategoryQuestionPage /> },
-        { path: 'interaction-style', element: <IntroduceInteractionStylePage /> },
-        { path: 'select-style', element: <SelectInteractionStylePage /> },
-        { path: 'finish-onboarding/:id', element: <FinishOnboardingPage /> },
+        { path: 'onboarding', element: <OnboardingPage /> },
         { path: 'friend/:id', element: <FriendPage /> },
         // GNB 있는 페이지
         {
