@@ -3,7 +3,7 @@ import { CategoryCard } from '@/entities/category/ui/CategoryCard';
 import MockImg from '@/assets/mockImg.svg?react';
 
 const meta: Meta<typeof CategoryCard> = {
-  title: 'Entities/Category/CategoryCard',
+  title: 'Card/CategoryCard',
   component: CategoryCard,
   tags: ['autodocs'],
   argTypes: {
@@ -14,6 +14,7 @@ const meta: Meta<typeof CategoryCard> = {
       description: {
         component: `
         카테고리 카드 컴포넌트입니다.
+        근데 버튼으로 해도 무방
         `,
       },
     },

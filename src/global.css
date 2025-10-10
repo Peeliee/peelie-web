@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import "tw-animate-css";
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -128,5 +128,212 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@theme {
+  /* --------- Color Tokens --------- */
+
+  /* Primary */
+  --color-peelie-primary-50: #fffbec;
+  --color-peelie-primary-100: #fff5d3;
+  --color-peelie-primary-200: #ffe8a5;
+  --color-peelie-primary-300: #ffd66d;
+  --color-peelie-primary-400: #ffb832;
+  --color-peelie-primary-500: #ffa00a;
+  --color-peelie-primary-600: #ff8800;
+  --color-peelie-primary-700: #cc6402;
+  --color-peelie-primary-800: #a14d08;
+  --color-peelie-primary-900: #82410c;
+
+  /* Secondary */
+  --color-peelie-secondary-100: #fff4cc;
+  --color-peelie-secondary-200: #ffb200;
+  --color-peelie-secondary-300: #bf7e00;
+
+  /* Gray */
+  --color-peelie-gray-000: #ffffff;
+  --color-peelie-gray-050: #fafafa;
+  --color-peelie-gray-100: #f6f6f6;
+  --color-peelie-gray-150: #e5e5e5;
+  --color-peelie-gray-200: #cccccc;
+  --color-peelie-gray-400: #c6c6c6;
+  --color-peelie-gray-500: #b1b1b1;
+  --color-peelie-gray-600: #888888;
+  --color-peelie-gray-700: #666666;
+  --color-peelie-gray-800: #4c4c4c;
+  --color-peelie-gray-900: #333333;
+  --color-peelie-gray-950: #191919;
+
+  /* Error */
+  --color-peelie-error-100: #f5bcbd;
+  --color-peelie-error-200: #d54049;
+  --color-peelie-error-300: #a4412c;
+
+  /* ===========================
+     Positive Colors
+  ============================ */
+  --color-peelie-positive-50: #efffee;
+  --color-peelie-positive-100: #d8ffd7;
+  --color-peelie-positive-600: #00c400;
+  --color-peelie-positive-700: #049105;
+
+  /* ===========================
+     Warning Colors
+  ============================ */
+  --color-peelie-warning-50: #fff1f1;
+  --color-peelie-warning-100: #ffdfdf;
+  --color-peelie-warning-600: #ef2b2a;
+  --color-peelie-warning-700: #c70e0f;
+
+  /* Etc */
+  --color-peelie-black: #000000;
+  --color-peelie-white: #ffffff;
+
+  /* --------- Font Tokens --------- */
+
+  /* Font Weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  /* Font Sizes */
+  --font-heading-1: 24px;
+  --font-heading-2: 22px;
+  --font-heading-3: 20px;
+  --font-heading-4: 18px;
+  --font-body-1: 16px;
+  --font-body-2: 14px;
+  --font-detail: 12px;
+
+  /* Line Heights */
+  --line-height-heading-1: 32px;
+  --line-height-heading-2: 30px;
+  --line-height-heading-3: 28px;
+  --line-height-heading-4: 26px;
+  --line-height-body-1: 24px;
+  --line-height-body-2: 20px;
+  --line-height-detail: 17px;
+
+  /* --------- Border Width Tokens --------- */
+  --border-50: 0.5px;
+  --border-100: 1px;
+  --border-200: 2px;
+
+  /* Spacing 일단 주석처리 */
+  /* --spacing-xs: 4px;
+  --spacing-s: 8px;
+  --spacing-m: 16px;
+  --spacing-l: 24px;
+  --spacing-xl: 32px;
+  --spacing-xxl: 64px; */
+
+  /* --------- Elevation / Shadow Tokens --------- */
+  --elevation-0: none;
+  --elevation-1: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+  --elevation-2: 0px 2px 4px 0px rgba(0, 0, 0, 0.08);
+  --elevation-3: 0px 4px 8px 0px rgba(0, 0, 0, 0.1);
+  --elevation-4: 0px 8px 16px 0px rgba(0, 0, 0, 0.12);
+  --elevation-5: 0px 12px 24px 0px rgba(0, 0, 0, 0.14);
+
+  /* --------- Radius Tokens --------- */
+  --radius-100: 3px;
+  --radius-200: 5px;
+  --radius-300: 7px;
+  --radius-400: 12px;
+
+  /* --------- etc --------- */
+  --opacity-32: 0.32;
+}
+
+@layer components {
+  /* ===========================
+     Font
+  ============================ */
+
+  /* Heading */
+  .heading-1-medium {
+    font-family: var(--font-family-pretendard);
+    font-size: var(--font-heading-1);
+    line-height: var(--line-height-heading-1);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .heading-2-medium {
+    font-family: var(--font-family-pretendard);
+    font-size: var(--font-heading-2);
+    line-height: var(--line-height-heading-2);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .heading-3-medium {
+    font-family: var(--font-family-pretendard);
+    font-size: var(--font-heading-3);
+    line-height: var(--line-height-heading-3);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .heading-4-medium {
+    font-family: var(--font-family-pretendard);
+    font-size: var(--font-heading-4);
+    line-height: var(--line-height-heading-4);
+    font-weight: var(--font-weight-medium);
+  }
+
+  /* Body */
+  .body-1-bold {
+    font-family: var(--font-family-pretendard);
+    font-size: var(--font-body-1);
+    line-height: var(--line-height-body-1);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .body-1-regular {
+    font-family: var(--font-family-pretendard);
+    font-size: var(--font-body-1);
+    line-height: var(--line-height-body-1);
+    font-weight: var(--font-weight-regular);
+  }
+
+  .body-2-bold {
+    font-family: var(--font-family-pretendard);
+    font-size: var(--font-body-2);
+    line-height: var(--line-height-body-2);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .body-2-regular {
+    font-family: var(--font-family-pretendard);
+    font-size: var(--font-body-2);
+    line-height: var(--line-height-body-2);
+    font-weight: var(--font-weight-regular);
+  }
+
+  /* Details */
+  .detail-regular {
+    font-family: var(--font-family-pretendard);
+    font-size: var(--font-detail);
+    line-height: var(--line-height-detail);
+    font-weight: var(--font-weight-regular);
+  }
+
+  .detail-bold {
+    font-family: var(--font-family-pretendard);
+    font-size: var(--font-detail);
+    line-height: var(--line-height-detail);
+    font-weight: var(--font-weight-bold);
+  }
+
+  /* ===========================
+     Shadow
+  ============================ */
+  .elevation-default {
+    box-shadow: var(--elevation-1);
+  }
+  .elevation-hover:hover {
+    box-shadow: var(--elevation-2);
+  }
+  .elevation-active:active {
+    box-shadow: var(--elevation-3);
   }
 }

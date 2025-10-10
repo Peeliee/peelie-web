@@ -5,7 +5,7 @@ import {
 } from '@/features/onboarding/ui/OnboardingQuestion';
 
 const meta: Meta<typeof OnboardingObjectQuestion> = {
-  title: 'Onboarding/Question',
+  title: 'Question/Question',
   component: OnboardingObjectQuestion,
   tags: ['autodocs'],
   args: {
