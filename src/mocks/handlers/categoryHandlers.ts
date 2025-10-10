@@ -68,7 +68,7 @@ export const categoryHandlers = [
         });
       }
 
-      const mock = CategorySubQuestionMock.data[subCategoryNum];
+      const mock = CategorySubQuestionMock.data?.[categoryNum]?.[subCategoryNum];
 
       if (!mock) {
         return HttpResponse.json({
