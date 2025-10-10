@@ -1,9 +1,14 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { cn } from '@/shared/lib/utils';
+// import { useQuery } from '@tanstack/react-query';
+// import { categoryKeys } from '@/entities/category/api/category.queries';
 import { OnboardingQuestionForm } from '@/widgets/OnboardingQuestionForm/OnboardingQuestionForm';
 
+import { cn } from '@/shared/lib/utils';
+
 const CategoryQuestionPage = () => {
+  // const selected = [1, 2, 3]; // TODO : 나중에 외부 퍼널로 주입 예정
+  // const {data: mainQuestionData, isLoading } = useQuery(categoryKeys.mainQuestion())
   const [answers, setAnswers] = useState<Record<string, string>>({});
 
   const totalQuestions = 5;

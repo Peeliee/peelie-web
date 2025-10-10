@@ -2,9 +2,16 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
 import { CategorySelectGrid } from '@/features/category/ui/CategorySelectGrid';
+import { usePrefetchCategoryMainQuestion } from '@/entities/category/api/category.queries';
 
 const SelectCategoryPage = () => {
   const [selected, setSelected] = useState<number[]>([]);
+  const prefetchMainQuestion = usePrefetchCategoryMainQuestion();
+
+  const handleSelect = (newSelected: number[]) => {
+    setSelected(newSelected);
+    newSelected.forEach((id) => prefetchMainQuestion(id));
+  };
   console.log(selected);
 
   return (
@@ -23,7 +30,7 @@ const SelectCategoryPage = () => {
         </p>
       </div>
 
-      <CategorySelectGrid onChange={setSelected} className="mb-15" />
+      <CategorySelectGrid onChange={handleSelect} className="mb-15" />
 
       <Link
         to="/category-question"
