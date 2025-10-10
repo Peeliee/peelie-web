@@ -30,16 +30,16 @@ export const categoryHandlers = [
       });
     }
 
-    const shouldFail = Math.random() < 0.5;
-    if (shouldFail) {
-      return HttpResponse.json({
-        status: 500,
-        success: false,
-        message: '서버 내부 오류 (mock)',
-        code: 'INTERNAL_SERVER_ERROR',
-        reason: '무작위 실패 발생 (테스트용)',
-      });
-    }
+    // const shouldFail = Math.random() < 0.1;
+    // if (shouldFail) {
+    //   return HttpResponse.json({
+    //     status: 500,
+    //     success: false,
+    //     message: '서버 내부 오류 (mock)',
+    //     code: 'INTERNAL_SERVER_ERROR',
+    //     reason: '무작위 실패 발생 (테스트용)',
+    //   });
+    // }
     await new Promise((resolve) => setTimeout(resolve, categoryMainQuestionMock.delay));
 
     return HttpResponse.json({
@@ -80,16 +80,16 @@ export const categoryHandlers = [
         });
       }
 
-      const shouldFail = Math.random() < 0.5;
-      if (shouldFail) {
-        return HttpResponse.json({
-          status: 500,
-          success: false,
-          message: '서버 내부 오류 (mock)',
-          code: 'INTERNAL_SERVER_ERROR',
-          reason: '무작위 실패 발생 (테스트용)',
-        });
-      }
+      // const shouldFail = Math.random() < 0.1;
+      // if (shouldFail) {
+      //   return HttpResponse.json({
+      //     status: 500,
+      //     success: false,
+      //     message: '서버 내부 오류 (mock)',
+      //     code: 'INTERNAL_SERVER_ERROR',
+      //     reason: '무작위 실패 발생 (테스트용)',
+      //   });
+      // }
 
       return HttpResponse.json({
         data: mock,

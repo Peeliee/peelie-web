@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-
 import { CategorySelectGrid } from '@/features/category/ui/CategorySelectGrid';
 import { usePrefetchCategoryMainQuestion } from '@/entities/category/api/category.queries';
 
@@ -12,7 +11,6 @@ const SelectCategoryPage = () => {
     setSelected(newSelected);
     newSelected.forEach((id) => prefetchMainQuestion(id));
   };
-  console.log(selected);
 
   return (
     <div className="min-h-screen flex flex-col px-6 py-10 justify-between">
