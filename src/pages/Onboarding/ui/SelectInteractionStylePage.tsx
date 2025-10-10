@@ -11,7 +11,7 @@ interface SelectInteractionStylePageProps {
 const SelectInteractionStylePage = ({ onNext }: SelectInteractionStylePageProps) => {
   const [current, setCurrent] = useState<number>(0);
   const style = INTERACTION_STYLES[current];
-  console.log(style);
+
   return (
     <div className="text-center py-10">
       <h3 className="mb-2 mt-10">교류 성향 선택</h3>

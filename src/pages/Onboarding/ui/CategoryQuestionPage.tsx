@@ -23,7 +23,7 @@ const CategoryQuestionPage = ({ selected, onNext }: CategoryQuestionPageProps) =
   const { subQuestions, isLoading: isSubLoading } = useGetAllSubQuestions(currentCategoryId);
 
   const [answers, setAnswers] = useState<Record<number, Record<string, string>>>({});
-  console.log(answers);
+
   const handleAnswersChange = (categoryId: number, newAnswers: Record<string, string>) => {
     setAnswers((prev) => ({
       ...prev,
