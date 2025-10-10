@@ -1,7 +1,8 @@
 import { useState } from 'react';
-// import { useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useGetAllSubQuestions } from '@/entities/category/api/category.queries';
 import { OnboardingQuestionForm } from '@/widgets/OnboardingQuestionForm/OnboardingQuestionForm';
+import { categoryKeys } from '@/entities/category/api/category.queries';
 import { cn } from '@/shared/lib/utils';
 
 interface CategoryQuestionPageProps {
@@ -9,17 +10,46 @@ interface CategoryQuestionPageProps {
   onNext: () => void;
 }
 
-const CategoryQuestionPage = ({ onNext }: CategoryQuestionPageProps) => {
-  // const selected = [1, 2, 3]; // TODO : 나중에 이전 단계에서 주입
+const CategoryQuestionPage = ({ selected, onNext }: CategoryQuestionPageProps) => {
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const currentCategoryId = selected[currentIndex];
 
-  const subQuestionData = useGetAllSubQuestions(1);
-  // const { data: mainQuestionData } = useQuery(categoryKeys.mainQuestion(selected[0]));
-  console.log(subQuestionData);
-  const [answers, setAnswers] = useState<Record<string, string>>({});
+  // main 질문
+  const { data: mainQuestion, isLoading: isMainLoading } = useQuery(
+    categoryKeys.mainQuestion(currentCategoryId),
+  );
 
+  // sub 질문
+  const { subQuestions, isLoading: isSubLoading } = useGetAllSubQuestions(currentCategoryId);
+
+  const [answers, setAnswers] = useState<Record<number, Record<string, string>>>({});
+  console.log(answers);
+  const handleAnswersChange = (categoryId: number, newAnswers: Record<string, string>) => {
+    setAnswers((prev) => ({
+      ...prev,
+      [categoryId]: newAnswers,
+    }));
+  };
+
+  const handleNext = async () => {
+    const isLast = currentIndex === selected.length - 1;
+
+    if (isLast) {
+      console.log('최종 저장:', answers);
+      onNext();
+    } else {
+      setCurrentIndex((prev) => prev + 1);
+    }
+  };
+
+  const currentAnswers = answers[currentCategoryId] || {};
   const totalQuestions = 5;
-  const answeredCount = Object.keys(answers).length;
-  const isCompleted = answeredCount >= totalQuestions;
+  const answeredCount = Object.keys(currentAnswers).length;
+  const isCompleted = answeredCount >= totalQuestions && totalQuestions > 0;
+
+  if (isSubLoading || isMainLoading || !mainQuestion || !subQuestions) {
+    return <div className="text-center mt-20">질문 불러오는 중...</div>;
+  }
 
   return (
     <div className="min-h-screen w-full flex flex-col px-6 py-10 pb-24">
@@ -32,10 +62,18 @@ const CategoryQuestionPage = ({ onNext }: CategoryQuestionPageProps) => {
         </p>
       </div>
 
-      <OnboardingQuestionForm onChange={setAnswers} />
+      {subQuestions && (
+        <OnboardingQuestionForm
+          mainQuestion={mainQuestion.data}
+          subQuestions={subQuestions}
+          isSubLoading={isSubLoading}
+          onChange={(newAnswers) => handleAnswersChange(currentCategoryId, newAnswers)}
+          initialAnswers={currentAnswers}
+        />
+      )}
 
       <button
-        onClick={onNext}
+        onClick={handleNext}
         className={cn(
           'fixed bottom-10 left-6 right-6 py-4 rounded-full text-center font-medium',
           isCompleted
