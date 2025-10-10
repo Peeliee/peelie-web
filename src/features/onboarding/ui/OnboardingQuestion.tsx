@@ -1,15 +1,14 @@
-import { useState } from 'react';
 import { cn } from '@/shared/lib/utils';
 
 /**
  *  @TODO : 추후에 Button 또는 Chip 컴포넌트로 바뀔 것 같음
- *  @level : 이것도 타입 미정이라 임의로 number 처리
  *  */
 interface OnboardingChoiceQuestionProps {
   level: string;
   title: string;
   options: string[];
   onAnswer: (value: string) => void;
+  selected?: string | null;
 }
 
 interface OnboardingTextQuestionProps {
@@ -24,11 +23,9 @@ export const OnboardingChoiceQuestion = ({
   title,
   options,
   onAnswer,
+  selected,
 }: OnboardingChoiceQuestionProps) => {
-  const [selected, setSelected] = useState<string | null>(null);
-
   const handleClick = (option: string) => {
-    setSelected(option);
     onAnswer(option);
   };
 
@@ -44,7 +41,9 @@ export const OnboardingChoiceQuestion = ({
             onClick={() => handleClick(option)}
             className={cn(
               'px-3 py-1 rounded-full border hover:bg-gray-100',
-              `${selected === option ? 'bg-gray-200' : 'hover:bg-gray-100'}`,
+              selected === option
+                ? 'bg-gray-300 border-gray-400'
+                : 'bg-white hover:bg-gray-100 border-gray-300',
             )}
           >
             {option}
