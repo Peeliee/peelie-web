@@ -8,28 +8,35 @@ import type {
   CategoryMainQuestion,
   CategorySubQuestion,
 } from '@/entities/category/model/category.type';
+import { cn } from '@/shared/lib/utils';
 
-interface OnboardingQuestionFormProps {
+interface CategoryQuestionFormProps {
   mainQuestion: CategoryMainQuestion;
   subQuestions?: CategorySubQuestion[];
   isSubLoading?: boolean;
   onChange?: (answers: Record<string, string>) => void;
+  onSubmit?: (answers: Record<string, string>) => void;
   initialAnswers?: Record<string, string>;
 }
 
-export const OnboardingQuestionForm = ({
+export const CategoryQuestionForm = ({
   mainQuestion,
   subQuestions,
   isSubLoading,
   initialAnswers = {},
   onChange,
-}: OnboardingQuestionFormProps) => {
+  onSubmit,
+}: CategoryQuestionFormProps) => {
   const { answers, updateAnswer, activeQuestionSet, isNextQuestionVisible } =
     useOnboardingFormController(mainQuestion, subQuestions, initialAnswers, onChange);
 
   if (isSubLoading || !subQuestions) {
     return <div className="text-center mt-20">질문 불러오는 중...</div>;
   }
+
+  const totalQuestions = activeQuestionSet.length + 1;
+  const answeredCount = Object.keys(answers).length;
+  const isCompleted = answeredCount >= totalQuestions;
 
   return (
     <div className="space-y-6 mb-6">
@@ -72,6 +79,19 @@ export const OnboardingQuestionForm = ({
           )}
         </div>
       )}
+      <button
+        onClick={() => onSubmit?.(answers)}
+        disabled={!isCompleted}
+        className={cn(
+          // 'w-full py-4 rounded-full font-medium mt-8',
+          'fixed bottom-10 left-6 right-6 py-4 rounded-full text-center font-medium',
+          isCompleted
+            ? 'bg-orange-400 text-white active:bg-orange-500'
+            : 'bg-gray-200 text-gray-400 pointer-events-none',
+        )}
+      >
+        계속하기
+      </button>
     </div>
   );
 };

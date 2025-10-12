@@ -1,9 +1,6 @@
-import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { useGetAllSubQuestions } from '@/entities/category/api/category.queries';
-import { OnboardingQuestionForm } from '@/widgets/onboarding/OnboardingQuestionForm';
-import { categoryKeys } from '@/entities/category/api/category.queries';
-import { cn } from '@/shared/lib/utils';
+import { useFunnel } from '@use-funnel/react-router-dom';
+
+import CategoryQuestionStep from '../../../widgets/onboarding/CategoryQuestionStep';
 
 interface CategoryQuestionPageProps {
   selected: number[];
@@ -11,45 +8,14 @@ interface CategoryQuestionPageProps {
 }
 
 const CategoryQuestionPage = ({ selected, onNext }: CategoryQuestionPageProps) => {
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const currentCategoryId = selected[currentIndex];
-
-  // main 질문
-  const { data: mainQuestion, isLoading: isMainLoading } = useQuery(
-    categoryKeys.mainQuestion(currentCategoryId),
-  );
-
-  // sub 질문
-  const { subQuestions, isLoading: isSubLoading } = useGetAllSubQuestions(currentCategoryId);
-
-  const [answers, setAnswers] = useState<Record<number, Record<string, string>>>({});
-
-  const handleAnswersChange = (categoryId: number, newAnswers: Record<string, string>) => {
-    setAnswers((prev) => ({
-      ...prev,
-      [categoryId]: newAnswers,
-    }));
-  };
-
-  const handleNext = async () => {
-    const isLast = currentIndex === selected.length - 1;
-
-    if (isLast) {
-      console.log('최종 저장:', answers);
-      onNext();
-    } else {
-      setCurrentIndex((prev) => prev + 1);
-    }
-  };
-
-  const currentAnswers = answers[currentCategoryId] || {};
-  const totalQuestions = 5;
-  const answeredCount = Object.keys(currentAnswers).length;
-  const isCompleted = answeredCount >= totalQuestions && totalQuestions > 0;
-
-  if (isSubLoading || isMainLoading || !mainQuestion || !subQuestions) {
-    return <div className="text-center mt-20">질문 불러오는 중...</div>;
-  }
+  const funnel = useFunnel<{
+    category1: { categoryId: number; answers: Record<string, string> };
+    category2: { categoryId: number; answers: Record<string, string> };
+    category3: { categoryId: number; answers: Record<string, string> };
+  }>({
+    id: 'category-funnel',
+    initial: { step: 'category1', context: { categoryId: selected[0], answers: {} } },
+  });
 
   return (
     <div className="min-h-screen w-full flex flex-col px-6 py-10 pb-24">
@@ -62,27 +28,41 @@ const CategoryQuestionPage = ({ selected, onNext }: CategoryQuestionPageProps) =
         </p>
       </div>
 
-      {subQuestions && (
-        <OnboardingQuestionForm
-          mainQuestion={mainQuestion.data}
-          subQuestions={subQuestions}
-          isSubLoading={isSubLoading}
-          onChange={(newAnswers) => handleAnswersChange(currentCategoryId, newAnswers)}
-          initialAnswers={currentAnswers}
-        />
-      )}
-
-      <button
-        onClick={handleNext}
-        className={cn(
-          'fixed bottom-10 left-6 right-6 py-4 rounded-full text-center font-medium',
-          isCompleted
-            ? 'bg-orange-400 text-white active:bg-orange-500'
-            : 'bg-gray-200 text-gray-400 pointer-events-none',
+      <funnel.Render
+        category1={({ context, history }) => (
+          <CategoryQuestionStep
+            categoryId={context.categoryId}
+            onSubmit={(answers) => {
+              console.log('`카테고리1 저장:', answers);
+              history.push('category2', {
+                categoryId: selected[1],
+                answers,
+              });
+            }}
+          />
         )}
-      >
-        계속하기
-      </button>
+        category2={({ context, history }) => (
+          <CategoryQuestionStep
+            categoryId={context.categoryId}
+            onSubmit={(answers) => {
+              console.log('카테고리2 저장:', answers);
+              history.push('category3', {
+                categoryId: selected[2],
+                answers,
+              });
+            }}
+          />
+        )}
+        category3={({ context }) => (
+          <CategoryQuestionStep
+            categoryId={context.categoryId}
+            onSubmit={(answers) => {
+              console.log('최종 저장:', answers);
+              onNext();
+            }}
+          />
+        )}
+      />
     </div>
   );
 };

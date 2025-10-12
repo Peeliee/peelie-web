@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { OnboardingQuestionForm } from '@/widgets/onboarding/OnboardingQuestionForm';
+import { OnboardingQuestionForm } from '@/features/onboarding/ui/CategoryQuestionForm';
 
 const meta: Meta<typeof OnboardingQuestionForm> = {
   title: 'Question/OnboardingQuestionForm',
