@@ -1,6 +1,5 @@
 import { useFunnel } from '@use-funnel/react-router-dom';
-
-import CategoryQuestionStep from '../../../widgets/onboarding/CategoryQuestionStep';
+import CategoryQuestionStep from '@/widgets/onboarding/CategoryQuestionStep';
 
 interface CategoryQuestionPageProps {
   selected: number[];

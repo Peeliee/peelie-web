@@ -1,5 +1,10 @@
 import { motion } from 'framer-motion';
-import { useOnboardingFormController } from '@/features/onboarding/hooks/useOnboardingFormController';
+import { useAnswerState } from '@/features/onboarding/hooks/useAnswerState';
+import {
+  groupSubQuestions,
+  getActiveQuestionSet,
+  isAllPreviousAnswered,
+} from '@/features/onboarding/utils/categoryQuestionUtils';
 import {
   OnboardingChoiceQuestion,
   OnboardingTextQuestion,
@@ -19,24 +24,6 @@ interface CategoryQuestionFormProps {
   initialAnswers?: Record<string, string>;
 }
 
-/**
- * @CategoryQuestionForm
- *
- * 단일 카테고리에 대한 온보딩 질문 폼입니다.
- *
- * 이 컴포넌트는 사용자의 선택 흐름에 따라 질문을 단계적으로 표시하고,
- * 응답 상태를 관리하며, 모든 질문이 완료되면 상위로 결과를 전달합니다.
- *
- * 주요 역할:
- * - `mainQuestion`(L0)과 `subQuestions`(L1~L4)를 순차적으로 렌더링
- * - 이전 단계가 완료되어야 다음 질문이 노출되는 단계적 인터랙션 제어
- * - 내부 상태(`answers`)를 통해 사용자의 응답 저장 및 실시간 업데이트
- * - 모든 질문 완료 시 `onSubmit(answers)` 호출로 상위 단계로 응답 전달
- *
- * 내부 구성:
- * - `useOnboardingFormController`: 질문 세트 활성화 및 답변 상태 제어 훅
- * - `OnboardingChoiceQuestion`, `OnboardingTextQuestion`: 개별 질문 UI 엔티티
- */
 export const CategoryQuestionForm = ({
   mainQuestion,
   subQuestions,
@@ -45,8 +32,10 @@ export const CategoryQuestionForm = ({
   onChange,
   onSubmit,
 }: CategoryQuestionFormProps) => {
-  const { answers, updateAnswer, activeQuestionSet, isNextQuestionVisible } =
-    useOnboardingFormController(mainQuestion, subQuestions, initialAnswers, onChange);
+  const { answers, updateAnswer } = useAnswerState(initialAnswers, onChange);
+
+  const grouped = groupSubQuestions(subQuestions);
+  const activeQuestionSet = getActiveQuestionSet(answers, mainQuestion, grouped);
 
   if (isSubLoading || !subQuestions) {
     return <div className="text-center mt-20">질문 불러오는 중...</div>;
@@ -71,7 +60,7 @@ export const CategoryQuestionForm = ({
       {answers.L0 && (
         <div key={answers.L0}>
           {activeQuestionSet.map((q, idx) =>
-            !isNextQuestionVisible(idx) ? null : (
+            !isAllPreviousAnswered(idx, activeQuestionSet, answers) ? null : (
               <motion.div
                 key={q.level}
                 initial={{ marginTop: -20, opacity: 0, height: 0 }}
