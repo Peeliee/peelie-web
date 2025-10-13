@@ -1,8 +1,5 @@
 import { cn } from '@/shared/lib/utils';
 
-/**
- *  @TODO : 추후에 Button 또는 Chip 컴포넌트로 바뀔 것 같음
- *  */
 interface OnboardingChoiceQuestionProps {
   level: string;
   title: string;
@@ -18,6 +15,11 @@ interface OnboardingTextQuestionProps {
   onAnswer: (value: string) => void;
 }
 
+/**
+ *  온보딩 질문 컴포넌트입니다.
+ *  @객관식질문 OnboardingChoiceQuestion
+ *  @주관식질문 OnboardingTextQuestion
+ *  */
 export const OnboardingChoiceQuestion = ({
   level,
   title,
@@ -25,10 +27,6 @@ export const OnboardingChoiceQuestion = ({
   onAnswer,
   selected,
 }: OnboardingChoiceQuestionProps) => {
-  const handleClick = (option: string) => {
-    onAnswer(option);
-  };
-
   return (
     <div>
       <h2>
@@ -38,7 +36,7 @@ export const OnboardingChoiceQuestion = ({
         {options.map((option) => (
           <button
             key={option}
-            onClick={() => handleClick(option)}
+            onClick={() => onAnswer(option)}
             className={cn(
               'px-3 py-1 rounded-full border hover:bg-gray-100',
               selected === option

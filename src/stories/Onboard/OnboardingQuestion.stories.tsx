@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import {
   OnboardingTextQuestion,
   OnboardingChoiceQuestion,
-} from '@/features/onboarding/ui/OnboardingQuestion';
+} from '@/entities/onboarding/ui/OnboardingQuestion';
 
 const meta: Meta<typeof OnboardingChoiceQuestion> = {
   title: 'Question/Question',

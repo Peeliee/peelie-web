@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CategorySelectGrid } from '@/features/category/ui/CategorySelectGrid';
+import { CategorySelectGrid } from '@/features/onboarding/ui/CategorySelectGrid';
 import { usePrefetchCategoryMainQuestion } from '@/entities/category/api/category.queries';
 
 interface SelectCategoryPageProps {

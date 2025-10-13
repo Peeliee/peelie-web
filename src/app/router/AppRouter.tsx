@@ -3,12 +3,11 @@ import LoginPage from '@/pages/Login/LoginPage';
 import OnboardingPage from '@/pages/Onboarding/OnboardingPage';
 import FriendPage from '@/pages/Friend/FriendPage';
 import { FriendList } from '@/pages/FriendList/FriendList';
-
 import HomePage from '@/pages/Home/HomePage';
 import MyPage from '@/pages/mypage/MyPage';
 import PATH from '@/shared/constants/path';
 import App from '../App';
-import { GNBLayout } from '@/widgets/GlobalNavigationBar/GNBLayout';
+import { GNBLayout } from '@/widgets/navigation/GNBLayout';
 
 const AppRouter = () => {
   const router = createBrowserRouter([
