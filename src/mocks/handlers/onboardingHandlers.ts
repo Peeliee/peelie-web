@@ -65,7 +65,7 @@ export const onboardingHandlers = [
 
   // 교류 성향 선택
   http.put<never, InteractionStyleResponseDTO, InteractionStyleResponseDTO | ApiErrorMessage>(
-    `${ONBOARDING_API_PREFIX}/onboarding/interaction-style`,
+    `${ONBOARDING_API_PREFIX}/onboarding/interaction`,
     async () => {
       await new Promise((resolve) => setTimeout(resolve, interactionStyleMock.delay));
 

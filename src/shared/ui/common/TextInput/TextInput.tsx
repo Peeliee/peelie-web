@@ -18,7 +18,7 @@ export function TextInput({
   ...props
 }: TextInputProps) {
   return (
-    <div className="flex flex-col w-full gap-1">
+    <div className={cn('flex flex-col w-full gap-1', className)}>
       {label && <label className="heading-4-medium text-peelie-black">{label}</label>}
 
       <input
@@ -35,8 +35,6 @@ export function TextInput({
           'disabled:placeholder:text-peelie-gray-400 disabled:cursor-not-allowed',
           // error
           error && 'border border-peelie-error-200',
-
-          className,
         )}
         {...props}
       />

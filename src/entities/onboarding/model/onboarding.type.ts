@@ -1,10 +1,10 @@
 import { type ApiResponse } from '@/shared/api/types';
-
+import type { InteractionStyleKey } from '@/shared/constants/interactionStyle';
 /**
  * 공통 타입 정의
  */
 export type OnboardingAnswerLevel = 'L1' | 'L2' | 'L3' | 'L4';
-export type InteractionStyle = 'CAUTIOUS' | 'BALANCED' | 'FAST' | 'UNKNOWN';
+export type InteractionStyle = InteractionStyleKey;
 
 export interface AnswerItem {
   level: OnboardingAnswerLevel;
