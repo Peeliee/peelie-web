@@ -43,8 +43,36 @@ export interface CategoryAnswerRequestDTO {
 }
 
 /**
- *
+ * 사용자 정보 생성
  */
+export interface GenerateStepInfoRequestDTO {
+  categoryIds: number[];
+}
+
+export interface Stage {
+  title: string;
+  subtitle: string;
+  content: string;
+}
+
+export interface Card {
+  stage1: Stage;
+  stage2: Stage;
+  stage3: Stage;
+}
+
+export interface GeneratingInfo {
+  generationStatus: 'GENERATING';
+}
+
+export interface GenerateInfoFail {
+  generationStatus: 'FAIL';
+}
+
+export interface GenerateInfoDone {
+  generationStatus: 'DONE';
+  card: Card;
+}
 
 /**
  * 교류성향 선택 + 한줄소개 입력
@@ -58,3 +86,6 @@ export type StartOnboardingResponseDTO = ApiResponse<OnboardingCommonResponse>;
 export type CategorySelectResponseDTO = ApiResponse<OnboardingCommonResponse>;
 export type CategoryAnswerResponseDTO = ApiResponse<OnboardingCommonResponse>;
 export type InteractionStyleResponseDTO = ApiResponse<OnboardingCommonResponse>;
+export type StepInfoCardResponseDTO = ApiResponse<
+  GeneratingInfo | GenerateInfoDone | GenerateInfoFail
+>;

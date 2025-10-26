@@ -4,6 +4,7 @@ import type {
   CategorySelectResponseDTO,
   CategoryAnswerResponseDTO,
   InteractionStyleResponseDTO,
+  StepInfoCardResponseDTO,
 } from '@/entities/onboarding/model/onboarding.type';
 import { type ApiErrorMessage } from '@/shared/api/types';
 
@@ -12,6 +13,7 @@ import {
   categorySelectMock,
   categoryAnswerMock,
   interactionStyleMock,
+  userSetpInfoMock,
 } from '../data/onboarding';
 
 const ONBOARDING_API_PREFIX = `${import.meta.env.VITE_API_BASE_URL}/api/v1`;
@@ -74,6 +76,20 @@ export const onboardingHandlers = [
         success: true,
         message: '교류 성향 선택 성공',
         data: interactionStyleMock.data,
+      });
+    },
+  ),
+
+  http.get<never, StepInfoCardResponseDTO, StepInfoCardResponseDTO | ApiErrorMessage>(
+    `${ONBOARDING_API_PREFIX}/onboarding/card/status`,
+    async () => {
+      await new Promise((resolve) => setTimeout(resolve, userSetpInfoMock.delay));
+
+      return HttpResponse.json({
+        status: 200,
+        success: true,
+        message: 'OK',
+        data: userSetpInfoMock.data,
       });
     },
   ),
