@@ -16,7 +16,7 @@ const OnboardingPage = () => {
     introducePeelie: Record<string, never>;
     selectCategory: Record<string, never>;
     categoryQuestion: { selected: number[] };
-    userStepInfoPage: Record<string, never>;
+    userStepInfo: Record<string, never>;
     introduceInteraction: Record<string, never>;
     selectInteraction: Record<string, never>;
     profileDescription: { interactionStyle: InteractionStyleKey };
@@ -40,10 +40,10 @@ const OnboardingPage = () => {
       categoryQuestion={({ context, history }) => (
         <CategoryQuestionPage
           selected={context.selected}
-          onNext={() => history.push('userStepInfoPage', () => ({}))}
+          onNext={() => history.push('userStepInfo', () => ({}))}
         />
       )}
-      userStepInfoPage={({ history }) => (
+      userStepInfo={({ history }) => (
         <UserStepInfoPage onNext={() => history.push('introduceInteraction')} />
       )}
       introduceInteraction={({ history }) => (
