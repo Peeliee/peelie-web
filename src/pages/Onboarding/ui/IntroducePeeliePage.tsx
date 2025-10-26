@@ -1,12 +1,29 @@
-// 온보딩 맨 첫 페이지입니다.
-import MockImg from '@/assets/mockImg.svg?react';
+import { useEffect } from 'react';
+import { useMutation } from '@tanstack/react-query';
+
+import { onboardingPost } from '@/entities/onboarding/api/onboarding-post';
 import { CarouselWrapper } from '@/shared/ui/common/Carousel/CarouselWrapper';
+import MockImg from '@/assets/mockImg.svg?react';
 
 interface IntroducePeeliePageProps {
   onNext: () => void;
 }
 
 const IntroducePeeliePage = ({ onNext }: IntroducePeeliePageProps) => {
+  const { mutate: startOnboarding } = useMutation({
+    mutationFn: onboardingPost.startOnboarding,
+    onSuccess: (data) => {
+      console.log('온보딩 post 성공 : ', data);
+    },
+    onError: (err) => {
+      console.log('온보딩 post 실패 : ', err);
+    },
+  });
+
+  useEffect(() => {
+    startOnboarding();
+  }, [startOnboarding]);
+
   return (
     <div className="flex flex-col justify-between items-center py-10">
       {/* 상단 로고/텍스트 */}

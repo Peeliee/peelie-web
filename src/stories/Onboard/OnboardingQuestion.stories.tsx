@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import {
   OnboardingTextQuestion,
   OnboardingChoiceQuestion,
-} from '@/features/onboarding/ui/OnboardingQuestion';
+} from '@/entities/onboarding/ui/OnboardingQuestion';
 
 const meta: Meta<typeof OnboardingChoiceQuestion> = {
   title: 'Question/Question',
@@ -11,7 +11,12 @@ const meta: Meta<typeof OnboardingChoiceQuestion> = {
   args: {
     level: 'L0',
     title: '영화는 어떻게 즐기는 편인가요?',
-    options: ['극장 관람 위주', 'TV/VOD 위주', 'OTT 스트리밍 위주', '상황에 따라 다 섞어서'],
+    options: [
+      { id: 1, label: '극장 관람 위주' },
+      { id: 2, label: 'TV/VOD 위주' },
+      { id: 3, label: 'OTT 스트리밍 위주' },
+      { id: 4, label: '상황에 따라 다 섞어서' },
+    ],
   },
   parameters: {
     docs: {
@@ -30,7 +35,7 @@ type Story = StoryObj<typeof OnboardingChoiceQuestion>;
 export const ObjectQuestion: Story = {
   args: {
     title: '영화는 어떻게 즐기는 편인가요?',
-    onAnswer: (val: string) => console.log(val),
+    onAnswer: (val: number) => console.log(val),
   },
 };
 

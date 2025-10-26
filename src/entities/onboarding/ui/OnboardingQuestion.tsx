@@ -1,14 +1,16 @@
 import { cn } from '@/shared/lib/utils';
 
-/**
- *  @TODO : 추후에 Button 또는 Chip 컴포넌트로 바뀔 것 같음
- *  */
+interface ChoiceOption {
+  id: number;
+  label: string;
+}
+
 interface OnboardingChoiceQuestionProps {
   level: string;
   title: string;
-  options: string[];
-  onAnswer: (value: string) => void;
-  selected?: string | null;
+  options: ChoiceOption[];
+  onAnswer: (id: number) => void;
+  selected?: number | null;
 }
 
 interface OnboardingTextQuestionProps {
@@ -18,6 +20,11 @@ interface OnboardingTextQuestionProps {
   onAnswer: (value: string) => void;
 }
 
+/**
+ *  온보딩 질문 컴포넌트입니다.
+ *  @객관식질문 OnboardingChoiceQuestion
+ *  @주관식질문 OnboardingTextQuestion
+ *  */
 export const OnboardingChoiceQuestion = ({
   level,
   title,
@@ -25,10 +32,6 @@ export const OnboardingChoiceQuestion = ({
   onAnswer,
   selected,
 }: OnboardingChoiceQuestionProps) => {
-  const handleClick = (option: string) => {
-    onAnswer(option);
-  };
-
   return (
     <div>
       <h2>
@@ -37,16 +40,16 @@ export const OnboardingChoiceQuestion = ({
       <div>
         {options.map((option) => (
           <button
-            key={option}
-            onClick={() => handleClick(option)}
+            key={option.id}
+            onClick={() => onAnswer(option.id)}
             className={cn(
               'px-3 py-1 rounded-full border hover:bg-gray-100',
-              selected === option
+              selected === option.id
                 ? 'bg-gray-300 border-gray-400'
                 : 'bg-white hover:bg-gray-100 border-gray-300',
             )}
           >
-            {option}
+            {option.label}
           </button>
         ))}
       </div>

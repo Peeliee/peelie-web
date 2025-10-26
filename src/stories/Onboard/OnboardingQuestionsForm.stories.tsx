@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { OnboardingQuestionForm } from '@/widgets/OnboardingQuestionForm/OnboardingQuestionForm';
+import { CategoryQuestionForm } from '@/features/onboarding/ui/CategoryQuestionForm';
 
-const meta: Meta<typeof OnboardingQuestionForm> = {
+const meta: Meta<typeof CategoryQuestionForm> = {
   title: 'Question/OnboardingQuestionForm',
-  component: OnboardingQuestionForm,
+  component: CategoryQuestionForm,
   tags: ['autodocs'],
   parameters: {
     docs: {
@@ -18,7 +18,7 @@ const meta: Meta<typeof OnboardingQuestionForm> = {
 };
 export default meta;
 
-type Story = StoryObj<typeof OnboardingQuestionForm>;
+type Story = StoryObj<typeof CategoryQuestionForm>;
 
 const mockMainQuestion = {
   categoryId: 1,
@@ -31,5 +31,5 @@ const mockMainQuestion = {
 };
 
 export const Default: Story = {
-  render: () => <OnboardingQuestionForm mainQuestion={mockMainQuestion} />,
+  render: () => <CategoryQuestionForm mainQuestion={mockMainQuestion} isPending={false} />,
 };

@@ -1,10 +1,13 @@
 import { useFunnel } from '@use-funnel/react-router-dom';
 
+import type { InteractionStyleKey } from '@/shared/constants/interactionStyle';
+
 import IntroducePeeliePage from './ui/IntroducePeeliePage';
 import SelectCategoryPage from './ui/SelectCategoryPage';
 import CategoryQuestionPage from './ui/CategoryQuestionPage';
 import IntroduceInteractionStylePage from './ui/IntroduceInteractionStylePage';
 import SelectInteractionStylePage from './ui/SelectInteractionStylePage';
+import ProfileDescriptionPage from './ui/ProfileDescriptionPage';
 import FinishOnboardingPage from './ui/FinishOnboardingPage';
 
 const OnboardingPage = () => {
@@ -14,7 +17,8 @@ const OnboardingPage = () => {
     categoryQuestion: { selected: number[] };
     introduceInteraction: Record<string, never>;
     selectInteraction: Record<string, never>;
-    finishOnboarding: { interactionType: string };
+    profileDescription: { interactionStyle: InteractionStyleKey };
+    finishOnboarding: { interactionStyle: InteractionStyleKey };
   }>({
     id: 'onboarding-funnel',
     initial: { step: 'introducePeelie', context: {} },
@@ -42,13 +46,19 @@ const OnboardingPage = () => {
       )}
       selectInteraction={({ history }) => (
         <SelectInteractionStylePage
-          onNext={(interactionType) =>
-            history.push('finishOnboarding', () => ({ interactionType }))
+          onNext={(interactionStyle) =>
+            history.push('profileDescription', () => ({ interactionStyle }))
           }
         />
       )}
+      profileDescription={({ context, history }) => (
+        <ProfileDescriptionPage
+          interactionStyle={context.interactionStyle}
+          onNext={() => history.push('finishOnboarding')}
+        />
+      )}
       finishOnboarding={({ context }) => (
-        <FinishOnboardingPage interactionType={context.interactionType} />
+        <FinishOnboardingPage interactionStyle={context.interactionStyle} />
       )}
     />
   );
