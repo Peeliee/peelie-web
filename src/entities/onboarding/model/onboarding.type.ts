@@ -30,7 +30,7 @@ export type AnswerGroup = {
 /**
  * 카테고리 선택
  */
-export interface CategorySelectionRequestDTO {
+export interface CategorySelectRequestDTO {
   categoryIds: number[];
 }
 
@@ -51,6 +51,6 @@ export interface InteractionStyleRequestDTO {
 }
 
 export type StartOnboardingResponseDTO = ApiResponse<OnboardingCommonResponse>;
-export type CategorySelectionResponseDTO = ApiResponse<OnboardingCommonResponse>;
+export type CategorySelectResponseDTO = ApiResponse<OnboardingCommonResponse>;
 export type CategoryAnswerResponseDTO = ApiResponse<OnboardingCommonResponse>;
 export type InteractionStyleResponseDTO = ApiResponse<OnboardingCommonResponse>;
