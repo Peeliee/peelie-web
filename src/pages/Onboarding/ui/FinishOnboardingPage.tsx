@@ -12,7 +12,6 @@ const FinishOnboardingPage = ({ interactionStyle }: FinishOnboardingPageProps) =
 
   const style = INTERACTION_STYLES.find((s) => s.key === interactionStyle);
 
-  console.log(interactionStyle);
   if (!style) {
     return <div>잘못된 접근</div>;
   }
