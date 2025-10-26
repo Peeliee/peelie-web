@@ -1,4 +1,7 @@
 import { useFunnel } from '@use-funnel/react-router-dom';
+import { useMutation } from '@tanstack/react-query';
+
+import { userPost } from '@/entities/user/api/user-post';
 import CategoryQuestionStep from '@/widgets/onboarding/CategoryQuestionStep';
 
 interface CategoryQuestionPageProps {
@@ -15,6 +18,22 @@ const CategoryQuestionPage = ({ selected, onNext }: CategoryQuestionPageProps) =
     id: 'category-funnel',
     initial: { step: 'category1', context: { categoryId: selected[0], answers: {} } },
   });
+
+  const { mutate: generateUserStepInfo, isPending } = useMutation({
+    mutationFn: userPost.generateUserStepInfo,
+    onSuccess: () => {
+      console.log('단계별 정보 생성 요청 완료');
+      onNext();
+    },
+    onError: (err) => {
+      console.error('단계별 정보 생성 요청 실패', err);
+    },
+  });
+
+  const handleLastStep = () => {
+    if (isPending) return;
+    generateUserStepInfo({ categoryIds: selected });
+  };
 
   return (
     <div className="min-h-screen w-full flex flex-col px-6 py-10 pb-24">
@@ -49,7 +68,7 @@ const CategoryQuestionPage = ({ selected, onNext }: CategoryQuestionPageProps) =
           />
         )}
         category3={({ context }) => (
-          <CategoryQuestionStep categoryId={context.categoryId} onNext={() => onNext()} />
+          <CategoryQuestionStep categoryId={context.categoryId} onNext={handleLastStep} />
         )}
       />
     </div>

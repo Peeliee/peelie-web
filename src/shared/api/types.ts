@@ -1,11 +1,14 @@
 import { HTTPError } from 'ky';
 import { type ApiErrorCode } from '../constants/errorCode';
 
-export interface ApiResponse<T> {
+export interface ApiResponse<T> extends ApiBaseResponse {
+  data: T;
+}
+
+export interface ApiBaseResponse {
   status: number;
   success: boolean;
   message: string;
-  data: T;
 }
 
 export interface ApiErrorMessage {

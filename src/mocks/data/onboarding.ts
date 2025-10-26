@@ -1,7 +1,5 @@
-import type {
-  OnboardingCommonResponse,
-  GenerateInfoDone,
-} from '@/entities/onboarding/model/onboarding.type';
+import type { OnboardingCommonResponse } from '@/entities/onboarding/model/onboarding.type';
+import type { GenerateInfoDone, GeneratingInfo } from '@/entities/user/model/user.type';
 
 export const onboardingStartMock: { data: OnboardingCommonResponse; delay: number } = {
   data: {
@@ -91,6 +89,11 @@ export const interactionStyleMock: { data: OnboardingCommonResponse; delay: numb
   delay: 1000,
 };
 
+export const userStepInfoMakingMock: { data: GeneratingInfo; delay: number } = {
+  data: { generationStatus: 'GENERATING' },
+  delay: 100,
+};
+
 export const userSetpInfoMock: { data: GenerateInfoDone; delay: number } = {
   data: {
     generationStatus: 'DONE',
@@ -115,5 +118,5 @@ export const userSetpInfoMock: { data: GenerateInfoDone; delay: number } = {
       },
     },
   },
-  delay: 5000,
+  delay: 100,
 };

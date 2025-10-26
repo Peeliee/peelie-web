@@ -1,8 +1,8 @@
 import api from '@/shared/api/ky';
 
-import { type StepInfoCardResponseDTO } from '../model/onboarding.type';
+import { type StepInfoCardResponseDTO } from '../model/user.type';
 
-export const onboardingGet = {
+export const userGet = {
   getUserStepInfo: async (): Promise<StepInfoCardResponseDTO> => {
     const response = await api.get('onboarding/card/status').json<StepInfoCardResponseDTO>();
     return response;

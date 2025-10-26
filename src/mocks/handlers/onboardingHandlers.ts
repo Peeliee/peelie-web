@@ -6,17 +6,20 @@ import type {
   InteractionStyleResponseDTO,
   StepInfoCardResponseDTO,
 } from '@/entities/onboarding/model/onboarding.type';
-import { type ApiErrorMessage } from '@/shared/api/types';
+import type { ApiErrorMessage, ApiBaseResponse } from '@/shared/api/types';
 
 import {
   onboardingStartMock,
   categorySelectMock,
   categoryAnswerMock,
   interactionStyleMock,
+  userStepInfoMakingMock,
   userSetpInfoMock,
 } from '../data/onboarding';
 
 const ONBOARDING_API_PREFIX = `${import.meta.env.VITE_API_BASE_URL}/api/v1`;
+
+let generationStartTime: number | null = null;
 
 // TODO: 실패 응답 구현하기
 export const onboardingHandlers = [
@@ -80,9 +83,40 @@ export const onboardingHandlers = [
     },
   ),
 
+  http.post<never, ApiBaseResponse | ApiErrorMessage>(
+    `${ONBOARDING_API_PREFIX}/onboarding/card/generate`,
+    async () => {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      return HttpResponse.json({
+        status: 200,
+        success: true,
+        message: 'OK',
+      });
+    },
+  ),
+
+  // 유저 단계별 정보 get
   http.get<never, StepInfoCardResponseDTO, StepInfoCardResponseDTO | ApiErrorMessage>(
     `${ONBOARDING_API_PREFIX}/onboarding/card/status`,
     async () => {
+      if (!generationStartTime) {
+        generationStartTime = Date.now();
+      }
+
+      const elapsed = Date.now() - generationStartTime;
+
+      if (elapsed < 5000) {
+        await new Promise((resolve) => setTimeout(resolve, userStepInfoMakingMock.delay));
+
+        return HttpResponse.json({
+          status: 200,
+          success: true,
+          message: '카드 생성 중',
+          data: userStepInfoMakingMock.data,
+        });
+      }
+
       await new Promise((resolve) => setTimeout(resolve, userSetpInfoMock.delay));
 
       return HttpResponse.json({
