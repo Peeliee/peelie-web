@@ -90,7 +90,6 @@ export const CategoryQuestionForm = ({
         onClick={() => onSubmit?.(answers)}
         disabled={!isCompleted}
         className={cn(
-          // 'w-full py-4 rounded-full font-medium mt-8',
           'fixed bottom-10 left-6 right-6 py-4 rounded-full text-center font-medium',
           isCompleted
             ? 'bg-orange-400 text-white active:bg-orange-500'
