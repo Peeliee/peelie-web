@@ -31,5 +31,5 @@ const mockMainQuestion = {
 };
 
 export const Default: Story = {
-  render: () => <CategoryQuestionForm mainQuestion={mockMainQuestion} />,
+  render: () => <CategoryQuestionForm mainQuestion={mockMainQuestion} isPending={false} />,
 };

@@ -17,11 +17,6 @@ export const INTERACTION_STYLES = [
     desc: '빠른 연결형에 대한 설명 빠른 연결형에 대한 설명',
     scores: { 모험력: 75, 번개력: 75, OO력: 75 },
   },
-  {
-    key: 'UNKNOWN',
-    title: '비정의',
-    desc: '',
-  },
 ] as const;
 
 export const InteractionStyle = {
