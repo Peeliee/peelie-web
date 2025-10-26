@@ -4,7 +4,7 @@ import { type ApiResponse } from '@/shared/api/types';
  * 공통 타입 정의
  */
 export type OnboardingAnswerLevel = 'L1' | 'L2' | 'L3' | 'L4';
-export type InteractionStyle = 'CAUTIOUS';
+export type InteractionStyle = 'CAUTIOUS' | 'BALANCED' | 'FAST' | 'UNKNOWN';
 
 export interface AnswerItem {
   level: OnboardingAnswerLevel;
@@ -41,6 +41,10 @@ export interface CategoryAnswerRequestDTO {
   subCategoryId: number;
   answers: AnswerItem[];
 }
+
+/**
+ *
+ */
 
 /**
  * 교류성향 선택 + 한줄소개 입력
