@@ -43,10 +43,6 @@ export interface CategoryAnswerRequestDTO {
 }
 
 /**
- *
- */
-
-/**
  * 교류성향 선택 + 한줄소개 입력
  */
 export interface InteractionStyleRequestDTO {

@@ -5,6 +5,7 @@ import type { InteractionStyleKey } from '@/shared/constants/interactionStyle';
 import IntroducePeeliePage from './ui/IntroducePeeliePage';
 import SelectCategoryPage from './ui/SelectCategoryPage';
 import CategoryQuestionPage from './ui/CategoryQuestionPage';
+import UserStepInfoPage from './ui/UserStepInfoPage';
 import IntroduceInteractionStylePage from './ui/IntroduceInteractionStylePage';
 import SelectInteractionStylePage from './ui/SelectInteractionStylePage';
 import ProfileDescriptionPage from './ui/ProfileDescriptionPage';
@@ -15,6 +16,7 @@ const OnboardingPage = () => {
     introducePeelie: Record<string, never>;
     selectCategory: Record<string, never>;
     categoryQuestion: { selected: number[] };
+    userStepInfo: Record<string, never>;
     introduceInteraction: Record<string, never>;
     selectInteraction: Record<string, never>;
     profileDescription: { interactionStyle: InteractionStyleKey };
@@ -38,8 +40,11 @@ const OnboardingPage = () => {
       categoryQuestion={({ context, history }) => (
         <CategoryQuestionPage
           selected={context.selected}
-          onNext={() => history.push('introduceInteraction', () => ({}))}
+          onNext={() => history.push('userStepInfo', () => ({}))}
         />
+      )}
+      userStepInfo={({ history }) => (
+        <UserStepInfoPage onNext={() => history.push('introduceInteraction')} />
       )}
       introduceInteraction={({ history }) => (
         <IntroduceInteractionStylePage onNext={() => history.push('selectInteraction')} />
