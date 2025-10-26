@@ -1,6 +1,9 @@
 import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+
 import { CategorySelectGrid } from '@/features/onboarding/ui/CategorySelectGrid';
 import { usePrefetchCategoryMainQuestion } from '@/entities/category/api/category.queries';
+import { onboardingPut } from '@/entities/onboarding/api/onboarding-put';
 
 interface SelectCategoryPageProps {
   onNext: (selectedIds: number[]) => void;
@@ -10,6 +13,17 @@ const SelectCategoryPage = ({ onNext }: SelectCategoryPageProps) => {
   const [selected, setSelected] = useState<number[]>([]);
   const prefetchMainQuestion = usePrefetchCategoryMainQuestion();
 
+  const { mutate: selectCategory, isPending } = useMutation({
+    mutationFn: onboardingPut.selectCategory,
+    onSuccess: (res) => {
+      console.log('카테고리 선택 성공', res);
+      onNext(selected);
+    },
+    onError: (err) => {
+      console.error('카테고리 선택 실패', err);
+    },
+  });
+
   const handleSelect = (newSelected: number[]) => {
     setSelected(newSelected);
     newSelected.forEach((id) => prefetchMainQuestion(id));
@@ -17,7 +31,7 @@ const SelectCategoryPage = ({ onNext }: SelectCategoryPageProps) => {
 
   const handleNext = () => {
     if (selected.length >= 3) {
-      onNext(selected);
+      selectCategory({ categoryIds: selected });
     }
   };
 
@@ -41,6 +55,7 @@ const SelectCategoryPage = ({ onNext }: SelectCategoryPageProps) => {
 
       <button
         onClick={handleNext}
+        disabled={isPending || selected.length < 3}
         className={`block w-full py-4 rounded-full text-center font-medium
           ${
             selected.length < 3
@@ -48,7 +63,7 @@ const SelectCategoryPage = ({ onNext }: SelectCategoryPageProps) => {
               : 'bg-orange-400 text-white  active:bg-orange-500'
           }`}
       >
-        계속하기
+        {isPending ? '로딩 중...' : '계속하기'}
       </button>
     </div>
   );

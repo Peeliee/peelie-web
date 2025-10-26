@@ -1,11 +1,16 @@
 import { cn } from '@/shared/lib/utils';
 
+interface ChoiceOption {
+  id: number;
+  label: string;
+}
+
 interface OnboardingChoiceQuestionProps {
   level: string;
   title: string;
-  options: string[];
-  onAnswer: (value: string) => void;
-  selected?: string | null;
+  options: ChoiceOption[];
+  onAnswer: (id: number) => void;
+  selected?: number | null;
 }
 
 interface OnboardingTextQuestionProps {
@@ -35,16 +40,16 @@ export const OnboardingChoiceQuestion = ({
       <div>
         {options.map((option) => (
           <button
-            key={option}
-            onClick={() => onAnswer(option)}
+            key={option.id}
+            onClick={() => onAnswer(option.id)}
             className={cn(
               'px-3 py-1 rounded-full border hover:bg-gray-100',
-              selected === option
+              selected === option.id
                 ? 'bg-gray-300 border-gray-400'
                 : 'bg-white hover:bg-gray-100 border-gray-300',
             )}
           >
-            {option}
+            {option.label}
           </button>
         ))}
       </div>

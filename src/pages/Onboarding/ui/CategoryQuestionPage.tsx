@@ -31,35 +31,25 @@ const CategoryQuestionPage = ({ selected, onNext }: CategoryQuestionPageProps) =
         category1={({ context, history }) => (
           <CategoryQuestionStep
             categoryId={context.categoryId}
-            onSubmit={(answers) => {
-              console.log('`카테고리1 저장:', answers);
+            onNext={() =>
               history.push('category2', {
                 categoryId: selected[1],
-                answers,
-              });
-            }}
+              })
+            }
           />
         )}
         category2={({ context, history }) => (
           <CategoryQuestionStep
             categoryId={context.categoryId}
-            onSubmit={(answers) => {
-              console.log('카테고리2 저장:', answers);
+            onNext={() =>
               history.push('category3', {
                 categoryId: selected[2],
-                answers,
-              });
-            }}
+              })
+            }
           />
         )}
         category3={({ context }) => (
-          <CategoryQuestionStep
-            categoryId={context.categoryId}
-            onSubmit={(answers) => {
-              console.log('최종 저장:', answers);
-              onNext();
-            }}
-          />
+          <CategoryQuestionStep categoryId={context.categoryId} onNext={() => onNext()} />
         )}
       />
     </div>
