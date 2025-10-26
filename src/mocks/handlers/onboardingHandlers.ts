@@ -4,8 +4,8 @@ import type {
   CategorySelectResponseDTO,
   CategoryAnswerResponseDTO,
   InteractionStyleResponseDTO,
-  StepInfoCardResponseDTO,
 } from '@/entities/onboarding/model/onboarding.type';
+import { type StepInfoCardResponseDTO } from '@/entities/user/model/user.type';
 import type { ApiErrorMessage, ApiBaseResponse } from '@/shared/api/types';
 
 import {
