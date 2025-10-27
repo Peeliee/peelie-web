@@ -25,6 +25,7 @@ const OnboardingPage = () => {
     id: 'onboarding-funnel',
     initial: { step: 'introducePeelie', context: {} },
   });
+
   return (
     <funnel.Render
       // 소개 페이지
