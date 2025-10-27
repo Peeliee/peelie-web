@@ -36,7 +36,7 @@ const SelectCategoryPage = ({ onNext }: SelectCategoryPageProps) => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col px-6 py-10 justify-between">
+    <div className="flex flex-col px-6 py-10 justify-between">
       <div className="text-center">
         <h2 className="text-2xl font-bold mb-2">
           관심있는 주제를
@@ -56,7 +56,7 @@ const SelectCategoryPage = ({ onNext }: SelectCategoryPageProps) => {
       <button
         onClick={handleNext}
         disabled={isPending || selected.length < 3}
-        className={`block w-full py-4 rounded-full text-center font-medium
+        className={`fixed bottom-10 left-6 right-6 block py-4 rounded-full text-center font-medium
           ${
             selected.length < 3
               ? 'bg-gray-200 text-gray-400 pointer-events-none'

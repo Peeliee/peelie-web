@@ -6,8 +6,9 @@ import { FriendList } from '@/pages/FriendList/FriendList';
 import HomePage from '@/pages/Home/HomePage';
 import MyPage from '@/pages/mypage/MyPage';
 import PATH from '@/shared/constants/path';
-import App from '../App';
 import { GNBLayout } from '@/app/layout/navigation/GNBLayout';
+import { BackHeaderLayout } from '@/app/layout/header/HeaderLayout';
+import App from '../App';
 
 const AppRouter = () => {
   const router = createBrowserRouter([
@@ -17,8 +18,12 @@ const AppRouter = () => {
       // GNB 없는 페이지
       children: [
         { path: 'login', element: <LoginPage /> },
-        { path: 'onboarding', element: <OnboardingPage /> },
         { path: 'friend/:id', element: <FriendPage /> },
+        // BackButton 있는 페이지
+        {
+          element: <BackHeaderLayout />,
+          children: [{ path: 'onboarding', element: <OnboardingPage /> }],
+        },
         // GNB 있는 페이지
         {
           element: <GNBLayout />,
