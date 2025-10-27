@@ -7,8 +7,8 @@ export const useUserStepInfo = () => {
 
   return useQuery({
     ...queryDef,
+    refetchOnMount: 'always',
     refetchInterval: (query) => (query.state.data?.data.generationStatus === 'DONE' ? false : 1000),
-    staleTime: Infinity,
-    gcTime: Infinity,
+    staleTime: 0,
   });
 };

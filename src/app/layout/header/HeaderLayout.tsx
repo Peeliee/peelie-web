@@ -1,5 +1,5 @@
-import { Outlet } from 'react-router-dom';
-import { useState, useCallback } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { HeaderContext } from '@/shared/context/headerContext';
 import { BackHeader, LogoHeader } from './ui/Header';
 
@@ -16,15 +16,18 @@ export const LogoHeaderLayout = () => {
 
 export const BackHeaderLayout = () => {
   const [isHidden, setHidden] = useState<boolean>(false);
+  const [backAction, setBackAction] = useState<(() => void) | null>(null);
+  const navigate = useNavigate();
 
-  const hideHeader = useCallback((hidden: boolean) => {
-    setHidden(hidden);
-  }, []);
+  const handleBackClick = () => {
+    if (backAction) backAction();
+    else navigate(-1);
+  };
 
   return (
-    <HeaderContext.Provider value={{ hideHeader }}>
+    <HeaderContext.Provider value={{ hideHeader: setHidden, setBackAction }}>
       <div className="flex flex-col h-full">
-        {!isHidden && <BackHeader />}
+        {!isHidden && <BackHeader onClick={handleBackClick} />}
         <main className="flex-1">
           <Outlet />
         </main>

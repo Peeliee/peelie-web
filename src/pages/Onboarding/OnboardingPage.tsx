@@ -49,7 +49,7 @@ const OnboardingPage = () => {
       )}
       // 단계별 정보 열람, 수정
       userStepInfo={({ history }) => (
-        <UserStepInfoPage onNext={() => history.push('introduceInteraction')} />
+        <UserStepInfoPage history={history} onNext={() => history.push('introduceInteraction')} />
       )}
       // 교류 성향 소개
       introduceInteraction={({ history }) => (

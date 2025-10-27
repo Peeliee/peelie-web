@@ -11,7 +11,7 @@ interface HeaderProps {
 }
 
 interface BackHeaderProps {
-  onBackClick?: () => void;
+  onClick?: () => void;
 }
 
 export const Header = ({ left, center, right }: HeaderProps) => {
@@ -28,11 +28,11 @@ export const Header = ({ left, center, right }: HeaderProps) => {
 export const LogoHeader = () => <Header left={<PeelieLogo />} />;
 
 // 백버튼 헤더
-export const BackHeader = ({ onBackClick }: BackHeaderProps) => {
+export const BackHeader = ({ onClick }: BackHeaderProps) => {
   const navigate = useNavigate();
 
   const handleBackClick = () => {
-    if (onBackClick) return onBackClick();
+    if (onClick) return onClick();
     navigate(-1);
   };
 

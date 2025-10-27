@@ -21,7 +21,7 @@ const CategoryQuestionPage = ({ selected, onNext }: CategoryQuestionPageProps) =
 
   const { mutate: generateUserStepInfo, isPending } = useMutation({
     mutationFn: userPost.generateUserStepInfo,
-    onSuccess: () => {
+    onSuccess: async () => {
       console.log('단계별 정보 생성 요청 완료');
       onNext();
     },

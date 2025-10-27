@@ -2,18 +2,28 @@ import { useEffect } from 'react';
 import { useUserStepInfo } from '@/entities/user/hooks/useUserStepInfo';
 import { useHeader } from '@/shared/context/headerContext';
 import { cn } from '@/shared/lib/utils';
+import type { useFunnel } from '@use-funnel/react-router-dom';
 
 interface UserStepInfoPageProps {
   onNext: () => void;
+  history: ReturnType<typeof useFunnel>['history'];
 }
 
-const UserStepInfoPage = ({ onNext }: UserStepInfoPageProps) => {
+const UserStepInfoPage = ({ onNext, history }: UserStepInfoPageProps) => {
   const { data, isError } = useUserStepInfo();
-  const { hideHeader } = useHeader();
+  const { hideHeader, setBackAction } = useHeader();
 
   const generationStatus = data?.data.generationStatus;
 
   const isGenerating = generationStatus !== 'DONE';
+
+  // TODO: 일단 임시로 이동 로직 여기에 배치
+  useEffect(() => {
+    hideHeader(false);
+    setBackAction(() => () => history.push('selectCategory', {}));
+
+    return () => setBackAction(null);
+  }, [hideHeader, setBackAction, history]);
 
   useEffect(() => {
     hideHeader(isError || isGenerating);
