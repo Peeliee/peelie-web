@@ -7,7 +7,7 @@ import HomePage from '@/pages/Home/HomePage';
 import MyPage from '@/pages/mypage/MyPage';
 import PATH from '@/shared/constants/path';
 import App from '../App';
-import { GNBLayout } from '@/widgets/navigation/GNBLayout';
+import { GNBLayout } from '@/app/layout/navigation/GNBLayout';
 
 const AppRouter = () => {
   const router = createBrowserRouter([

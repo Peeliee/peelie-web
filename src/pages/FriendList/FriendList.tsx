@@ -6,7 +6,7 @@ import {
   UserCardDescription,
 } from '@/entities/user/ui/UserCardHorizontal';
 
-import { GlobalNavigationBar } from '@/widgets/navigation/ui/GlobalNavigationBar';
+import { GlobalNavigationBar } from '@/app/layout/navigation/ui/GlobalNavigationBar';
 
 import { useNavigate } from 'react-router-dom';
 
