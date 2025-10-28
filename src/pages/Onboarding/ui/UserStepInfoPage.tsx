@@ -23,7 +23,7 @@ const UserStepInfoPage = ({ onNext, history }: UserStepInfoPageProps) => {
     setBackAction(() => () => history.push('selectCategory', {}));
 
     return () => setBackAction(null);
-  }, [hideHeader, setBackAction, history]);
+  }, []);
 
   useEffect(() => {
     hideHeader(isError || isGenerating);
@@ -31,6 +31,7 @@ const UserStepInfoPage = ({ onNext, history }: UserStepInfoPageProps) => {
   }, [isError, isGenerating, hideHeader]);
 
   if (isError) {
+    // TODO : 에러 화면 추후 분리해서 만들기
     return (
       <div className="flex flex-col items-center justify-center h-screen">
         <p>정보를 불러오는 중 오류가 발생했습니다.</p>
@@ -41,6 +42,7 @@ const UserStepInfoPage = ({ onNext, history }: UserStepInfoPageProps) => {
 
   if (data?.data.generationStatus !== 'DONE') {
     return (
+      // TODO: 로딩 중 화면 추후 분리해서 만들기
       <div className="text-center animate-pulse">
         <h2 className="text-lg font-semibold text-gray-800 mb-2 mt-90">단계별 정보 생성 중</h2>
         <p className="text-sm text-gray-500">

@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { CategorySelectGrid } from '@/features/onboarding/ui/CategorySelectGrid';
 import { usePrefetchCategoryMainQuestion } from '@/entities/category/api/category.queries';
 import { onboardingPut } from '@/entities/onboarding/api/onboarding-put';
+import { userStepInfoQuery } from '@/entities/user/api/user.queries';
 
 interface SelectCategoryPageProps {
   onNext: (selectedIds: number[]) => void;
@@ -13,10 +14,15 @@ const SelectCategoryPage = ({ onNext }: SelectCategoryPageProps) => {
   const [selected, setSelected] = useState<number[]>([]);
   const prefetchMainQuestion = usePrefetchCategoryMainQuestion();
 
+  const queryClient = useQueryClient();
+
   const { mutate: selectCategory, isPending } = useMutation({
     mutationFn: onboardingPut.selectCategory,
     onSuccess: (res) => {
       console.log('카테고리 선택 성공', res);
+      queryClient.removeQueries({
+        queryKey: userStepInfoQuery.userStepInfo().queryKey,
+      });
       onNext(selected);
     },
     onError: (err) => {
