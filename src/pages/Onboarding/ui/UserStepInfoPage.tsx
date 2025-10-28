@@ -2,8 +2,9 @@ import { useEffect } from 'react';
 import { useUserStepInfo } from '@/entities/user/hooks/useUserStepInfo';
 import { useHeader } from '@/shared/context/headerContext';
 import { cn } from '@/shared/lib/utils';
-import type { useFunnel } from '@use-funnel/react-router-dom';
+import { type useFunnel } from '@use-funnel/react-router-dom';
 
+// TODO : history 타입이 이게 맞나?
 interface UserStepInfoPageProps {
   onNext: () => void;
   history: ReturnType<typeof useFunnel>['history'];

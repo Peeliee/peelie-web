@@ -49,7 +49,11 @@ const OnboardingPage = () => {
       )}
       // 단계별 정보 열람, 수정
       userStepInfo={({ history }) => (
-        <UserStepInfoPage history={history} onNext={() => history.push('introduceInteraction')} />
+        <UserStepInfoPage
+          // TODO : history 타입이 이게 맞나?
+          history={history as ReturnType<typeof useFunnel>['history']}
+          onNext={() => history.push('introduceInteraction')}
+        />
       )}
       // 교류 성향 소개
       introduceInteraction={({ history }) => (
