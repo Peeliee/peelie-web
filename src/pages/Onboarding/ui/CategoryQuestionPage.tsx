@@ -21,7 +21,7 @@ const CategoryQuestionPage = ({ selected, onNext }: CategoryQuestionPageProps) =
 
   const { mutate: generateUserStepInfo, isPending } = useMutation({
     mutationFn: userPost.generateUserStepInfo,
-    onSuccess: () => {
+    onSuccess: async () => {
       console.log('단계별 정보 생성 요청 완료');
       onNext();
     },
@@ -36,7 +36,7 @@ const CategoryQuestionPage = ({ selected, onNext }: CategoryQuestionPageProps) =
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col px-6 py-10 pb-24">
+    <div className="w-full flex flex-col px-6 py-10 pb-24">
       <div className="text-center mb-8">
         <h1 className="text-xl font-bold mb-2">선택한 카테고리에 대해 이야기해볼까요?</h1>
         <p className="text-gray-500 text-sm">

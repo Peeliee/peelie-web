@@ -25,11 +25,14 @@ const OnboardingPage = () => {
     id: 'onboarding-funnel',
     initial: { step: 'introducePeelie', context: {} },
   });
+
   return (
     <funnel.Render
+      // 소개 페이지
       introducePeelie={({ history }) => (
         <IntroducePeeliePage onNext={() => history.push('selectCategory')} />
       )}
+      // 카테고리 선택
       selectCategory={({ history }) => (
         <SelectCategoryPage
           onNext={(selectedIds) =>
@@ -37,18 +40,26 @@ const OnboardingPage = () => {
           }
         />
       )}
+      // 카테고리별 질문
       categoryQuestion={({ context, history }) => (
         <CategoryQuestionPage
           selected={context.selected}
           onNext={() => history.push('userStepInfo', () => ({}))}
         />
       )}
+      // 단계별 정보 열람, 수정
       userStepInfo={({ history }) => (
-        <UserStepInfoPage onNext={() => history.push('introduceInteraction')} />
+        <UserStepInfoPage
+          // TODO : history 타입이 이게 맞나?
+          history={history as ReturnType<typeof useFunnel>['history']}
+          onNext={() => history.push('introduceInteraction')}
+        />
       )}
+      // 교류 성향 소개
       introduceInteraction={({ history }) => (
         <IntroduceInteractionStylePage onNext={() => history.push('selectInteraction')} />
       )}
+      // 교류 성향 선택
       selectInteraction={({ history }) => (
         <SelectInteractionStylePage
           onNext={(interactionStyle) =>
@@ -56,12 +67,14 @@ const OnboardingPage = () => {
           }
         />
       )}
+      // 한줄소개 입력
       profileDescription={({ context, history }) => (
         <ProfileDescriptionPage
           interactionStyle={context.interactionStyle}
           onNext={() => history.push('finishOnboarding')}
         />
       )}
+      // 온보딩 완료
       finishOnboarding={({ context }) => (
         <FinishOnboardingPage interactionStyle={context.interactionStyle} />
       )}

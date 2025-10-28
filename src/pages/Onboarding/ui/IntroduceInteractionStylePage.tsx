@@ -7,7 +7,7 @@ interface IntroduceInteractionStylePageProps {
 
 const IntroduceInteractionStylePage = ({ onNext }: IntroduceInteractionStylePageProps) => {
   return (
-    <div className="min-h-screen w-full flex flex-col justify-center items-center px-6 py-10">
+    <div className="w-full flex flex-col justify-center items-center px-6 py-10">
       <div className="text-center">
         <h1 className="text-xl font-bold mb-2">교류 성향을 선택해요</h1>
         <p className="text-gray-500 text-sm">

@@ -33,7 +33,7 @@ const ProfileDescriptionPage = ({ interactionStyle, onNext }: ProfileDescription
     submitInteractionInfo({ interactionStyle, bio: description });
   };
   return (
-    <div className="flex flex-col min-h-screen px-6 py-10">
+    <div className="flex flex-col px-6 py-10">
       <TextInput
         label="자기소개 한마디"
         placeholder="입력하세요"
