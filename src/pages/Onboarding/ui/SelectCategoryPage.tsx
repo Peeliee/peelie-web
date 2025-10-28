@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useSearchParams } from 'react-router-dom';
 
 import { CategorySelectGrid } from '@/features/onboarding/ui/CategorySelectGrid';
 import { usePrefetchCategoryMainQuestion } from '@/entities/category/api/category.queries';
@@ -10,9 +11,22 @@ interface SelectCategoryPageProps {
   onNext: (selectedIds: number[]) => void;
 }
 
+export const useClearFunnelSession = (id: string) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  useEffect(() => {
+    if (searchParams.has(`${id}.step`)) {
+      searchParams.delete(`${id}.step`);
+      setSearchParams(searchParams);
+      console.log(`[Funnel Reset] Cleared session for ${id}`);
+    }
+  }, []);
+};
+
 const SelectCategoryPage = ({ onNext }: SelectCategoryPageProps) => {
   const [selected, setSelected] = useState<number[]>([]);
   const prefetchMainQuestion = usePrefetchCategoryMainQuestion();
+
+  useClearFunnelSession('category-funnel');
 
   const queryClient = useQueryClient();
 
