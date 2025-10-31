@@ -14,7 +14,7 @@ export const categorySelectMock: { data: OnboardingCommonResponse; delay: number
     selectedCategoryIds: [1, 2, 3],
     answers: [],
   },
-  delay: 1000,
+  delay: 100,
 };
 
 export const categoryAnswerMock: { data: OnboardingCommonResponse; delay: number } = {
@@ -50,7 +50,7 @@ export const categoryAnswerMock: { data: OnboardingCommonResponse; delay: number
       },
     ],
   },
-  delay: 1000,
+  delay: 100,
 };
 
 export const interactionStyleMock: { data: OnboardingCommonResponse; delay: number } = {
@@ -86,7 +86,7 @@ export const interactionStyleMock: { data: OnboardingCommonResponse; delay: numb
       },
     ],
   },
-  delay: 1000,
+  delay: 100,
 };
 
 export const userStepInfoMakingMock: { data: GeneratingInfo; delay: number } = {

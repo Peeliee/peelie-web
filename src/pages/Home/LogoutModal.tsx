@@ -1,4 +1,4 @@
-import { ConfirmModal } from '@/shared/ui/common/AlertDIalog/confirmModal';
+import { ConfirmModal } from '@/shared/ui/common/Modal/ModalWrapper';
 import { Button } from '@/shared/ui/common/button';
 
 export function LogalModal() {

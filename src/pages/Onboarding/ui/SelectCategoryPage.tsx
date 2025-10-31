@@ -26,7 +26,7 @@ const SelectCategoryPage = ({ onNext }: SelectCategoryPageProps) => {
   const [selected, setSelected] = useState<number[]>([]);
   const prefetchMainQuestion = usePrefetchCategoryMainQuestion();
 
-  useClearFunnelSession('category-funnel');
+  // useClearFunnelSession('category-funnel');
 
   const queryClient = useQueryClient();
 
