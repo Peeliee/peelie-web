@@ -19,22 +19,6 @@ import { ModalWrapper } from './ModalWrapper';
  * - ConfirmModal: 팔로우 / 확인 등의 액션을 확인받는 일반 확인 모달
  */
 
-interface ConfirmModalProps {
-  trigger: React.ReactNode;
-  title: string;
-  description?: string;
-  firstButton?: {
-    text?: string;
-    variant?: 'primary' | 'inactive' | 'secondary' | 'error';
-    onClick?: () => void;
-  };
-  secondButton?: {
-    text?: string;
-    variant?: 'primary' | 'inactive' | 'secondary' | 'error';
-    onClick?: () => void;
-  };
-}
-
 export const QrModal = ({
   url,
   label,
@@ -72,9 +56,6 @@ export const QrModal = ({
 /**
  * ConfirmModal
  *
- * 재사용 가능한 확인(Confirm) 모달 컴포넌트.
- * 트리거 버튼, 제목, 설명, 취소/확인 버튼 설정을 외부에서 주입할 수 있습니다.
- *
  * @example
  * ```tsx
  * <ConfirmModal
@@ -92,23 +73,37 @@ export const QrModal = ({
  *     onClick: () => console.log('탈퇴 처리 로직 실행'),
  *   }}
  * />
- * ```
- *
- * Props:
- * - `trigger`: 모달을 여는 버튼 또는 요소 (ReactNode)
- * - `title`: 모달 제목 (string)
- * - `description`: 모달 설명문 (string, optional)
- * - `cancel`: { text, variant, onClick } — 취소 버튼 설정 (optional)
- * - `confirm`: { text, variant, onClick } — 확인 버튼 설정 (optional)
  */
+interface ConfirmModalProps {
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  trigger?: React.ReactNode;
+  title: string;
+  description?: string;
+  firstButton?: {
+    text?: string;
+    variant?: 'primary' | 'inactive' | 'secondary' | 'error';
+    onClick?: () => void;
+  };
+  secondButton?: {
+    text?: string;
+    variant?: 'primary' | 'inactive' | 'secondary' | 'error';
+    onClick?: () => void;
+  };
+}
+
 export const ConfirmModal = ({
+  open: controlledOpen,
+  onOpenChange,
   trigger,
   title,
   description,
   firstButton,
   secondButton,
 }: ConfirmModalProps) => {
-  const [open, setOpen] = useState<boolean>(false);
+  const [internalOpen, setInternalOpen] = useState(false);
+  const open = controlledOpen ?? internalOpen;
+  const setOpen = onOpenChange ?? setInternalOpen;
 
   const handleFirstButtonClick = () => {
     firstButton?.onClick?.();
@@ -122,9 +117,7 @@ export const ConfirmModal = ({
 
   return (
     <ModalWrapper open={open} onOpenChange={setOpen}>
-      <ModalWrapper.Trigger>
-        <Button>{trigger}</Button>
-      </ModalWrapper.Trigger>
+      {trigger && <ModalWrapper.Trigger>{trigger}</ModalWrapper.Trigger>}
 
       <ModalWrapper.Content>
         <ModalWrapper.Header>

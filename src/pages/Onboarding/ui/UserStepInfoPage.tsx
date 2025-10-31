@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useUserStepInfo } from '@/entities/user/hooks/useUserStepInfo';
 import { useHeader } from '@/shared/context/headerContext';
 import { cn } from '@/shared/lib/utils';
 import { type useFunnel } from '@use-funnel/react-router-dom';
+import { ConfirmModal } from '@/shared/ui/common/Modal/ModalPresets';
 
 // TODO : history 타입이 이게 맞나?
 interface UserStepInfoPageProps {
@@ -14,17 +15,22 @@ const UserStepInfoPage = ({ onNext, history }: UserStepInfoPageProps) => {
   const { data, isError } = useUserStepInfo();
   const { hideHeader, setBackAction } = useHeader();
 
-  const generationStatus = data?.data.generationStatus;
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
+  const generationStatus = data?.data.generationStatus;
   const isGenerating = generationStatus !== 'DONE';
 
   // TODO: 일단 임시로 이동 로직 여기에 배치
   useEffect(() => {
     hideHeader(false);
-    setBackAction(() => () => history.push('selectCategory', {}));
+    setBackAction(() => () => setConfirmOpen(true));
 
     return () => setBackAction(null);
   }, []);
+
+  const goBackToSelectCategory = () => {
+    history.push('selectCategory', {});
+  };
 
   useEffect(() => {
     hideHeader(isError || isGenerating);
@@ -41,7 +47,7 @@ const UserStepInfoPage = ({ onNext, history }: UserStepInfoPageProps) => {
     );
   }
 
-  if (data?.data.generationStatus !== 'DONE') {
+  if (generationStatus !== 'DONE') {
     return (
       // TODO: 로딩 중 화면 추후 분리해서 만들기
       <div className="text-center animate-pulse">
@@ -86,6 +92,23 @@ const UserStepInfoPage = ({ onNext, history }: UserStepInfoPageProps) => {
       >
         계속하기
       </button>
+
+      <ConfirmModal
+        open={confirmOpen}
+        onOpenChange={setConfirmOpen}
+        title="단계별 정보가 초기화됩니다"
+        description="이전 단계로 돌아가면 지금 생성된 정보는 삭제됩니다. 그래도 이동할까요?"
+        firstButton={{
+          text: '취소',
+          variant: 'inactive',
+          onClick: () => setConfirmOpen(false),
+        }}
+        secondButton={{
+          text: '이동하기',
+          variant: 'primary',
+          onClick: goBackToSelectCategory,
+        }}
+      />
     </div>
   );
 };
