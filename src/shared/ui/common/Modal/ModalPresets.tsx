@@ -19,6 +19,22 @@ import { ModalWrapper } from './ModalWrapper';
  * - ConfirmModal: 팔로우 / 확인 등의 액션을 확인받는 일반 확인 모달
  */
 
+interface ConfirmModalProps {
+  trigger: React.ReactNode;
+  title: string;
+  description?: string;
+  firstButton?: {
+    text?: string;
+    variant?: 'primary' | 'inactive' | 'secondary' | 'error';
+    onClick?: () => void;
+  };
+  secondButton?: {
+    text?: string;
+    variant?: 'primary' | 'inactive' | 'secondary' | 'error';
+    onClick?: () => void;
+  };
+}
+
 export const QrModal = ({
   url,
   label,
@@ -53,28 +69,76 @@ export const QrModal = ({
   );
 };
 
-export const ConfirmModal = () => {
+/**
+ * ConfirmModal
+ *
+ * 재사용 가능한 확인(Confirm) 모달 컴포넌트.
+ * 트리거 버튼, 제목, 설명, 취소/확인 버튼 설정을 외부에서 주입할 수 있습니다.
+ *
+ * @example
+ * ```tsx
+ * <ConfirmModal
+ *   trigger={<Button>회원 탈퇴</Button>}
+ *   title="정말 탈퇴하시겠어요?"
+ *   description="탈퇴 시 모든 데이터가 삭제됩니다."
+ *   cancel={{
+ *     text: '취소',
+ *     variant: 'inactive',
+ *     onClick: () => console.log('취소 누름'),
+ *   }}
+ *   confirm={{
+ *     text: '탈퇴하기',
+ *     variant: 'primary',
+ *     onClick: () => console.log('탈퇴 처리 로직 실행'),
+ *   }}
+ * />
+ * ```
+ *
+ * Props:
+ * - `trigger`: 모달을 여는 버튼 또는 요소 (ReactNode)
+ * - `title`: 모달 제목 (string)
+ * - `description`: 모달 설명문 (string, optional)
+ * - `cancel`: { text, variant, onClick } — 취소 버튼 설정 (optional)
+ * - `confirm`: { text, variant, onClick } — 확인 버튼 설정 (optional)
+ */
+export const ConfirmModal = ({
+  trigger,
+  title,
+  description,
+  firstButton,
+  secondButton,
+}: ConfirmModalProps) => {
   const [open, setOpen] = useState<boolean>(false);
+
+  const handleFirstButtonClick = () => {
+    firstButton?.onClick?.();
+    setOpen(false);
+  };
+
+  const handleSecondButtonClick = () => {
+    secondButton?.onClick?.();
+    setOpen(false);
+  };
 
   return (
     <ModalWrapper open={open} onOpenChange={setOpen}>
       <ModalWrapper.Trigger>
-        <Button>팔로우 테스트</Button>
+        <Button>{trigger}</Button>
       </ModalWrapper.Trigger>
 
       <ModalWrapper.Content>
         <ModalWrapper.Header>
-          <ModalWrapper.Title>“김용희님을 팔로우하시겠어요?”</ModalWrapper.Title>
-          <ModalWrapper.Description>
-            님의 관심사와 기본 프로필을 볼 수 있어요.
-          </ModalWrapper.Description>
+          <ModalWrapper.Title>{title}</ModalWrapper.Title>
+          <ModalWrapper.Description>{description}</ModalWrapper.Description>
         </ModalWrapper.Header>
 
         <ModalWrapper.Footer>
-          <Button variant="inactive" onClick={() => setOpen(false)}>
-            취소
+          <Button variant={firstButton?.variant ?? 'inactive'} onClick={handleFirstButtonClick}>
+            {firstButton?.text ?? '취소'}
           </Button>
-          <Button variant="primary">팔로우</Button>
+          <Button variant={secondButton?.variant ?? 'primary'} onClick={handleSecondButtonClick}>
+            {secondButton?.text ?? '확인'}
+          </Button>
         </ModalWrapper.Footer>
       </ModalWrapper.Content>
     </ModalWrapper>
