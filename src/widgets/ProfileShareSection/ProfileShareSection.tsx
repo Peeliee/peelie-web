@@ -1,4 +1,4 @@
-import { QrModal, ConfirmModal } from '@/shared/ui/common/Modal/QrModal';
+import { QrModal, ConfirmModal } from '@/shared/ui/common/Modal/ModalPresets';
 import { cn } from '@/shared/lib/utils';
 
 interface ProfileShareSectionProps {

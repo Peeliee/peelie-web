@@ -4,6 +4,21 @@ import { Button } from '../button';
 
 import { ModalWrapper } from './ModalWrapper';
 
+/**
+ * @file ModalPresets.tsx
+ *
+ * @description
+ * ModalWrapper를 기반으로 구현된 공용 모달 컴포넌트 모음.
+ *
+ *   ModalWrapper를 중심으로
+ *   다양한 목적의 모달을 프리셋 형태로 재사용 하기 위해 존재함.
+ *   개별 도메인과 직접적인 비즈니스 로직을 갖지 않음.
+ *
+ * @components
+ * - QrModal: 프로필 공유용 QR 코드 노출 모달
+ * - ConfirmModal: 팔로우 / 확인 등의 액션을 확인받는 일반 확인 모달
+ */
+
 export const QrModal = ({
   url,
   label,
@@ -22,6 +37,7 @@ export const QrModal = ({
       </ModalWrapper.Trigger>
 
       <ModalWrapper.Content className="bg-[#FF8C00] text-white">
+        <ModalWrapper.CloseButton onClose={() => setOpen(false)} />
         <ModalWrapper.Header>
           <ModalWrapper.Title>QR을 스캔해주세요</ModalWrapper.Title>
           <ModalWrapper.Description>

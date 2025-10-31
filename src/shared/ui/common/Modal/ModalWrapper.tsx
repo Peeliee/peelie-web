@@ -8,8 +8,10 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/shared/ui/common/alert-dialog';
-import { Button } from '../button';
+import CloseBtn from '@/assets/closeButton.svg?react';
 import { cn } from '@/shared/lib/utils';
+
+import { Button } from '../button';
 
 export interface ModalWrapperProps {
   children: React.ReactNode;
@@ -33,12 +35,15 @@ function Content({ className, children }: { children: React.ReactNode; className
   return (
     <AlertDialogContent
       className={cn(
-        'flex w-[308px] flex-col items-center justify-center gap-5 rounded-2xl p-6 text-center',
+        'flex w-[308px] flex-col items-center justify-center rounded-2xl p-6 text-center',
         'bg-white shadow-lg',
         className,
       )}
     >
-      {children}
+      {/* <div className="relative w-full h-full flex flex-col gap-5 items-center justify-center">
+        {children}
+      </div> */}
+      <div className="w-full h-full flex flex-col items-center gap-5">{children}</div>
     </AlertDialogContent>
   );
 }
@@ -70,25 +75,20 @@ function Description({ children, className }: { children?: React.ReactNode; clas
   );
 }
 
-export function QRImage({
-  value,
-  className,
-  size = 220,
-}: {
-  value: string;
-  className?: string;
-  size?: number;
-}) {
+export function QRImage({ value, className }: { value: string; className?: string }) {
   return (
     <div
       className={cn(
-        'flex items-center justify-center rounded-lg bg-white overflow-hidden',
+        'flex w-full aspect-square items-center justify-center rounded-lg bg-white overflow-hidden',
         className,
       )}
-      style={{ width: size, height: size }}
     >
       {value ? (
-        <QRCodeSVG value={value} size={size - 20} level="M" />
+        <QRCodeSVG
+          value={value}
+          style={{ width: '90%', height: '90%', display: 'block' }}
+          level="M"
+        />
       ) : (
         <div className="text-gray-400 text-sm">QR 데이터 없음</div>
       )}
@@ -151,6 +151,28 @@ function Footer({
   );
 }
 
+export const CloseButton = ({
+  onClose,
+  className,
+}: {
+  onClose: () => void;
+  className?: string;
+}) => {
+  return (
+    <button
+      type="button"
+      onClick={onClose}
+      className={cn(
+        'absolute right-4 top-4 p-1',
+        'rounded-full transition-opacity hover:opacity-70',
+        className,
+      )}
+    >
+      <CloseBtn className="w-5 h-5 text-black" />
+    </button>
+  );
+};
+
 export const ModalWrapper = Object.assign(Root, {
   Trigger,
   Content,
@@ -160,4 +182,5 @@ export const ModalWrapper = Object.assign(Root, {
   UserInfo,
   Description,
   Footer,
+  CloseButton,
 });
