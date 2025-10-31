@@ -1413,5 +1413,5 @@ export const CategorySubQuestionMock: {
       ],
     },
   },
-  delay: 500,
+  delay: 1000,
 };

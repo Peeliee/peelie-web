@@ -106,7 +106,7 @@ export const onboardingHandlers = [
 
       const elapsed = Date.now() - generationStartTime;
 
-      if (elapsed < 3000) {
+      if (elapsed < 5000) {
         await new Promise((resolve) => setTimeout(resolve, userStepInfoMakingMock.delay));
 
         return HttpResponse.json({
