@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import { useEffect } from 'react';
+
 import { QueryProvider } from './provider/QueryProvider';
 
 const App = () => {
