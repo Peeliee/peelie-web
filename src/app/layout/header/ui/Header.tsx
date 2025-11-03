@@ -16,7 +16,7 @@ interface BackHeaderProps {
 
 export const Header = ({ left, center, right }: HeaderProps) => {
   return (
-    <header className="flex items-center justify-between h-12 px-4 border-b border-gray-100">
+    <header className="fixed top-0 flex items-center justify-between h-12 px-4 border-b border-gray-100">
       <div className="flex-1">{left}</div>
       <div className="flex-1 flex justify-center">{center}</div>
       <div className="flex-1 flex justify-end">{right}</div>

@@ -95,6 +95,27 @@ export const FriendListStack = () => {
     navigate(`/friend/${id}`);
   };
 
+  const scrollToCard = (index: number) => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const card = container.querySelectorAll('.stack-card')[index] as HTMLElement | undefined;
+    if (!card) return;
+
+    const containerRect = container.getBoundingClientRect();
+    const cardRect = card.getBoundingClientRect();
+
+    // 스크롤 목표 = 현재 스크롤 + 카드 중앙 - 컨테이너 중앙
+    const scrollTarget =
+      container.scrollTop +
+      (cardRect.top + cardRect.height / 2 - (containerRect.top + containerRect.height / 2));
+
+    container.scrollTo({
+      top: scrollTarget,
+      behavior: 'smooth',
+    });
+  };
+
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -134,25 +155,30 @@ export const FriendListStack = () => {
   }, []);
 
   return (
-    <div
-      ref={containerRef}
-      className="relative h-200 w-full overflow-y-scroll no-scrollbar px-4 pt-12"
-    >
-      {defaultFriends.map((friend, index) => (
-        <div
-          key={friend.userId}
-          className={cn(
-            'stack-card absolute left-0 right-0 transition-transform duration-300',
-            activeIndex === index ? 'z-[9999]' : '',
-          )}
-          style={{
-            top: `${index * 120}px`,
-          }}
-          onClick={() => setActiveIndex(index)}
-        >
-          <FlipUserCard friend={friend} onClick={() => handleNavigate(friend.userId)} />
-        </div>
-      ))}
+    <div ref={containerRef} className="relative h-190 w-full overflow-auto no-scrollbar px-4 pt-12">
+      <div className="h-10" />
+
+      <div className="relative">
+        {defaultFriends.map((friend, index) => (
+          <div
+            key={friend.userId}
+            className={cn(
+              'stack-card absolute left-0 right-0 transition-transform duration-300',
+              activeIndex === index ? 'z-[9999]' : '',
+            )}
+            style={{
+              top: `${index * 120}px`,
+            }}
+            onClick={() => {
+              setActiveIndex(index);
+              scrollToCard(index);
+            }}
+          >
+            <FlipUserCard friend={friend} onClick={() => handleNavigate(friend.userId)} />
+          </div>
+        ))}
+      </div>
+      <div className="h-30" />
     </div>
   );
 };
