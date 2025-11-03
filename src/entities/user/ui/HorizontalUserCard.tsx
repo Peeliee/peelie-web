@@ -1,7 +1,8 @@
 import { type ReactNode } from 'react';
 import { cn } from '@/shared/lib/utils';
+import MockImg from '@/assets/mockImg.svg?react';
 
-interface UserCardHorizontalProps {
+interface HorizontalUserCardProps {
   className?: string;
   children: ReactNode;
   onClick?: () => void;
@@ -13,21 +14,24 @@ interface UserCardHorizontalProps {
  * UserCardEditProfile, UserCardPersonality 같은 하위 컴포넌트를 조합해서 사용.
  *
  * @example
- * <UserCardHorizontal onClick={() => console.log('카드 클릭')}>
+ * <HorizontalUserCard onClick={() => console.log('카드 클릭')}>
  *   <UserCardImage src="/avatar.png" />
  *   <div className="flex flex-col">
  *     <UserCardName>김용희</UserCardName>
  *     <UserCardDescription>대화를 통해 배우고, 성장하고 싶습니다.</UserCardDescription>
  *   </div>
  *   <UserCardPersonality>신중형</UserCardPersonality>
- * </UserCardHorizontal>
+ * </HorizontalUserCard>
  *
  */
-const UserCardHorizontal = ({ className, children, onClick }: UserCardHorizontalProps) => {
+const HorizontalUserCard = ({ className, children, onClick }: HorizontalUserCardProps) => {
   return (
     <div
       onClick={onClick}
-      className={cn('flex items-center gap-4 rounded-lg border p-4 bg-white shadow-sm', className)}
+      className={cn(
+        'flex h-60 items-center gap-4 rounded-lg border p-4 bg-white shadow-sm',
+        className,
+      )}
     >
       {children}
     </div>
@@ -36,7 +40,7 @@ const UserCardHorizontal = ({ className, children, onClick }: UserCardHorizontal
 
 const UserCardImage = ({ src, className }: { src?: string; className?: string }) => {
   return (
-    <div className={cn('w-12 h-12 bg-gray-200 overflow-hidden', className)}>
+    <div className={cn('w-34 h-34 bg-gray-200 overflow-hidden', className)}>
       {src && <img src={src} />}
     </div>
   );
@@ -100,11 +104,44 @@ const UserCardPersonality = ({
   );
 };
 
+const UserCardFlipped = ({
+  userName,
+  stage,
+  onClick,
+}: {
+  userName: string;
+  stage: number;
+  onClick: () => void;
+}) => {
+  return (
+    <div
+      className={cn(
+        'w-full h-60 rounded-2xl bg-gradient-to-br from-[#FFAD33] to-[#FF823D]',
+        'p-6 flex flex-col items-center justify-center text-center text-white aspect-[4/3]',
+      )}
+    >
+      <MockImg className="w-20" />
+      {userName}님과 나의 교류껍질은 아직 단단해요! <br /> 한 겹 더 친해질 시간이에요 {stage}
+      <div className="w-full border-t border-white/30 mb-3" />
+      <button
+        onClick={onClick}
+        className={cn(
+          'flex items-center justify-center gap-1 text-sm font-medium',
+          'text-white hover:text-white/90 transition',
+        )}
+      >
+        친구 프로필 바로가기
+      </button>
+    </div>
+  );
+};
+
 export {
-  UserCardHorizontal,
+  HorizontalUserCard,
   UserCardImage,
   UserCardName,
   UserCardDescription,
   UserCardEditProfile,
   UserCardPersonality,
+  UserCardFlipped,
 };

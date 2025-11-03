@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import {
-  UserCardHorizontal,
+  HorizontalUserCard,
   UserCardImage,
   UserCardName,
   UserCardDescription,
   UserCardEditProfile,
   UserCardPersonality,
-} from '@/entities/user/ui/UserCardHorizontal';
+} from '@/entities/user/ui/HorizontalUserCard';
 
-const meta: Meta<typeof UserCardHorizontal> = {
+const meta: Meta<typeof HorizontalUserCard> = {
   title: 'Card/UserHorizontalCard',
-  component: UserCardHorizontal,
+  component: HorizontalUserCard,
   tags: ['autodocs'],
   parameters: {
     docs: {
@@ -26,26 +26,26 @@ const meta: Meta<typeof UserCardHorizontal> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof UserCardHorizontal>;
+type Story = StoryObj<typeof HorizontalUserCard>;
 
 // 프로필 버전
 export const ProfileCard: Story = {
   render: () => (
-    <UserCardHorizontal>
+    <HorizontalUserCard>
       <UserCardImage />
       <div className="flex flex-col">
         <UserCardName>김용희</UserCardName>
         <UserCardDescription>대화를 통해 배우고, 나누며 성장하고 싶습니다.</UserCardDescription>
       </div>
       <UserCardEditProfile onClick={() => alert('수정 클릭')}>프로필 수정하기</UserCardEditProfile>
-    </UserCardHorizontal>
+    </HorizontalUserCard>
   ),
 };
 
 // 교류 성향 버전
 export const PersonalityCard: Story = {
   render: () => (
-    <UserCardHorizontal onClick={() => alert('클릭')}>
+    <HorizontalUserCard onClick={() => alert('클릭')}>
       <UserCardImage />
       <div className="flex flex-col">
         <div className="flex items-center gap-2">
@@ -54,6 +54,6 @@ export const PersonalityCard: Story = {
         <UserCardDescription>대화를 통해 배우고, 나누며 성장하고 싶습니다.</UserCardDescription>
       </div>
       <UserCardPersonality>신중형</UserCardPersonality>
-    </UserCardHorizontal>
+    </HorizontalUserCard>
   ),
 };

@@ -1,6 +1,6 @@
 import { cn } from '@/shared/lib/utils';
 
-interface UserCardVerticalProps {
+interface VerticalUserCardProps {
   className?: string;
   imageSrc?: string;
   name: string;
@@ -10,26 +10,26 @@ interface UserCardVerticalProps {
 }
 
 /**
- * UserCardVertical
+ * VerticalUserCard
  *
  * 사용자 정보를 세로 레이아웃으로 보여주는 카드
  *
  * @example
- * <UserCardVertical
+ * <VerticalUserCard
  *   imageSrc="/김용희.png"
  *   name="김용희"
  *   personality="신중형"
  *   description="대화를 통해 배우고, 나누며 성장하고 싶습니다."
  * />
  */
-export const UserCardVertical = ({
+export const VerticalUserCard = ({
   className,
   imageSrc,
   name,
   personality,
   description,
   onClick,
-}: UserCardVerticalProps) => {
+}: VerticalUserCardProps) => {
   return (
     <div
       onClick={onClick}

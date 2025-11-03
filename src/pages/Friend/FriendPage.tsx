@@ -1,11 +1,11 @@
 import { useParams } from 'react-router-dom';
 import {
-  UserCardHorizontal,
+  HorizontalUserCard,
   UserCardImage,
   UserCardName,
   UserCardDescription,
   UserCardPersonality,
-} from '@/entities/user/ui/UserCardHorizontal';
+} from '@/entities/user/ui/HorizontalUserCard';
 import { StepTabs, StepTab } from '@/features/user/ui/StepTabs';
 import { mockUsers } from '@/widgets/RandomUserCarousel/RandomUserCarousel';
 import MockImg from '@/assets/mockImg.svg';
@@ -23,7 +23,7 @@ const FriendPage = () => {
             교류 단계에 맞는 단계별 캐릭터 테마 이미지 삽입
           </div>
         </div>
-        <UserCardHorizontal
+        <HorizontalUserCard
           onClick={() => console.log('카드 클릭')}
           className="mt-4 border-0 shadow-none"
         >
@@ -35,7 +35,7 @@ const FriendPage = () => {
             </div>
             <UserCardDescription>{user?.description}</UserCardDescription>
           </div>
-        </UserCardHorizontal>
+        </HorizontalUserCard>
 
         <StepTabs>
           <StepTab title="STEP 1">

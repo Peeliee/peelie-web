@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { UserCardVertical } from '@/entities/user/ui/UserCardVertical';
+import { VerticalUserCard } from '@/entities/user/ui/VerticalUserCard';
 
-const meta: Meta<typeof UserCardVertical> = {
+const meta: Meta<typeof VerticalUserCard> = {
   title: 'Card/UserCardVertical',
-  component: UserCardVertical,
+  component: VerticalUserCard,
   tags: ['autodocs'],
 };
 
 export default meta;
-type Story = StoryObj<typeof UserCardVertical>;
+type Story = StoryObj<typeof VerticalUserCard>;
 
 export const VerticalCard: Story = {
   args: {
@@ -16,6 +16,6 @@ export const VerticalCard: Story = {
     name: '김용희',
     personality: '외향형',
     description: '함께 성장하며 즐거운 대화를 나누고 싶습니다.',
-    onClick: () => alert('클릭'), 
+    onClick: () => alert('클릭'),
   },
 };

@@ -1,10 +1,10 @@
 import {
-  UserCardHorizontal,
+  HorizontalUserCard,
   UserCardImage,
   UserCardName,
   UserCardDescription,
   UserCardEditProfile,
-} from '@/entities/user/ui/UserCardHorizontal';
+} from '@/entities/user/ui/HorizontalUserCard';
 import { StepTabs, StepTab } from '@/features/user/ui/StepTabs';
 import MockImg from '@/assets/mockImg.svg';
 
@@ -17,7 +17,7 @@ const MyPage = () => {
           교류 단계에 맞는 단계별 캐릭터 테마 이미지 삽입
         </div>
       </div>
-      <UserCardHorizontal className="mt-4 border-0 shadow-none">
+      <HorizontalUserCard className="mt-4 border-0 shadow-none">
         <UserCardImage src={MockImg} />
 
         {/* 가운데 영역 */}
@@ -30,7 +30,7 @@ const MyPage = () => {
         <UserCardEditProfile onClick={() => alert('수정 클릭')} className="self-center">
           프로필 수정하기
         </UserCardEditProfile>
-      </UserCardHorizontal>
+      </HorizontalUserCard>
 
       <StepTabs>
         <StepTab title="STEP 1">

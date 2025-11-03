@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
 import { CarouselWrapper } from '@/shared/ui/common/Carousel/CarouselWrapper';
-import { UserCardVertical } from '@/entities/user/ui/UserCardVertical';
+import { VerticalUserCard } from '@/entities/user/ui/VerticalUserCard';
 import MockImg from '@/assets/mockImg.svg';
 
 export const mockUsers = [
@@ -68,7 +68,7 @@ export const RandomUserCarousel = () => {
     <CarouselWrapper variant="peekSmall">
       {randomFive.map((user) => (
         <div onClick={() => navigate(`/friend/${user.id}`)}>
-          <UserCardVertical
+          <VerticalUserCard
             key={user.name}
             imageSrc={user.imageSrc}
             name={user.name}
