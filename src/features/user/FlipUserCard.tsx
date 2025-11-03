@@ -1,6 +1,5 @@
 // FriendCard.tsx
 
-import { useState } from 'react';
 import {
   HorizontalUserCard,
   UserCardName,
@@ -19,16 +18,14 @@ interface FlipUserCardProps {
     stage: number;
     profileUrl: string;
   };
+  isFlipped: boolean;
+  onFlip: () => void;
   onClick: () => void;
 }
 
-export const FlipUserCard = ({ friend, onClick }: FlipUserCardProps) => {
-  const [isFlipped, setIsFlipped] = useState(false);
-
-  const handleCardClick = () => setIsFlipped((prev) => !prev);
-
+export const FlipUserCard = ({ friend, isFlipped, onFlip, onClick }: FlipUserCardProps) => {
   return (
-    <div onClick={handleCardClick} className="w-full cursor-pointer">
+    <div onClick={onFlip} className="w-full cursor-pointer">
       {isFlipped ? (
         <UserCardFlipped userName={friend.userName} stage={friend.stage} onClick={onClick} />
       ) : (
