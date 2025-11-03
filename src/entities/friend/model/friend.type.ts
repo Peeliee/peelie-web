@@ -11,7 +11,7 @@ export interface FriendResponse {
   profileUrl: string | null;
 }
 
-export interface FriendDetailResponse {
+export interface FriendProfileResponse {
   userId: number;
   userName: string;
   profileImageUrl: string | null;
@@ -22,5 +22,5 @@ export interface FriendDetailResponse {
 }
 
 export type FriendListResponseDTO = ApiResponse<FriendResponse[]>;
-export type FriendDetailResponseDTO = ApiResponse<FriendDetailResponse>;
+export type FriendProfileResponseDTO = ApiResponse<FriendProfileResponse>;
 export type RandomFriendListResponseDTO = ApiResponse<FriendResponse[]>;
