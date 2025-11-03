@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useKakaoAuthCode } from '@/features/auth/hooks/useKakaoAuthCode';
 import { GlobalNavigationBar } from '@/app/layout/navigation/ui/GlobalNavigationBar';
 import { ProfileShareSection } from '@/widgets/ProfileShareSection/ProfileShareSection';
-import { RandomUserCarousel } from '@/widgets/RandomUserCarousel/RandomUserCarousel';
+import { RandomUserCarousel } from '@/widgets/Carousel/RandomUserCarousel';
 import { StepProgress } from '@/shared/ui/common/Progress/StepProgress';
 import { StatusProgress } from '@/shared/ui/common/Progress/StatusProgress';
 

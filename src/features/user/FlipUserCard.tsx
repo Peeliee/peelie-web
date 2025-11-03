@@ -12,15 +12,17 @@ import {
 
 interface FlipUserCardProps {
   friend: {
+    userId: number;
     userName: string;
     interactionStyle: string;
     bio: string;
     stage: number;
     profileUrl: string;
   };
+  onClick: () => void;
 }
 
-export const FlipUserCard = ({ friend }: FlipUserCardProps) => {
+export const FlipUserCard = ({ friend, onClick }: FlipUserCardProps) => {
   const [isFlipped, setIsFlipped] = useState(false);
 
   const handleCardClick = () => setIsFlipped((prev) => !prev);
@@ -28,11 +30,7 @@ export const FlipUserCard = ({ friend }: FlipUserCardProps) => {
   return (
     <div onClick={handleCardClick} className="w-full cursor-pointer">
       {isFlipped ? (
-        <UserCardFlipped
-          userName={friend.userName}
-          stage={friend.stage}
-          onClick={() => alert('프로필 바로가기')}
-        />
+        <UserCardFlipped userName={friend.userName} stage={friend.stage} onClick={onClick} />
       ) : (
         <HorizontalUserCard>
           <div>

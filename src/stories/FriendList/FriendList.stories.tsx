@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { FriendList } from '@/pages/FriendList/FriendList';
+import { FriendList } from '@/pages/FriendList/FriendListPage';
 
 const meta: Meta<typeof FriendList> = {
   title: 'Pages/FriendList',

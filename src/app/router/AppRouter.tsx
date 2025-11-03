@@ -2,12 +2,12 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import LoginPage from '@/pages/Login/LoginPage';
 import OnboardingPage from '@/pages/Onboarding/OnboardingPage';
 import FriendPage from '@/pages/Friend/FriendPage';
-import { FriendList } from '@/pages/FriendList/FriendList';
+import FriendListPage from '@/pages/FriendList/FriendListPage';
 import HomePage from '@/pages/Home/HomePage';
 import MyPage from '@/pages/mypage/MyPage';
 import PATH from '@/shared/constants/path';
 import { GNBLayout } from '@/app/layout/navigation/GNBLayout';
-import { BackHeaderLayout } from '@/app/layout/header/HeaderLayout';
+import { BackHeaderLayout, LogoHeaderLayout } from '@/app/layout/header/HeaderLayout';
 import App from '../App';
 
 const AppRouter = () => {
@@ -29,8 +29,12 @@ const AppRouter = () => {
           element: <GNBLayout />,
           children: [
             { path: '', element: <HomePage /> },
-            { path: 'friends', element: <FriendList /> }, // 친구 목록
+
             { path: 'mypage', element: <MyPage /> },
+            {
+              element: <LogoHeaderLayout />,
+              children: [{ path: 'friendslist', element: <FriendListPage /> }],
+            },
           ],
         },
       ],

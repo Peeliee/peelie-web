@@ -7,7 +7,7 @@ import {
   UserCardPersonality,
 } from '@/entities/user/ui/HorizontalUserCard';
 import { StepTabs, StepTab } from '@/features/user/ui/StepTabs';
-import { mockUsers } from '@/widgets/RandomUserCarousel/RandomUserCarousel';
+import { mockUsers } from '@/widgets/Carousel/RandomUserCarousel';
 import MockImg from '@/assets/mockImg.svg';
 
 const FriendPage = () => {
