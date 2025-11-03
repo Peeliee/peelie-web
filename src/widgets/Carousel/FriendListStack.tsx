@@ -44,46 +44,6 @@ const defaultFriends = [
     bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
     interactionStyle: '신중형',
   },
-  {
-    userId: 6,
-    userName: '유지원2',
-    profileUrl: 'nature.jpeg',
-    stage: 1,
-    bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
-    interactionStyle: '신중형',
-  },
-  {
-    userId: 7,
-    userName: '김나은2',
-    profileUrl: 'nature.jpeg',
-    stage: 1,
-    bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
-    interactionStyle: '신중형',
-  },
-  {
-    userId: 8,
-    userName: '김용희2',
-    profileUrl: 'nature.jpeg',
-    stage: 1,
-    bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
-    interactionStyle: '신중형',
-  },
-  {
-    userId: 9,
-    userName: '강희구2',
-    profileUrl: 'nature.jpeg',
-    stage: 1,
-    bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
-    interactionStyle: '신중형',
-  },
-  {
-    userId: 10,
-    userName: '권두환2',
-    profileUrl: 'nature.jpeg',
-    stage: 1,
-    bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
-    interactionStyle: '신중형',
-  },
 ];
 
 export const FriendListStack = () => {
@@ -137,7 +97,7 @@ export const FriendListStack = () => {
       // 각 카드에 transform 적용
       cards.forEach((card, index) => {
         const element = card as HTMLElement;
-        const baseOffset = index * 50;
+        const baseOffset = index * 20;
         const isClosest = index === closestIndex;
 
         // 중앙 카드만 extraSpace 적용
@@ -154,11 +114,18 @@ export const FriendListStack = () => {
     return () => container.removeEventListener('scroll', handleScroll);
   }, []);
 
-  return (
-    <div ref={containerRef} className="relative h-190 w-full overflow-auto no-scrollbar px-4 pt-12">
-      <div className="h-10" />
+  const CARD_GAP = 120;
+  const topSpacer = window.innerHeight * 0.25;
+  const bottomSpacer = window.innerHeight * 0.05;
+  const wrapperHeight = defaultFriends.length * CARD_GAP + topSpacer + bottomSpacer;
 
-      <div className="relative">
+  return (
+    <div
+      ref={containerRef}
+      className="relative h-full w-full overflow-auto no-scrollbar px-4 pt-12"
+    >
+      <div className="h-[25vh]" />
+      <div className="relative" style={{ height: `${wrapperHeight}px` }}>
         {defaultFriends.map((friend, index) => (
           <div
             key={friend.userId}
@@ -177,8 +144,8 @@ export const FriendListStack = () => {
             <FlipUserCard friend={friend} onClick={() => handleNavigate(friend.userId)} />
           </div>
         ))}
+        <div className="h-[95vh]" />
       </div>
-      <div className="h-30" />
     </div>
   );
 };
