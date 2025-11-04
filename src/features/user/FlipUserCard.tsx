@@ -1,5 +1,3 @@
-// FriendCard.tsx
-
 import {
   HorizontalUserCard,
   UserCardName,
@@ -8,16 +6,12 @@ import {
   UserCardDescription,
   UserCardFlipped,
 } from '@/entities/user/ui/HorizontalUserCard';
+import type { FriendResponse } from '@/entities/friend/model/friend.type';
+import { InteractionStyle } from '@/shared/constants/interactionStyle';
+import mockProfile from '@/assets/mockimage.png';
 
 interface FlipUserCardProps {
-  friend: {
-    userId: number;
-    userName: string;
-    interactionStyle: string;
-    bio: string;
-    stage: number;
-    profileUrl: string;
-  };
+  friend: FriendResponse;
   isFlipped: boolean;
   onFlip: () => void;
   onClick: () => void;
@@ -33,9 +27,10 @@ export const FlipUserCard = ({ friend, isFlipped, onFlip, onClick }: FlipUserCar
           <div>
             <div className="flex flex-row mb-2">
               <UserCardName>{friend.userName}</UserCardName>
-              <UserCardPersonality>{friend.interactionStyle}</UserCardPersonality>
+              <UserCardPersonality>{InteractionStyle[friend.interactionStyle]}</UserCardPersonality>
             </div>
-            <UserCardImage src={friend.profileUrl} />
+            {/* TODO : 기본 이미지 넣기 */}
+            <UserCardImage src={friend.profileUrl || mockProfile} />
           </div>
           <UserCardDescription>{friend.bio}</UserCardDescription>
         </HorizontalUserCard>

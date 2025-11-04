@@ -1,4 +1,6 @@
 import { useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+
 import {
   HorizontalUserCard,
   UserCardImage,
@@ -6,13 +8,31 @@ import {
   UserCardDescription,
   UserCardPersonality,
 } from '@/entities/user/ui/HorizontalUserCard';
+import { friendQuery } from '@/entities/friend/api/friend.queries';
+import { InteractionStyle } from '@/shared/constants/interactionStyle';
 import { StepTabs, StepTab } from '@/features/user/ui/StepTabs';
-import { mockUsers } from '@/widgets/Carousel/RandomUserCarousel';
 import MockImg from '@/assets/mockImg.svg';
 
 const FriendPage = () => {
   const { id } = useParams<{ id: string }>();
-  const user = mockUsers.find((u) => u.id === Number(id));
+
+  const { data: user, isLoading, isError } = useQuery(friendQuery.friendProfile(Number(id)));
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <p className="text-gray-500">친구 프로필을 불러오는 중...</p>
+      </div>
+    );
+  }
+
+  if (isError || !user?.data) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <p className="text-gray-500">친구 프로필을 불러오지 못했습니다.</p>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -30,10 +50,12 @@ const FriendPage = () => {
           <UserCardImage src={MockImg} />
           <div className="flex flex-col flex-1">
             <div className="flex items-center justify-between">
-              <UserCardName>{user?.name}</UserCardName>
-              <UserCardPersonality>{user?.personality}</UserCardPersonality>
+              <UserCardName>{user.data.userName}</UserCardName>
+              <UserCardPersonality>
+                {InteractionStyle[user.data.interactionStyle]}
+              </UserCardPersonality>
             </div>
-            <UserCardDescription>{user?.description}</UserCardDescription>
+            <UserCardDescription>{user.data.bio}</UserCardDescription>
           </div>
         </HorizontalUserCard>
 
