@@ -11,6 +11,32 @@ import { FriendListMock, FriendProfileMock, RandomFriendListMock } from '../data
 const FRIEND_API_PREFIX = `${import.meta.env.VITE_API_BASE_URL}/api/v1`;
 
 export const friendHandlers = [
+  // 랜덤 친구 5명
+  http.get<never, RandomFriendListResponseDTO, RandomFriendListResponseDTO | ApiErrorMessage>(
+    `${FRIEND_API_PREFIX}/friends/random`,
+    async () => {
+      const mock = RandomFriendListMock.data;
+      console.log('mock');
+      if (!mock) {
+        return HttpResponse.json({
+          status: 404,
+          success: false,
+          message: '랜덤 친구 가져오기 실패',
+          code: 'NOT_FOUND',
+          reason: '아무튼 없습니다',
+        });
+      }
+      await new Promise((resolve) => setTimeout(resolve, RandomFriendListMock.delay));
+
+      return HttpResponse.json({
+        data: mock,
+        status: 200,
+        message: '랜덤 친구 조회 성공',
+        success: true,
+      });
+    },
+  ),
+
   // 친구 리스트
   http.get<never, FriendListResponseDTO, FriendListResponseDTO | ApiErrorMessage>(
     `${FRIEND_API_PREFIX}/friends`,
@@ -59,32 +85,6 @@ export const friendHandlers = [
         data: mock,
         status: 200,
         message: '친구 프로필 조회 성공',
-        success: true,
-      });
-    },
-  ),
-
-  // 랜덤 친구 5명
-  http.get<never, RandomFriendListResponseDTO, RandomFriendListResponseDTO | ApiErrorMessage>(
-    `${FRIEND_API_PREFIX}/friends/random`,
-    async () => {
-      const mock = RandomFriendListMock.data;
-
-      if (!mock) {
-        return HttpResponse.json({
-          status: 404,
-          success: false,
-          message: '랜덤 친구 가져오기 실패',
-          code: 'NOT_FOUND',
-          reason: '아무튼 없습니다',
-        });
-      }
-      await new Promise((resolve) => setTimeout(resolve, RandomFriendListMock.delay));
-
-      return HttpResponse.json({
-        data: mock,
-        status: 200,
-        message: '랜덤 친구 조회 성공',
         success: true,
       });
     },

@@ -1,4 +1,7 @@
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+
+import { friendQuery } from '@/entities/friend/api/friend.queries';
 import { useKakaoAuthCode } from '@/features/auth/hooks/useKakaoAuthCode';
 import { GlobalNavigationBar } from '@/app/layout/navigation/ui/GlobalNavigationBar';
 import { ProfileShareSection } from '@/widgets/ProfileShareSection/ProfileShareSection';
@@ -8,6 +11,9 @@ import { StatusProgress } from '@/shared/ui/common/Progress/StatusProgress';
 
 const HomePage = () => {
   const navigate = useNavigate();
+
+  const { data, isLoading, isError } = useQuery(friendQuery.randomFriend());
+
   useKakaoAuthCode();
 
   return (
@@ -41,7 +47,7 @@ const HomePage = () => {
         <p className="text-sm text-gray-500">지금 가까워질 수 있는</p>
         <h2 className="font-semibold text-black">오늘의 랜덤 추천 친구</h2>
       </div>
-      <RandomUserCarousel />
+      <RandomUserCarousel friendList={data?.data} isLoading={isLoading} isError={isError} />
 
       <GlobalNavigationBar />
     </div>
