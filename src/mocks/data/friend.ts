@@ -1,11 +1,12 @@
 import type { FriendResponse, FriendProfileResponse } from '@/entities/friend/model/friend.type';
+import mockImg from '@/assets/mockImg.svg';
 
 export const FriendListMock: { data: FriendResponse[]; delay: number } = {
   data: [
     {
       userId: 1,
       userName: '유지원',
-      profileUrl: 'nature.jpeg',
+      profileUrl: mockImg,
       stage: 1,
       bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
       interactionStyle: 'CAUTIOUS',
@@ -13,7 +14,7 @@ export const FriendListMock: { data: FriendResponse[]; delay: number } = {
     {
       userId: 2,
       userName: '김나은',
-      profileUrl: 'nature.jpeg',
+      profileUrl: mockImg,
       stage: 2,
       bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
       interactionStyle: 'BALANCED',
@@ -21,7 +22,7 @@ export const FriendListMock: { data: FriendResponse[]; delay: number } = {
     {
       userId: 3,
       userName: '김용희',
-      profileUrl: 'nature.jpeg',
+      profileUrl: null,
       stage: 3,
       bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
       interactionStyle: 'FAST',
@@ -29,7 +30,7 @@ export const FriendListMock: { data: FriendResponse[]; delay: number } = {
     {
       userId: 4,
       userName: '강희구',
-      profileUrl: 'nature.jpeg',
+      profileUrl: mockImg,
       stage: 1,
       bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
       interactionStyle: 'CAUTIOUS',
@@ -37,7 +38,7 @@ export const FriendListMock: { data: FriendResponse[]; delay: number } = {
     {
       userId: 5,
       userName: '권두환',
-      profileUrl: 'nature.jpeg',
+      profileUrl: mockImg,
       stage: 2,
       bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
       interactionStyle: 'BALANCED',
@@ -45,7 +46,7 @@ export const FriendListMock: { data: FriendResponse[]; delay: number } = {
     {
       userId: 6,
       userName: '성하빈',
-      profileUrl: 'nature.jpeg',
+      profileUrl: null,
       stage: 3,
       bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
       interactionStyle: 'CAUTIOUS',
@@ -53,7 +54,7 @@ export const FriendListMock: { data: FriendResponse[]; delay: number } = {
     {
       userId: 7,
       userName: '신재현',
-      profileUrl: 'nature.jpeg',
+      profileUrl: mockImg,
       stage: 1,
       bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
       interactionStyle: 'BALANCED',
@@ -61,7 +62,7 @@ export const FriendListMock: { data: FriendResponse[]; delay: number } = {
     {
       userId: 8,
       userName: '프로도',
-      profileUrl: 'nature.jpeg',
+      profileUrl: null,
       stage: 2,
       bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
       interactionStyle: 'FAST',
@@ -75,7 +76,7 @@ export const FriendProfileMock: { data: FriendProfileResponse[]; delay: number }
     {
       userId: 1,
       userName: '유지원',
-      profileImageUrl: 'nature.jpeg',
+      profileImageUrl: mockImg,
       instagramId: 'ujw_insta',
       bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
       interactionStyle: 'CAUTIOUS',
@@ -103,7 +104,7 @@ export const FriendProfileMock: { data: FriendProfileResponse[]; delay: number }
     {
       userId: 2,
       userName: '김나은',
-      profileImageUrl: 'nature.jpeg',
+      profileImageUrl: mockImg,
       instagramId: 'naeun_story',
       bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
       interactionStyle: 'BALANCED',
@@ -131,7 +132,7 @@ export const FriendProfileMock: { data: FriendProfileResponse[]; delay: number }
     {
       userId: 3,
       userName: '김용희',
-      profileImageUrl: 'nature.jpeg',
+      profileImageUrl: null,
       instagramId: 'yonghee.dev',
       bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
       interactionStyle: 'FAST',
@@ -159,7 +160,7 @@ export const FriendProfileMock: { data: FriendProfileResponse[]; delay: number }
     {
       userId: 4,
       userName: '강희구',
-      profileImageUrl: 'nature.jpeg',
+      profileImageUrl: mockImg,
       instagramId: null,
       bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
       interactionStyle: 'CAUTIOUS',
@@ -187,7 +188,7 @@ export const FriendProfileMock: { data: FriendProfileResponse[]; delay: number }
     {
       userId: 5,
       userName: '권두환',
-      profileImageUrl: 'nature.jpeg',
+      profileImageUrl: mockImg,
       instagramId: null,
       bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
       interactionStyle: 'BALANCED',
@@ -215,7 +216,7 @@ export const FriendProfileMock: { data: FriendProfileResponse[]; delay: number }
     {
       userId: 6,
       userName: '성하빈',
-      profileImageUrl: 'nature.jpeg',
+      profileImageUrl: null,
       instagramId: 'frodo_friends',
       bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
       interactionStyle: 'CAUTIOUS',
@@ -243,7 +244,7 @@ export const FriendProfileMock: { data: FriendProfileResponse[]; delay: number }
     {
       userId: 7,
       userName: '신재현',
-      profileImageUrl: 'nature.jpeg',
+      profileImageUrl: mockImg,
       instagramId: 'ryan_official',
       bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
       interactionStyle: 'BALANCED',
@@ -270,7 +271,7 @@ export const FriendProfileMock: { data: FriendProfileResponse[]; delay: number }
     {
       userId: 8,
       userName: '프로도',
-      profileImageUrl: 'nature.jpeg',
+      profileImageUrl: null,
       instagramId: 'muzi_world',
       bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
       interactionStyle: 'FAST',

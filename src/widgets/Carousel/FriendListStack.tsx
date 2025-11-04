@@ -2,57 +2,17 @@ import { useState, useRef } from 'react';
 import { cn } from '@/shared/lib/utils';
 import { FlipUserCard } from '@/features/user/FlipUserCard';
 import { useNavigate } from 'react-router-dom';
+import type { FriendResponse } from '@/entities/friend/model/friend.type';
 
-const defaultFriends = [
-  {
-    userId: 1,
-    userName: '유지원',
-    profileUrl: 'nature.jpeg',
-    stage: 1,
-    bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
-    interactionStyle: '신중형',
-  },
-  {
-    userId: 2,
-    userName: '김나은',
-    profileUrl: 'nature.jpeg',
-    stage: 1,
-    bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
-    interactionStyle: '신중형',
-  },
-  {
-    userId: 3,
-    userName: '김용희',
-    profileUrl: 'nature.jpeg',
-    stage: 1,
-    bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
-    interactionStyle: '신중형',
-  },
-  {
-    userId: 4,
-    userName: '강희구',
-    profileUrl: 'nature.jpeg',
-    stage: 1,
-    bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
-    interactionStyle: '신중형',
-  },
-  {
-    userId: 5,
-    userName: '권두환',
-    profileUrl: 'nature.jpeg',
-    stage: 1,
-    bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
-    interactionStyle: '신중형',
-  },
-];
+interface FriendListStackProps {
+  friendList: FriendResponse[];
+}
 
-export const FriendListStack = () => {
+export const FriendListStack = ({ friendList }: FriendListStackProps) => {
   const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [flippedIndex, setFlippedIndex] = useState<number | null>(null);
-
-  console.log(activeIndex);
 
   const handleNavigate = (id: number | string) => {
     navigate(`/friend/${id}`);
@@ -124,7 +84,7 @@ export const FriendListStack = () => {
       className="relative h-full w-full overflow-auto no-scrollbar px-4 pt-12"
     >
       <div className="relative">
-        {defaultFriends.map((friend, index) => {
+        {friendList.map((friend, index) => {
           const baseOffset = index * 20;
           const isActive = activeIndex === index;
           const isFlipped = flippedIndex === index;

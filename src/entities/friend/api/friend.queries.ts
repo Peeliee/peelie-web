@@ -8,8 +8,8 @@ export const friendQuery = createQueryKeys('friend', {
     queryFn: friendGet.friendList,
   }),
 
-  friendProfile: () => ({
-    queryKey: ['friendProfile'],
+  friendProfile: (friendId: number) => ({
+    queryKey: ['friendProfile', friendId],
     queryFn: friendGet.friendProfile,
   }),
 
