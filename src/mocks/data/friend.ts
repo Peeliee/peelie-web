@@ -44,7 +44,7 @@ export const FriendListMock: { data: FriendResponse[]; delay: number } = {
     },
     {
       userId: 6,
-      userName: '프로도',
+      userName: '성하빈',
       profileUrl: 'nature.jpeg',
       stage: 3,
       bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
@@ -52,7 +52,7 @@ export const FriendListMock: { data: FriendResponse[]; delay: number } = {
     },
     {
       userId: 7,
-      userName: '라이언',
+      userName: '신재현',
       profileUrl: 'nature.jpeg',
       stage: 1,
       bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
@@ -60,7 +60,7 @@ export const FriendListMock: { data: FriendResponse[]; delay: number } = {
     },
     {
       userId: 8,
-      userName: '무지',
+      userName: '프로도',
       profileUrl: 'nature.jpeg',
       stage: 2,
       bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
@@ -214,7 +214,7 @@ export const FriendProfileMock: { data: FriendProfileResponse[]; delay: number }
     },
     {
       userId: 6,
-      userName: '프로도',
+      userName: '성하빈',
       profileImageUrl: 'nature.jpeg',
       instagramId: 'frodo_friends',
       bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
@@ -242,7 +242,7 @@ export const FriendProfileMock: { data: FriendProfileResponse[]; delay: number }
     },
     {
       userId: 7,
-      userName: '라이언',
+      userName: '신재현',
       profileImageUrl: 'nature.jpeg',
       instagramId: 'ryan_official',
       bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
@@ -269,7 +269,7 @@ export const FriendProfileMock: { data: FriendProfileResponse[]; delay: number }
     },
     {
       userId: 8,
-      userName: '무지',
+      userName: '프로도',
       profileImageUrl: 'nature.jpeg',
       instagramId: 'muzi_world',
       bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
@@ -294,6 +294,52 @@ export const FriendProfileMock: { data: FriendProfileResponse[]; delay: number }
             '친한 친구와 아무 이유 없이 만나서 커피 한잔하며 웃는 그 순간이 좋아요. 별거 아닌 일상이 나를 행복하게 만들어줘요.',
         },
       },
+    },
+  ],
+  delay: 1000,
+};
+
+export const RandomFriendListMock: { data: FriendResponse[]; delay: number } = {
+  data: [
+    {
+      userId: 1,
+      userName: '유지원',
+      profileUrl: 'nature.jpeg',
+      stage: 1,
+      bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
+      interactionStyle: 'CAUTIOUS',
+    },
+    {
+      userId: 2,
+      userName: '김나은',
+      profileUrl: 'nature.jpeg',
+      stage: 2,
+      bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
+      interactionStyle: 'BALANCED',
+    },
+    {
+      userId: 3,
+      userName: '김용희',
+      profileUrl: 'nature.jpeg',
+      stage: 3,
+      bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
+      interactionStyle: 'FAST',
+    },
+    {
+      userId: 4,
+      userName: '강희구',
+      profileUrl: 'nature.jpeg',
+      stage: 1,
+      bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
+      interactionStyle: 'CAUTIOUS',
+    },
+    {
+      userId: 5,
+      userName: '권두환',
+      profileUrl: 'nature.jpeg',
+      stage: 2,
+      bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
+      interactionStyle: 'BALANCED',
     },
   ],
   delay: 1000,
