@@ -47,7 +47,7 @@ const HomePage = () => {
         <p className="text-sm text-gray-500">지금 가까워질 수 있는</p>
         <h2 className="font-semibold text-black">오늘의 랜덤 추천 친구</h2>
       </div>
-      <RandomUserCarousel friendList={data?.data} isLoading={isLoading} isError={isError} />
+      <RandomUserCarousel friendList={data?.data ?? []} isLoading={isLoading} isError={isError} />
 
       <GlobalNavigationBar />
     </div>
