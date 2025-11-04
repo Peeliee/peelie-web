@@ -10,7 +10,7 @@ export const friendQuery = createQueryKeys('friend', {
 
   friendProfile: (friendId: number) => ({
     queryKey: ['friendProfile', friendId],
-    queryFn: friendGet.friendProfile,
+    queryFn: () => friendGet.friendProfile(friendId),
   }),
 
   randomFriend: () => ({

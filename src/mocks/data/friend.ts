@@ -71,9 +71,9 @@ export const FriendListMock: { data: FriendResponse[]; delay: number } = {
   delay: 1000,
 };
 
-export const FriendProfileMock: { data: FriendProfileResponse[]; delay: number } = {
-  data: [
-    {
+export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; delay: number } = {
+  data: {
+    1: {
       userId: 1,
       userName: '유지원',
       profileImageUrl: mockImg,
@@ -101,7 +101,7 @@ export const FriendProfileMock: { data: FriendProfileResponse[]; delay: number }
         },
       },
     },
-    {
+    2: {
       userId: 2,
       userName: '김나은',
       profileImageUrl: mockImg,
@@ -129,7 +129,7 @@ export const FriendProfileMock: { data: FriendProfileResponse[]; delay: number }
         },
       },
     },
-    {
+    3: {
       userId: 3,
       userName: '김용희',
       profileImageUrl: null,
@@ -157,7 +157,7 @@ export const FriendProfileMock: { data: FriendProfileResponse[]; delay: number }
         },
       },
     },
-    {
+    4: {
       userId: 4,
       userName: '강희구',
       profileImageUrl: mockImg,
@@ -185,7 +185,7 @@ export const FriendProfileMock: { data: FriendProfileResponse[]; delay: number }
         },
       },
     },
-    {
+    5: {
       userId: 5,
       userName: '권두환',
       profileImageUrl: mockImg,
@@ -213,7 +213,7 @@ export const FriendProfileMock: { data: FriendProfileResponse[]; delay: number }
         },
       },
     },
-    {
+    6: {
       userId: 6,
       userName: '성하빈',
       profileImageUrl: null,
@@ -241,7 +241,7 @@ export const FriendProfileMock: { data: FriendProfileResponse[]; delay: number }
         },
       },
     },
-    {
+    7: {
       userId: 7,
       userName: '신재현',
       profileImageUrl: mockImg,
@@ -268,7 +268,7 @@ export const FriendProfileMock: { data: FriendProfileResponse[]; delay: number }
         },
       },
     },
-    {
+    8: {
       userId: 8,
       userName: '프로도',
       profileImageUrl: null,
@@ -296,7 +296,7 @@ export const FriendProfileMock: { data: FriendProfileResponse[]; delay: number }
         },
       },
     },
-  ],
+  },
   delay: 1000,
 };
 

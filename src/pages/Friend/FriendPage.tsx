@@ -1,4 +1,6 @@
 import { useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+
 import {
   HorizontalUserCard,
   UserCardImage,
@@ -6,12 +8,16 @@ import {
   UserCardDescription,
   UserCardPersonality,
 } from '@/entities/user/ui/HorizontalUserCard';
+import { friendQuery } from '@/entities/friend/api/friend.queries';
 import { StepTabs, StepTab } from '@/features/user/ui/StepTabs';
 import { mockUsers } from '@/widgets/Carousel/RandomUserCarousel';
 import MockImg from '@/assets/mockImg.svg';
 
 const FriendPage = () => {
   const { id } = useParams<{ id: string }>();
+
+  const { data, isLoading, isError } = useQuery(friendQuery.friendProfile(Number(id)));
+  console.log(data, isLoading, isError);
   const user = mockUsers.find((u) => u.id === Number(id));
 
   return (

@@ -42,8 +42,7 @@ export const friendHandlers = [
     `${FRIEND_API_PREFIX}/friends/:friendId`,
     async ({ params }) => {
       const { friendId } = params;
-
-      const mock = FriendProfileMock.data[friendId];
+      const mock = FriendProfileMock.data[Number(friendId)];
 
       if (!mock) {
         return HttpResponse.json({
