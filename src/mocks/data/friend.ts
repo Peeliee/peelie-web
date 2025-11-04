@@ -1,5 +1,6 @@
 import type { FriendResponse, FriendProfileResponse } from '@/entities/friend/model/friend.type';
 import mockImg from '@/assets/mockImg.svg';
+import mockyonghee from '@/assets/mockyonghee.png';
 
 export const FriendListMock: { data: FriendResponse[]; delay: number } = {
   data: [
@@ -8,7 +9,7 @@ export const FriendListMock: { data: FriendResponse[]; delay: number } = {
       userName: '유지원',
       profileUrl: mockImg,
       stage: 1,
-      bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
+      bio: '대화를 통해 배우고, 나누며 성장하고 싶습니다.',
       interactionStyle: 'CAUTIOUS',
     },
     {
@@ -16,15 +17,15 @@ export const FriendListMock: { data: FriendResponse[]; delay: number } = {
       userName: '김나은',
       profileUrl: mockImg,
       stage: 2,
-      bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
+      bio: '대화를 통해 세상을 배우고, 진심을 나누며 성장하고 싶어요',
       interactionStyle: 'BALANCED',
     },
     {
       userId: 3,
       userName: '김용희',
-      profileUrl: null,
+      profileUrl: mockyonghee,
       stage: 3,
-      bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
+      bio: '아 집가고싶다',
       interactionStyle: 'FAST',
     },
     {
@@ -32,7 +33,7 @@ export const FriendListMock: { data: FriendResponse[]; delay: number } = {
       userName: '강희구',
       profileUrl: mockImg,
       stage: 1,
-      bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
+      bio: '누군가와의 대화 속에서 배움과 영감을 얻는 걸 좋아합니다.',
       interactionStyle: 'CAUTIOUS',
     },
     {
@@ -40,7 +41,7 @@ export const FriendListMock: { data: FriendResponse[]; delay: number } = {
       userName: '권두환',
       profileUrl: mockImg,
       stage: 2,
-      bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
+      bio: '진심이 담긴 대화가 사람을 변화시킨다고 믿습니다.',
       interactionStyle: 'BALANCED',
     },
     {
@@ -48,7 +49,7 @@ export const FriendListMock: { data: FriendResponse[]; delay: number } = {
       userName: '성하빈',
       profileUrl: null,
       stage: 3,
-      bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
+      bio: '소통 속에서 배우고, 관계 속에서 성장하려 합니다.',
       interactionStyle: 'CAUTIOUS',
     },
     {
@@ -56,7 +57,7 @@ export const FriendListMock: { data: FriendResponse[]; delay: number } = {
       userName: '신재현',
       profileUrl: mockImg,
       stage: 1,
-      bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
+      bio: '대화를 통해 서로의 생각을 넓히고 싶은 사람입니다',
       interactionStyle: 'BALANCED',
     },
     {
@@ -64,7 +65,7 @@ export const FriendListMock: { data: FriendResponse[]; delay: number } = {
       userName: '프로도',
       profileUrl: null,
       stage: 2,
-      bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
+      bio: '나눔과 공감을 통해 더 나은 나로 성장하고 싶습니다',
       interactionStyle: 'FAST',
     },
   ],
@@ -78,7 +79,7 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
       userName: '유지원',
       profileImageUrl: mockImg,
       instagramId: 'ujw_insta',
-      bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
+      bio: '대화를 통해 배우고, 나누며 성장하고 싶습니다.',
       interactionStyle: 'CAUTIOUS',
       card: {
         stage1: {
@@ -106,7 +107,7 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
       userName: '김나은',
       profileImageUrl: mockImg,
       instagramId: 'naeun_story',
-      bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
+      bio: '대화를 통해 세상을 배우고, 진심을 나누며 성장하고 싶어요.',
       interactionStyle: 'BALANCED',
       card: {
         stage1: {
@@ -132,9 +133,9 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
     3: {
       userId: 3,
       userName: '김용희',
-      profileImageUrl: null,
+      profileImageUrl: mockyonghee,
       instagramId: 'yonghee.dev',
-      bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
+      bio: '아 집가고싶다',
       interactionStyle: 'FAST',
       card: {
         stage1: {
@@ -162,7 +163,7 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
       userName: '강희구',
       profileImageUrl: mockImg,
       instagramId: null,
-      bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
+      bio: '누군가와의 대화 속에서 배움과 영감을 얻는 걸 좋아합니다.',
       interactionStyle: 'CAUTIOUS',
       card: {
         stage1: {
@@ -190,7 +191,7 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
       userName: '권두환',
       profileImageUrl: mockImg,
       instagramId: null,
-      bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
+      bio: '진심이 담긴 대화가 사람을 변화시킨다고 믿습니다.',
       interactionStyle: 'BALANCED',
       card: {
         stage1: {
@@ -218,7 +219,7 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
       userName: '성하빈',
       profileImageUrl: null,
       instagramId: 'frodo_friends',
-      bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
+      bio: '소통 속에서 배우고, 관계 속에서 성장하려 합니다.',
       interactionStyle: 'CAUTIOUS',
       card: {
         stage1: {
@@ -246,7 +247,7 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
       userName: '신재현',
       profileImageUrl: mockImg,
       instagramId: 'ryan_official',
-      bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
+      bio: '대화를 통해 서로의 생각을 넓히고 싶은 사람입니다.',
       interactionStyle: 'BALANCED',
       card: {
         stage1: {
@@ -273,7 +274,7 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
       userName: '프로도',
       profileImageUrl: null,
       instagramId: 'muzi_world',
-      bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
+      bio: '나눔과 공감을 통해 더 나은 나로 성장하고 싶습니다.',
       interactionStyle: 'FAST',
       card: {
         stage1: {
