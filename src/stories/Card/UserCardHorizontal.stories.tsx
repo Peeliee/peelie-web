@@ -6,7 +6,7 @@ import {
   UserCardDescription,
   UserCardEditProfile,
   UserCardInteractionStyle,
-} from '@/entities/user/ui/HorizontalUserCard';
+} from '@/shared/ui/common/Card/HorizontalUserCard';
 
 const meta: Meta<typeof HorizontalUserCard> = {
   title: 'Card/UserHorizontalCard',

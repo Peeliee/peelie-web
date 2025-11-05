@@ -5,19 +5,19 @@ import {
   UserCardImage,
   UserCardDescription,
   UserCardFlipped,
-} from '@/entities/user/ui/HorizontalUserCard';
+} from '@/shared/ui/common/Card/HorizontalUserCard';
 import type { FriendResponse } from '@/entities/friend/model/friend.type';
 import { InteractionStyle } from '@/shared/constants/interactionStyle';
 import mockProfile from '@/assets/mockimage.png';
 
-interface FlipUserCardProps {
+interface FlipFriendCardProps {
   friend: FriendResponse;
   isFlipped: boolean;
   onFlip: () => void;
   onClick: () => void;
 }
 
-export const FlipUserCard = ({ friend, isFlipped, onFlip, onClick }: FlipUserCardProps) => {
+export const FlipFriendCard = ({ friend, isFlipped, onFlip, onClick }: FlipFriendCardProps) => {
   return (
     <div onClick={onFlip} className="w-full cursor-pointer">
       {isFlipped ? (

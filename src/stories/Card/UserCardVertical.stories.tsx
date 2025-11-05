@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { VerticalUserCard } from '@/entities/user/ui/VerticalUserCard';
+import { VerticalUserCard } from '@/shared/ui/common/Card/VerticalUserCard';
 
 const meta: Meta<typeof VerticalUserCard> = {
   title: 'Card/UserCardVertical',
