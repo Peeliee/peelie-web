@@ -1,5 +1,6 @@
 import { type ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { cn } from '@/shared/lib/utils';
 
 import PeelieLogo from '@/assets/peelieLogo.svg?react';
 import BackButton from '@/assets/backButton.svg?react';
@@ -8,15 +9,22 @@ interface HeaderProps {
   left?: ReactNode;
   center?: ReactNode;
   right?: ReactNode;
+  className?: string;
 }
 
 interface BackHeaderProps {
   onClick?: () => void;
+  transparent?: boolean;
 }
 
-export const Header = ({ left, center, right }: HeaderProps) => {
+export const Header = ({ left, center, right, className }: HeaderProps) => {
   return (
-    <header className="fixed top-0 flex items-center justify-between h-12 px-4 border-b border-gray-100">
+    <header
+      className={cn(
+        'fixed top-0 flex items-center justify-between h-12 px-4 border-b border-gray-100',
+        className,
+      )}
+    >
       <div className="flex-1">{left}</div>
       <div className="flex-1 flex justify-center">{center}</div>
       <div className="flex-1 flex justify-end">{right}</div>
@@ -28,7 +36,7 @@ export const Header = ({ left, center, right }: HeaderProps) => {
 export const LogoHeader = () => <Header left={<PeelieLogo />} />;
 
 // 백버튼 헤더
-export const BackHeader = ({ onClick }: BackHeaderProps) => {
+export const BackHeader = ({ onClick, transparent }: BackHeaderProps) => {
   const navigate = useNavigate();
 
   const handleBackClick = () => {
@@ -38,6 +46,10 @@ export const BackHeader = ({ onClick }: BackHeaderProps) => {
 
   return (
     <Header
+      className={cn(
+        'fixed top-0 left-0 w-full flex items-center justify-between px-4 py-3 z-9999 border-none',
+        transparent ? 'bg-transparent text-white' : 'bg-white text-gray-900 shadow-sm',
+      )}
       left={
         <button onClick={handleBackClick} className="flex items-center justify-center w-8 h-8">
           <BackButton className="w-6 h-6" />

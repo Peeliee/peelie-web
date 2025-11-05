@@ -3,6 +3,7 @@ import { createContext, useContext } from 'react';
 interface HeaderContextType {
   hideHeader: (hidden: boolean) => void;
   setBackAction: (fn: (() => void) | null) => void;
+  setTransparent?: (value: boolean) => void;
 }
 
 /**
@@ -11,6 +12,7 @@ interface HeaderContextType {
 export const HeaderContext = createContext<HeaderContextType>({
   hideHeader: () => {},
   setBackAction: () => {},
+  setTransparent: () => {},
 });
 
 export const useHeader = () => useContext(HeaderContext);

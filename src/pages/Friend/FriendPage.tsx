@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import { useLayoutEffect } from 'react';
 
 import {
   HorizontalUserCard,
@@ -10,15 +11,22 @@ import {
 } from '@/shared/ui/common/Card/HorizontalUserCard';
 import { friendQuery } from '@/entities/friend/api/friend.queries';
 import { InteractionStyle } from '@/shared/constants/interactionStyle';
+import { useHeader } from '@/shared/context/headerContext';
 import Background from '@/assets/friendProfileBackground.svg?react';
 import Character from '@/assets/characterMock.svg?react';
-
 import MockImg from '@/assets/mockImg.svg';
 
 const FriendPage = () => {
   const { id } = useParams<{ id: string }>();
-
   const { data: user, isLoading, isError } = useQuery(friendQuery.friendProfile(Number(id)));
+
+  const { setTransparent } = useHeader();
+
+  useLayoutEffect(() => {
+    setTransparent?.(true);
+    // 페이지 나갈 때 원래대로 복구
+    return () => setTransparent?.(false);
+  }, [setTransparent]);
 
   if (isLoading) {
     return (
@@ -38,7 +46,7 @@ const FriendPage = () => {
 
   return (
     <>
-      <div className="p-3">
+      <div>
         {/* TODO : 배경 작업 필요 */}
         <div className="relative w-full flex justify-center items-center h-[260px]">
           <Background className="absolute inset-0 w-full h-full" />
