@@ -5,7 +5,7 @@ import {
   UserCardName,
   UserCardDescription,
   UserCardEditProfile,
-  UserCardPersonality,
+  UserCardInteractionStyle,
 } from '@/entities/user/ui/HorizontalUserCard';
 
 const meta: Meta<typeof HorizontalUserCard> = {
@@ -53,7 +53,7 @@ export const PersonalityCard: Story = {
         </div>
         <UserCardDescription>대화를 통해 배우고, 나누며 성장하고 싶습니다.</UserCardDescription>
       </div>
-      <UserCardPersonality>신중형</UserCardPersonality>
+      <UserCardInteractionStyle>신중형</UserCardInteractionStyle>
     </HorizontalUserCard>
   ),
 };

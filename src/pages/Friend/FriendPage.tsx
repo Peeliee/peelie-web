@@ -6,7 +6,7 @@ import {
   UserCardImage,
   UserCardName,
   UserCardDescription,
-  UserCardPersonality,
+  UserCardInteractionStyle,
 } from '@/entities/user/ui/HorizontalUserCard';
 import { friendQuery } from '@/entities/friend/api/friend.queries';
 import { InteractionStyle } from '@/shared/constants/interactionStyle';
@@ -51,9 +51,9 @@ const FriendPage = () => {
           <div className="flex flex-col flex-1">
             <div className="flex items-center justify-between">
               <UserCardName>{user.data.userName}</UserCardName>
-              <UserCardPersonality>
+              <UserCardInteractionStyle>
                 {InteractionStyle[user.data.interactionStyle]}
-              </UserCardPersonality>
+              </UserCardInteractionStyle>
             </div>
             <UserCardDescription>{user.data.bio}</UserCardDescription>
           </div>

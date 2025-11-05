@@ -1,7 +1,7 @@
 import {
   HorizontalUserCard,
   UserCardName,
-  UserCardPersonality,
+  UserCardInteractionStyle,
   UserCardImage,
   UserCardDescription,
   UserCardFlipped,
@@ -27,7 +27,9 @@ export const FlipUserCard = ({ friend, isFlipped, onFlip, onClick }: FlipUserCar
           <div>
             <div className="flex flex-row mb-2">
               <UserCardName>{friend.userName}</UserCardName>
-              <UserCardPersonality>{InteractionStyle[friend.interactionStyle]}</UserCardPersonality>
+              <UserCardInteractionStyle>
+                {InteractionStyle[friend.interactionStyle]}
+              </UserCardInteractionStyle>
             </div>
             {/* TODO : 기본 이미지 넣기 */}
             <UserCardImage src={friend.profileUrl || mockProfile} />

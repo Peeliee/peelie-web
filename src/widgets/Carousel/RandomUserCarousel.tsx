@@ -39,7 +39,7 @@ export const RandomUserCarousel = ({ friendList, isLoading, isError }: RandomUse
             key={user.userId}
             imageSrc={user.profileUrl ?? mockImg}
             name={user.userName}
-            personality={InteractionStyle[user.interactionStyle]}
+            interactionStyle={InteractionStyle[user.interactionStyle]}
             description={user.bio}
           />
         </div>
