@@ -1,6 +1,5 @@
 import { http, HttpResponse } from 'msw';
 import type {
-  StartOnboardingResponseDTO,
   CategorySelectResponseDTO,
   CategoryAnswerResponseDTO,
   InteractionStyleResponseDTO,
@@ -9,7 +8,6 @@ import { type StepInfoCardResponseDTO } from '@/entities/user/model/user.type';
 import type { ApiErrorMessage, ApiBaseResponse } from '@/shared/api/types';
 
 import {
-  onboardingStartMock,
   categorySelectMock,
   categoryAnswerMock,
   interactionStyleMock,
@@ -23,21 +21,6 @@ let generationStartTime: number | null = null;
 
 // TODO: 실패 응답 구현하기
 export const onboardingHandlers = [
-  // 온보딩 시작
-  http.post<never, StartOnboardingResponseDTO, StartOnboardingResponseDTO | ApiErrorMessage>(
-    `${ONBOARDING_API_PREFIX}/onboarding/start`,
-    async () => {
-      await new Promise((resolve) => setTimeout(resolve, onboardingStartMock.delay));
-
-      return HttpResponse.json({
-        status: 200,
-        success: true,
-        message: '온보딩 시작 성공',
-        data: onboardingStartMock.data,
-      });
-    },
-  ),
-
   // 카테고리 선택
   http.put<never, CategorySelectResponseDTO, CategorySelectResponseDTO | ApiErrorMessage>(
     `${ONBOARDING_API_PREFIX}/onboarding/categories`,
