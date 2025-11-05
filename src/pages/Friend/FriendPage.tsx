@@ -12,7 +12,7 @@ import {
 import { friendQuery } from '@/entities/friend/api/friend.queries';
 import { InteractionStyle } from '@/shared/constants/interactionStyle';
 import { useHeader } from '@/shared/context/headerContext';
-import { SpeechBubble } from '@/shared/ui/common/SpeechBubble/SpeechBubble';
+import { FriendBioBubble } from '@/features/friend/ui/FriendBioBubble';
 import Background from '@/assets/friendProfileBackground.svg?react';
 import Character from '@/assets/characterMock.svg?react';
 import MockImg from '@/assets/mockImg.svg';
@@ -22,7 +22,7 @@ const FriendPage = () => {
   const { data: user, isLoading, isError } = useQuery(friendQuery.friendProfile(Number(id)));
 
   const { setTransparent } = useHeader();
-
+  console.log(user?.data.bio);
   useLayoutEffect(() => {
     setTransparent?.(true);
     // 페이지 나갈 때 원래대로 복구
@@ -52,13 +52,7 @@ const FriendPage = () => {
         <div className="relative w-full flex justify-center items-center h-[260px]">
           <Background className="absolute inset-0 w-full h-79" />
 
-          <SpeechBubble
-            variant="secondary"
-            tailPosition="center"
-            className="absolute bottom-34 z-990 w-80"
-          >
-            “집콕 + OTT + 로맨스 조합이면 완벽해요. 영상미 좋은 영화만 보면 기분이 좋아져요!”
-          </SpeechBubble>
+          <FriendBioBubble bio={user.data.bio} />
 
           <Character className="relative z-10 w-25 h-full top-22" />
         </div>
@@ -74,7 +68,7 @@ const FriendPage = () => {
                 {InteractionStyle[user.data.interactionStyle]}
               </UserCardInteractionStyle>
             </div>
-            <UserCardDescription>{user.data.bio}</UserCardDescription>
+            <UserCardDescription>test</UserCardDescription>
           </div>
         </HorizontalUserCard>
 

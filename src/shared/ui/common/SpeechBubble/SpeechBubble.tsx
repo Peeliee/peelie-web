@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import { cn } from '@/shared/lib/utils';
 
 type SpeechBubbleVariant = 'primary' | 'secondary' | 'gray';
@@ -22,6 +23,7 @@ const tailStyles: Record<TailPosition, string> = {
   left: 'after:left-[-10px] after:top-1/2 after:-translate-y-1/2',
 };
 
+// 말풍선 공통 컴포넌트
 export const SpeechBubble = ({
   variant = 'primary',
   tailPosition = 'center',
@@ -29,9 +31,17 @@ export const SpeechBubble = ({
   className,
 }: SpeechBubbleProps) => {
   return (
-    <div
+    <motion.div
+      initial={{ scale: 0.8, opacity: 0, y: 10 }}
+      animate={{ scale: 1, opacity: 1, y: 0 }}
+      transition={{
+        type: 'spring',
+        stiffness: 150,
+        damping: 12,
+        duration: 0.5,
+      }}
       className={cn(
-        'relative inline-block px-6 py-4 rounded-2xl shadow-[0_4px_4px_rgba(0,0,0,0.25)] body-1-bold',
+        'relative inline-block px-6 py-4 rounded-2xl shadow-[0_4px_4px_rgba(0,0,0,0.25)]',
         'after:content-[""] after:absolute after:w-0 after:h-0 after:border-solid',
         variantStyles[variant],
         // 꼭지점 방향에 따라 삼각형 모양 다르게
@@ -59,6 +69,6 @@ export const SpeechBubble = ({
       )}
     >
       {children}
-    </div>
+    </motion.div>
   );
 };

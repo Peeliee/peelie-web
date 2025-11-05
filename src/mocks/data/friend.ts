@@ -9,7 +9,7 @@ export const FriendListMock: { data: FriendResponse[]; delay: number } = {
       userName: '유지원',
       profileUrl: mockImg,
       stage: 1,
-      bio: '대화를 통해 배우고, 나누며 성장하고 싶습니다.',
+      bio: '"집콕 + OTT + 로맨스 조합이면 완벽해요. 영상미 좋은 영화만 보면 기분이 좋아져요!"',
       interactionStyle: 'CAUTIOUS',
     },
     {
@@ -17,7 +17,7 @@ export const FriendListMock: { data: FriendResponse[]; delay: number } = {
       userName: '김나은',
       profileUrl: null,
       stage: 2,
-      bio: '대화를 통해 세상을 배우고, 진심을 나누며 성장하고 싶어요',
+      bio: '“밤하늘 조명처럼 반짝이는 감성 영화를 보면 마음이 따뜻해져요. 잔잔한 여운이 오래 남는 걸 좋아합니다.”',
       interactionStyle: 'BALANCED',
     },
     {
@@ -25,7 +25,7 @@ export const FriendListMock: { data: FriendResponse[]; delay: number } = {
       userName: '김용희',
       profileUrl: mockyonghee,
       stage: 3,
-      bio: '아 집가고싶다',
+      bio: '"침대 + 이불 조합이면 충분해요. 아 집가고싶다"',
       interactionStyle: 'FAST',
     },
     {
@@ -33,7 +33,7 @@ export const FriendListMock: { data: FriendResponse[]; delay: number } = {
       userName: '강희구',
       profileUrl: mockImg,
       stage: 1,
-      bio: '누군가와의 대화 속에서 배움과 영감을 얻는 걸 좋아합니다.',
+      bio: '“낯선 도시 골목길을 걷는 게 제일 좋아요. 즉흥 여행이 항상 새로운 영감을 줍니다.”',
       interactionStyle: 'CAUTIOUS',
     },
     {
@@ -41,7 +41,7 @@ export const FriendListMock: { data: FriendResponse[]; delay: number } = {
       userName: '권두환',
       profileUrl: mockImg,
       stage: 2,
-      bio: '진심이 담긴 대화가 사람을 변화시킨다고 믿습니다.',
+      bio: '"하루의 끝엔 조용한 독서 시간이 필요해요. 문장 하나로 마음이 바뀌는 순간을 사랑합니다."',
       interactionStyle: 'BALANCED',
     },
     {
@@ -49,7 +49,7 @@ export const FriendListMock: { data: FriendResponse[]; delay: number } = {
       userName: '성하빈',
       profileUrl: null,
       stage: 3,
-      bio: '소통 속에서 배우고, 관계 속에서 성장하려 합니다.',
+      bio: '“하루의 끝엔 조용한 독서 시간이 필요해요. 문장 하나로 마음이 바뀌는 순간을 사랑합니다.”',
       interactionStyle: 'CAUTIOUS',
     },
     {
@@ -57,7 +57,7 @@ export const FriendListMock: { data: FriendResponse[]; delay: number } = {
       userName: '신재현',
       profileUrl: mockImg,
       stage: 1,
-      bio: '대화를 통해 서로의 생각을 넓히고 싶은 사람입니다',
+      bio: '“밤하늘 조명처럼 반짝이는 감성 영화를 보면 마음이 따뜻해져요. 잔잔한 여운이 오래 남는 걸 좋아합니다.”',
       interactionStyle: 'BALANCED',
     },
     {
@@ -65,7 +65,7 @@ export const FriendListMock: { data: FriendResponse[]; delay: number } = {
       userName: '프로도',
       profileUrl: null,
       stage: 2,
-      bio: '나눔과 공감을 통해 더 나은 나로 성장하고 싶습니다',
+      bio: '카카오를 다니는 프로도입니다. 토스가고싶어요',
       interactionStyle: 'FAST',
     },
   ],
@@ -79,7 +79,13 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
       userName: '유지원',
       profileImageUrl: mockImg,
       instagramId: 'ujw_insta',
-      bio: '대화를 통해 배우고, 나누며 성장하고 싶습니다.',
+      bio: [
+        { text: '“', bold: false },
+        { text: '집콕 + OTT + 로맨스', bold: true },
+        { text: ' 조합이면 완벽해요. ', bold: false },
+        { text: '영상미 좋은 영화', bold: true },
+        { text: '만 보면 기분이 좋아져요!”', bold: false },
+      ],
       interactionStyle: 'CAUTIOUS',
       card: {
         stage1: {
@@ -107,7 +113,13 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
       userName: '김나은',
       profileImageUrl: null,
       instagramId: 'naeun_story',
-      bio: '대화를 통해 세상을 배우고, 진심을 나누며 성장하고 싶어요.',
+      bio: [
+        { text: '“', bold: false },
+        { text: '밤하늘 조명처럼 반짝이는 감성 영화', bold: true },
+        { text: '를 보면 마음이 따뜻해져요. ', bold: false },
+        { text: '잔잔한 여운', bold: true },
+        { text: '이 오래 남는 걸 좋아합니다.”', bold: false },
+      ],
       interactionStyle: 'BALANCED',
       card: {
         stage1: {
@@ -135,7 +147,13 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
       userName: '김용희',
       profileImageUrl: mockyonghee,
       instagramId: 'yonghee.dev',
-      bio: '아 집가고싶다',
+      bio: [
+        { text: '“', bold: false },
+        { text: '침대 + 이불 조합', bold: true },
+        { text: '이면 충분해요. 아', bold: false },
+        { text: '집', bold: true },
+        { text: '가고싶다"', bold: false },
+      ],
       interactionStyle: 'FAST',
       card: {
         stage1: {
@@ -163,7 +181,13 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
       userName: '강희구',
       profileImageUrl: mockImg,
       instagramId: null,
-      bio: '누군가와의 대화 속에서 배움과 영감을 얻는 걸 좋아합니다.',
+      bio: [
+        { text: '“', bold: false },
+        { text: '낯선 도시 골목길', bold: true },
+        { text: '을 걷는 게 제일 좋아요. ', bold: false },
+        { text: '즉흥 여행', bold: true },
+        { text: '이 항상 새로운 영감을 줍니다.”', bold: false },
+      ],
       interactionStyle: 'CAUTIOUS',
       card: {
         stage1: {
@@ -191,7 +215,13 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
       userName: '권두환',
       profileImageUrl: mockImg,
       instagramId: null,
-      bio: '진심이 담긴 대화가 사람을 변화시킨다고 믿습니다.',
+      bio: [
+        { text: '“', bold: false },
+        { text: '맛있는 음식', bold: true },
+        { text: '을 앞에 두면 세상 고민이 사라져요. ', bold: false },
+        { text: '야식의 행복', bold: true },
+        { text: '을 아는 사람이라면 우리 통할 거예요.”', bold: false },
+      ],
       interactionStyle: 'BALANCED',
       card: {
         stage1: {
@@ -219,7 +249,13 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
       userName: '성하빈',
       profileImageUrl: null,
       instagramId: 'frodo_friends',
-      bio: '소통 속에서 배우고, 관계 속에서 성장하려 합니다.',
+      bio: [
+        { text: '“', bold: false },
+        { text: '하루의 끝엔 조용한 독서 시간', bold: true },
+        { text: '이 필요해요. ', bold: false },
+        { text: '문장 하나로 마음이 바뀌는 순간', bold: true },
+        { text: '을 사랑합니다.”', bold: false },
+      ],
       interactionStyle: 'CAUTIOUS',
       card: {
         stage1: {
@@ -247,7 +283,13 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
       userName: '신재현',
       profileImageUrl: mockImg,
       instagramId: 'ryan_official',
-      bio: '대화를 통해 서로의 생각을 넓히고 싶은 사람입니다.',
+      bio: [
+        { text: '“', bold: false },
+        { text: '밤하늘 조명처럼 반짝이는 감성 영화', bold: true },
+        { text: '를 보면 마음이 따뜻해져요. ', bold: false },
+        { text: '잔잔한 여운', bold: true },
+        { text: '이 오래 남는 걸 좋아합니다.”', bold: false },
+      ],
       interactionStyle: 'BALANCED',
       card: {
         stage1: {
@@ -274,7 +316,13 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
       userName: '프로도',
       profileImageUrl: null,
       instagramId: 'muzi_world',
-      bio: '나눔과 공감을 통해 더 나은 나로 성장하고 싶습니다.',
+      bio: [
+        { text: '“', bold: false },
+        { text: '카카오', bold: true },
+        { text: '를 다니는 프로도입니다. ', bold: false },
+        { text: '토스', bold: true },
+        { text: '가고싶어요”', bold: false },
+      ],
       interactionStyle: 'FAST',
       card: {
         stage1: {
@@ -308,7 +356,7 @@ export const RandomFriendListMock: { data: FriendResponse[]; delay: number } = {
       userName: '유지원',
       profileUrl: mockImg,
       stage: 1,
-      bio: '대화를 통해 배우고, 나누며 성장하고 싶습니다.',
+      bio: '"집콕 + OTT + 로맨스 조합이면 완벽해요. 영상미 좋은 영화만 보면 기분이 좋아져요!"',
       interactionStyle: 'CAUTIOUS',
     },
     {
@@ -316,7 +364,7 @@ export const RandomFriendListMock: { data: FriendResponse[]; delay: number } = {
       userName: '김나은',
       profileUrl: null,
       stage: 2,
-      bio: '대화를 통해 세상을 배우고, 진심을 나누며 성장하고 싶어요',
+      bio: '“밤하늘 조명처럼 반짝이는 감성 영화를 보면 마음이 따뜻해져요. 잔잔한 여운이 오래 남는 걸 좋아합니다.”',
       interactionStyle: 'BALANCED',
     },
     {
@@ -324,7 +372,7 @@ export const RandomFriendListMock: { data: FriendResponse[]; delay: number } = {
       userName: '김용희',
       profileUrl: mockyonghee,
       stage: 3,
-      bio: '아 집가고싶다',
+      bio: '"침대 + 이불 조합이면 충분해요. 아 집가고싶다"',
       interactionStyle: 'FAST',
     },
     {
@@ -332,7 +380,7 @@ export const RandomFriendListMock: { data: FriendResponse[]; delay: number } = {
       userName: '강희구',
       profileUrl: mockImg,
       stage: 1,
-      bio: '누군가와의 대화 속에서 배움과 영감을 얻는 걸 좋아합니다.',
+      bio: '“낯선 도시 골목길을 걷는 게 제일 좋아요. 즉흥 여행이 항상 새로운 영감을 줍니다.”',
       interactionStyle: 'CAUTIOUS',
     },
     {
@@ -340,7 +388,7 @@ export const RandomFriendListMock: { data: FriendResponse[]; delay: number } = {
       userName: '권두환',
       profileUrl: mockImg,
       stage: 2,
-      bio: '진심이 담긴 대화가 사람을 변화시킨다고 믿습니다.',
+      bio: '"하루의 끝엔 조용한 독서 시간이 필요해요. 문장 하나로 마음이 바뀌는 순간을 사랑합니다."',
       interactionStyle: 'BALANCED',
     },
   ],

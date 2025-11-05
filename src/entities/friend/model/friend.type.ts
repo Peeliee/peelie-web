@@ -2,6 +2,11 @@ import { type ApiResponse } from '@/shared/api/types';
 import { type InteractionStyleKey } from '@/shared/constants/interactionStyle';
 import { type Card } from '@/entities/user/model/user.type';
 
+export interface BioSegment {
+  text: string;
+  bold: boolean;
+}
+
 export interface FriendResponse {
   userId: number;
   userName: string;
@@ -16,7 +21,7 @@ export interface FriendProfileResponse {
   userName: string;
   profileImageUrl: string | null;
   instagramId: string | null;
-  bio: string;
+  bio: BioSegment[];
   interactionStyle: InteractionStyleKey;
   card: Card;
 }
