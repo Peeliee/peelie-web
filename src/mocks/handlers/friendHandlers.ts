@@ -16,7 +16,7 @@ export const friendHandlers = [
     `${FRIEND_API_PREFIX}/friends/random`,
     async () => {
       const mock = RandomFriendListMock.data;
-      console.log('mock');
+
       if (!mock) {
         return HttpResponse.json({
           status: 404,

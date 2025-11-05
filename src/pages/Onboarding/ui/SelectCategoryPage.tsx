@@ -26,8 +26,6 @@ const SelectCategoryPage = ({ onNext }: SelectCategoryPageProps) => {
   const [selected, setSelected] = useState<number[]>([]);
   const prefetchMainQuestion = usePrefetchCategoryMainQuestion();
 
-  // useClearFunnelSession('category-funnel');
-
   const queryClient = useQueryClient();
 
   const { mutate: selectCategory, isPending } = useMutation({

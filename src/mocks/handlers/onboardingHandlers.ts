@@ -67,7 +67,7 @@ export const onboardingHandlers = [
   ),
 
   http.post<never, ApiBaseResponse | ApiErrorMessage>(
-    `${ONBOARDING_API_PREFIX}/onboarding/card/generate`,
+    `${ONBOARDING_API_PREFIX}/onboarding/card/initialize`,
     async () => {
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
