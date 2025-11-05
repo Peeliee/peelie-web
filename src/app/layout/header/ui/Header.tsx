@@ -21,7 +21,7 @@ export const Header = ({ left, center, right, className }: HeaderProps) => {
   return (
     <header
       className={cn(
-        'fixed top-0 flex items-center justify-between h-12 px-4 border-b border-gray-100',
+        'fixed top-0 flex items-center justify-between h-12 px-4 border-none',
         className,
       )}
     >
@@ -48,7 +48,7 @@ export const BackHeader = ({ onClick, transparent }: BackHeaderProps) => {
     <Header
       className={cn(
         'fixed top-0 left-0 w-full flex items-center justify-between px-4 py-3 z-9999 border-none',
-        transparent ? 'bg-transparent text-white' : 'bg-white text-gray-900 shadow-sm',
+        transparent ? 'bg-transparent text-white' : 'bg-white text-gray-900',
       )}
       left={
         <button onClick={handleBackClick} className="flex items-center justify-center w-8 h-8">

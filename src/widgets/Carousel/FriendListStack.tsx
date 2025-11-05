@@ -27,20 +27,20 @@ export const FriendListStack = ({ friendList }: FriendListStackProps) => {
       return;
     }
 
-    // 같은 카드 두 번째 클릭 → 뒤집기
+    // 같은 카드 두 번째 클릭 -> 뒤집기
     if (activeIndex === index && flippedIndex === null) {
       setFlippedIndex(index);
       return;
     }
 
-    // 같은 카드 세 번째 클릭 → 닫기
+    // 같은 카드 세 번째 클릭 -> 닫기
     if (activeIndex === index && flippedIndex === index) {
       setFlippedIndex(null);
       setActiveIndex(null);
       return;
     }
 
-    // 다른 카드 클릭 → 기존 상태 초기화 후 새 카드로 교체
+    // 다른 카드 클릭 -> 기존 상태 초기화 후 새 카드로 교체
     setFlippedIndex(null);
     setActiveIndex(index);
     scrollToCard(index);

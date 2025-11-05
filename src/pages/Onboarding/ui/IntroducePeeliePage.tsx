@@ -5,16 +5,26 @@ import MockImg3 from '@/assets/mockyonghee.png';
 
 import { CoverflowCarousel } from '@/shared/ui/common/Carousel/CoverflowCarousel';
 
+import { useOnboardingProgress } from '../context/OnboardingProgressContext';
+import { useEffect } from 'react';
+
 interface IntroducePeeliePageProps {
   onNext: () => void;
 }
 
 const IntroducePeeliePage = ({ onNext }: IntroducePeeliePageProps) => {
+  const { setShowProgress } = useOnboardingProgress();
+
+  useEffect(() => {
+    setShowProgress(false);
+    return () => setShowProgress(true);
+  }, [setShowProgress]);
+
   return (
-    <div className="flex flex-col justify-between items-center py-10">
+    <div className="flex flex-col justify-between items-center py-12">
       {/* 상단 로고/텍스트 */}
       <div className="w-full text-left">
-        <h1 className="text-xl font-bold">Peelie는</h1>
+        <h1 className="text-xl font-bold mt-20">Peelie는</h1>
       </div>
 
       {/* 캐러셀 */}
