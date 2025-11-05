@@ -1,29 +1,15 @@
-import { useEffect } from 'react';
-import { useMutation } from '@tanstack/react-query';
-
-import { onboardingPost } from '@/entities/onboarding/api/onboarding-post';
 import { CarouselWrapper } from '@/shared/ui/common/Carousel/CarouselWrapper';
 import MockImg from '@/assets/mockImg.svg?react';
+import MockImg2 from '@/assets/parkjiwon.webp';
+import MockImg3 from '@/assets/mockyonghee.png';
+
+import { CoverflowCarousel } from '@/shared/ui/common/Carousel/CoverflowCarousel';
 
 interface IntroducePeeliePageProps {
   onNext: () => void;
 }
 
 const IntroducePeeliePage = ({ onNext }: IntroducePeeliePageProps) => {
-  const { mutate: startOnboarding } = useMutation({
-    mutationFn: onboardingPost.startOnboarding,
-    onSuccess: (data) => {
-      console.log('온보딩 post 성공 : ', data);
-    },
-    onError: (err) => {
-      console.log('온보딩 post 실패 : ', err);
-    },
-  });
-
-  useEffect(() => {
-    startOnboarding();
-  }, [startOnboarding]);
-
   return (
     <div className="flex flex-col justify-between items-center py-10">
       {/* 상단 로고/텍스트 */}
@@ -33,6 +19,11 @@ const IntroducePeeliePage = ({ onNext }: IntroducePeeliePageProps) => {
 
       {/* 캐러셀 */}
 
+      <CoverflowCarousel>
+        <MockImg className="w-80 h-80" />
+        <img src={MockImg2} />
+        <img src={MockImg3} className="w-40 h-40" />
+      </CoverflowCarousel>
       <CarouselWrapper variant="full">
         <MockImg className="w-80 h-80" />
         <MockImg className="w-80 h-80" />

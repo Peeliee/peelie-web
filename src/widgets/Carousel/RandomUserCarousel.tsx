@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
 import { CarouselWrapper } from '@/shared/ui/common/Carousel/CarouselWrapper';
-import { VerticalUserCard } from '@/entities/user/ui/VerticalUserCard';
+import { VerticalUserCard } from '@/shared/ui/common/Card/VerticalUserCard';
 import type { FriendResponse } from '@/entities/friend/model/friend.type';
 import { InteractionStyle } from '@/shared/constants/interactionStyle';
 import mockImg from '@/assets/mockimage.png';
@@ -39,7 +39,7 @@ export const RandomUserCarousel = ({ friendList, isLoading, isError }: RandomUse
             key={user.userId}
             imageSrc={user.profileUrl ?? mockImg}
             name={user.userName}
-            personality={InteractionStyle[user.interactionStyle]}
+            interactionStyle={InteractionStyle[user.interactionStyle]}
             description={user.bio}
           />
         </div>

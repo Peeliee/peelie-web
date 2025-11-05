@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { cn } from '@/shared/lib/utils';
-import { FlipUserCard } from '@/features/user/FlipUserCard';
+import { FlipFriendCard } from '@/entities/friend/ui/FlipFriendCard';
 import { useNavigate } from 'react-router-dom';
 import type { FriendResponse } from '@/entities/friend/model/friend.type';
 
@@ -108,7 +108,7 @@ export const FriendListStack = ({ friendList }: FriendListStackProps) => {
               }}
               onClick={() => handleCardClick(index)}
             >
-              <FlipUserCard
+              <FlipFriendCard
                 friend={friend}
                 onClick={() => handleNavigate(friend.userId)}
                 isFlipped={isFlipped}
