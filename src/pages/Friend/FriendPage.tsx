@@ -12,6 +12,7 @@ import {
 import { friendQuery } from '@/entities/friend/api/friend.queries';
 import { InteractionStyle } from '@/shared/constants/interactionStyle';
 import { useHeader } from '@/shared/context/headerContext';
+import { SpeechBubble } from '@/shared/ui/common/SpeechBubble/SpeechBubble';
 import Background from '@/assets/friendProfileBackground.svg?react';
 import Character from '@/assets/characterMock.svg?react';
 import MockImg from '@/assets/mockImg.svg';
@@ -49,9 +50,17 @@ const FriendPage = () => {
       <div>
         {/* TODO : 배경 작업 필요 */}
         <div className="relative w-full flex justify-center items-center h-[260px]">
-          <Background className="absolute inset-0 w-full h-full" />
+          <Background className="absolute inset-0 w-full h-79" />
 
-          <Character className="relative z-10 w-30 h-30 top-10" />
+          <SpeechBubble
+            variant="secondary"
+            tailPosition="center"
+            className="absolute bottom-34 z-990 w-80"
+          >
+            “집콕 + OTT + 로맨스 조합이면 완벽해요. 영상미 좋은 영화만 보면 기분이 좋아져요!”
+          </SpeechBubble>
+
+          <Character className="relative z-10 w-25 h-full top-22" />
         </div>
         <HorizontalUserCard
           onClick={() => console.log('카드 클릭')}
