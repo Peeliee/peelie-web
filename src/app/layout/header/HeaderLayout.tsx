@@ -5,9 +5,9 @@ import { BackHeader, LogoHeader } from './ui/Header';
 
 export const LogoHeaderLayout = () => {
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-full">
       <LogoHeader />
-      <main className="flex-1 pt-12 overflow-hidden">
+      <main className="flex-1 overflow-hidden">
         <Outlet />
       </main>
     </div>
