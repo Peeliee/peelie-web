@@ -337,3 +337,9 @@ body {
     box-shadow: var(--elevation-3);
   }
 }
+
+@media (prefers-reduced-motion: no-preference) {
+  .embla__container {
+    transition: transform 0.1s ease-out;
+  }
+}
