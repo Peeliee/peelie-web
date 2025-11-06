@@ -17,6 +17,8 @@ export const LogoHeaderLayout = () => {
 export const BackHeaderLayout = () => {
   const [isHidden, setHidden] = useState<boolean>(false);
   const [backAction, setBackAction] = useState<(() => void) | null>(null);
+  const [isTransparent, setTransparent] = useState(false);
+
   const navigate = useNavigate();
 
   const handleBackClick = () => {
@@ -25,9 +27,9 @@ export const BackHeaderLayout = () => {
   };
 
   return (
-    <HeaderContext.Provider value={{ hideHeader: setHidden, setBackAction }}>
+    <HeaderContext.Provider value={{ hideHeader: setHidden, setBackAction, setTransparent }}>
       <div className="flex flex-col h-full">
-        {!isHidden && <BackHeader onClick={handleBackClick} />}
+        {!isHidden && <BackHeader onClick={handleBackClick} transparent={isTransparent} />}
         <main className="flex-1">
           <Outlet />
         </main>

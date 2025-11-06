@@ -4,8 +4,7 @@ import {
   UserCardName,
   UserCardDescription,
   UserCardEditProfile,
-} from '@/entities/user/ui/HorizontalUserCard';
-import { StepTabs, StepTab } from '@/features/user/ui/StepTabs';
+} from '@/shared/ui/common/Card/HorizontalUserCard';
 import MockImg from '@/assets/mockImg.svg';
 
 const MyPage = () => {
@@ -31,28 +30,6 @@ const MyPage = () => {
           프로필 수정하기
         </UserCardEditProfile>
       </HorizontalUserCard>
-
-      <StepTabs>
-        <StepTab title="STEP 1">
-          <div>첫 번째 내용</div>
-        </StepTab>
-        <StepTab title="STEP 2">
-          <div className="pb-14">
-            매우 긴 두 번째 내용매우 긴 두 번째 내용 엄청 긴 두 번째 내용매우 긴 두 번째 내용매우 긴
-            두 번째 내용 엄청 긴 두 번째 내용 <br />
-            매우 긴 두 번째 내용매우 긴 두 번째 내용엄청 긴 두 번째 내용엄청 긴 두 번째 내용 매우 긴
-            두 번째 내용매우 긴 두 번째 내용매우 긴 두 번째 내용엄청 긴 두 번째 내용매우 긴 두 번째
-            내용매우 긴 두 번째 내용 <br />
-            매우 긴 두 번째 내용매우 긴 두 번째 내용엄청 긴 두 번째 내용매우 긴 두 번째 내용 매우 긴
-            두 번째 내용매우 긴 두 번째 내용엄청 긴 두 번째 내용매우 긴 두 번째 내용매우 긴 두 번째
-            내용매우 긴 두 번째 내용 <br />
-            매우 긴 두 번째 내용엄청 긴 두 번째 내용매우 긴 두 번째 내용매우 긴 두 번째 내용
-          </div>
-        </StepTab>
-        <StepTab title="STEP 3" locked>
-          <div>세 번째 내용</div>
-        </StepTab>
-      </StepTabs>
     </div>
   );
 };

@@ -4,7 +4,7 @@ interface VerticalUserCardProps {
   className?: string;
   imageSrc?: string;
   name: string;
-  personality: string; // 교류 성향
+  interactionStyle: string; // 교류 성향
   description: string; // 한줄 소개
   onClick?: () => void;
 }
@@ -18,7 +18,7 @@ interface VerticalUserCardProps {
  * <VerticalUserCard
  *   imageSrc="/김용희.png"
  *   name="김용희"
- *   personality="신중형"
+ *   interactionStyle="신중형"
  *   description="대화를 통해 배우고, 나누며 성장하고 싶습니다."
  * />
  */
@@ -26,7 +26,7 @@ export const VerticalUserCard = ({
   className,
   imageSrc,
   name,
-  personality,
+  interactionStyle,
   description,
   onClick,
 }: VerticalUserCardProps) => {
@@ -43,9 +43,9 @@ export const VerticalUserCard = ({
       {/* 이름, 성향 */}
       <div className="flex w-full items-center justify-between gap-2 pt-8">
         <span className="font-bold text-lg">{name}</span>
-        {personality && (
+        {interactionStyle && (
           <span className="px-2 py-0.5 text-xs rounded-full bg-gray-200 text-gray-700">
-            {personality}
+            {interactionStyle}
           </span>
         )}
       </div>

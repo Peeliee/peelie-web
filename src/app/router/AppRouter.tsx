@@ -18,11 +18,13 @@ const AppRouter = () => {
       // GNB 없는 페이지
       children: [
         { path: 'login', element: <LoginPage /> },
-        { path: 'friend/:id', element: <FriendPage /> },
         // BackButton 있는 페이지
         {
           element: <BackHeaderLayout />,
-          children: [{ path: 'onboarding', element: <OnboardingPage /> }],
+          children: [
+            { path: 'onboarding', element: <OnboardingPage /> },
+            { path: 'friend/:id', element: <FriendPage /> },
+          ],
         },
         // GNB 있는 페이지
         {

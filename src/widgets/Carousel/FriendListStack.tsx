@@ -1,60 +1,63 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { cn } from '@/shared/lib/utils';
-import { FlipUserCard } from '@/features/user/FlipUserCard';
+import { FlipFriendCard } from '@/entities/friend/ui/FlipFriendCard';
 import { useNavigate } from 'react-router-dom';
+import type { FriendResponse } from '@/entities/friend/model/friend.type';
 
-const defaultFriends = [
-  {
-    userId: 1,
-    userName: '유지원',
-    profileUrl: 'nature.jpeg',
-    stage: 1,
-    bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
-    interactionStyle: '신중형',
-  },
-  {
-    userId: 2,
-    userName: '김나은',
-    profileUrl: 'nature.jpeg',
-    stage: 1,
-    bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
-    interactionStyle: '신중형',
-  },
-  {
-    userId: 3,
-    userName: '김용희',
-    profileUrl: 'nature.jpeg',
-    stage: 1,
-    bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
-    interactionStyle: '신중형',
-  },
-  {
-    userId: 4,
-    userName: '강희구',
-    profileUrl: 'nature.jpeg',
-    stage: 1,
-    bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
-    interactionStyle: '신중형',
-  },
-  {
-    userId: 5,
-    userName: '권두환',
-    profileUrl: 'nature.jpeg',
-    stage: 1,
-    bio: '대화를 통해 배우고,\n나누며 성장하고 싶습니다.',
-    interactionStyle: '신중형',
-  },
-];
+interface FriendListStackProps {
+  friendList: FriendResponse[];
+}
 
-export const FriendListStack = () => {
+export const FriendListStack = ({ friendList }: FriendListStackProps) => {
   const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState<number>(-1);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [flippedIndex, setFlippedIndex] = useState<number | null>(null);
 
   const handleNavigate = (id: number | string) => {
     navigate(`/friend/${id}`);
   };
 
+  const handleCardClick = (index: number) => {
+    // 아무 카드도 안 뽑힌 상태 → 뽑기
+    if (activeIndex === null) {
+      setActiveIndex(index);
+      setFlippedIndex(null);
+      scrollToCard(index);
+      return;
+    }
+
+    // 같은 카드 두 번째 클릭 -> 뒤집기
+    if (activeIndex === index && flippedIndex === null) {
+      setFlippedIndex(index);
+      return;
+    }
+
+    // 같은 카드 세 번째 클릭 -> 닫기
+    if (activeIndex === index && flippedIndex === index) {
+      setFlippedIndex(null);
+      setActiveIndex(null);
+      return;
+    }
+
+    // 다른 카드 클릭 -> 기존 상태 초기화 후 새 카드로 교체
+    setFlippedIndex(null);
+    setActiveIndex(index);
+    scrollToCard(index);
+  };
+
+  const handleFlip = (index: number) => {
+    // FlipUserCard에서 onFlip 호출 시 처리
+    if (flippedIndex === index) {
+      // 이미 뒤집혀 있으면 다시 닫기
+      setFlippedIndex(null);
+      setActiveIndex(null);
+    } else {
+      setFlippedIndex(index);
+    }
+  };
+
+  // 클릭 시 해당 카드로 부드럽게 스크롤
   const scrollToCard = (index: number) => {
     const container = containerRef.current;
     if (!container) return;
@@ -65,7 +68,6 @@ export const FriendListStack = () => {
     const containerRect = container.getBoundingClientRect();
     const cardRect = card.getBoundingClientRect();
 
-    // 스크롤 목표 = 현재 스크롤 + 카드 중앙 - 컨테이너 중앙
     const scrollTarget =
       container.scrollTop +
       (cardRect.top + cardRect.height / 2 - (containerRect.top + containerRect.height / 2));
@@ -76,75 +78,45 @@ export const FriendListStack = () => {
     });
   };
 
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const handleScroll = () => {
-      const cards = container.querySelectorAll('.stack-card');
-      const centerY = window.innerHeight / 2;
-
-      // 모든 카드의 중심과 화면 중앙 거리 측정
-      const distances = Array.from(cards).map((card) => {
-        const rect = (card as HTMLElement).getBoundingClientRect();
-        const cardCenter = rect.top + rect.height / 2;
-        return Math.abs(centerY - cardCenter);
-      });
-
-      // 중앙에 가장 가까운 카드 인덱스 찾기
-      const closestIndex = distances.indexOf(Math.min(...distances));
-
-      // 각 카드에 transform 적용
-      cards.forEach((card, index) => {
-        const element = card as HTMLElement;
-        const baseOffset = index * 20;
-        const isClosest = index === closestIndex;
-
-        // 중앙 카드만 extraSpace 적용
-        const extraSpace = isClosest ? 120 : 0;
-
-        element.style.transform = `translateY(${baseOffset - extraSpace}px)`;
-        element.style.zIndex = String(index);
-      });
-    };
-
-    container.addEventListener('scroll', handleScroll);
-    handleScroll();
-
-    return () => container.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const CARD_GAP = 120;
-  const topSpacer = window.innerHeight * 0.25;
-  const bottomSpacer = window.innerHeight * 0.05;
-  const wrapperHeight = defaultFriends.length * CARD_GAP + topSpacer + bottomSpacer;
-
   return (
     <div
       ref={containerRef}
       className="relative h-full w-full overflow-auto no-scrollbar px-4 pt-12"
     >
-      <div className="h-[25vh]" />
-      <div className="relative" style={{ height: `${wrapperHeight}px` }}>
-        {defaultFriends.map((friend, index) => (
-          <div
-            key={friend.userId}
-            className={cn(
-              'stack-card absolute left-0 right-0 transition-transform duration-300',
-              activeIndex === index ? 'z-[9999]' : '',
-            )}
-            style={{
-              top: `${index * 120}px`,
-            }}
-            onClick={() => {
-              setActiveIndex(index);
-              scrollToCard(index);
-            }}
-          >
-            <FlipUserCard friend={friend} onClick={() => handleNavigate(friend.userId)} />
-          </div>
-        ))}
-        <div className="h-[95vh]" />
+      <div className="relative">
+        {friendList.map((friend, index) => {
+          const baseOffset = index * 20;
+          const isActive = activeIndex === index;
+          const isFlipped = flippedIndex === index;
+          const zIndex = isActive ? 9999 : index;
+
+          const extraSpace = 120;
+          const isBelowActive = activeIndex !== null && index > activeIndex;
+          const translateY = isBelowActive ? baseOffset + extraSpace : baseOffset;
+
+          return (
+            <div
+              key={friend.userId}
+              className={cn(
+                'stack-card absolute left-0 right-0 transition-transform duration-300 ease-out cursor-pointer no-scrollbar',
+                isActive && 'z-[9999]',
+              )}
+              style={{
+                top: `${index * 120}px`,
+                transform: `translateY(${translateY}px)`,
+                zIndex,
+              }}
+              onClick={() => handleCardClick(index)}
+            >
+              <FlipFriendCard
+                friend={friend}
+                onClick={() => handleNavigate(friend.userId)}
+                isFlipped={isFlipped}
+                onFlip={() => handleFlip(index)}
+              />
+            </div>
+          );
+        })}
       </div>
     </div>
   );

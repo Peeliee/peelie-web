@@ -11,7 +11,7 @@ interface HorizontalUserCardProps {
 /**
  * 사용자 정보를 가로 레이아웃으로 보여주는 카드
  *
- * UserCardEditProfile, UserCardPersonality 같은 하위 컴포넌트를 조합해서 사용.
+ * UserCardEditProfile, UserCardInteractionStyle 같은 하위 컴포넌트를 조합해서 사용.
  *
  * @example
  * <HorizontalUserCard onClick={() => console.log('카드 클릭')}>
@@ -20,7 +20,7 @@ interface HorizontalUserCardProps {
  *     <UserCardName>김용희</UserCardName>
  *     <UserCardDescription>대화를 통해 배우고, 성장하고 싶습니다.</UserCardDescription>
  *   </div>
- *   <UserCardPersonality>신중형</UserCardPersonality>
+ *   <UserCardInteractionStyle>신중형</UserCardInteractionStyle>
  * </HorizontalUserCard>
  *
  */
@@ -85,7 +85,7 @@ const UserCardEditProfile = ({
 };
 
 // 교류 성향 배지
-const UserCardPersonality = ({
+const UserCardInteractionStyle = ({
   children,
   className,
 }: {
@@ -142,6 +142,6 @@ export {
   UserCardName,
   UserCardDescription,
   UserCardEditProfile,
-  UserCardPersonality,
+  UserCardInteractionStyle,
   UserCardFlipped,
 };

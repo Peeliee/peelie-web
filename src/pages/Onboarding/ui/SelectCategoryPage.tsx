@@ -26,8 +26,6 @@ const SelectCategoryPage = ({ onNext }: SelectCategoryPageProps) => {
   const [selected, setSelected] = useState<number[]>([]);
   const prefetchMainQuestion = usePrefetchCategoryMainQuestion();
 
-  // useClearFunnelSession('category-funnel');
-
   const queryClient = useQueryClient();
 
   const { mutate: selectCategory, isPending } = useMutation({
@@ -56,7 +54,7 @@ const SelectCategoryPage = ({ onNext }: SelectCategoryPageProps) => {
   };
 
   return (
-    <div className="flex flex-col px-6 py-10 justify-between">
+    <div className="flex flex-col px-6 py-20 justify-between">
       <div className="text-center">
         <h2 className="text-2xl font-bold mb-2">
           관심있는 주제를

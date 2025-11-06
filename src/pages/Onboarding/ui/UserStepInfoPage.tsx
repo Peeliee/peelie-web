@@ -5,6 +5,8 @@ import { cn } from '@/shared/lib/utils';
 import { type useFunnel } from '@use-funnel/react-router-dom';
 import { ConfirmModal } from '@/shared/ui/common/Modal/ModalPresets';
 
+import { useOnboardingProgress } from '../context/OnboardingProgressContext';
+
 // TODO : history 타입이 이게 맞나?
 interface UserStepInfoPageProps {
   onNext: () => void;
@@ -16,6 +18,8 @@ const UserStepInfoPage = ({ onNext, history }: UserStepInfoPageProps) => {
   const { hideHeader, setBackAction } = useHeader();
 
   const [confirmOpen, setConfirmOpen] = useState(false);
+
+  const { setShowProgress } = useOnboardingProgress();
 
   const generationStatus = data?.data.generationStatus;
   const isGenerating = generationStatus !== 'DONE';
@@ -36,6 +40,11 @@ const UserStepInfoPage = ({ onNext, history }: UserStepInfoPageProps) => {
     hideHeader(isError || isGenerating);
     return () => hideHeader(false);
   }, [isError, isGenerating, hideHeader]);
+
+  useEffect(() => {
+    setShowProgress(generationStatus === 'DONE');
+    return () => setShowProgress(true);
+  }, [generationStatus, setShowProgress]);
 
   if (isError) {
     // TODO : 에러 화면 추후 분리해서 만들기

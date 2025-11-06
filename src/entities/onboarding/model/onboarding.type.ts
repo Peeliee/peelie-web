@@ -15,7 +15,7 @@ export interface AnswerItem {
 }
 
 /**
- * 온보딩 시작
+ * 온보딩 공통 응답
  */
 export interface OnboardingCommonResponse {
   selectedCategoryIds: number[];
@@ -50,7 +50,6 @@ export interface InteractionStyleRequestDTO {
   bio: string;
 }
 
-export type StartOnboardingResponseDTO = ApiResponse<OnboardingCommonResponse>;
 export type CategorySelectResponseDTO = ApiResponse<OnboardingCommonResponse>;
 export type CategoryAnswerResponseDTO = ApiResponse<OnboardingCommonResponse>;
 export type InteractionStyleResponseDTO = ApiResponse<OnboardingCommonResponse>;

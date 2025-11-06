@@ -342,4 +342,14 @@ body {
   .embla__container {
     transition: transform 0.1s ease-out;
   }
+
+  /* 스크롤바 숨기기 유틸 */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE, Edge */
+    scrollbar-width: none; /* Firefox */
+  }
 }

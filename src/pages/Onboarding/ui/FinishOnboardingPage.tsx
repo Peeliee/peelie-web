@@ -1,7 +1,11 @@
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+
 import { INTERACTION_STYLES, type InteractionStyleKey } from '@/shared/constants/interactionStyle';
 import MockImg from '@/assets/mockImg.svg?react';
 import { cn } from '@/shared/lib/utils';
+
+import { useOnboardingProgress } from '../context/OnboardingProgressContext';
 
 interface FinishOnboardingPageProps {
   interactionStyle: InteractionStyleKey;
@@ -9,8 +13,14 @@ interface FinishOnboardingPageProps {
 
 const FinishOnboardingPage = ({ interactionStyle }: FinishOnboardingPageProps) => {
   const navigate = useNavigate();
+  const { setShowProgress } = useOnboardingProgress();
 
   const style = INTERACTION_STYLES.find((s) => s.key === interactionStyle);
+
+  useEffect(() => {
+    setShowProgress(false);
+    return () => setShowProgress(true);
+  }, [setShowProgress]);
 
   if (!style) {
     return <div>잘못된 접근</div>;
