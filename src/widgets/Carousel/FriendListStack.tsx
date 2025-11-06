@@ -81,9 +81,9 @@ export const FriendListStack = ({ friendList }: FriendListStackProps) => {
   return (
     <div
       ref={containerRef}
-      className="relative h-full w-full overflow-auto no-scrollbar px-4 pt-12"
+      className="relative h-full w-full overflow-auto no-scrollbar px-4 pt-12 z-0"
     >
-      <div className="relative">
+      <div className="relative z-0">
         {friendList.map((friend, index) => {
           const baseOffset = index * 20;
           const isActive = activeIndex === index;

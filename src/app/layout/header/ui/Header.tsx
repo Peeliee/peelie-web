@@ -20,10 +20,8 @@ interface BackHeaderProps {
 export const Header = ({ left, center, right, className }: HeaderProps) => {
   return (
     <header
-      className={cn(
-        'fixed top-0 flex items-center justify-between h-12 px-4 border-none',
-        className,
-      )}
+      className={cn('flex items-center justify-between h-12 px-4 border-none', className)}
+      style={{ transform: 'translateZ(0)' }}
     >
       <div className="flex-1">{left}</div>
       <div className="flex-1 flex justify-center">{center}</div>
@@ -47,7 +45,7 @@ export const BackHeader = ({ onClick, transparent }: BackHeaderProps) => {
   return (
     <Header
       className={cn(
-        'fixed top-0 left-0 w-full flex items-center justify-between px-4 py-3 z-9999 border-none',
+        'w-full flex items-center justify-between px-4 py-3 z-[9999] border-none',
         transparent ? 'bg-transparent text-white' : 'bg-white text-gray-900',
       )}
       left={

@@ -24,7 +24,7 @@ const FriendListPage = () => {
 
   return (
     <div className="flex flex-col w-full h-full pb-[64px] max-h-screen">
-      <div className="flex-1 overflow-hidden px-4">
+      <div className="flex-1 px-4">
         <FriendListStack friendList={data.data} />
       </div>
     </div>
