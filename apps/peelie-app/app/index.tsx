@@ -1,6 +1,7 @@
 // app/index.tsx
 import { WebView } from "react-native-webview";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { View } from "react-native";
 
 export default function HomeScreen() {
     const DEV_URL = "http://10.221.43.192:5173";
@@ -10,7 +11,7 @@ export default function HomeScreen() {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
             <WebView
-                source={{ uri: "http://10.30.99.128:5174/" }}
+                source={{ uri: "http://172.30.1.89:5173/" }}
                 originWhitelist={["*"]}
                 allowsInlineMediaPlayback
                 startInLoadingState
