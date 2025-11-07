@@ -5,6 +5,7 @@ import { VerticalUserCard } from '@/shared/ui/common/Card/VerticalUserCard';
 import type { FriendResponse } from '@/entities/friend/model/friend.type';
 import { InteractionStyle } from '@/shared/constants/interactionStyle';
 import mockImg from '@/assets/mockimage.png';
+import { SwipeWrapper } from '@/shared/ui/common/Carousel/SwipeWrapper';
 
 interface RandomUserCarouselProps {
   friendList: FriendResponse[];
@@ -32,7 +33,7 @@ export const RandomUserCarousel = ({ friendList, isLoading, isError }: RandomUse
   }
 
   return (
-    <CarouselWrapper variant="peekSmall">
+    <SwipeWrapper>
       {friendList.map((user) => (
         <div onClick={() => navigate(`/friend/${user.userId}`)}>
           <VerticalUserCard
@@ -44,6 +45,6 @@ export const RandomUserCarousel = ({ friendList, isLoading, isError }: RandomUse
           />
         </div>
       ))}
-    </CarouselWrapper>
+    </SwipeWrapper>
   );
 };
