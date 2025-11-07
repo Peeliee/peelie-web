@@ -15,8 +15,11 @@ const dirname =
 export default defineConfig({
   plugins: [react(), tailwindcss(), svgr()],
   resolve: {
-    alias: {
-      '@': path.resolve(dirname, './src'),
+   alias: {
+      '@': path.resolve(__dirname, './src'),
+      // React 중복 방지
+      react: path.resolve(__dirname, './node_modules/react'),
+      'react-dom': path.resolve(__dirname, './node_modules/react-dom'),
     },
   },
   server: {

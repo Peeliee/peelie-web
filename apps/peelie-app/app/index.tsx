@@ -10,7 +10,7 @@ export default function HomeScreen() {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
             <WebView
-                source={{ uri: "http://10.30.99.128:5173/" }}
+                source={{ uri: "http://10.30.99.128:5174/" }}
                 originWhitelist={["*"]}
                 allowsInlineMediaPlayback
                 startInLoadingState
