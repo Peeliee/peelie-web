@@ -45,7 +45,7 @@ export const BackHeader = ({ onClick, transparent }: BackHeaderProps) => {
   return (
     <Header
       className={cn(
-        'w-full flex items-center justify-between px-4 py-3 z-[9999] border-none',
+        'fixed top-0 w-full flex items-center justify-between px-4 py-3 z-[9999] border-none',
         transparent ? 'bg-transparent text-white' : 'bg-white text-gray-900',
       )}
       left={
