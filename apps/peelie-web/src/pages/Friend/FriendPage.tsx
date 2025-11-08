@@ -47,7 +47,7 @@ const FriendPage = () => {
 
   return (
     <>
-      <div>
+      <div className="relative">
         {/* TODO : 배경 작업 필요 */}
         <div className="relative w-full flex justify-center items-center h-[260px]">
           <Background className="absolute inset-0 w-full h-79" />

@@ -33,7 +33,7 @@ export const VerticalUserCard = ({
   return (
     <div
       onClick={onClick}
-      className={cn('flex flex-col items-center gap-2 rounded-xl border p-4', className)}
+      className={cn('flex flex-col w-66 items-center gap-2 rounded-xl border p-4', className)}
     >
       {/* 프로필 이미지 */}
       <div className="w-full h-full bg-gray-200">

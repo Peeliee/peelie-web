@@ -1,10 +1,9 @@
 import { useNavigate } from 'react-router-dom';
-
-import { CarouselWrapper } from '@/shared/ui/common/Carousel/CarouselWrapper';
 import { VerticalUserCard } from '@/shared/ui/common/Card/VerticalUserCard';
 import type { FriendResponse } from '@/entities/friend/model/friend.type';
 import { InteractionStyle } from '@/shared/constants/interactionStyle';
 import mockImg from '@/assets/mockimage.png';
+import { PeekSmallSwiperWrapper } from '@/shared/ui/common/Carousel/SwiperWrapper';
 
 interface RandomUserCarouselProps {
   friendList: FriendResponse[];
@@ -32,7 +31,7 @@ export const RandomUserCarousel = ({ friendList, isLoading, isError }: RandomUse
   }
 
   return (
-    <CarouselWrapper variant="peekSmall">
+    <PeekSmallSwiperWrapper>
       {friendList.map((user) => (
         <div onClick={() => navigate(`/friend/${user.userId}`)}>
           <VerticalUserCard
@@ -44,6 +43,6 @@ export const RandomUserCarousel = ({ friendList, isLoading, isError }: RandomUse
           />
         </div>
       ))}
-    </CarouselWrapper>
+    </PeekSmallSwiperWrapper>
   );
 };
