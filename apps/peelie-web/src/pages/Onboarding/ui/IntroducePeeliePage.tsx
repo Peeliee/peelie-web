@@ -28,20 +28,18 @@ const IntroducePeeliePage = ({ onNext }: IntroducePeeliePageProps) => {
 
       {/* 캐러셀 */}
 
-
       <PeekSwiperWrapper>
         <MockImg className="w-80 h-80" />
         <MockImg className="w-80 h-80" />
         <MockImg className="w-80 h-80" />
       </PeekSwiperWrapper>
+      {/* 시작하기 버튼 */}
 
       <CoverflowCarousel>
-        <MockImg className="w-80 h-80" />
+        <MockImg className="w-40 h-40" />
         <img src={MockImg2} />
         <img src={MockImg3} className="w-40 h-40" />
       </CoverflowCarousel>
-      {/* 시작하기 버튼 */}
-
       <button
         onClick={onNext}
         className="block py-4 fixed bottom-10 left-6 right-6 bg-orange-400 text-white rounded-full text-center font-medium active:bg-orange-500"
