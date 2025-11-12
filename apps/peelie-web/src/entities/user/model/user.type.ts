@@ -1,4 +1,5 @@
 import type { ApiResponse } from '@/shared/api/types';
+import type { InteractionStyleKey } from '@/shared/constants/interactionStyle';
 
 /**
  * 사용자 정보 생성
@@ -32,6 +33,22 @@ export interface GenerateInfoDone {
   card: Card;
 }
 
+export interface bioSegment {
+  stage: number;
+  bio: string;
+}
+
+export interface UserResponse {
+  userName: string;
+  profileImageUrl: string | null;
+  instagramId: string | null;
+  bio: bioSegment[];
+  interactionStyle: InteractionStyleKey;
+  card: Card;
+}
+
 export type StepInfoCardResponseDTO = ApiResponse<
   GeneratingInfo | GenerateInfoDone | GenerateInfoFail
 >;
+
+export type UserResponseDTO = ApiResponse<UserResponse>;

@@ -21,33 +21,36 @@ import { ModalWrapper } from './ModalWrapper';
 
 export const QrModal = ({
   url,
-  label,
-  nickName,
+  children,
+  className,
 }: {
   url: string;
-  label: string;
-  nickName: string;
+  children: React.ReactNode;
+  className?: string;
 }) => {
   const [open, setOpen] = useState<boolean>(false);
 
   return (
     <ModalWrapper open={open} onOpenChange={setOpen}>
-      <ModalWrapper.Trigger>
-        <Button>QR 테스트</Button>
+      <ModalWrapper.Trigger className={className}>
+        <Button>{children}</Button>
       </ModalWrapper.Trigger>
 
-      <ModalWrapper.Content className="bg-[#FF8C00] text-white">
+      <ModalWrapper.Content className="bg-[#FF8C00] px-4 pt-4 pb-12">
         <ModalWrapper.CloseButton onClose={() => setOpen(false)} />
         <ModalWrapper.Header>
-          <ModalWrapper.Title>QR을 스캔해주세요</ModalWrapper.Title>
-          <ModalWrapper.Description>
-            교류하고자 하는 친구에게 나의 QR을 보여주세요.
+          <ModalWrapper.Title className="text-peelie-white">
+            <span className="heading-1-medium">나의 QR 공유</span>
+          </ModalWrapper.Title>
+          <ModalWrapper.Description className="text-peelie-gray-150">
+            <span className="body-1-regular">
+              QR을 스캔하면 나의 프로필이
+              <br /> 상대방에게 제공됩니다.
+            </span>
           </ModalWrapper.Description>
         </ModalWrapper.Header>
 
         <ModalWrapper.QRImage value={url ?? 'https://naver.com'} />
-
-        <ModalWrapper.UserInfo label={label} nickName={nickName} />
       </ModalWrapper.Content>
     </ModalWrapper>
   );

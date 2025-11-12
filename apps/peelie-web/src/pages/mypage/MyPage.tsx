@@ -1,35 +1,38 @@
-import {
-  HorizontalUserCard,
-  UserCardImage,
-  UserCardName,
-  UserCardDescription,
-  UserCardEditProfile,
-} from '@/shared/ui/common/Card/HorizontalUserCard';
-import MockImg from '@/assets/mockImg.svg';
+import { useUser } from '@/app/provider/userContext';
+import { Button } from '@/shared/ui/common/button';
+import { CoverflowCarousel } from '@/shared/ui/common/Carousel/CoverflowCarousel';
+
+import MockImg from '@/assets/mockImg.svg?react';
+import MockImg2 from '@/assets/parkjiwon.webp';
+import MockImg3 from '@/assets/mockyonghee.png';
 
 const MyPage = () => {
+  const { user } = useUser();
+
   return (
-    <div className="p-3">
-      <div className="flex w-full justify-center p-12 bg-amber-300">헤더 자리</div>
-      <div>
-        <div className="flex w-full justify-center p-12 bg-green-300">
-          교류 단계에 맞는 단계별 캐릭터 테마 이미지 삽입
-        </div>
+    <div className="flex flex-col justify-center items-center p-4">
+      <div className="flex justify-center">
+        <p className="heading-4-medium">마이페이지</p>
       </div>
-      <HorizontalUserCard className="mt-4 border-0 shadow-none">
-        <UserCardImage src={MockImg} />
+      <img src={user?.profileImageUrl ?? ''} className="w-50 h-50" />
+      <p>{user?.userName}</p>
+      <span>기본 자기소개 {user?.bio[0].bio}</span>
+      <span> 1단계 자기소개 {user?.bio[1].bio}</span>
+      <span>2단계 자기소개 {user?.bio[2].bio}</span>
+      <span>3단계 자기소개 {user?.bio[3].bio}</span>
 
-        {/* 가운데 영역 */}
-        <div className="flex flex-col flex-1">
-          <UserCardName>김용희</UserCardName>
-          <UserCardDescription>대화를 통해 배우고, 나누며 성장하고 싶습니다.</UserCardDescription>
-        </div>
+      <Button size={'large'} className="w-full">
+        프로필 편집
+      </Button>
 
-        {/* 오른쪽 버튼 - 가운데 정렬 */}
-        <UserCardEditProfile onClick={() => alert('수정 클릭')} className="self-center">
-          프로필 수정하기
-        </UserCardEditProfile>
-      </HorizontalUserCard>
+      <div className="w-screen h-0.5 bg-peelie-gray-150 mt-4 mb-4" />
+
+      <p className="flex w-full justify-start heading-4-medium mb-4">나의 단계별 교류 카드</p>
+      <CoverflowCarousel>
+        <MockImg className="w-40 h-40" />
+        <img src={MockImg2} />
+        <img src={MockImg3} className="w-40 h-40" />
+      </CoverflowCarousel>
     </div>
   );
 };
