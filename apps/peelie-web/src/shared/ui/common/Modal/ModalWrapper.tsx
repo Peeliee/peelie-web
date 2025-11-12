@@ -27,23 +27,24 @@ function Root({ children, open, onOpenChange }: ModalWrapperProps) {
   );
 }
 
-function Trigger({ children }: { children: React.ReactNode }) {
-  return <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>;
+function Trigger({ children, className }: { children: React.ReactNode; className?: string }) {
+  return (
+    <AlertDialogTrigger asChild className={className}>
+      {children}
+    </AlertDialogTrigger>
+  );
 }
 
 function Content({ className, children }: { children: React.ReactNode; className?: string }) {
   return (
     <AlertDialogContent
       className={cn(
-        'flex w-[308px] flex-col items-center justify-center rounded-2xl p-6 text-center',
-        'bg-white shadow-lg',
+        'flex w-[308px] flex-col items-center justify-center rounded-2xl text-center',
+        'bg-white shadow-lg border-none',
         className,
       )}
     >
-      {/* <div className="relative w-full h-full flex flex-col gap-5 items-center justify-center">
-        {children}
-      </div> */}
-      <div className="w-full h-full flex flex-col items-center gap-5">{children}</div>
+      <div className="w-full h-full flex flex-col items-center gap-4">{children}</div>
     </AlertDialogContent>
   );
 }
@@ -57,22 +58,12 @@ function Header({ children, className }: { children: React.ReactNode; className?
 }
 
 function Title({ children, className }: { children: React.ReactNode; className?: string }) {
-  return (
-    <AlertDialogTitle
-      className={cn('text-base font-semibold text-gray-900 leading-snug', className)}
-    >
-      {children}
-    </AlertDialogTitle>
-  );
+  return <AlertDialogTitle className={className}>{children}</AlertDialogTitle>;
 }
 
 function Description({ children, className }: { children?: React.ReactNode; className?: string }) {
   if (!children) return null;
-  return (
-    <AlertDialogDescription className={cn('text-sm text-gray-500 leading-relaxed', className)}>
-      {children}
-    </AlertDialogDescription>
-  );
+  return <AlertDialogDescription className={cn(className)}>{children}</AlertDialogDescription>;
 }
 
 export function QRImage({ value, className }: { value: string; className?: string }) {
@@ -159,17 +150,16 @@ export const CloseButton = ({
   className?: string;
 }) => {
   return (
-    <button
-      type="button"
-      onClick={onClose}
-      className={cn(
-        'absolute right-4 top-4 p-1',
-        'rounded-full transition-opacity hover:opacity-70',
-        className,
-      )}
-    >
-      <CloseBtn className="w-5 h-5 text-black" />
-    </button>
+    <div className='flex w-full items-end justify-end'>
+      
+      <button
+        type="button"
+        onClick={onClose}
+        className={cn('rounded-full transition-opacity hover:opacity-70', className)}
+      >
+        <CloseBtn className="w-5 h-5 text-black" />
+      </button>
+    </div>
   );
 };
 

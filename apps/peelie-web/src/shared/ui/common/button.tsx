@@ -45,7 +45,7 @@ const buttonVariants = cva(
         class: cn(
           'bg-gradient-to-b from-[var(--color-peelie-secondary-200)] to-[var(--color-peelie-primary-600)] text-peelie-white',
           'disabled:bg-peelie-primary-600 disabled:opacity-32',
-          'active:bg-peelie-primary-700',
+          'active:from-[var(--color-peelie-primary-700)] active:to-[var(--color-peelie-primary-700)]',
         ),
       },
       // Primary outline

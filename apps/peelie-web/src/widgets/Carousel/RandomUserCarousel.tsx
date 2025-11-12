@@ -2,8 +2,11 @@ import { useNavigate } from 'react-router-dom';
 import { VerticalUserCard } from '@/shared/ui/common/Card/VerticalUserCard';
 import type { FriendResponse } from '@/entities/friend/model/friend.type';
 import { InteractionStyle } from '@/shared/constants/interactionStyle';
-import mockImg from '@/assets/mockimage.png';
 import { PeekSmallSwiperWrapper } from '@/shared/ui/common/Carousel/SwiperWrapper';
+import CharacterShadow from '@/assets/character/friendCardShadow.svg?react';
+import { QrModal } from '@/shared/ui/common/Modal/ModalPresets';
+import EmptyCard from '@/assets/character/emptyCard.svg?react';
+import mockImg from '@/assets/mockimage.png';
 
 interface RandomUserCarouselProps {
   friendList: FriendResponse[];
@@ -30,6 +33,24 @@ export const RandomUserCarousel = ({ friendList, isLoading, isError }: RandomUse
     );
   }
 
+  if (!friendList.length) {
+    return (
+      <div className="flex w-full justify-center mt-10">
+        <EmptyCard className="absolute bottom-45 z-0" />
+        <div className="flex flex-col relative w-65 h-98.5 bg-[#F1F1F1] p-4 rounded-400">
+          <div className="flex flex-col w-full h-full mb-5 bg-[#FFF] rounded-400 text-peelie-gray-500 items-center justify-center z-10">
+            <p className="z-30">추천할 친구가 없어요</p>
+            <p className="z-30">정보가 궁금한 친구를 추가해봐요</p>
+            <CharacterShadow className="absolute bottom-16 z-20" />
+          </div>
+          <QrModal url="https://naver.com" className="z-30">
+            내 QR 공유하기
+          </QrModal>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <PeekSmallSwiperWrapper>
       {friendList.map((user) => (
@@ -40,6 +61,7 @@ export const RandomUserCarousel = ({ friendList, isLoading, isError }: RandomUse
             name={user.userName}
             interactionStyle={InteractionStyle[user.interactionStyle]}
             description={user.bio}
+            className='bg-white'
           />
         </div>
       ))}
