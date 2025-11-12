@@ -20,6 +20,7 @@ export const CoverflowCarousel = ({ children }: CoverflowCarouselProps) => {
         grabCursor={true}
         centeredSlides={true}
         slidesPerView={2}
+        initialSlide={Math.floor(childArray.length / 2)}
         coverflowEffect={{
           rotate: 50, // 양 옆 카드 회전 각도
           stretch: 60, // 카드 간 간격

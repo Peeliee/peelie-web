@@ -1,8 +1,4 @@
 import MockImg from '@/assets/mockImg.svg?react';
-import MockImg2 from '@/assets/parkjiwon.webp';
-import MockImg3 from '@/assets/mockyonghee.png';
-
-import { CoverflowCarousel } from '@/shared/ui/common/Carousel/CoverflowCarousel';
 import { PeekSwiperWrapper } from '@/shared/ui/common/Carousel/SwiperWrapper';
 import { useOnboardingProgress } from '../context/OnboardingProgressContext';
 import { useEffect } from 'react';
@@ -35,11 +31,6 @@ const IntroducePeeliePage = ({ onNext }: IntroducePeeliePageProps) => {
       </PeekSwiperWrapper>
       {/* 시작하기 버튼 */}
 
-      <CoverflowCarousel>
-        <MockImg className="w-40 h-40" />
-        <img src={MockImg2} />
-        <img src={MockImg3} className="w-40 h-40" />
-      </CoverflowCarousel>
       <button
         onClick={onNext}
         className="block py-4 fixed bottom-10 left-6 right-6 bg-orange-400 text-white rounded-full text-center font-medium active:bg-orange-500"

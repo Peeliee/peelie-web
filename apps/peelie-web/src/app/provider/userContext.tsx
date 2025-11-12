@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { userGet } from '@/entities/user/api/user-get';
-import type { UserResponseDTO } from '@/entities/user/model/user.type';
+import type { UserResponse } from '@/entities/user/model/user.type';
 
 interface UserContextValue {
-  user: UserResponseDTO | null;
+  user: UserResponse | null;
   isLoading: boolean;
   refetchUser: () => Promise<void>;
 }
@@ -11,14 +11,14 @@ interface UserContextValue {
 const UserContext = createContext<UserContextValue | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<UserResponseDTO | null>(null);
+  const [user, setUser] = useState<UserResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchUser = async () => {
     try {
       setIsLoading(true);
       const response = await userGet.getUserInfo();
-      setUser(response);
+      setUser(response.data);
     } catch (error) {
       console.error('유저 정보를 가져오는 중 오류:', error);
     } finally {

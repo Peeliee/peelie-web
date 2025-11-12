@@ -11,10 +11,10 @@ const HomePage = () => {
   const { data, isLoading, isError } = useQuery(friendQuery.randomFriend());
 
   return (
-    <div style={{ color: 'black' }}>
+    <div className="w-full h-full">
       <div className="flex justify-center">
         <button
-          className="bg-amber-400 rounded-3xl p-3 mt-0"
+          className="bg-amber-400 rounded-3xl p-1 mt-0"
           onClick={() => {
             navigate('/login');
           }}
@@ -22,7 +22,7 @@ const HomePage = () => {
           로그인페이지로 이동하기 버튼
         </button>
         <button
-          className="bg-amber-400 rounded-3xl p-3 mt-0"
+          className="bg-amber-400 rounded-3xl p-1 mt-0"
           onClick={() => {
             navigate('/onboarding');
           }}
