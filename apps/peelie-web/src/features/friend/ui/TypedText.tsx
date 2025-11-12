@@ -7,6 +7,7 @@ interface TypedTextProps {
   delayBetweenLoops?: number;
   onRestart?: () => void;
   className?: string;
+  repeat?: boolean;
 }
 
 export const TypedText = ({
@@ -14,6 +15,7 @@ export const TypedText = ({
   speed = 25,
   delayBetweenLoops = 10000,
   onRestart,
+  repeat = true,
   className,
 }: TypedTextProps) => {
   const el = useRef<HTMLSpanElement>(null);
@@ -27,15 +29,17 @@ export const TypedText = ({
       typeSpeed: speed,
       showCursor: false,
       contentType: 'html',
-      loop: false, // 수동 반복
+      loop: false,
       onComplete: () => {
+        if (!repeat) return;
+
         setTimeout(() => {
           el.current?.classList.add('fade-out');
           setTimeout(() => {
             el.current?.classList.remove('fade-out');
             typed.reset();
             onRestart?.();
-          }, 500); // fadeOut transition 시간 ms
+          }, 500);
         }, delayBetweenLoops);
       },
     });
@@ -45,7 +49,7 @@ export const TypedText = ({
     return () => {
       typed.destroy();
     };
-  }, [htmlString, speed, delayBetweenLoops, onRestart]);
+  }, [htmlString, speed, delayBetweenLoops, onRestart, repeat]);
 
   return <span ref={el} className={className} />;
 };

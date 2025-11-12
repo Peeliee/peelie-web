@@ -5,19 +5,43 @@ import { bioToHTML } from '@/features/friend/lib/bioToHTML';
 import type { BioSegment } from '@/entities/friend/model/friend.type';
 import { cn } from '@/shared/lib/utils';
 
-export const FriendBioBubble = ({ bio }: { bio: BioSegment[] }) => {
+export type SpeechBubbleVariant =
+  | 'primary'
+  | 'secondary'
+  | 'gray'
+  | 'fast'
+  | 'balanced'
+  | 'cautious';
+type TailPosition = 'center' | 'bottom-left' | 'left';
+
+interface FriendBioBubbleProps {
+  bio: BioSegment[];
+  variant?: SpeechBubbleVariant;
+  tailPosition?: TailPosition;
+  repeat?: boolean;
+  className?: string;
+}
+
+export const FriendBioBubble = ({
+  bio,
+  variant,
+  tailPosition,
+  repeat = true,
+  className,
+}: FriendBioBubbleProps) => {
   const [motionKey, setMotionKey] = useState<number>(0);
 
   return (
     <SpeechBubble
       key={motionKey}
-      variant="primary"
-      tailPosition="center"
-      className={cn('absolute bottom-34 z-990 w-80 body-1-regular')}
+      variant={variant}
+      tailPosition={tailPosition}
+      className={cn('absolute z-990 body-1-regular', className)}
     >
       <TypedText
         htmlString={bioToHTML(bio)}
         speed={30}
+        repeat={repeat}
         delayBetweenLoops={3000}
         onRestart={() => setMotionKey((prev) => prev + 1)}
       />
