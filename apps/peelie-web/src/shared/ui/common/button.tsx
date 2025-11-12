@@ -25,10 +25,10 @@ const buttonVariants = cva(
         pressed: '',
       },
       size: {
-        small: 'h-6 px-2 rounded-200 body-1-regular',
-        medium: 'h-8 px-3 rounded-200 body-1-regular',
-        large: 'h-10 px-4 rounded-200 body-1-regular',
-        extraLarge: 'h-12 px-6 rounded-200 heading-4-medium',
+        small: 'h-6 px-2 rounded-400 body-1-regular',
+        medium: 'h-8 px-3 rounded-400 body-1-regular',
+        large: 'h-10 px-4 rounded-400 body-1-regular',
+        extraLarge: 'h-12 px-6 rounded-400 heading-4-medium',
       },
     },
     defaultVariants: {
