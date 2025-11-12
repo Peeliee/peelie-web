@@ -29,14 +29,13 @@ const AppRouter = () => {
         // GNB 있는 페이지
         {
           element: <GNBLayout />,
-
           children: [
-            { path: 'friendslist', element: <FriendListPage /> },
             {
               element: <LogoHeaderLayout />,
               children: [
                 { path: 'mypage', element: <MyPage /> },
                 { path: '', element: <HomePage /> },
+                { path: 'friendslist', element: <FriendListPage /> },
               ],
             },
           ],
