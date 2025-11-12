@@ -11,6 +11,7 @@ interface CarouselWrapperProps {
   variant: CarouselVariant;
   onChange?: (index: number) => void;
   showIndicator?: boolean;
+  className?: string;
 }
 
 /**
@@ -27,6 +28,7 @@ export function CarouselWrapper({
   variant,
   onChange,
   showIndicator = true,
+  className,
 }: CarouselWrapperProps) {
   const [api, setApi] = useState<CarouselApi | null>(null);
   const [current, setCurrent] = useState(0);
@@ -58,13 +60,13 @@ export function CarouselWrapper({
     <div className="w-full">
       <Carousel
         setApi={setApi}
-        className="w-full"
+        className={cn('w-full')}
         opts={{
           align: isPeekMode ? 'center' : 'start',
           loop: false,
         }}
       >
-        <CarouselContent>
+        <CarouselContent className={className}>
           {isPeekMode && (
             <div className={cn(`${spacerBasis} shrink-0 pointer-events-none`)} aria-hidden />
           )}
@@ -78,8 +80,8 @@ export function CarouselWrapper({
                 className={cn(
                   'flex items-center justify-center transition-transform duration-300',
                   variant === 'full' && 'basis-full',
-                  variant === 'peek' && 'basis-[80%] pl-4',
-                  variant === 'peekSmall' && 'basis-[70%] pl-4',
+                  variant === 'peek' && 'basis-[80%] -ml-2 -mr-2',
+                  variant === 'peekSmall' && 'basis-[70%]',
                   variant === 'peekSmall' && !isActive && 'scale-80',
                 )}
               >
@@ -94,12 +96,12 @@ export function CarouselWrapper({
       </Carousel>
 
       {showIndicator && (
-        <div className="flex justify-center mt-3">
+        <div className="flex justify-center mt-2">
           {slides.map((_, index) => (
             <div
               key={index}
               className={`w-2 h-2 rounded-full transition-colors duration-200 mr-3 ${
-                index === current ? 'bg-orange-500' : 'bg-orange-200'
+                index === current ? 'w-4 bg-peelie-primary-600' : 'bg-orange-200'
               }`}
             />
           ))}

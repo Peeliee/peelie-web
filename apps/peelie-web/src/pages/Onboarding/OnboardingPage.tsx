@@ -48,14 +48,14 @@ const OnboardingPage = () => {
   return (
     <OnboardingProgressContext.Provider value={{ showProgress, setShowProgress }}>
       <div className="flex flex-col w-full">
-        <div className="px-6 pt-20">
+        <div className="px-6 pt-14.5">
           {showProgress && <StepProgress currentStep={currentStep} />}
         </div>
 
         <funnel.Render
           // 소개 페이지
           introducePeelie={({ history }) => (
-            <IntroducePeeliePage onNext={() => history.push('selectCategory')} />
+            <IntroducePeeliePage onNext={() => history.push('selectInteraction')} />
           )}
           // 카테고리 선택
           selectCategory={({ history }) => (

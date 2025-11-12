@@ -3,6 +3,7 @@ import { SpeechBubble } from '@/shared/ui/common/SpeechBubble/SpeechBubble';
 import { TypedText } from '@/features/friend/ui/TypedText';
 import { bioToHTML } from '@/features/friend/lib/bioToHTML';
 import type { BioSegment } from '@/entities/friend/model/friend.type';
+import { cn } from '@/shared/lib/utils';
 
 export const FriendBioBubble = ({ bio }: { bio: BioSegment[] }) => {
   const [motionKey, setMotionKey] = useState<number>(0);
@@ -12,7 +13,7 @@ export const FriendBioBubble = ({ bio }: { bio: BioSegment[] }) => {
       key={motionKey}
       variant="primary"
       tailPosition="center"
-      className="absolute bottom-34 z-990 w-80 body-1-regular"
+      className={cn('absolute bottom-34 z-990 w-80 body-1-regular')}
     >
       <TypedText
         htmlString={bioToHTML(bio)}
