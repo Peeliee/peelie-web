@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom';
 import { useEffect } from 'react';
 
 import { QueryProvider } from './provider/QueryProvider';
+import { UserProvider } from './provider/userContext';
 
 const App = () => {
   useEffect(() => {
@@ -13,7 +14,9 @@ const App = () => {
   return (
     <main>
       <QueryProvider>
-        <Outlet />
+        <UserProvider>
+          <Outlet />
+        </UserProvider>
       </QueryProvider>
     </main>
   );
