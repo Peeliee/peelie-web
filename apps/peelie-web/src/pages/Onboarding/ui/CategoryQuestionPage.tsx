@@ -3,6 +3,8 @@ import { useMutation } from '@tanstack/react-query';
 
 import { userPost } from '@/entities/user/api/user-post';
 import CategoryQuestionStep from '@/widgets/onboarding/CategoryQuestionStep';
+import CategoryQuestionCharacter from '@/assets/character/categoryQuestionCharacter.svg?react';
+import { FriendBioBubble } from '@/features/friend/ui/FriendBioBubble';
 
 interface CategoryQuestionPageProps {
   selected: number[];
@@ -36,14 +38,15 @@ const CategoryQuestionPage = ({ selected, onNext }: CategoryQuestionPageProps) =
   };
 
   return (
-    <div className="w-full flex flex-col px-6 py-10 pb-24">
-      <div className="text-center mb-8">
-        <h1 className="text-xl font-bold mb-2">선택한 카테고리에 대해 이야기해볼까요?</h1>
-        <p className="text-gray-500 text-sm">
-          작성한 내용은 바로 전체 공개되지 않고,
-          <br />
-          단계별 정보 공개에 사용돼요.
-        </p>
+    <div className="w-full flex flex-col px-4 pt-1 pb-24">
+      <div className="relative">
+        <CategoryQuestionCharacter />
+        <FriendBioBubble
+          tailPosition="left"
+          className="absolute left-30 top-8 w-59 h-20"
+          repeat={false}
+          bio={[{ text: '선택한 주제에 대한 세부 질문에 답해주세요!', bold: false }]}
+        />
       </div>
 
       <funnel.Render

@@ -48,7 +48,7 @@ const OnboardingPage = () => {
   return (
     <OnboardingProgressContext.Provider value={{ showProgress, setShowProgress }}>
       <div className="flex flex-col w-full">
-        <div className="px-6 pt-20">
+        <div className="px-6 pt-13">
           {showProgress && <StepProgress currentStep={currentStep} />}
         </div>
 

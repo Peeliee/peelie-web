@@ -9,7 +9,6 @@ const meta: Meta<typeof OnboardingChoiceQuestion> = {
   component: OnboardingChoiceQuestion,
   tags: ['autodocs'],
   args: {
-    level: 'L0',
     title: '영화는 어떻게 즐기는 편인가요?',
     options: [
       { id: 1, label: '극장 관람 위주' },

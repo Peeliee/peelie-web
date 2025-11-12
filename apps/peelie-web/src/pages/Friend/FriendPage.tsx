@@ -52,7 +52,7 @@ const FriendPage = () => {
         <div className="relative w-full flex justify-center items-center h-[260px]">
           <Background className="absolute inset-0 w-full h-79" />
 
-          <FriendBioBubble bio={user.data.bio} />
+          <FriendBioBubble bio={user.data.bio} className='bottom-34 w-80' />
 
           <Character className="relative z-10 w-25 h-full top-22" />
         </div>

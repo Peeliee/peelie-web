@@ -55,10 +55,9 @@ export const CategoryQuestionForm = ({
   const isCompleted = answeredCount >= totalQuestions;
 
   return (
-    <div className="space-y-6 mb-6">
+    <div className="space-y-6 mt-6 mb-6">
       {/* main 질문 */}
       <OnboardingChoiceQuestion
-        level="L0"
         title={mainQuestion.categoryQuestion}
         options={mainQuestion.subCategoryNames.map((s) => ({ id: s.id, label: s.name }))}
         onAnswer={(optionId) => updateAnswer('L0', optionId)}
@@ -77,7 +76,6 @@ export const CategoryQuestionForm = ({
               >
                 {q.type === 'CHOICE' ? (
                   <OnboardingChoiceQuestion
-                    level={q.level}
                     title={q.content}
                     options={q.options.map((o) => ({ id: o.optionId, label: o.content }))}
                     onAnswer={(val) => updateAnswer(q.level, val)}

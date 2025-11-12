@@ -120,6 +120,7 @@ export const FullSwiperWrapper = ({
       <Swiper
         modules={[Pagination]}
         spaceBetween={24}
+        speed={500}
         slidesPerView={1}
         pagination={false}
         onSlideChange={(swiper: SwiperType) => {
@@ -150,9 +151,9 @@ export const PeekSwiperWrapper = ({
     <>
       <Swiper
         modules={[Pagination]}
-        slidesPerView={1.2} // 한 화면에 1.2개 정도 보이게
+        slidesPerView={1.4} // 한 화면에 1.2개 정도 보이게
         centeredSlides={true} // 현재 슬라이드 중앙 정렬
-        spaceBetween={16} // 슬라이드 간격
+        spaceBetween={35} // 슬라이드 간격
         pagination={false}
         onSlideChange={(swiper: SwiperType) => {
           onChange?.(swiper.activeIndex);

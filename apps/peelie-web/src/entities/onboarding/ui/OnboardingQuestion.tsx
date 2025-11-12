@@ -1,4 +1,6 @@
 import { cn } from '@/shared/lib/utils';
+import { Chip } from '@/shared/ui/common/Chip/Chip';
+import { Button } from '@/shared/ui/common/button';
 
 interface ChoiceOption {
   id: number;
@@ -6,7 +8,6 @@ interface ChoiceOption {
 }
 
 interface OnboardingChoiceQuestionProps {
-  level: string;
   title: string;
   options: ChoiceOption[];
   onAnswer: (id: number) => void;
@@ -26,48 +27,65 @@ interface OnboardingTextQuestionProps {
  *  @주관식질문 OnboardingTextQuestion
  *  */
 export const OnboardingChoiceQuestion = ({
-  level,
   title,
   options,
   onAnswer,
   selected,
 }: OnboardingChoiceQuestionProps) => {
+  const MAX_CHIP_LENGTH = 14;
+  const hasLongOption = options.some((opt) => opt.label.length > MAX_CHIP_LENGTH);
+
   return (
     <div>
-      <h2>
-        {level}. {title}
-      </h2>
-      <div>
-        {options.map((option) => (
-          <button
-            key={option.id}
-            onClick={() => onAnswer(option.id)}
-            className={cn(
-              'px-3 py-1 rounded-full border hover:bg-gray-100',
-              selected === option.id
-                ? 'bg-gray-300 border-gray-400'
-                : 'bg-white hover:bg-gray-100 border-gray-300',
-            )}
-          >
-            {option.label}
-          </button>
-        ))}
+      <p className="heading-4-medium">{title}</p>
+      <div
+        className={cn('pt-4 pb-6', hasLongOption ? 'flex flex-col gap-4' : 'flex flex-wrap gap-2')}
+      >
+        {options.map((option) => {
+          const isSelected = selected === option.id;
+
+          // 전체 Button
+          if (hasLongOption) {
+            return (
+              <Button
+                key={option.id}
+                variant={'primary'}
+                size={'large'}
+                buttonType={isSelected ? 'fill' : 'outline'}
+                onClick={() => onAnswer(option.id)}
+                className={cn('w-full justify-center')}
+              >
+                {option.label}
+              </Button>
+            );
+          }
+
+          // 전체 Chip
+          return (
+            <Chip
+              key={option.id}
+              size={'large'}
+              variant="primary"
+              chipType={isSelected ? 'default' : 'subtle'}
+              onClick={() => onAnswer(option.id)}
+            >
+              {option.label}
+            </Chip>
+          );
+        })}
       </div>
     </div>
   );
 };
 
 export const OnboardingTextQuestion = ({
-  level,
   title,
   placeholder,
   onAnswer,
 }: OnboardingTextQuestionProps) => {
   return (
     <div>
-      <h2>
-        {level}. {title}
-      </h2>
+      <h2>{title}</h2>
       <div className="mt-2">
         <input
           type="text"

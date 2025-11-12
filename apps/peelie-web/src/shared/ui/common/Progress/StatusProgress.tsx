@@ -2,9 +2,10 @@ import { cn } from '@/shared/lib/utils';
 
 interface StatusProgressProps {
   currentStep: number;
+  className?: string;
 }
 
-export function StatusProgress({ currentStep }: StatusProgressProps) {
+export function StatusProgress({ currentStep, className }: StatusProgressProps) {
   const total = 4;
   const activeColors = [
     'bg-peelie-primary-300',
@@ -14,7 +15,12 @@ export function StatusProgress({ currentStep }: StatusProgressProps) {
   ];
 
   return (
-    <div className="relative w-full h-3 bg-peelie-gray-200 rounded-400 overflow-hidden">
+    <div
+      className={cn(
+        'relative w-full h-3 bg-peelie-gray-200 rounded-400 overflow-hidden',
+        className,
+      )}
+    >
       <div className="flex w-full h-full gap-0.5">
         {Array.from({ length: total }).map((_, i) => {
           const isActive = i < currentStep;
