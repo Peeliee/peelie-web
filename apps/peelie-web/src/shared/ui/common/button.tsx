@@ -26,8 +26,8 @@ const buttonVariants = cva(
       },
       size: {
         small: 'h-6 px-2 rounded-200 body-1-regular',
-        medium: 'h-8 px-3 rounded-200 heading-4-medium',
-        large: 'h-10 px-4 rounded-200 heading-4-medium',
+        medium: 'h-8 px-3 rounded-200 body-1-regular',
+        large: 'h-10 px-4 rounded-200 body-1-regular',
         extraLarge: 'h-12 px-6 rounded-200 heading-4-medium',
       },
     },
@@ -43,7 +43,7 @@ const buttonVariants = cva(
         variant: 'primary',
         buttonType: 'fill',
         class: cn(
-          'bg-peelie-primary-600 text-peelie-white',
+          'bg-gradient-to-b from-[var(--color-peelie-secondary-200)] to-[var(--color-peelie-primary-600)] text-peelie-white',
           'disabled:bg-peelie-primary-600 disabled:opacity-32',
           'active:bg-peelie-primary-700',
         ),
