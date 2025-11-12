@@ -6,7 +6,6 @@ import Background from '@/assets/background/background.svg?react';
 import Shadow from '@/assets/character/shadow.svg?react';
 import { Badge } from '@/shared/ui/common/Badge/Badge';
 import { SpeechBubble } from '@/shared/ui/common/SpeechBubble/SpeechBubble';
-import type { SpeechBubbleVariant } from '@/shared/ui/common/SpeechBubble/SpeechBubble';
 import { cn } from '@/shared/lib/utils';
 
 interface InteractionStyleCardProps {
@@ -24,8 +23,9 @@ const CONFIG = {
           <span class="body-1-bold leading-none">균형형</span>이야
         `,
     CharacterImage: BalancedCharacter,
-    progress: [3, 4, 2],
+    progress: [2, 4, 2],
     bubbleColor: 'fast',
+    badgeColor: 'green',
   },
   fast: {
     bg: 'bg-gradient-to-b from-[var(--color-peelie-secondary-200)] to-[var(--color-peelie-gray-000)]',
@@ -36,8 +36,9 @@ const CONFIG = {
       <span class="body-1-bold leading-none">신속형</span>이야
     `,
     CharacterImage: FastCharacter,
-    progress: [2, 3, 4],
+    progress: [1, 3, 4],
     bubbleColor: 'balanced',
+    badgeColor: 'secondary',
   },
   cautious: {
     bg: 'bg-gradient-to-b from-[var(--color-peelie-primary-600)] to-[var(--color-peelie-gray-000)]',
@@ -50,12 +51,13 @@ const CONFIG = {
     CharacterImage: CautiousCharacter,
     progress: [4, 2, 1],
     bubbleColor: 'cautious',
+    badgeColor: 'primary',
   },
-};
+} as const;
 
 export const InteractionStyleCard = ({ type, isActive }: InteractionStyleCardProps) => {
-  const { bg, label, bubbleText, CharacterImage, progress, bubbleColor } = CONFIG[type];
-  console.log(type);
+  const { bg, label, bubbleText, CharacterImage, progress, bubbleColor, badgeColor } = CONFIG[type];
+
   return (
     <div
       className={cn(
@@ -69,7 +71,7 @@ export const InteractionStyleCard = ({ type, isActive }: InteractionStyleCardPro
           <SpeechBubble
             key={`${type}-${isActive}`}
             className="absolute bottom-28.5 left-11 z-990 body-1-regular w-56"
-            variant={bubbleColor as SpeechBubbleVariant}
+            variant={bubbleColor}
           >
             <span dangerouslySetInnerHTML={{ __html: bubbleText }} />
           </SpeechBubble>
@@ -88,7 +90,7 @@ export const InteractionStyleCard = ({ type, isActive }: InteractionStyleCardPro
         <Shadow className="absolute bottom-0.5" />
       </div>
 
-      <Badge variant={'green'} badgeType={'fill'} className="my-2">
+      <Badge variant={badgeColor} badgeType={'fill'} className="my-2">
         {label}
       </Badge>
       {/* 하단 정보 */}
