@@ -23,8 +23,8 @@ export const userHandlers = [
 
   http.patch<never, UserRequestDTO, UserResponseDTO | ApiErrorMessage>(
     `${USER_API_PREFIX}/profile`,
-    async ({request}) => {
-      const body = (await request.json()) as UserRequestDTO;
+    async () => {
+      // const body = (await request.json()) as UserRequestDTO;
 
       await new Promise((resolve) => setTimeout(resolve, UserMock.delay));
 
