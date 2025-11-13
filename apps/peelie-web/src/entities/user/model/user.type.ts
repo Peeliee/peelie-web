@@ -47,6 +47,17 @@ export interface UserResponse {
   card: Card;
 }
 
+export interface UserRequestDTO {
+  userName: string;
+  instagramId: string | null;
+  profileImageUrl: string | null;
+  interactionStyle: InteractionStyleKey;
+  stage0Bio: string;
+  stage1Bio: string;
+  stage2Bio: string;
+  stage3Bio: string;
+}
+
 export type StepInfoCardResponseDTO = ApiResponse<
   GeneratingInfo | GenerateInfoDone | GenerateInfoFail
 >;
