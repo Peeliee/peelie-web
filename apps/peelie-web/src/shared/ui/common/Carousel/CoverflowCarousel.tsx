@@ -4,17 +4,19 @@ import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
 import type React from 'react';
+import { cn } from '@/shared/lib/utils';
 
 interface CoverflowCarouselProps {
   children: React.ReactNode;
+  className?: string;
 }
 
 // Swiper 기반 커버플로우 레이아웃 컴포넌트 (공통 캐러셀 UI)
-export const CoverflowCarousel = ({ children }: CoverflowCarouselProps) => {
+export const CoverflowCarousel = ({ children, className }: CoverflowCarouselProps) => {
   const childArray = Array.isArray(children) ? children : [children];
 
   return (
-    <div className="w-full">
+    <div className={cn('w-full', className)}>
       <Swiper
         effect={'coverflow'}
         grabCursor={true}

@@ -19,7 +19,7 @@ export function TextInput({
 }: TextInputProps) {
   return (
     <div className={cn('flex flex-col w-full gap-1', className)}>
-      {label && <label className="heading-4-medium text-peelie-black">{label}</label>}
+      {label && <label className="body-1-regular text-peelie-gray-600">{label}</label>}
 
       <input
         type={type}
@@ -28,9 +28,9 @@ export function TextInput({
         className={cn(
           'w-full h-10 px-3 rounded-300 outline-none transition-all body-1-regular',
           // 기본
-          'bg-peelie-neutral-5 border border-peelie-neutral-30 text-peelie-black placeholder:text-peelie-gray-700',
+          'bg-peelie-neutral-5 border border-peelie-neutral-30 text-peelie-black placeholder:text-peelie-gray-400',
           // focus
-          'focus:placeholder:text-peelie-black',
+          'focus:placeholder:text-peelie-gray-400 focus:border-peelie-primary-600',
           // disabled
           'disabled:placeholder:text-peelie-gray-400 disabled:cursor-not-allowed',
           // error
