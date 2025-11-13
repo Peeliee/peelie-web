@@ -81,7 +81,7 @@ export const FriendListStack = ({ friendList }: FriendListStackProps) => {
   return (
     <div
       ref={containerRef}
-      className="relative h-full w-full overflow-auto no-scrollbar px-4 pt-12 z-0"
+      className="relative h-full w-full overflow-auto no-scrollbar px-4 pt-3 z-0"
     >
       <div className="relative z-0">
         {friendList.map((friend, index) => {

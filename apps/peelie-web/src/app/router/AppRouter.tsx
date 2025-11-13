@@ -5,6 +5,7 @@ import FriendPage from '@/pages/Friend/FriendPage';
 import FriendListPage from '@/pages/FriendList/FriendListPage';
 import HomePage from '@/pages/Home/HomePage';
 import MyPage from '@/pages/mypage/MyPage';
+import EditProfilePage from '@/pages/EditProfile/EditProfilePage';
 import PATH from '@/shared/constants/path';
 import { GNBLayout } from '@/app/layout/navigation/GNBLayout';
 import { BackHeaderLayout, LogoHeaderLayout } from '@/app/layout/header/HeaderLayout';
@@ -24,19 +25,19 @@ const AppRouter = () => {
             { path: 'onboarding', element: <OnboardingPage /> },
             { path: 'friend/:id', element: <FriendPage /> },
             { path: 'login', element: <LoginPage /> },
+            { path: 'mypage/edit-profile', element: <EditProfilePage /> },
           ],
         },
         // GNB 있는 페이지
         {
           element: <GNBLayout />,
-
           children: [
-            { path: 'friendslist', element: <FriendListPage /> },
             {
               element: <LogoHeaderLayout />,
               children: [
                 { path: 'mypage', element: <MyPage /> },
                 { path: '', element: <HomePage /> },
+                { path: 'friendslist', element: <FriendListPage /> },
               ],
             },
           ],

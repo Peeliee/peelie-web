@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 import { useUser } from '@/app/provider/userContext';
 import { Button } from '@/shared/ui/common/button';
 import { CoverflowCarousel } from '@/shared/ui/common/Carousel/CoverflowCarousel';
@@ -7,6 +9,7 @@ import MockImg2 from '@/assets/parkjiwon.webp';
 import MockImg3 from '@/assets/mockyonghee.png';
 
 const MyPage = () => {
+  const navigate = useNavigate();
   const { user } = useUser();
 
   return (
@@ -21,7 +24,7 @@ const MyPage = () => {
       <span>2단계 자기소개 {user?.bio[2].bio}</span>
       <span>3단계 자기소개 {user?.bio[3].bio}</span>
 
-      <Button size={'large'} className="w-full">
+      <Button size={'large'} className="w-full" onClick={() => navigate('edit-profile')}>
         프로필 편집
       </Button>
 
@@ -29,9 +32,9 @@ const MyPage = () => {
 
       <p className="flex w-full justify-start heading-4-medium mb-4">나의 단계별 교류 카드</p>
       <CoverflowCarousel>
-        <MockImg className="w-40 h-40" />
-        <img src={MockImg2} />
-        <img src={MockImg3} className="w-40 h-40" />
+        <MockImg className="w-40 h-40 object-contain" />
+        <img src={MockImg2} className="w-40 h-40 object-contain" />
+        <img src={MockImg3} className="w-40 h-40 object-contain" />
       </CoverflowCarousel>
     </div>
   );

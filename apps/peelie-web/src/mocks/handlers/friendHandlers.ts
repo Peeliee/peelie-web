@@ -17,7 +17,9 @@ export const friendHandlers = [
     async () => {
       const mock = RandomFriendListMock.data;
 
-      if (!mock) {
+      const isSuccess = Math.random() > 0.7;
+
+      if (!isSuccess || !mock) {
         return HttpResponse.json({
           status: 404,
           success: false,
