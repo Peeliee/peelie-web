@@ -2,11 +2,23 @@ import { QrModal } from '@/shared/ui/common/Modal/ModalPresets';
 import { Button } from '@/shared/ui/common/button';
 import { cn } from '@/shared/lib/utils';
 
+declare global {
+  interface Window {
+    ReactNativeWebView?: {
+      postMessage: (message: string) => void;
+    };
+  }
+}
+
 interface ProfileShareSectionProps {
   className?: string;
 }
 
 export const ProfileShareSection = ({ className }: ProfileShareSectionProps) => {
+  const handleOpenCamera = () => {
+    window.ReactNativeWebView?.postMessage(JSON.stringify({ type: 'OPEN_CAMERA' }));
+  };
+
   return (
     <div
       className={cn('w-full p-4 bg-peelie-primary-100 shadow-elevation-3 rounded-400', className)}
@@ -16,7 +28,13 @@ export const ProfileShareSection = ({ className }: ProfileShareSectionProps) => 
         <QrModal url="https://naver.com" className="flex-1">
           내 QR 공유하기
         </QrModal>
-        <Button variant={'secondary'} state={'default'} size={'medium'} className="flex-1">
+        <Button
+          variant={'secondary'}
+          state={'default'}
+          size={'medium'}
+          className="flex-1"
+          onClick={handleOpenCamera}
+        >
           친구 QR 공유받기
         </Button>
       </div>

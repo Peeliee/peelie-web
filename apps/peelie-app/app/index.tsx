@@ -1,9 +1,11 @@
-// app/index.tsx
 import { WebView } from "react-native-webview";
 import { SafeAreaView, SafeAreaProvider, useSafeAreaInsets } from "react-native-safe-area-context";
 import { StyleSheet, Platform } from "react-native";
+import { useRouter } from "expo-router";
 
 export default function HomeScreen() {
+    const router = useRouter();
+
     const DEV_URL = "http://10.221.43.192:5173";
     const PROD_URL = "https://peelie.vercel.app";
     const sourceUrl = __DEV__ ? DEV_URL : PROD_URL;
@@ -19,6 +21,18 @@ export default function HomeScreen() {
         };
         true;
     `;
+
+    const handleMessage = (event) => {
+        try {
+            const data = JSON.parse(event.nativeEvent.data);
+            console.log("버튼눌림");
+            if (data.type === "OPEN_CAMERA") {
+                router.push("/screen/CameraScreen");
+            }
+        } catch (e) {
+            console.log("Invalid message", e);
+        }
+    };
 
     return (
         <SafeAreaProvider>
@@ -42,7 +56,7 @@ export default function HomeScreen() {
                     onLoadStart={() => console.log("WebView 시작")}
                     onLoadEnd={() => console.log("WebView 완료")}
                     onError={(e) => console.log("WebView 오류:", e.nativeEvent)}
-                    onMessage={(event) => console.log("📩 message:", event.nativeEvent.data)}
+                    onMessage={handleMessage}
                     injectedJavaScript={injectedJavaScript}
                 />
             </SafeAreaView>
