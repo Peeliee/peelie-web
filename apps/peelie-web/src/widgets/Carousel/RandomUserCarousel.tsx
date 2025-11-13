@@ -35,14 +35,16 @@ export const RandomUserCarousel = ({ friendList, isLoading, isError }: RandomUse
 
   if (!friendList.length) {
     return (
-      <div className="flex w-full justify-center mt-10">
-        <EmptyCard className="absolute bottom-74 z-0" />
-        <div className="flex flex-col relative w-65 h-98.5 bg-[#F1F1F1] p-4 rounded-400">
-          <div className="flex flex-col w-full h-full mb-5 bg-[#FFF] rounded-400 text-peelie-gray-500 items-center justify-center z-10">
+      <div className="flex w-full justify-center mt-5">
+        <EmptyCard className="absolute left-10 top-15 z-0" />
+
+        <div className="relative flex flex-col w-65 h-98.5 bg-[#F1F1F1] p-4 rounded-400 z-10">
+          <div className="flex flex-col w-full h-full mb-5 bg-[#FFF] rounded-400 text-peelie-gray-500 items-center justify-center z-10 relative">
             <p className="z-30">추천할 친구가 없어요</p>
             <p className="z-30">정보가 궁금한 친구를 추가해봐요</p>
             <CharacterShadow className="absolute bottom-16 z-20" />
           </div>
+
           <QrModal url="https://naver.com" className="z-30">
             내 QR 공유하기
           </QrModal>
@@ -61,7 +63,7 @@ export const RandomUserCarousel = ({ friendList, isLoading, isError }: RandomUse
             name={user.userName}
             interactionStyle={InteractionStyle[user.interactionStyle]}
             description={user.bio}
-            className='bg-white'
+            className="bg-white"
           />
         </div>
       ))}

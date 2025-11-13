@@ -36,7 +36,7 @@ const HomePage = () => {
 
       <div className="w-full h-0.5 bg-peelie-gray-150" />
       <div className="relative h-full">
-        <div className="absolute bottom-0 left-0 w-full h-[80%] bg-gradient-to-t from-[var(--color-peelie-primary-200)] to-white pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-full h-[80%] bg-gradient-to-t from-[var(--color-peelie-primary-200)] to-[var(--color-peelie-gray-050)] pointer-events-none" />
 
         <div className="px-4 py-3">
           <h2 className="heading-4-medium text-peelie-gray-950">오늘의 랜덤 추천 친구</h2>
