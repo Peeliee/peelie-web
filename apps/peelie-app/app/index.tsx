@@ -45,7 +45,7 @@ export default function HomeScreen() {
                 ]}
             >
                 <WebView
-                    source={{ uri: "https://peelie.vercel.app" }}
+                    source={{ uri: "http://10.30.99.128:5173/" }}
                     originWhitelist={["*"]}
                     allowsInlineMediaPlayback
                     startInLoadingState

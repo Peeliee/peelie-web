@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
+import { type useFunnel } from '@use-funnel/react-router-dom';
 import { useUserStepInfo } from '@/entities/user/hooks/useUserStepInfo';
 import { useHeader } from '@/shared/context/headerContext';
 import { cn } from '@/shared/lib/utils';
-import { type useFunnel } from '@use-funnel/react-router-dom';
 import { ConfirmModal } from '@/shared/ui/common/Modal/ModalPresets';
-
+import { CoverflowCarousel } from '@/shared/ui/common/Carousel/CoverflowCarousel';
+import { UserInfoCard } from '@/entities/user/ui/UserInfoCard';
+import MockImg from "@/assets/mockImg.svg?react"
 import { useOnboardingProgress } from '../context/OnboardingProgressContext';
 
 // TODO : history 타입이 이게 맞나?
@@ -69,27 +71,16 @@ const UserStepInfoPage = ({ onNext, history }: UserStepInfoPageProps) => {
   }
 
   return (
-    <div className="min-h-screen w-full flex flex-col justify-center items-center px-6 pt-10 pb-20">
+    <div className="min-h-screen w-full flex flex-col justify-center items-center px-5 pt-10 pb-20">
       {!isGenerating && data && (
-        <div className="w-full max-w-md bg-white rounded-2xl  p-6">
-          <h2 className="text-xl font-bold text-gray-900 mb-3">{data.data.card.stage1.title}</h2>
-          <p className="text-sm text-gray-500 mb-1">{data.data.card.stage1.subtitle}</p>
-          <p className="text-base text-gray-700 leading-relaxed whitespace-pre-line">
-            {data.data.card.stage1.content}
-          </p>
-          <br />
-          <h2 className="text-xl font-bold text-gray-900 mb-3">{data.data.card.stage2.title}</h2>
-          <p className="text-sm text-gray-500 mb-1">{data.data.card.stage2.subtitle}</p>
-          <p className="text-base text-gray-700 leading-relaxed whitespace-pre-line">
-            {data.data.card.stage2.content}
-          </p>
-          <br />
-          <h2 className="text-xl font-bold text-gray-900 mb-3">{data.data.card.stage3.title}</h2>
-          <p className="text-sm text-gray-500 mb-1">{data.data.card.stage3.subtitle}</p>
-          <p className="text-base text-gray-700 leading-relaxed whitespace-pre-line">
-            {data.data.card.stage3.content}
-          </p>
-        </div>
+        <CoverflowCarousel className='w-full w-screen'>
+          <MockImg  className='w-60 h-60'/>
+          <MockImg  className='w-60 h-60'/>
+          <MockImg  className='w-60 h-60'/>
+          {/* <UserInfoCard level={2} title={data.data.card.stage2.title} />
+          <UserInfoCard level={2} title={data.data.card.stage1.title} />
+          <UserInfoCard level={2} title={data.data.card.stage3.title} /> */}
+        </CoverflowCarousel>
       )}
 
       <button

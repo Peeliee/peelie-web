@@ -6,6 +6,7 @@ import { CategorySelectGrid } from '@/features/onboarding/ui/CategorySelectGrid'
 import { usePrefetchCategoryMainQuestion } from '@/entities/category/api/category.queries';
 import { onboardingPut } from '@/entities/onboarding/api/onboarding-put';
 import { userStepInfoQuery } from '@/entities/user/api/user.queries';
+import { Button } from '@/shared/ui/common/button';
 
 interface SelectCategoryPageProps {
   onNext: (selectedIds: number[]) => void;
@@ -71,18 +72,15 @@ const SelectCategoryPage = ({ onNext }: SelectCategoryPageProps) => {
 
       <CategorySelectGrid onChange={handleSelect} className="mb-15" />
 
-      <button
+      <Button
+        variant={'primary'}
+        size={'extraLarge'}
         onClick={handleNext}
         disabled={isPending || selected.length < 3}
-        className={`fixed bottom-10 left-6 right-6 block py-4 rounded-full text-center font-medium
-          ${
-            selected.length < 3
-              ? 'bg-gray-200 text-gray-400 pointer-events-none'
-              : 'bg-orange-400 text-white  active:bg-orange-500'
-          }`}
+        className={`fixed bottom-10 inset-x-4`}
       >
         {isPending ? '로딩 중...' : '계속하기'}
-      </button>
+      </Button>
     </div>
   );
 };
