@@ -17,7 +17,7 @@ export const LogoHeaderLayout = () => {
 export const BackHeaderLayout = () => {
   const [isHidden, setHidden] = useState<boolean>(false);
   const [backAction, setBackAction] = useState<(() => void) | null>(null);
-  const [isTransparent, setTransparent] = useState(false);
+  const [isTransparent, setTransparent] = useState(true);
 
   const navigate = useNavigate();
 

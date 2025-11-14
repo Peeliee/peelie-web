@@ -7,6 +7,7 @@ import { CoverflowSwiper } from '@/shared/ui/common/Carousel/CoverflowSwiper';
 import { UserInfoCard } from '@/entities/user/ui/UserInfoCard';
 import { Button } from '@/shared/ui/common/button';
 import { UserInfoModal } from '@/features/user/ui/UserInfoModal';
+import { useUser } from '@/app/provider/userContext';
 
 import { useOnboardingProgress } from '../context/OnboardingProgressContext';
 
@@ -19,6 +20,7 @@ interface UserStepInfoPageProps {
 const stageMap = ['stage2', 'stage1', 'stage3'] as const;
 
 const UserStepInfoPage = ({ onNext, history }: UserStepInfoPageProps) => {
+  const { user } = useUser();
   const { data, isError } = useUserStepInfo();
   const [current, setCurrent] = useState<number>(1);
 
@@ -81,7 +83,7 @@ const UserStepInfoPage = ({ onNext, history }: UserStepInfoPageProps) => {
   }
 
   return (
-    <div className="min-h-screen w-full flex flex-col justify-center items-center px-5 pt-10 pb-20">
+    <div className="h-full w-full flex flex-col justify-center items-center px-5 pb-20 pt-30">
       {!isGenerating && data && (
         <CoverflowSwiper className="w-screen" onChange={setCurrent}>
           <UserInfoCard
@@ -104,7 +106,6 @@ const UserStepInfoPage = ({ onNext, history }: UserStepInfoPageProps) => {
           />
         </CoverflowSwiper>
       )}
-
       <Button
         variant={'primary'}
         size={'extraLarge'}
@@ -113,7 +114,6 @@ const UserStepInfoPage = ({ onNext, history }: UserStepInfoPageProps) => {
       >
         계속하기
       </Button>
-
       <ConfirmModal
         open={confirmOpen}
         onOpenChange={setConfirmOpen}
@@ -130,7 +130,15 @@ const UserStepInfoPage = ({ onNext, history }: UserStepInfoPageProps) => {
           onClick: goBackToSelectCategory,
         }}
       />
-
+      <div className="w-full heading-3-medium text-center mt-4">
+        <span>친구에게 공개될 {user?.userName}님의 정보가 </span>
+        <br />
+        <span>어떻게 보일 지 한 눈에 확인할 수 있어요</span>
+        <div className='mt-2'>
+          <p className='w-full bg-peelie-primary-300 p-3 rounded-200 mb-2'>내가 즐겨하는 취미는 무엇인지</p>
+          <p className='w-full bg-peelie-primary-300 p-3 rounded-200'>내가 즐겨하는 취미는 무엇인지???</p>
+        </div>
+      </div>
       <UserInfoModal
         open={isModalOpen}
         onOpenChange={setIsModalOpen}

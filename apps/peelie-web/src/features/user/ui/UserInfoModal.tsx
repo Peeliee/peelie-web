@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { ModalWrapper } from '@/shared/ui/common/Modal/ModalWrapper';
-import { ViewMode, EditMode } from '@/entities/user/ui/UserInfoModalMode';
+import { ViewMode, EditMode } from '@/entities/user/ui/UserInfoModalPresets';
 
 interface UserInfoModalProps {
   open: boolean;
