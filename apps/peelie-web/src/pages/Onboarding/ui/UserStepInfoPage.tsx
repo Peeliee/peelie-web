@@ -6,6 +6,7 @@ import { ConfirmModal } from '@/shared/ui/common/Modal/ModalPresets';
 import { CoverflowSwiper } from '@/shared/ui/common/Carousel/CoverflowSwiper';
 import { UserInfoCard } from '@/entities/user/ui/UserInfoCard';
 import { Button } from '@/shared/ui/common/button';
+import { UserInfoModal } from '@/features/user/ui/UserInfoModal';
 
 import { useOnboardingProgress } from '../context/OnboardingProgressContext';
 
@@ -15,17 +16,25 @@ interface UserStepInfoPageProps {
   history: ReturnType<typeof useFunnel>['history'];
 }
 
+const stageMap = ['stage2', 'stage1', 'stage3'] as const;
+
 const UserStepInfoPage = ({ onNext, history }: UserStepInfoPageProps) => {
   const { data, isError } = useUserStepInfo();
+  const [current, setCurrent] = useState<number>(1);
+
   const { hideHeader, setBackAction } = useHeader();
 
   const [confirmOpen, setConfirmOpen] = useState(false);
-  const [current, setCurrent] = useState<number>(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { setShowProgress } = useOnboardingProgress();
 
   const generationStatus = data?.data.generationStatus;
   const isGenerating = generationStatus !== 'DONE';
+
+  const handleClickInfoCard = () => {
+    setIsModalOpen(true);
+  };
 
   // TODO: 일단 임시로 이동 로직 여기에 배치
   useEffect(() => {
@@ -75,9 +84,24 @@ const UserStepInfoPage = ({ onNext, history }: UserStepInfoPageProps) => {
     <div className="min-h-screen w-full flex flex-col justify-center items-center px-5 pt-10 pb-20">
       {!isGenerating && data && (
         <CoverflowSwiper className="w-screen" onChange={setCurrent}>
-          <UserInfoCard level={1} title={data.data.card.stage2.title} isActive={current === 0} />
-          <UserInfoCard level={2} title={data.data.card.stage1.title} isActive={current === 1} />
-          <UserInfoCard level={3} title={data.data.card.stage3.title} isActive={current === 2} />
+          <UserInfoCard
+            level={1}
+            title={data.data.card.stage2.title}
+            onClick={handleClickInfoCard}
+            isActive={current === 0}
+          />
+          <UserInfoCard
+            level={2}
+            title={data.data.card.stage1.title}
+            onClick={handleClickInfoCard}
+            isActive={current === 1}
+          />
+          <UserInfoCard
+            level={3}
+            title={data.data.card.stage3.title}
+            onClick={handleClickInfoCard}
+            isActive={current === 2}
+          />
         </CoverflowSwiper>
       )}
 
@@ -105,6 +129,14 @@ const UserStepInfoPage = ({ onNext, history }: UserStepInfoPageProps) => {
           variant: 'primary',
           onClick: goBackToSelectCategory,
         }}
+      />
+
+      <UserInfoModal
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        title={data?.data.card[stageMap[current]].title ?? ''}
+        subTitle={data?.data.card[stageMap[current]].subtitle ?? ''}
+        content={data?.data.card[stageMap[current]].content ?? ''}
       />
     </div>
   );

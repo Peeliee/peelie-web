@@ -6,17 +6,19 @@ import { cn } from '@/shared/lib/utils';
 interface UserInfoCardProps {
   level: number;
   title: string;
-  isActive: number;
+  isActive: boolean;
+  onClick?: () => void;
   className?: string;
 }
 
-export const UserInfoCard = ({ level, title, isActive, className }: UserInfoCardProps) => {
+export const UserInfoCard = ({ level, title, isActive, onClick, className }: UserInfoCardProps) => {
   return (
     <div
       className={cn(
         'relative w-58 h-79 rounded-400 p-4 bg-linear-to-t from-peelie-primary-600 to-peelie-secondary-200',
         className,
       )}
+      onClick={onClick}
     >
       <Chip variant="primary" chipType="outline" size="medium" className="mt-2 ml-2">
         Lv {level}
@@ -27,7 +29,11 @@ export const UserInfoCard = ({ level, title, isActive, className }: UserInfoCard
 
       <div className="flex items-end justify-between w-full">
         {isActive && (
-          <SpeechBubble variant="gray" tailPosition="center" className='absolute bottom-30 z-1'>
+          <SpeechBubble
+            variant="gray"
+            tailPosition="center"
+            className="absolute bottom-30 inset-x-4 z-1"
+          >
             <span
               dangerouslySetInnerHTML={{
                 __html: `친구에게 소개할 나의 ${level}단계 정보를 확인해봐요!`,
@@ -36,7 +42,7 @@ export const UserInfoCard = ({ level, title, isActive, className }: UserInfoCard
           </SpeechBubble>
         )}
 
-        <Character  className='absolute bottom-4 right-4'/>
+        <Character className="absolute bottom-4 right-4" />
       </div>
     </div>
   );

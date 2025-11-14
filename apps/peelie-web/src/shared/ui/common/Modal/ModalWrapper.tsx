@@ -150,12 +150,11 @@ export const CloseButton = ({
   className?: string;
 }) => {
   return (
-    <div className='flex w-full items-end justify-end'>
-      
+    <div className={cn('flex w-full items-end justify-end', className)}>
       <button
         type="button"
         onClick={onClose}
-        className={cn('rounded-full transition-opacity hover:opacity-70', className)}
+        className={cn('rounded-full transition-opacity hover:opacity-70')}
       >
         <CloseBtn className="w-5 h-5 text-black" />
       </button>

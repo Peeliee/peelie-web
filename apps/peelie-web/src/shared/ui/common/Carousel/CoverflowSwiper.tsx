@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectCoverflow, Pagination } from 'swiper/modules';
+import { EffectCoverflow } from 'swiper/modules';
 import { useState } from 'react';
 
 import 'swiper/css';
