@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import { type useFunnel } from '@use-funnel/react-router-dom';
 import { useUserStepInfo } from '@/entities/user/hooks/useUserStepInfo';
 import { useHeader } from '@/shared/context/headerContext';
-import { cn } from '@/shared/lib/utils';
 import { ConfirmModal } from '@/shared/ui/common/Modal/ModalPresets';
-import { CoverflowCarousel } from '@/shared/ui/common/Carousel/CoverflowCarousel';
+import { CoverflowSwiper } from '@/shared/ui/common/Carousel/CoverflowSwiper';
 import { UserInfoCard } from '@/entities/user/ui/UserInfoCard';
-import MockImg from "@/assets/mockImg.svg?react"
+import { Button } from '@/shared/ui/common/button';
+
 import { useOnboardingProgress } from '../context/OnboardingProgressContext';
 
 // TODO : history 타입이 이게 맞나?
@@ -20,6 +20,7 @@ const UserStepInfoPage = ({ onNext, history }: UserStepInfoPageProps) => {
   const { hideHeader, setBackAction } = useHeader();
 
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [current, setCurrent] = useState<number>(1);
 
   const { setShowProgress } = useOnboardingProgress();
 
@@ -73,25 +74,21 @@ const UserStepInfoPage = ({ onNext, history }: UserStepInfoPageProps) => {
   return (
     <div className="min-h-screen w-full flex flex-col justify-center items-center px-5 pt-10 pb-20">
       {!isGenerating && data && (
-        <CoverflowCarousel className='w-full w-screen'>
-          <MockImg  className='w-60 h-60'/>
-          <MockImg  className='w-60 h-60'/>
-          <MockImg  className='w-60 h-60'/>
-          {/* <UserInfoCard level={2} title={data.data.card.stage2.title} />
-          <UserInfoCard level={2} title={data.data.card.stage1.title} />
-          <UserInfoCard level={2} title={data.data.card.stage3.title} /> */}
-        </CoverflowCarousel>
+        <CoverflowSwiper className="w-screen" onChange={setCurrent}>
+          <UserInfoCard level={1} title={data.data.card.stage2.title} isActive={current === 0} />
+          <UserInfoCard level={2} title={data.data.card.stage1.title} isActive={current === 1} />
+          <UserInfoCard level={3} title={data.data.card.stage3.title} isActive={current === 2} />
+        </CoverflowSwiper>
       )}
 
-      <button
+      <Button
+        variant={'primary'}
+        size={'extraLarge'}
         onClick={onNext}
-        className={cn(
-          'fixed bottom-10 left-6 right-6 py-4 rounded-full text-center font-medium z-9999',
-          'bg-orange-400 text-white active:bg-orange-500',
-        )}
+        className="fixed bottom-4 inset-x-4"
       >
         계속하기
-      </button>
+      </Button>
 
       <ConfirmModal
         open={confirmOpen}

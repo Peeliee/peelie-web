@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useUser } from '@/app/provider/userContext';
 import { Button } from '@/shared/ui/common/button';
-import { CoverflowCarousel } from '@/shared/ui/common/Carousel/CoverflowCarousel';
+import { CoverflowSwiper } from '@/shared/ui/common/Carousel/CoverflowSwiper';
 
 import MockImg from '@/assets/mockImg.svg?react';
 import MockImg2 from '@/assets/parkjiwon.webp';
@@ -31,11 +31,11 @@ const MyPage = () => {
       <div className="w-screen h-0.5 bg-peelie-gray-150 mt-4 mb-4" />
 
       <p className="flex w-full justify-start heading-4-medium mb-4">나의 단계별 교류 카드</p>
-      <CoverflowCarousel>
+      <CoverflowSwiper>
         <MockImg className="w-40 h-40 object-contain" />
         <img src={MockImg2} className="w-40 h-40 object-contain" />
         <img src={MockImg3} className="w-40 h-40 object-contain" />
-      </CoverflowCarousel>
+      </CoverflowSwiper>
     </div>
   );
 };

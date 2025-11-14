@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
-import { cn } from '@/shared/lib/utils';
 import { InteractionStyleSwiper } from '@/features/onboarding/ui/InteractionStyleSwiper';
 import { INTERACTION_STYLES, type InteractionStyleKey } from '@/shared/constants/interactionStyle';
 import { InteractionStyleValueToKey } from '@/shared/constants/interactionStyle';
+import { Button } from '@/shared/ui/common/button';
 
 interface SelectInteractionStylePageProps {
   onNext: (interactionType: InteractionStyleKey) => void;
@@ -18,15 +18,14 @@ const SelectInteractionStylePage = ({ onNext }: SelectInteractionStylePageProps)
     <div className="text-center mt-6">
       <InteractionStyleSwiper current={current} onChange={setCurrent} />
 
-      <button
+      <Button
+        variant={'primary'}
+        size={'extraLarge'}
         onClick={() => onNext(interactionStyle)}
-        className={cn(
-          'fixed bottom-10 left-6 right-6 py-4 rounded-full text-center font-medium',
-          'bg-orange-400 text-white active:bg-orange-500',
-        )}
+        className="fixed bottom-4 inset-x-4"
       >
         선택하기
-      </button>
+      </Button>
     </div>
   );
 };

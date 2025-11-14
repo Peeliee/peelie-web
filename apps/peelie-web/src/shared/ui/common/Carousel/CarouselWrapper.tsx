@@ -101,7 +101,7 @@ export function CarouselWrapper({
             <div
               key={index}
               className={`w-2 h-2 rounded-full transition-colors duration-200 mr-3 ${
-                index === current ? 'w-4 bg-peelie-primary-600' : 'bg-orange-200'
+                index === current ? 'w-4 bg-peelie-primary-600' : 'bg-peelie-gray-150'
               }`}
             />
           ))}

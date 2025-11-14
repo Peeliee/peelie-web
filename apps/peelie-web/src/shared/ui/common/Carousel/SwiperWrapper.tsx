@@ -43,7 +43,9 @@ export const SwiperIndicator = ({ total, activeIndex, className }: SwiperIndicat
           key={index}
           className={cn(
             'transition-all duration-300 rounded-full',
-            index === activeIndex ? 'w-6 h-2 bg-orange-500' : 'w-2 h-2 bg-orange-200',
+            index === activeIndex
+              ? 'w-4 h-2 bg-peelie-primary-600'
+              : 'w-1.5 h-1.5 bg-peelie-gray-150',
           )}
         />
       ))}
