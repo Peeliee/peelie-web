@@ -1,5 +1,5 @@
 import InteractionStyleGroup from '@/assets/interactionStyleGroup.svg?react';
-import { cn } from '@/shared/lib/utils';
+import { Button } from '@/shared/ui/common/button';
 
 interface IntroduceInteractionStylePageProps {
   onNext: () => void;
@@ -19,15 +19,14 @@ const IntroduceInteractionStylePage = ({ onNext }: IntroduceInteractionStylePage
 
       <InteractionStyleGroup className="mt-30" />
 
-      <button
+      <Button
+        variant={'primary'}
+        size={'extraLarge'}
         onClick={onNext}
-        className={cn(
-          'fixed bottom-10 left-6 right-6 py-4 rounded-full text-center font-medium z-9999',
-          'bg-orange-400 text-white active:bg-orange-500',
-        )}
+        className="fixed bottom-4 inset-x-4"
       >
         계속하기
-      </button>
+      </Button>
     </div>
   );
 };

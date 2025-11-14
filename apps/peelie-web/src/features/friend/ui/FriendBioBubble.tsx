@@ -2,8 +2,12 @@ import { useState } from 'react';
 import { SpeechBubble } from '@/shared/ui/common/SpeechBubble/SpeechBubble';
 import { TypedText } from '@/features/friend/ui/TypedText';
 import { bioToHTML } from '@/features/friend/lib/bioToHTML';
-import type { BioSegment } from '@/entities/friend/model/friend.type';
 import { cn } from '@/shared/lib/utils';
+
+export interface BioSegment {
+  text: string;
+  bold: boolean;
+}
 
 export type SpeechBubbleVariant =
   | 'primary'

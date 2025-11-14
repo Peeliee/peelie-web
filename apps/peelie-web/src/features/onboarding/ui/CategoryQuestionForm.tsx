@@ -14,6 +14,7 @@ import type {
   CategorySubQuestion,
 } from '@/entities/category/model/category.type';
 import { cn } from '@/shared/lib/utils';
+import { Button } from '@/shared/ui/common/button';
 
 interface AnswerLevels {
   L0?: number;
@@ -93,18 +94,15 @@ export const CategoryQuestionForm = ({
           )}
         </div>
       )}
-      <button
+      <Button
+        variant={'primary'}
+        size={'extraLarge'}
         onClick={() => onSubmit?.(answers)}
         disabled={!isCompleted}
-        className={cn(
-          'fixed bottom-10 left-6 right-6 py-4 rounded-full text-center font-medium',
-          isCompleted
-            ? 'bg-orange-400 text-white active:bg-orange-500'
-            : 'bg-gray-200 text-gray-400 pointer-events-none',
-        )}
+        className={cn('fixed bottom-10 inset-x-4')}
       >
         {isPending ? '...로딩 중' : '계속하기'}
-      </button>
+      </Button>
     </div>
   );
 };
