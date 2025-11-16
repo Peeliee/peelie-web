@@ -191,29 +191,34 @@ export const EffectCardWrapper = ({
   const [activeIndex, setActiveIndex] = useState(0);
   return (
     <div>
-      {/* <div className="w-full px-15 h-full"> */}
-      <div className="w-full px-15 h-full">
+      <div className="w-full px-17 h-full">
         <Swiper
           effect={'cards'}
           autoHeight={true}
           grabCursor={true}
-          modules={[EffectCards, Pagination]}
+          modules={[EffectCards]}
           onSlideChange={(swiper: SwiperType) => {
             onChange?.(swiper.activeIndex);
             setActiveIndex(swiper.activeIndex);
           }}
-          className="mySwiper !overflow-visible"
+          className="mySwiper !overflow-visible rounded-400"
         >
           {slides.map((child, i) => {
             return (
-              <SwiperSlide key={i} className={cn('rounded-2xl  overflow-hidden')}>
+              <SwiperSlide key={i} className={cn('overflow-hidden rounded-400')}>
                 {child}
               </SwiperSlide>
             );
           })}
         </Swiper>
       </div>
-      {showIndicator && <SwiperIndicator total={slides.length} activeIndex={activeIndex} className='fixed bottom-40 inset-x-0' />}
+      {showIndicator && (
+        <SwiperIndicator
+          total={slides.length}
+          activeIndex={activeIndex}
+          className="fixed bottom-35 inset-x-0"
+        />
+      )}
     </div>
   );
 };
