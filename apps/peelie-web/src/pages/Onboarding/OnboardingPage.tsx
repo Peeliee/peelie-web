@@ -55,7 +55,7 @@ const OnboardingPage = () => {
         <funnel.Render
           // 소개 페이지
           introducePeelie={({ history }) => (
-            <IntroducePeeliePage onNext={() => history.push('userStepInfo')} />
+            <IntroducePeeliePage onNext={() => history.push('selectCategory')} />
           )}
           // 카테고리 선택
           selectCategory={({ history }) => (

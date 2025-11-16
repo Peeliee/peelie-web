@@ -33,7 +33,7 @@ export const GlobalNavigationBar = () => {
   const location = useLocation();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200">
+    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-999">
       <ul className="flex justify-around items-center py-2">
         {GNB_ITEMS.map((item) => {
           const isActive = location.pathname === item.to;
