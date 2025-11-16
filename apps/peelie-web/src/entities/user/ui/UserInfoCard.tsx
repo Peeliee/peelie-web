@@ -41,7 +41,6 @@ export const UserInfoCard = ({ level, title, isActive, onClick, className }: Use
             />
           </SpeechBubble>
         )}
-
         <Character className="absolute bottom-4 right-4" />
       </div>
     </div>

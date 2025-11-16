@@ -1,8 +1,10 @@
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+
 import { VerticalUserCard } from '@/shared/ui/common/Card/VerticalUserCard';
 import type { FriendResponse } from '@/entities/friend/model/friend.type';
 import { InteractionStyle } from '@/shared/constants/interactionStyle';
-import { PeekSmallSwiperWrapper } from '@/shared/ui/common/Carousel/SwiperWrapper';
+import { EffectCardWrapper } from '@/shared/ui/common/Carousel/SwiperWrapper';
 import CharacterShadow from '@/assets/character/friendCardShadow.svg?react';
 import { QrModal } from '@/shared/ui/common/Modal/ModalPresets';
 import EmptyCard from '@/assets/character/emptyCard.svg?react';
@@ -54,7 +56,7 @@ export const RandomUserCarousel = ({ friendList, isLoading, isError }: RandomUse
   }
 
   return (
-    <PeekSmallSwiperWrapper>
+    <EffectCardWrapper>
       {friendList.map((user) => (
         <div onClick={() => navigate(`/friend/${user.userId}`)}>
           <VerticalUserCard
@@ -67,6 +69,6 @@ export const RandomUserCarousel = ({ friendList, isLoading, isError }: RandomUse
           />
         </div>
       ))}
-    </PeekSmallSwiperWrapper>
+    </EffectCardWrapper>
   );
 };
