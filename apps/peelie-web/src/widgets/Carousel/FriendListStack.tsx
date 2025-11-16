@@ -81,9 +81,14 @@ export const FriendListStack = ({ friendList }: FriendListStackProps) => {
   return (
     <div
       ref={containerRef}
-      className="relative h-full w-full overflow-auto no-scrollbar px-4 pt-3 z-0"
+      className="relative h-full w-full overflow-auto no-scrollbar px-5 pt-3 z-0"
     >
-      <div className="relative z-0">
+      <div
+        className="relative z-0"
+        style={{
+          height: `${friendList.length * 143 + 200}px`,
+        }}
+      >
         {friendList.map((friend, index) => {
           const baseOffset = index * 20;
           const isActive = activeIndex === index;
@@ -99,7 +104,7 @@ export const FriendListStack = ({ friendList }: FriendListStackProps) => {
               key={friend.userId}
               className={cn(
                 'stack-card absolute left-0 right-0 transition-transform duration-300 ease-out cursor-pointer no-scrollbar',
-                isActive && 'z-[9999]',
+                isActive && 'z-9999',
               )}
               style={{
                 top: `${index * 120}px`,

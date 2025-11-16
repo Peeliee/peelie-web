@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 
 import { VerticalUserCard } from '@/shared/ui/common/Card/VerticalUserCard';
 import type { FriendResponse } from '@/entities/friend/model/friend.type';
