@@ -3,8 +3,10 @@ import { GlobalNavigationBar } from './ui/GlobalNavigationBar';
 
 export const GNBLayout = () => {
   return (
-    <div className="flex flex-col mb-14">
-      <Outlet />
+    <div className="flex flex-col min-h-screen">
+      <div className="flex-1 pb-14">
+        <Outlet />
+      </div>
       <GlobalNavigationBar />
     </div>
   );

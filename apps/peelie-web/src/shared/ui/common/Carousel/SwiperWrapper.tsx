@@ -213,11 +213,7 @@ export const EffectCardWrapper = ({
         </Swiper>
       </div>
       {showIndicator && (
-        <SwiperIndicator
-          total={slides.length}
-          activeIndex={activeIndex}
-          className="fixed bottom-35 inset-x-0"
-        />
+        <SwiperIndicator total={slides.length} activeIndex={activeIndex} className="mt-5" />
       )}
     </div>
   );

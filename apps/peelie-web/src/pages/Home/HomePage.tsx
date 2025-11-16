@@ -11,8 +11,9 @@ const HomePage = () => {
   const { data, isLoading, isError } = useQuery(friendQuery.randomFriend());
 
   return (
-    <div className="w-full h-full">
-      <div className="flex justify-center">
+    <div className="realtive w-full min-h-[calc(100vh-104px)] overflow-hidden">
+      <div className="absolute bottom-0 left-0 w-full h-[60%] bg-gradient-to-t from-[var(--color-peelie-primary-200)] to-[var(--color-peelie-gray-050)] pointer-events-none" />
+      <div className="flex justify-center h-full">
         <button
           className="bg-amber-400 rounded-3xl p-1 mt-0"
           onClick={() => {
@@ -35,9 +36,7 @@ const HomePage = () => {
       </div>
 
       <div className="w-full h-0.5 bg-peelie-gray-150" />
-      <div className="relative h-full">
-        <div className="absolute bottom-0 left-0 w-full h-[80%] bg-gradient-to-t from-[var(--color-peelie-primary-200)] to-[var(--color-peelie-gray-050)] pointer-events-none" />
-
+      <div className="flex-1 relative">
         <div className="px-4 py-3">
           <h2 className="heading-4-medium text-peelie-gray-950">오늘의 랜덤 추천 친구</h2>
         </div>

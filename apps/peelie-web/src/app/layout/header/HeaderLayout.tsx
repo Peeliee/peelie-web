@@ -7,7 +7,7 @@ export const LogoHeaderLayout = () => {
   return (
     <div className="flex flex-col h-full">
       <LogoHeader />
-      <main className="flex-1 overflow-hidden">
+      <main className="flex-1 overflow-auto">
         <Outlet />
       </main>
     </div>
@@ -30,7 +30,7 @@ export const BackHeaderLayout = () => {
     <HeaderContext.Provider value={{ hideHeader: setHidden, setBackAction, setTransparent }}>
       <div className="flex flex-col h-full">
         {!isHidden && <BackHeader onClick={handleBackClick} transparent={isTransparent} />}
-        <main className="flex-1">
+        <main className="flex-1 overflow-auto">
           <Outlet />
         </main>
       </div>
