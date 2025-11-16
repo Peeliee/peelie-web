@@ -68,7 +68,13 @@ export const CoverflowSwiper = ({ children, onChange, className }: CoverflowSwip
         className="mySwiper"
       >
         {childArray.map((child, idx) => (
-          <SwiperSlide key={idx} className="w-full h-full">
+          <SwiperSlide
+            key={idx}
+            className={cn(
+              'w-full h-full',
+              idx === activeIndex ? 'blur-0 scale-100' : 'blur-[3px] brightness-60 scale-90',
+            )}
+          >
             {child}
           </SwiperSlide>
         ))}

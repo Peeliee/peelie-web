@@ -393,3 +393,11 @@ html,
 body {
   @apply bg-peelie-gray-050;
 }
+
+/* html, body, #root {
+  height: 100%;
+} */
+
+.trapezoid {
+  clip-path: polygon(0% 0%, 100% 0%, 97% 100%, 3% 100%);
+}

@@ -19,10 +19,7 @@ interface BackHeaderProps {
 
 export const Header = ({ left, center, right, className }: HeaderProps) => {
   return (
-    <header
-      className={cn('flex items-center justify-between h-12 px-4 border-none', className)}
-      style={{ transform: 'translateZ(0)' }}
-    >
+    <header className={cn('flex items-center justify-between h-12 px-4 border-none', className)}>
       <div className="flex-1">{left}</div>
       <div className="flex-1 flex justify-center">{center}</div>
       <div className="flex-1 flex justify-end">{right}</div>

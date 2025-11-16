@@ -33,15 +33,18 @@ export const VerticalUserCard = ({
   return (
     <div
       onClick={onClick}
-      className={cn('flex flex-col w-66 items-center gap-2 rounded-xl border p-4', className)}
+      className={cn(
+        'flex flex-col items-center rounded-400 border p-4 bg-peelie-gray-000',
+        className,
+      )}
     >
       {/* 프로필 이미지 */}
-      <div className="w-full h-full bg-gray-200">
-        {imageSrc && <img src={imageSrc} alt={`${name} 프로필`} />}
+      <div className="w-55 h-55 bg-gray-200 overflow-hidden">
+        {imageSrc && <img src={imageSrc} className="w-full h-full object-cover" />}
       </div>
 
       {/* 이름, 성향 */}
-      <div className="flex w-full items-center justify-between gap-2 pt-8">
+      <div className="flex w-full items-center justify-between pt-4">
         <span className="font-bold text-lg">{name}</span>
         {interactionStyle && (
           <span className="px-2 py-0.5 text-xs rounded-full bg-gray-200 text-gray-700">
@@ -51,8 +54,8 @@ export const VerticalUserCard = ({
       </div>
 
       {/* 한줄 소개 */}
-      <span className="justify-start w-full pt-5">한줄소개</span>
-      {description && <div className="text-sm text-gray-500 text-start">{description}</div>}
+      <span className=" body-2-regular justify-start w-full pt-4">한줄소개</span>
+      {description && <div className="body-2-regular text-gray-500 text-start">{description}</div>}
     </div>
   );
 };

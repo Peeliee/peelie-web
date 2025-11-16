@@ -3,7 +3,7 @@ import 'swiper/css/pagination';
 
 import { type ReactNode, Children, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination } from 'swiper/modules';
+import { Pagination, EffectCards } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
 import { cn } from '@/shared/lib/utils';
 
@@ -28,9 +28,16 @@ interface PeekSwiperWrapperProps {
   showIndicator?: boolean;
 }
 
+interface EffectCardWrapperProps {
+  children: ReactNode;
+  onChange?: (index: number) => void;
+  showIndicator?: boolean;
+}
+
 // 인디케이터
 interface SwiperIndicatorProps {
   total: number;
+  onChange?: (index: number) => void;
   activeIndex: number;
   className?: string;
 }
@@ -77,6 +84,7 @@ export const PeekSmallSwiperWrapper = ({
       <Swiper
         modules={[Pagination]}
         speed={400}
+        effect="card"
         spaceBetween={10} // 카드 간격
         slidesPerView={1.5} // 한 화면에 카드 1.5개 (양 옆 살짝 보이게)
         centeredSlides={true}
@@ -171,5 +179,42 @@ export const PeekSwiperWrapper = ({
       </Swiper>
       {showIndicator && <SwiperIndicator total={slides.length} activeIndex={activeIndex} />}
     </>
+  );
+};
+
+export const EffectCardWrapper = ({
+  children,
+  onChange,
+  showIndicator = true,
+}: EffectCardWrapperProps) => {
+  const slides = Children.toArray(children);
+  const [activeIndex, setActiveIndex] = useState(0);
+  return (
+    <div>
+      <div className="w-full px-17 h-full">
+        <Swiper
+          effect={'cards'}
+          autoHeight={true}
+          grabCursor={true}
+          modules={[EffectCards]}
+          onSlideChange={(swiper: SwiperType) => {
+            onChange?.(swiper.activeIndex);
+            setActiveIndex(swiper.activeIndex);
+          }}
+          className="mySwiper !overflow-visible rounded-400"
+        >
+          {slides.map((child, i) => {
+            return (
+              <SwiperSlide key={i} className={cn('overflow-hidden rounded-400')}>
+                {child}
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
+      </div>
+      {showIndicator && (
+        <SwiperIndicator total={slides.length} activeIndex={activeIndex} className="mt-5" />
+      )}
+    </div>
   );
 };

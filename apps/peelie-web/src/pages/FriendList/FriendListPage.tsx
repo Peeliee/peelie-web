@@ -5,7 +5,7 @@ import { friendQuery } from '@/entities/friend/api/friend.queries';
 
 const FriendListPage = () => {
   const { data, isLoading, isError } = useQuery(friendQuery.friendList());
-
+  console.log(data);
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-full">
@@ -23,8 +23,8 @@ const FriendListPage = () => {
   }
 
   return (
-    <div className="flex flex-col w-full h-full pb-[64px] max-h-screen">
-      <div className="flex-1 px-4">
+    <div className="flex flex-col w-full h-full max-h-screen">
+      <div className="flex-1">
         <FriendListStack friendList={data.data} />
       </div>
     </div>
