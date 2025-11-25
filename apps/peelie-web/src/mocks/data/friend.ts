@@ -5,7 +5,7 @@ import mockImg from '@/assets/mockImg.svg';
 export const FriendListMock: { data: FriendResponse[]; delay: number } = {
   data: [
     {
-      userId: 1,
+      userId: 2,
       userName: '유지원',
       profileUrl: mockImg,
       stage: 1,
@@ -13,7 +13,7 @@ export const FriendListMock: { data: FriendResponse[]; delay: number } = {
       interactionStyle: 'CAUTIOUS',
     },
     {
-      userId: 2,
+      userId: 3,
       userName: '김나은',
       profileUrl: null,
       stage: 2,
@@ -74,8 +74,8 @@ export const FriendListMock: { data: FriendResponse[]; delay: number } = {
 
 export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; delay: number } = {
   data: {
-    1: {
-      userId: 1,
+    2: {
+      userId: 2,
       userName: '유지원',
       profileImageUrl: mockImg,
       instagramId: 'ujw_insta',
@@ -108,8 +108,8 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
         },
       },
     },
-    2: {
-      userId: 2,
+    3: {
+      userId: 3,
       userName: '김나은',
       profileImageUrl: null,
       instagramId: 'naeun_story',
@@ -352,7 +352,7 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
 export const RandomFriendListMock: { data: FriendResponse[]; delay: number } = {
   data: [
     {
-      userId: 1,
+      userId: 2,
       userName: '유지원',
       profileUrl: mockImg,
       stage: 1,
@@ -360,7 +360,7 @@ export const RandomFriendListMock: { data: FriendResponse[]; delay: number } = {
       interactionStyle: 'CAUTIOUS',
     },
     {
-      userId: 2,
+      userId: 3,
       userName: '김나은',
       profileUrl: null,
       stage: 2,

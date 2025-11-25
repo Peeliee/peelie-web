@@ -16,6 +16,13 @@ interface ProfileShareSectionProps {
 
 export const ProfileShareSection = ({ className }: ProfileShareSectionProps) => {
   const handleOpenCamera = () => {
+    const isWebView = typeof window.ReactNativeWebView !== 'undefined';
+
+    if (!isWebView) {
+      alert('앱에서만 사용할 수 있어요.');
+      return;
+    }
+
     window.ReactNativeWebView?.postMessage(JSON.stringify({ type: 'OPEN_CAMERA' }));
   };
 

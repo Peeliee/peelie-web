@@ -12,7 +12,7 @@ const HomePage = () => {
 
   return (
     <div className="realtive w-full min-h-[calc(100vh-104px)] overflow-hidden">
-      <div className="absolute bottom-0 left-0 w-full h-[60%] bg-gradient-to-t from-[var(--color-peelie-primary-200)] to-[var(--color-peelie-gray-050)] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-full h-[60%] bg-linear-to-t from-peelie-primary-200 to-peelie-gray-050 pointer-events-none" />
       <div className="flex justify-center h-full">
         <button
           className="bg-amber-400 rounded-3xl p-1 mt-0"

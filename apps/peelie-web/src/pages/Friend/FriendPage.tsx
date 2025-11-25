@@ -16,7 +16,6 @@ import { FriendBioBubble } from '@/features/friend/ui/FriendBioBubble';
 import Background from '@/assets/friendProfileBackground.svg?react';
 import Character from '@/assets/characterMock.svg?react';
 import MockImg from '@/assets/mockImg.svg';
-import { Chip } from '@/shared/ui/common/Chip/Chip';
 
 const FriendPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -54,10 +53,6 @@ const FriendPage = () => {
           <Background className="absolute inset-0 w-full h-79" />
 
           <FriendBioBubble bio={user.data.bio} className="bottom-34 w-80" />
-
-          <Chip variant={'primary'} chipType={'outline'} className="absolute top-50 right-22 z-10">
-            {user.data.userName}
-          </Chip>
 
           <Character className="relative z-10 w-25 h-full top-22" />
         </div>

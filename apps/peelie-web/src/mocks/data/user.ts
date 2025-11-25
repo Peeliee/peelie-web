@@ -3,6 +3,7 @@ import mockyonghee from '@/assets/mockyonghee.png';
 
 export const UserMock: { data: UserResponse; delay: number } = {
   data: {
+    userId: 1,
     userName: '김용희',
     profileImageUrl: mockyonghee,
     instagramId: 'y_h2._',
