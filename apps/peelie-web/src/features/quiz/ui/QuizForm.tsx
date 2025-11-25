@@ -1,14 +1,18 @@
 import { useState } from 'react';
 import { QuizCard } from '@/entities/quiz/ui/QuizCard';
+import { cn } from '@/shared/lib/utils';
+import { Button } from '@/shared/ui/common/button';
+import { QuizModal } from '@/shared/ui/common/Modal/ModalPresets';
+
 interface QuizOption {
   optionId: number;
   text: string;
 }
 
-// 퀴즈
 interface Quiz {
   quizId: number;
   quiz: string;
+  answerId: number;
   answer: QuizOption[];
 }
 
@@ -16,42 +20,51 @@ interface QuizFormProps {
   quizList: Quiz[];
   onSubmit: (answers: { quizId: number; optionId: number }[]) => void;
   onFinish: () => void;
+  className?: string;
 }
 
-export const QuizForm = ({ quizList, onFinish }: QuizFormProps) => {
+export const QuizForm = ({ quizList, onFinish, className }: QuizFormProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
-  const [isGrading, setIsGrading] = useState(false);
+  const [showCorrectModal, setShowCorrectModal] = useState(false);
+  const [showWrongModal, setShowWrongModal] = useState(false);
 
   const currentQuiz = quizList[currentIndex];
 
   const handleConfirm = () => {
-    if (selected === null) return; // 선택 안했으면 무시
-
-    setIsGrading(true);
+    if (selected === null) return;
 
     const isCorrect = selected === currentQuiz.answerId;
-    console.log(isCorrect)
-    // 정답/오답 모달 애니메이션 보여주고 싶으면 여기서 처리
-    setTimeout(() => {
-      setIsGrading(false);
 
-      // 정답 여부와 관계없이 다음 문제로 이동
-      const nextIndex = currentIndex + 1;
+    if (isCorrect) {
+      setShowCorrectModal(true);
+    } else {
+      setShowWrongModal(true);
+    }
+  };
 
-      if (nextIndex < quizList.length) {
-        setCurrentIndex(nextIndex);
-        setSelected(null); // 다음 문제 선택 초기화
-      } else {
-        onFinish(); // 모든 퀴즈 완료
-      }
-    }, 600);
+  const handleNextQuestion = () => {
+    setShowCorrectModal(false);
+    setSelected(null);
+
+    const next = currentIndex + 1;
+    if (next < quizList.length) {
+      setCurrentIndex(next);
+    } else {
+      onFinish();
+    }
+  };
+
+  // 오답: 다시 풀기
+  const handleRetry = () => {
+    setShowWrongModal(false);
+    setSelected(null);
   };
 
   return (
-    <div className="flex flex-col h-full justify-between">
-      <div className="text-center text-[20px] font-semibold mb-2">
-        {currentIndex + 1}/{quizList.length}
+    <div className={cn('flex flex-col', className)}>
+      <div className="heading-1-medium text-center text-peelie-gray-600 mb-2">
+        <span className="text-peelie-primary-600">{currentIndex + 1}</span>/{quizList.length}
       </div>
 
       <QuizCard
@@ -61,13 +74,31 @@ export const QuizForm = ({ quizList, onFinish }: QuizFormProps) => {
         onSelectOption={setSelected}
       />
 
-      <button
+      <Button
+        variant={'primary'}
+        buttonType={'fill'}
+        size="extraLarge"
         onClick={handleConfirm}
-        disabled={selected === null || isGrading}
-        className="w-full mt-6 bg-gradient-to-r from-[#FFB54C] to-[#FF8A00] text-white text-[18px] font-semibold py-4 rounded-2xl disabled:opacity-50"
+        disabled={selected === null}
+        className="w-full mt-6"
       >
         확인하기
-      </button>
+      </Button>
+
+      <QuizModal
+        answer={true}
+        open={showCorrectModal}
+        onClose={() => setShowCorrectModal(false)}
+        onClick={handleNextQuestion}
+      />
+
+      {/* 오답 모달 */}
+      <QuizModal
+        answer={false}
+        open={showWrongModal}
+        onClose={() => setShowWrongModal(false)}
+        onClick={handleRetry}
+      />
     </div>
   );
 };

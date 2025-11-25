@@ -1,23 +1,11 @@
 import { useState } from 'react';
 
+import { cn } from '@/shared/lib/utils';
+
 import { Button } from '../button';
 
 import { ModalWrapper } from './ModalWrapper';
-
-/**
- * @file ModalPresets.tsx
- *
- * @description
- * ModalWrapper를 기반으로 구현된 공용 모달 컴포넌트 모음.
- *
- *   ModalWrapper를 중심으로
- *   다양한 목적의 모달을 프리셋 형태로 재사용 하기 위해 존재함.
- *   개별 도메인과 직접적인 비즈니스 로직을 갖지 않음.
- *
- * @components
- * - QrModal: 프로필 공유용 QR 코드 노출 모달
- * - ConfirmModal: 팔로우 / 확인 등의 액션을 확인받는 일반 확인 모달
- */
+import MockImg from '@/assets/mockImg.svg?react';
 
 export const QrModal = ({
   url,
@@ -56,27 +44,64 @@ export const QrModal = ({
   );
 };
 
-/**
- * ConfirmModal
- *
- * @example
- * ```tsx
- * <ConfirmModal
- *   trigger={<Button>회원 탈퇴</Button>}
- *   title="정말 탈퇴하시겠어요?"
- *   description="탈퇴 시 모든 데이터가 삭제됩니다."
- *   cancel={{
- *     text: '취소',
- *     variant: 'inactive',
- *     onClick: () => console.log('취소 누름'),
- *   }}
- *   confirm={{
- *     text: '탈퇴하기',
- *     variant: 'primary',
- *     onClick: () => console.log('탈퇴 처리 로직 실행'),
- *   }}
- * />
- */
+export const QuizModal = ({
+  answer, // true = 정답, false = 오답
+  open,
+  onClose,
+  onClick,
+  className,
+}: {
+  answer: boolean;
+  open: boolean;
+  onClose: () => void;
+  onClick: () => void;
+  className?: string;
+}) => {
+  // 정답/오답 텍스트 자동 매핑
+  const title = answer ? '정답이에요' : '아쉽지만 오답이에요';
+  const description = answer ? '다음 문제도 이어서 풀어봐요!' : '다시 한 번 생각해볼까요?';
+
+  return (
+    <ModalWrapper open={open} onOpenChange={onClose}>
+      {/* <ModalWrapper.Trigger className={className}>{children}</ModalWrapper.Trigger> */}
+
+      <ModalWrapper.Content
+        className={cn(
+          'bg-linear-to-t from-peelie-primary-600 to-peelie-secondary-200 p-4 gap-4 rounded-400',
+          className,
+        )}
+      >
+        <ModalWrapper.CloseButton onClose={onClose} />
+
+        <ModalWrapper.Header>
+          <ModalWrapper.Title className="text-peelie-white">
+            <span className="heading-1-medium">{title}</span>
+          </ModalWrapper.Title>
+
+          <ModalWrapper.Description className="text-peelie-gray-150 body-1-regular text-center">
+            {description}
+          </ModalWrapper.Description>
+        </ModalWrapper.Header>
+
+        <div className="flex w-full aspect-square items-center justify-center rounded-400 bg-white overflow-hidden">
+          <MockImg />
+        </div>
+
+        <Button
+          variant={'secondary'}
+          size={'extraLarge'}
+          buttonType={'fill'}
+          state="default"
+          onClick={onClick}
+          className={cn('w-full')}
+        >
+          {answer ? '다음' : '다시 풀기'}
+        </Button>
+      </ModalWrapper.Content>
+    </ModalWrapper>
+  );
+};
+
 interface ConfirmModalProps {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
