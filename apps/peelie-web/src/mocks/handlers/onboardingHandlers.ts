@@ -15,7 +15,7 @@ import {
   userSetpInfoMock,
 } from '../data/onboarding';
 
-const ONBOARDING_API_PREFIX = `${import.meta.env.VITE_API_BASE_URL}/api/v1`;
+const ONBOARDING_API_PREFIX = `${import.meta.env.VITE_API_BASE_URL}/api/v1`; 
 
 let generationStartTime: number | null = null;
 

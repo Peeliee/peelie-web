@@ -18,6 +18,7 @@ export interface QuizOption {
 export interface Quiz {
   quizId: number;
   quiz: string;
+  answerId: number;
   answer: QuizOption[];
 }
 

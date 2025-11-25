@@ -1,17 +1,45 @@
-import { QuizCard } from '@/entities/quiz/ui/QuizCard';
+import { useQuery } from '@tanstack/react-query';
+import { useParams, useSearchParams } from 'react-router-dom';
+
+import { QuizForm } from '@/features/quiz/ui/QuizForm';
+import { quizQuery } from '@/entities/quiz/api/quiz.queries';
 
 const QuizPage = () => {
+  const { id } = useParams(); // "/friend/:userId/quiz"
+
+  // 2) query params
+  const [searchParams] = useSearchParams();
+  const stage = searchParams.get('stage');
+
+  const parsedUserId = Number(id);
+  const parsedStage = Number(stage);
+
+  console.log("userId : ", id)
+  console.log('parsedUserId : ', parsedUserId, 'parsedStage : ', parsedStage);
+  const { data, isLoading, isError } = useQuery(
+    quizQuery.quizList({ userId: parsedUserId, stage: parsedStage }),
+  );
+
+  if (isNaN(parsedUserId) || isNaN(parsedStage)) {
+    console.log('좆버그');
+    return <div>잘못된 URL 파라미터</div>;
+  }
+
+  if (isLoading) return <div>로딩중...</div>;
+
+  if (isError || !data) return <div>퀴즈 불러오기 실패</div>;
+
   return (
     <div>
       <div>
-        <QuizCard
-          question="최근 스트레스 쌓인 김용희… 퇴근 후 딱 한 편만 본다면?"
-          options={[
-            { optionId: 1, text: '감정선 미친 로맨스 영화로 마음 한 번 쏟아내린다' },
-            { optionId: 2, text: '아무 감정 없는 미친 액션으로 뇌를 비워버린다' },
-          ]}
-          selectedOptionId={1}
-          onSelectOption={(id: number) => console.log('선택한 옵션:', id)}
+        <QuizForm
+          quizList={data.data}
+          onFinish={() => {
+            console.log('퀴즈 완료!');
+          }}
+          onSubmit={(answers) => {
+            console.log('유저 답변 기록:', answers);
+          }}
         />
       </div>
     </div>
