@@ -79,6 +79,7 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
       userName: '유지원',
       profileImageUrl: mockImg,
       instagramId: 'ujw_insta',
+      stage: 1,
       bio: [
         { text: '“', bold: false },
         { text: '집콕 + OTT + 로맨스', bold: true },
@@ -113,6 +114,7 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
       userName: '김나은',
       profileImageUrl: null,
       instagramId: 'naeun_story',
+      stage: 2,
       bio: [
         { text: '“', bold: false },
         { text: '밤하늘 조명처럼 반짝이는 감성 영화', bold: true },
@@ -181,6 +183,7 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
       userName: '강희구',
       profileImageUrl: mockImg,
       instagramId: null,
+      stage: 3,
       bio: [
         { text: '“', bold: false },
         { text: '낯선 도시 골목길', bold: true },
@@ -215,6 +218,7 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
       userName: '권두환',
       profileImageUrl: mockImg,
       instagramId: null,
+      stage: 0,
       bio: [
         { text: '“', bold: false },
         { text: '맛있는 음식', bold: true },
@@ -249,6 +253,7 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
       userName: '성하빈',
       profileImageUrl: null,
       instagramId: 'frodo_friends',
+      stage: 1,
       bio: [
         { text: '“', bold: false },
         { text: '하루의 끝엔 조용한 독서 시간', bold: true },
@@ -283,6 +288,7 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
       userName: '신재현',
       profileImageUrl: mockImg,
       instagramId: 'ryan_official',
+      stage: 2,
       bio: [
         { text: '“', bold: false },
         { text: '밤하늘 조명처럼 반짝이는 감성 영화', bold: true },
@@ -316,6 +322,7 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
       userName: '프로도',
       profileImageUrl: null,
       instagramId: 'muzi_world',
+      stage: 3,
       bio: [
         { text: '“', bold: false },
         { text: '카카오', bold: true },

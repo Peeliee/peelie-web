@@ -21,6 +21,7 @@ export interface FriendProfileResponse {
   userName: string;
   profileImageUrl: string | null;
   instagramId: string | null;
+  stage: number;
   bio: BioSegment[];
   interactionStyle: InteractionStyleKey;
   card: Card;

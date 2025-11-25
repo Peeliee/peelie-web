@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { useLayoutEffect } from 'react';
 
@@ -18,6 +18,8 @@ import Character from '@/assets/characterMock.svg?react';
 import MockImg from '@/assets/mockImg.svg';
 
 const FriendPage = () => {
+  const navigate = useNavigate();
+
   const { id } = useParams<{ id: string }>();
   const { data: user, isLoading, isError } = useQuery(friendQuery.friendProfile(Number(id)));
 
@@ -74,7 +76,7 @@ const FriendPage = () => {
 
         <button
           className="fixed bottom-5 right-3 left-3 p-4 rounded-3xl bg-orange-400"
-          onClick={() => alert('준비중')}
+          onClick={() => navigate(`/friend/${user.data.userId}/quiz?stage=${user.data.stage}`)}
         >
           교류 퀴즈 풀기
         </button>
