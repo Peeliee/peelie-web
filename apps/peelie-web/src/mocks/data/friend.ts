@@ -1,6 +1,6 @@
 import type { FriendResponse, FriendProfileResponse } from '@/entities/friend/model/friend.type';
 import mockImg from '@/assets/mockImg.svg';
-// import mockyonghee from '@/assets/mockyonghee.png';
+import mockyonghee from '@/assets/mockyonghee.png';
 
 export const FriendListMock: { data: FriendResponse[]; delay: number } = {
   data: [
@@ -144,42 +144,43 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
         },
       },
     },
-    // 3: {
-    //   userId: 3,
-    //   userName: '김용희',
-    //   profileImageUrl: mockyonghee,
-    //   instagramId: 'yonghee.dev',
-    //   bio: [
-    //     { text: '“', bold: false },
-    //     { text: '침대 + 이불 조합', bold: true },
-    //     { text: '이면 충분해요. 아', bold: false },
-    //     { text: '집', bold: true },
-    //     { text: '가고싶다"', bold: false },
-    //   ],
-    //   interactionStyle: 'FAST',
-    //   card: {
-    //     stage1: {
-    //       title: '⚡🎬 빠르게 연결되는 순간들',
-    //       subtitle: '직감으로 통하는 사람',
-    //       content:
-    //         '새로운 사람을 만나면 금세 대화 주제를 찾아내요. 영화, 기술, 음악 등 관심사가 다양해서 대화가 끊이지 않아요. 상대가 진심이면 바로 마음을 엽니다.',
-    //     },
-    //     stage2: {
-    //       title: '🔥 공감의 속도는 진심으로부터',
-    //       subtitle: '짧은 대화 속에서도 깊은 연결',
-    //       content:
-    //         '친해지는 속도는 빠르지만, 그만큼 진심을 중요하게 생각해요. 어느 날 밤새 이야기하다가 “이 사람은 진짜다”라는 느낌을 받은 적이 있어요.',
-    //     },
-    //     stage3: {
-    //       title: '💫 진심이 닿았을 때',
-    //       subtitle: '속도보다 중요한 건 방향',
-    //       content:
-    //         '누군가와 함께 성장할 수 있다는 건 큰 행운이에요. 나에게 교류란, 단순한 만남이 아니라 서로의 삶을 나누는 과정이에요.',
-    //     },
-    //   },
-    // },
     4: {
       userId: 4,
+      userName: '김용희',
+      profileImageUrl: mockyonghee,
+      instagramId: 'yonghee.dev',
+      stage: 2,
+      bio: [
+        { text: '“', bold: false },
+        { text: '침대 + 이불 조합', bold: true },
+        { text: '이면 충분해요. 아', bold: false },
+        { text: '집', bold: true },
+        { text: '가고싶다"', bold: false },
+      ],
+      interactionStyle: 'FAST',
+      card: {
+        stage1: {
+          title: '⚡🎬 빠르게 연결되는 순간들',
+          subtitle: '직감으로 통하는 사람',
+          content:
+            '새로운 사람을 만나면 금세 대화 주제를 찾아내요. 영화, 기술, 음악 등 관심사가 다양해서 대화가 끊이지 않아요. 상대가 진심이면 바로 마음을 엽니다.',
+        },
+        stage2: {
+          title: '🔥 공감의 속도는 진심으로부터',
+          subtitle: '짧은 대화 속에서도 깊은 연결',
+          content:
+            '친해지는 속도는 빠르지만, 그만큼 진심을 중요하게 생각해요. 어느 날 밤새 이야기하다가 “이 사람은 진짜다”라는 느낌을 받은 적이 있어요.',
+        },
+        stage3: {
+          title: '💫 진심이 닿았을 때',
+          subtitle: '속도보다 중요한 건 방향',
+          content:
+            '누군가와 함께 성장할 수 있다는 건 큰 행운이에요. 나에게 교류란, 단순한 만남이 아니라 서로의 삶을 나누는 과정이에요.',
+        },
+      },
+    },
+    5: {
+      userId: 5,
       userName: '강희구',
       profileImageUrl: mockImg,
       instagramId: null,
@@ -213,8 +214,8 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
         },
       },
     },
-    5: {
-      userId: 5,
+    6: {
+      userId: 6,
       userName: '권두환',
       profileImageUrl: mockImg,
       instagramId: null,
@@ -248,8 +249,8 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
         },
       },
     },
-    6: {
-      userId: 6,
+    7: {
+      userId: 7,
       userName: '성하빈',
       profileImageUrl: null,
       instagramId: 'frodo_friends',
@@ -283,8 +284,8 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
         },
       },
     },
-    7: {
-      userId: 7,
+    8: {
+      userId: 8,
       userName: '신재현',
       profileImageUrl: mockImg,
       instagramId: 'ryan_official',
@@ -317,8 +318,8 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
         },
       },
     },
-    8: {
-      userId: 8,
+    9: {
+      userId: 9,
       userName: '프로도',
       profileImageUrl: null,
       instagramId: 'muzi_world',
@@ -374,16 +375,16 @@ export const RandomFriendListMock: { data: FriendResponse[]; delay: number } = {
       bio: '“밤하늘 조명처럼 반짝이는 감성 영화를 보면 마음이 따뜻해져요. 잔잔한 여운이 오래 남는 걸 좋아합니다.”',
       interactionStyle: 'BALANCED',
     },
-    // {
-    //   userId: 3,
-    //   userName: '김용희',
-    //   profileUrl: mockyonghee,
-    //   stage: 3,
-    //   bio: '"침대 + 이불 조합이면 충분해요. 아 집가고싶다"',
-    //   interactionStyle: 'FAST',
-    // },
     {
       userId: 4,
+      userName: '김용희',
+      profileUrl: mockyonghee,
+      stage: 3,
+      bio: '"침대 + 이불 조합이면 충분해요. 아 집가고싶다"',
+      interactionStyle: 'FAST',
+    },
+    {
+      userId: 5,
       userName: '강희구',
       profileUrl: mockImg,
       stage: 1,
@@ -391,7 +392,7 @@ export const RandomFriendListMock: { data: FriendResponse[]; delay: number } = {
       interactionStyle: 'CAUTIOUS',
     },
     {
-      userId: 5,
+      userId: 6,
       userName: '권두환',
       profileUrl: mockImg,
       stage: 2,

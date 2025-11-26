@@ -3,6 +3,7 @@ import { useParams, useSearchParams } from 'react-router-dom';
 
 import { QuizForm } from '@/features/quiz/ui/QuizForm';
 import { quizQuery } from '@/entities/quiz/api/quiz.queries';
+import { quizPost } from '@/entities/quiz/api/quiz-post';
 
 const QuizPage = () => {
   const { id } = useParams(); // "/friend/:userId/quiz"
@@ -16,7 +17,7 @@ const QuizPage = () => {
 
   console.log('userId : ', id);
   console.log('parsedUserId : ', parsedUserId, 'parsedStage : ', parsedStage);
-  
+
   const { data, isLoading, isError } = useQuery(
     quizQuery.quizList({ userId: parsedUserId, stage: parsedStage }),
   );
@@ -36,9 +37,7 @@ const QuizPage = () => {
         quizList={data.data}
         onFinish={() => {
           console.log('퀴즈 완료!');
-        }}
-        onSubmit={(answers) => {
-          console.log('유저 답변 기록:', answers);
+          quizPost.unlockStage({ userId: parsedUserId, stage: parsedStage + 1 });
         }}
         className="fixed bottom-4 inset-x-4"
       />

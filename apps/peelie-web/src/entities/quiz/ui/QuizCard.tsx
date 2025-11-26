@@ -1,4 +1,4 @@
-import { splitIntoTwoLines } from '@/shared/lib/splitIntoTwoLines';
+import { splitIntoMultiLines } from '@/shared/lib/splitIntoMultiLines';
 
 interface QuizOption {
   optionId: number;
@@ -21,7 +21,7 @@ export const QuizCard = ({
   return (
     <div className="w-full flex flex-col items-center">
       <div className="text-center heading-2-medium mb-4 whitespace-pre-line">
-        {splitIntoTwoLines(`Q. ${question}`)}
+        {splitIntoMultiLines(`Q. ${question}`)}
       </div>
 
       {/* 옵션 1 */}
@@ -38,7 +38,7 @@ export const QuizCard = ({
         `}
       >
         <span className="body-1-regular whitespace-pre-line">
-          {splitIntoTwoLines(options[0].text)}
+          {splitIntoMultiLines(options[0].text)}
         </span>
       </button>
 
@@ -59,7 +59,7 @@ export const QuizCard = ({
         `}
       >
         <span className="body-1-regular whitespace-pre-line">
-          {splitIntoTwoLines(options[1].text)}
+          {splitIntoMultiLines(options[1].text)}
         </span>
       </button>
     </div>

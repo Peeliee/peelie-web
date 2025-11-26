@@ -18,7 +18,6 @@ interface Quiz {
 
 interface QuizFormProps {
   quizList: Quiz[];
-  onSubmit: (answers: { quizId: number; optionId: number }[]) => void;
   onFinish: () => void;
   className?: string;
 }
