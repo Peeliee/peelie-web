@@ -45,7 +45,10 @@ const QuizPage = () => {
             queryKey: friendQuery.friendProfile(parsedUserId).queryKey,
           });
 
-          navigate(`/friend/${parsedUserId}`, { state: { unlockStage: parsedStage + 1 } });
+          navigate(`/friend/${parsedUserId}`, {
+            state: { unlockStage: parsedStage + 1 },
+            replace: true,
+          });
         }}
         className="fixed bottom-4 inset-x-4"
       />

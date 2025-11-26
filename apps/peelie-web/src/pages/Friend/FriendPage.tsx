@@ -88,7 +88,7 @@ const FriendPage = () => {
           </div>
         </HorizontalUserCard>
 
-        <UnlockModal
+        {/* <UnlockModal
           name={user.data.userName}
           open={true}
           stage={3}
@@ -96,10 +96,12 @@ const FriendPage = () => {
           onClose={() => {
 
           }}
-        />
+        /> */}
         <button
           className="fixed bottom-5 right-3 left-3 p-4 rounded-3xl bg-orange-400"
-          onClick={() => navigate(`/friend/${user.data.userId}/quiz?stage=${user.data.stage}`)}
+          onClick={() =>
+            navigate(`/friend/${user.data.userId}/quiz?stage=${user.data.stage}`, { replace: true })
+          }
         >
           교류 퀴즈 풀기
         </button>
