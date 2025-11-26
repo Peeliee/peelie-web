@@ -6,6 +6,7 @@ import FriendListPage from '@/pages/FriendList/FriendListPage';
 import HomePage from '@/pages/Home/HomePage';
 import MyPage from '@/pages/mypage/MyPage';
 import EditProfilePage from '@/pages/EditProfile/EditProfilePage';
+import QuizPage from '@/pages/quiz/QuizPage';
 import PATH from '@/shared/constants/path';
 import { GNBLayout } from '@/app/layout/navigation/GNBLayout';
 import { BackHeaderLayout, LogoHeaderLayout } from '@/app/layout/header/HeaderLayout';
@@ -23,7 +24,13 @@ const AppRouter = () => {
           element: <BackHeaderLayout />,
           children: [
             { path: 'onboarding', element: <OnboardingPage /> },
-            { path: 'friend/:id', element: <FriendPage /> },
+            {
+              path: 'friend/:id',
+              children: [
+                { index: true, element: <FriendPage /> }, // /friend/:id
+                { path: 'quiz', element: <QuizPage /> }, // /friend/:id/quiz
+              ],
+            },
             { path: 'login', element: <LoginPage /> },
             { path: 'mypage/edit-profile', element: <EditProfilePage /> },
           ],

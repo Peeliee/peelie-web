@@ -39,6 +39,7 @@ export interface bioSegment {
 }
 
 export interface UserResponse {
+  userId: number;
   userName: string;
   profileImageUrl: string | null;
   instagramId: string | null;

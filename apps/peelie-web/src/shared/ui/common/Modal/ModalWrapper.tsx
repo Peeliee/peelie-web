@@ -66,7 +66,7 @@ function Description({ children, className }: { children?: React.ReactNode; clas
   return <AlertDialogDescription className={cn(className)}>{children}</AlertDialogDescription>;
 }
 
-export function QRImage({ value, className }: { value: string; className?: string }) {
+function QRImage({ value, className }: { value: string; className?: string }) {
   return (
     <div
       className={cn(
