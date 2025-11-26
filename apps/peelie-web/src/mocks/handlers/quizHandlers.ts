@@ -20,7 +20,7 @@ export const quizHandlers = [
       return HttpResponse.json({
         status: 200,
         success: true,
-        message: '카드 생성 중',
+        message: '퀴즈 가져오기 성공',
         data: quizMock.data,
       });
     },
@@ -34,7 +34,7 @@ export const quizHandlers = [
       return HttpResponse.json({
         status: 200,
         success: true,
-        message: '카드 생성 중',
+        message: '단계 해제 성공',
         data: unlockStageMock.data,
       });
     },

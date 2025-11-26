@@ -1,14 +1,16 @@
-import { useQuery } from '@tanstack/react-query';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 
 import { QuizForm } from '@/features/quiz/ui/QuizForm';
 import { quizQuery } from '@/entities/quiz/api/quiz.queries';
 import { quizPost } from '@/entities/quiz/api/quiz-post';
+import { friendQuery } from '@/entities/friend/api/friend.queries';
 
 const QuizPage = () => {
-  const { id } = useParams(); // "/friend/:userId/quiz"
+  const { id } = useParams();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
-  // 2) query params
   const [searchParams] = useSearchParams();
   const stage = searchParams.get('stage');
 
@@ -35,9 +37,15 @@ const QuizPage = () => {
     <div className="flex flex-col h-full">
       <QuizForm
         quizList={data.data}
-        onFinish={() => {
+        onFinish={async () => {
           console.log('퀴즈 완료!');
-          quizPost.unlockStage({ userId: parsedUserId, stage: parsedStage + 1 });
+          await quizPost.unlockStage({ userId: parsedUserId, stage: parsedStage + 1 });
+
+          await queryClient.invalidateQueries({
+            queryKey: friendQuery.friendProfile(parsedUserId).queryKey,
+          });
+
+          navigate(`/friend/${parsedUserId}`, { state: { unlockStage: parsedStage + 1 } });
         }}
         className="fixed bottom-4 inset-x-4"
       />

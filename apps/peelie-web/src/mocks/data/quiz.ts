@@ -22,7 +22,7 @@ export const quizMock: { data: Quiz[]; delay: number } = {
     {
       quizId: 2,
       quiz: '김용희가 직관을 간다면, 어느 팀 응원석에 더 자연스럽게 앉을까?',
-      answerId: 1,
+      answerId: 2,
       answer: [
         {
           optionId: 1,
