@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { useUser } from '@/app/provider/userContext';
 import { Button } from '@/shared/ui/common/button';
@@ -16,6 +17,8 @@ interface EditProfileForm {
 }
 
 const EditProfilePage = () => {
+  const navigate = useNavigate();
+
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const { user } = useUser();
   const { mutate, isPending } = useEditProfile();
@@ -144,7 +147,13 @@ const EditProfilePage = () => {
           onChange={(e) => handleChange('instagramId', e.target.value)}
         />
       </div>
-      <Button variant={'primary'} buttonType={'outline'} size={'medium'} className="w-full">
+      <Button
+        variant={'primary'}
+        buttonType={'outline'}
+        size={'medium'}
+        className="w-full"
+        onClick={() => navigate('card-regenerate')}
+      >
         카드 재생성하기
       </Button>
 

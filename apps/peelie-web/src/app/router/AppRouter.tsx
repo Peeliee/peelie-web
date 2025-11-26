@@ -7,6 +7,7 @@ import HomePage from '@/pages/Home/HomePage';
 import MyPage from '@/pages/mypage/MyPage';
 import EditProfilePage from '@/pages/EditProfile/EditProfilePage';
 import QuizPage from '@/pages/quiz/QuizPage';
+import CardRegeneratePage from '@/pages/EditProfile/ui/CardRegeneratePage';
 import PATH from '@/shared/constants/path';
 import { GNBLayout } from '@/app/layout/navigation/GNBLayout';
 import { BackHeaderLayout, LogoHeaderLayout } from '@/app/layout/header/HeaderLayout';
@@ -32,7 +33,14 @@ const AppRouter = () => {
               ],
             },
             { path: 'login', element: <LoginPage /> },
-            { path: 'mypage/edit-profile', element: <EditProfilePage /> },
+            {
+              path: 'mypage/edit-profile',
+
+              children: [
+                { index: true, element: <EditProfilePage /> },
+                { path: 'card-regenerate', element: <CardRegeneratePage /> },
+              ],
+            },
           ],
         },
         // GNB 있는 페이지

@@ -88,15 +88,6 @@ const FriendPage = () => {
           </div>
         </HorizontalUserCard>
 
-        {/* <UnlockModal
-          name={user.data.userName}
-          open={true}
-          stage={3}
-          // type="primary"
-          onClose={() => {
-
-          }}
-        /> */}
         <button
           className="fixed bottom-5 right-3 left-3 p-4 rounded-3xl bg-orange-400"
           onClick={() =>
@@ -129,6 +120,13 @@ const FriendPage = () => {
           onClose={() => setShowDetailModal(false)}
           onAction={() => {
             if (unlockStage === 3) {
+              const isWebView = typeof window.ReactNativeWebView !== 'undefined';
+
+              if (!isWebView) {
+                alert('앱에서만 사용할 수 있어요.');
+                return;
+              }
+
               window.ReactNativeWebView?.postMessage(
                 JSON.stringify({
                   type: 'OPEN_INSTAGRAM',
