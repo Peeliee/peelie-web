@@ -1,6 +1,6 @@
 import { WebView } from "react-native-webview";
 import { SafeAreaView, SafeAreaProvider, useSafeAreaInsets } from "react-native-safe-area-context";
-import { StyleSheet, Platform } from "react-native";
+import { StyleSheet, Platform, Linking } from "react-native";
 import { useRouter } from "expo-router";
 
 export default function HomeScreen() {
@@ -29,6 +29,18 @@ export default function HomeScreen() {
             if (data.type === "OPEN_CAMERA") {
                 router.push("/screen/CameraScreen");
             }
+
+            if (data.type === "OPEN_INSTAGRAM") {
+                const username = data.username;
+
+                // 인스타 앱 열기
+                const url = `instagram://user?username=${username}`;
+
+                Linking.openURL(url).catch(() => {
+                    // 앱 없으면 웹으로 fallback
+                    Linking.openURL(`https://instagram.com/${username}`);
+                });
+            }
         } catch (e) {
             console.log("Invalid message", e);
         }
@@ -45,7 +57,7 @@ export default function HomeScreen() {
                 ]}
             >
                 <WebView
-                    source={{ uri: "https://peelie.vercel.app" }}
+                    source={{ uri: sourceUrl }}
                     originWhitelist={["*"]}
                     allowsInlineMediaPlayback
                     startInLoadingState

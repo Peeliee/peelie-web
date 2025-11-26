@@ -129,7 +129,12 @@ const FriendPage = () => {
           onClose={() => setShowDetailModal(false)}
           onAction={() => {
             if (unlockStage === 3) {
-              window.location.href = `https://instagram.com/${user.data.instagramId}`;
+              window.ReactNativeWebView?.postMessage(
+                JSON.stringify({
+                  type: 'OPEN_INSTAGRAM',
+                  username: user.data.instagramId,
+                }),
+              );
             }
           }}
         />
