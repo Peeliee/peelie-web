@@ -14,9 +14,15 @@ import { friendQuery } from '@/entities/friend/api/friend.queries';
 import { InteractionStyle } from '@/shared/constants/interactionStyle';
 import { useHeader } from '@/shared/context/headerContext';
 import { FriendBioBubble } from '@/features/friend/ui/FriendBioBubble';
+import { CoverflowSwiper } from '@/shared/ui/common/Carousel/CoverflowSwiper';
+import { UserInfoCard } from '@/entities/user/ui/UserInfoCard';
+import { UserInfoModal } from '@/features/user/ui/UserInfoModal';
+import { Button } from '@/shared/ui/common/button';
 import Background from '@/assets/friendProfileBackground.svg?react';
 import Character from '@/assets/characterMock.svg?react';
 import MockImg from '@/assets/mockImg.svg';
+
+const stageMap = ['stage2', 'stage1', 'stage3'] as const;
 
 const FriendPage = () => {
   const navigate = useNavigate();
@@ -28,9 +34,14 @@ const FriendPage = () => {
   const unlockStage = location.state?.unlockStage ?? null;
   const [showUnlockedModal, setShowUnlockedModal] = useState(false);
   const [showDetailModal, setShowDetailModal] = useState(false);
-  console.log('unlockStage : ', unlockStage);
-  console.log('showUnlockedModal : ', showUnlockedModal);
-  console.log('showDetailModal : ', showDetailModal);
+
+  const [current, setCurrent] = useState<number>(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleClickInfoCard = () => {
+    setIsModalOpen(true);
+  };
+
   const { setTransparent } = useHeader();
 
   useLayoutEffect(() => {
@@ -61,9 +72,17 @@ const FriendPage = () => {
     );
   }
 
+  const stage = user.data.stage;
+
+  const cards = [];
+
+  if (stage >= 1) cards.push(user.data.card.stage1);
+  if (stage >= 2) cards.push(user.data.card.stage2);
+  if (stage >= 3) cards.push(user.data.card.stage3);
+
   return (
     <div>
-      <div className="relative">
+      <div className="relative pb-20">
         {/* TODO : 배경 작업 필요 */}
         <div className="relative w-full flex justify-center items-center h-[260px]">
           <Background className="absolute inset-0 w-full h-79" />
@@ -88,14 +107,28 @@ const FriendPage = () => {
           </div>
         </HorizontalUserCard>
 
-        <button
-          className="fixed bottom-5 right-3 left-3 p-4 rounded-3xl bg-orange-400"
+        <CoverflowSwiper className="w-screen" onChange={setCurrent}>
+          {cards.map((card, idx) => (
+            <UserInfoCard
+              key={idx}
+              level={idx + 1} // 1,2,3
+              title={card.title}
+              onClick={handleClickInfoCard}
+              isActive={current === idx}
+            />
+          ))}
+        </CoverflowSwiper>
+
+        <Button
+          variant={'primary'}
+          size={'extraLarge'}
           onClick={() =>
             navigate(`/friend/${user.data.userId}/quiz?stage=${user.data.stage}`, { replace: true })
           }
+          className="fixed bottom-4 inset-x-4 z-10"
         >
           교류 퀴즈 풀기
-        </button>
+        </Button>
       </div>
       {showUnlockedModal && (
         <UnlockModal
@@ -137,6 +170,14 @@ const FriendPage = () => {
           }}
         />
       )}
+
+      <UserInfoModal
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        title={user.data.card[stageMap[current]].title ?? ''}
+        subTitle={user.data.card[stageMap[current]].subtitle ?? ''}
+        content={user.data.card[stageMap[current]].content ?? ''}
+      />
     </div>
   );
 };
