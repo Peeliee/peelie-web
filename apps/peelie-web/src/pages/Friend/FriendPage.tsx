@@ -127,6 +127,11 @@ const FriendPage = () => {
           stage={unlockStage}
           // type="detail"
           onClose={() => setShowDetailModal(false)}
+          onAction={() => {
+            if (unlockStage === 3) {
+              window.location.href = `https://instagram.com/${user.data.instagramId}`;
+            }
+          }}
         />
       )}
     </div>

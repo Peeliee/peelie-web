@@ -7,8 +7,6 @@ import { Button } from '../button';
 import { ModalWrapper } from './ModalWrapper';
 import MockImg from '@/assets/mockImg.svg?react';
 
-import { splitIntoMultiLines } from '@/shared/lib/splitIntoMultiLines';
-
 export const QrModal = ({
   url,
   children,
@@ -139,11 +137,13 @@ export const UnlockModal = ({
   name,
   open,
   onClose,
+  onAction,
 }: {
   stage: 1 | 2 | 3;
   name: string;
   open: boolean;
   onClose: () => void;
+  onAction?: () => void;
 }) => {
   const config = UNLOCK_MODAL_MAP[stage];
 
@@ -169,6 +169,11 @@ export const UnlockModal = ({
       onClose();
     }
   }, [counter, config.autoClose, onClose]);
+
+  const handleButtonClick = () => {
+    if (onAction) onAction();
+    else onClose();
+  };
 
   return (
     <ModalWrapper open={open} onOpenChange={(v) => !v && onClose()}>
@@ -202,7 +207,7 @@ export const UnlockModal = ({
             buttonType={'fill'}
             state="default"
             className={cn('w-full')}
-            onClick={onClose}
+            onClick={handleButtonClick}
           >
             {config.button}
           </Button>

@@ -78,8 +78,8 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
       userId: 2,
       userName: '유지원',
       profileImageUrl: mockImg,
-      instagramId: 'ujw_insta',
-      stage: 1,
+      instagramId: 'y_h2._',
+      stage: 2,
       bio: [
         { text: '“', bold: false },
         { text: '집콕 + OTT + 로맨스', bold: true },
@@ -113,7 +113,7 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
       userId: 3,
       userName: '김나은',
       profileImageUrl: null,
-      instagramId: 'naeun_story',
+      instagramId: 'y_h2._',
       stage: 2,
       bio: [
         { text: '“', bold: false },
@@ -148,7 +148,7 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
       userId: 4,
       userName: '김용희',
       profileImageUrl: mockyonghee,
-      instagramId: 'yonghee.dev',
+      instagramId: 'y_h2._',
       stage: 2,
       bio: [
         { text: '“', bold: false },
@@ -218,7 +218,7 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
       userId: 6,
       userName: '권두환',
       profileImageUrl: mockImg,
-      instagramId: null,
+      instagramId: 'y_h2._',
       stage: 0,
       bio: [
         { text: '“', bold: false },
@@ -253,7 +253,7 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
       userId: 7,
       userName: '성하빈',
       profileImageUrl: null,
-      instagramId: 'frodo_friends',
+      instagramId: 'y_h2._',
       stage: 1,
       bio: [
         { text: '“', bold: false },
@@ -288,7 +288,7 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
       userId: 8,
       userName: '신재현',
       profileImageUrl: mockImg,
-      instagramId: 'ryan_official',
+      instagramId: 'y_h2._',
       stage: 2,
       bio: [
         { text: '“', bold: false },
@@ -322,7 +322,7 @@ export const FriendProfileMock: { data: Record<number, FriendProfileResponse>; d
       userId: 9,
       userName: '프로도',
       profileImageUrl: null,
-      instagramId: 'muzi_world',
+      instagramId: 'y_h2._',
       stage: 3,
       bio: [
         { text: '“', bold: false },
