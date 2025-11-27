@@ -17,7 +17,7 @@ interface UserStepInfoPageProps {
   history: ReturnType<typeof useFunnel>['history'];
 }
 
-const stageMap = ['stage2', 'stage1', 'stage3'] as const;
+const stageMap = ['stage1', 'stage2', 'stage3'] as const;
 
 const UserStepInfoPage = ({ onNext, history }: UserStepInfoPageProps) => {
   const { user } = useUser();

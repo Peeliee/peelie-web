@@ -28,12 +28,12 @@ export const QuizCard = ({
       <button
         onClick={() => onSelectOption(options[0].optionId)}
         className={`
-          w-full bg-peelie-white p-4 text-center border rounded-300 
+          w-full p-4 text-center border rounded-300 
           transition-all
           ${
             selectedOptionId === options[0].optionId
-              ? 'border-peelie-primary-600 '
-              : 'border-peelie-gray-150'
+              ? 'border-peelie-gray-150 bg-peelie-primary-600 '
+              : 'border-peelie-gray-150 bg-peelie-white'
           }
         `}
       >
@@ -49,12 +49,12 @@ export const QuizCard = ({
       <button
         onClick={() => onSelectOption(options[1].optionId)}
         className={`
-            w-full bg-peelie-white p-4 text-center border rounded-300 
+            w-full p-4 text-center border rounded-300 
           transition-all
           ${
             selectedOptionId === options[1].optionId
-              ? 'border-peelie-primary-500 shadow-md'
-              : 'border-peelie-gray-150'
+              ? 'border-peelie-gray-150 bg-peelie-primary-600'
+              : 'border-peelie-gray-150 bg-peelie-white'
           }
         `}
       >

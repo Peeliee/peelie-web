@@ -7,7 +7,7 @@ import { CoverflowSwiper } from '@/shared/ui/common/Carousel/CoverflowSwiper';
 import { UserInfoCard } from '@/entities/user/ui/UserInfoCard';
 import { UserInfoModal } from '@/features/user/ui/UserInfoModal';
 
-const stageMap = ['stage2', 'stage1', 'stage3'] as const;
+const stageMap = ['stage1', 'stage2', 'stage3'] as const;
 
 const MyPage = () => {
   const navigate = useNavigate();

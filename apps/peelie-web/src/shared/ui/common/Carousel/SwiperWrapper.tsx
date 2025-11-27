@@ -191,7 +191,7 @@ export const EffectCardWrapper = ({
   const [activeIndex, setActiveIndex] = useState(0);
   return (
     <div>
-      <div className="w-full px-17 h-full">
+      <div className="w-full px-17 h-100">
         <Swiper
           effect={'cards'}
           autoHeight={true}
@@ -201,7 +201,7 @@ export const EffectCardWrapper = ({
             onChange?.(swiper.activeIndex);
             setActiveIndex(swiper.activeIndex);
           }}
-          className="mySwiper !overflow-visible rounded-400"
+          className="mySwiper overflow-visible! rounded-400"
         >
           {slides.map((child, i) => {
             return (

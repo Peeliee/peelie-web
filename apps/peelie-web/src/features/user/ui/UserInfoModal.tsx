@@ -38,11 +38,11 @@ export const UserInfoModal = ({
 
   return (
     <ModalWrapper open={open} onOpenChange={onOpenChange}>
-      <ModalWrapper.Content className="w-87.5 bg-peelie-primary-300 rounded-300">
-        <ModalWrapper.CloseButton onClose={() => onOpenChange(false)} />
+      <ModalWrapper.Content className="w-76.5 p-4 bg-peelie-white rounded-300">
+        {/* <ModalWrapper.CloseButton onClose={() => onOpenChange(false)} /> */}
 
         {!isEditMode ? (
-          <ViewMode title={title} subTitle={subTitle} content={content} onEdit={handleStartEdit} />
+          <ViewMode title={title} subTitle={subTitle} content={content} onClose={onOpenChange} onEdit={handleStartEdit} />
         ) : (
           <EditMode form={form} setForm={setForm} onApply={handleApply} />
         )}

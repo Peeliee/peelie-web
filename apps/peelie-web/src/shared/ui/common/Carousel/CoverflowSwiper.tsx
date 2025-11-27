@@ -42,7 +42,7 @@ export const SwiperIndicator = ({ total, activeIndex, className }: SwiperIndicat
 export const CoverflowSwiper = ({ children, onChange, className }: CoverflowSwiperProps) => {
   const childArray = Array.isArray(children) ? children : [children];
   const [activeIndex, setActiveIndex] = useState(0);
-
+  console.log(activeIndex)
   return (
     <div className={cn('w-full', className)}>
       <Swiper

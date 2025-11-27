@@ -24,14 +24,13 @@ export const QrModal = ({
         <Button>{children}</Button>
       </ModalWrapper.Trigger>
 
-      <ModalWrapper.Content className="bg-[#FF8C00] px-4 pt-4 pb-12">
-        <ModalWrapper.CloseButton onClose={() => setOpen(false)} />
+      <ModalWrapper.Content className="bg-peelie-primary-100 px-4 pt-4 w-66">
         <ModalWrapper.Header>
           <ModalWrapper.Title className="text-peelie-white">
-            <span className="heading-1-medium">나의 QR 공유</span>
+            <span className="heading-1-medium text-peelie-gray-900">나의 QR 공유</span>
           </ModalWrapper.Title>
           <ModalWrapper.Description className="text-peelie-gray-150">
-            <span className="body-1-regular">
+            <span className="body-1-regular text-peelie-gray-600">
               QR을 스캔하면 나의 프로필이
               <br /> 상대방에게 제공됩니다.
             </span>
@@ -39,6 +38,7 @@ export const QrModal = ({
         </ModalWrapper.Header>
 
         <ModalWrapper.QRImage value={url ?? 'https://naver.com'} />
+        <Button variant="secondary" buttonType="fill" size="large" className='w-full' onClick={() => setOpen(false)}>닫기</Button>
       </ModalWrapper.Content>
     </ModalWrapper>
   );
@@ -69,8 +69,6 @@ export const QuizModal = ({
           className,
         )}
       >
-        <ModalWrapper.CloseButton onClose={onClose} />
-
         <ModalWrapper.Header>
           <ModalWrapper.Title className="text-peelie-white">
             <span className="heading-1-medium">{title}</span>
