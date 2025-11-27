@@ -16,7 +16,6 @@ import { useHeader } from '@/shared/context/headerContext';
 import { FriendBioBubble } from '@/features/friend/ui/FriendBioBubble';
 import { CoverflowSwiper } from '@/shared/ui/common/Carousel/CoverflowSwiper';
 import { UserInfoCard } from '@/entities/user/ui/UserInfoCard';
-import { UserInfoModal } from '@/features/user/ui/UserInfoModal';
 import { Button } from '@/shared/ui/common/button';
 import { FriendInfoBottomSheet } from '@/entities/friend/ui/FriendInfoBottomSheet';
 import Background from '@/assets/friendProfileBackground.svg?react';
