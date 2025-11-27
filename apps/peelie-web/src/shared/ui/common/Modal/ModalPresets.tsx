@@ -69,8 +69,6 @@ export const QuizModal = ({
           className,
         )}
       >
-        <ModalWrapper.CloseButton onClose={onClose} />
-
         <ModalWrapper.Header>
           <ModalWrapper.Title className="text-peelie-white">
             <span className="heading-1-medium">{title}</span>
