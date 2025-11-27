@@ -171,18 +171,10 @@ const FriendPage = () => {
         />
       )}
 
-      {/* <UserInfoModal
-        open={isModalOpen}
-        onOpenChange={setIsModalOpen}
-        title={user.data.card[stageMap[current]].title ?? ''}
-        subTitle={user.data.card[stageMap[current]].subtitle ?? ''}
-        content={user.data.card[stageMap[current]].content ?? ''}
-      /> */}
-
       <FriendInfoBottomSheet
         open={isModalOpen}
         onOpenChange={setIsModalOpen}
-        level={stage}
+        level={current + 1}
         title={user.data.card[stageMap[current]].title ?? ''}
         subTitle={user.data.card[stageMap[current]].subtitle ?? ''}
         content={user.data.card[stageMap[current]].content ?? ''}
