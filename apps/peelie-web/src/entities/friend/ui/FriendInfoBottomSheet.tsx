@@ -36,13 +36,13 @@ export const FriendInfoBottomSheet = ({
     <>
       {/* --- Dimmed Background --- */}
       {open && (
-        <div className="fixed inset-0 bg-black/40 z-40" onClick={() => onOpenChange(false)}></div>
+        <div className="fixed inset-0 bg-black/40 z-999" onClick={() => onOpenChange(false)}></div>
       )}
 
       {/* --- Bottom Sheet --- */}
       <div
         className={`
-          fixed left-0 right-0 bottom-0 z-50 
+          fixed left-0 right-0 bottom-0 z-9999 
           bg-peelie-white rounded-t-400 px-4
           transform transition-transform duration-300
           ${open ? 'translate-y-0' : 'translate-y-full'}
