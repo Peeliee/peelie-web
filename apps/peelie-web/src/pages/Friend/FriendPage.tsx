@@ -18,6 +18,7 @@ import { CoverflowSwiper } from '@/shared/ui/common/Carousel/CoverflowSwiper';
 import { UserInfoCard } from '@/entities/user/ui/UserInfoCard';
 import { UserInfoModal } from '@/features/user/ui/UserInfoModal';
 import { Button } from '@/shared/ui/common/button';
+import { FriendInfoBottomSheet } from '@/entities/friend/ui/FriendInfoBottomSheet';
 import Background from '@/assets/friendProfileBackground.svg?react';
 import Character from '@/assets/characterMock.svg?react';
 import MockImg from '@/assets/mockImg.svg';
@@ -171,9 +172,18 @@ const FriendPage = () => {
         />
       )}
 
-      <UserInfoModal
+      {/* <UserInfoModal
         open={isModalOpen}
         onOpenChange={setIsModalOpen}
+        title={user.data.card[stageMap[current]].title ?? ''}
+        subTitle={user.data.card[stageMap[current]].subtitle ?? ''}
+        content={user.data.card[stageMap[current]].content ?? ''}
+      /> */}
+
+      <FriendInfoBottomSheet
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        level={stage}
         title={user.data.card[stageMap[current]].title ?? ''}
         subTitle={user.data.card[stageMap[current]].subtitle ?? ''}
         content={user.data.card[stageMap[current]].content ?? ''}

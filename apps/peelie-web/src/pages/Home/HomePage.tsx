@@ -37,8 +37,8 @@ const HomePage = () => {
 
       <div className="w-full h-0.5 bg-peelie-gray-150" />
       <div className="flex-1 relative">
-        <div className="px-4 py-3">
-          <h2 className="heading-4-medium text-peelie-gray-950">오늘의 랜덤 추천 친구</h2>
+        <div className="px-4 py-3 mb-6">
+          <p className="heading-4-medium text-peelie-gray-950">오늘의 랜덤 추천 친구</p>
         </div>
         <RandomUserCarousel friendList={data?.data ?? []} isLoading={isLoading} isError={isError} />
       </div>
