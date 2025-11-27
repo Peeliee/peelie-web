@@ -22,7 +22,7 @@ import Background from '@/assets/friendProfileBackground.svg?react';
 import Character from '@/assets/characterMock.svg?react';
 import MockImg from '@/assets/mockImg.svg';
 
-const stageMap = ['stage2', 'stage1', 'stage3'] as const;
+const stageMap = ['stage1', 'stage2', 'stage3'] as const;
 
 const FriendPage = () => {
   const navigate = useNavigate();
