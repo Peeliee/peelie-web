@@ -105,8 +105,6 @@ const UserCardInteractionStyle = ({
 };
 
 const UserCardFlipped = ({
-  userName,
-  stage,
   onClick,
 }: {
   userName: string;
