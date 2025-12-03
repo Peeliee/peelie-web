@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 import {
   UserCardName,
@@ -19,6 +20,8 @@ interface FlipFriendCardProps {
 }
 
 export const FlipFriendCard = ({ friend, isFlipped, onFlip, onClick }: FlipFriendCardProps) => {
+  const navigate = useNavigate();
+
   console.log(friend);
   return (
     <div onClick={onFlip} className="w-full cursor-pointer perspective-[1000px]">
@@ -38,7 +41,8 @@ export const FlipFriendCard = ({ friend, isFlipped, onFlip, onClick }: FlipFrien
         >
           {/* 상단 "나와의 교류 단계는 1단계" */}
           <div className="text-right detail-bold mb-3 text-peelie-gray-600">
-            나와의 교류 단계는 <span className="font-bold text-peelie-primary-600">{friend.stage}단계</span>
+            나와의 교류 단계는{' '}
+            <span className="font-bold text-peelie-primary-600">{friend.stage}단계</span>
           </div>
 
           <div className="flex flex-row gap-4">
@@ -65,7 +69,12 @@ export const FlipFriendCard = ({ friend, isFlipped, onFlip, onClick }: FlipFrien
 
         {/* 뒷면 */}
         <div className="absolute inset-0 rotate-y-180 backface-hidden">
-          <UserCardFlipped userName={friend.userName} stage={friend.stage} onClick={onClick} />
+          <UserCardFlipped
+            userName={friend.userName}
+            stage={friend.stage}
+            onClick={onClick}
+            onClickQuestion={() => navigate(`/friend/${friend.userId}/quiz`)}
+          />
         </div>
       </motion.div>
     </div>
