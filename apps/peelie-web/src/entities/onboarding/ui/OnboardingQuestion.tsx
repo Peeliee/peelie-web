@@ -37,7 +37,7 @@ export const OnboardingChoiceQuestion = ({
 
   return (
     <div>
-      <p className="heading-4-medium">{title}</p>
+      <p className="heading-4-medium py-3">{title}</p>
       <div
         className={cn('pt-4 pb-6', hasLongOption ? 'flex flex-col gap-4' : 'flex flex-wrap gap-2')}
       >

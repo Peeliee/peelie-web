@@ -64,34 +64,43 @@ export const CategoryQuestionForm = ({
         onAnswer={(optionId) => updateAnswer('L0', optionId)}
         selected={answers.L0}
       />
-
+      {answers.L0 && <div className="w-full h-px bg-peelie-gray-150 my-4" />}
+      
       {/* sub 질문 */}
       {answers.L0 && (
         <div key={answers.L0}>
-          {activeQuestionSet.map((q, idx) =>
-            !isAllPreviousAnswered(idx, activeQuestionSet, answers) ? null : (
-              <motion.div
-                key={q.level}
-                initial={{ marginTop: -20, opacity: 0, height: 0 }}
-                animate={{ marginTop: 0, opacity: 1, height: 'auto' }}
-              >
-                {q.type === 'CHOICE' ? (
-                  <OnboardingChoiceQuestion
-                    title={q.content}
-                    options={q.options.map((o) => ({ id: o.optionId, label: o.content }))}
-                    onAnswer={(val) => updateAnswer(q.level, val)}
-                    selected={answers[q.level] as number}
-                  />
-                ) : (
-                  <OnboardingTextQuestion
-                    level={q.level}
-                    title={q.content}
-                    onAnswer={(val) => updateAnswer(q.level, val)}
-                  />
-                )}
-              </motion.div>
-            ),
-          )}
+          {activeQuestionSet.map((q, idx) => {
+            if (!isAllPreviousAnswered(idx, activeQuestionSet, answers)) return null;
+
+            const isLast = idx === activeQuestionSet.length - 1;
+
+            return (
+              <div key={q.level}>
+                <motion.div
+                  initial={{ marginTop: -20, opacity: 0, height: 0 }}
+                  animate={{ marginTop: 0, opacity: 1, height: 'auto' }}
+                >
+                  {q.type === 'CHOICE' ? (
+                    <OnboardingChoiceQuestion
+                      title={q.content}
+                      options={q.options.map((o) => ({ id: o.optionId, label: o.content }))}
+                      onAnswer={(val) => updateAnswer(q.level, val)}
+                      selected={answers[q.level] as number}
+                    />
+                  ) : (
+                    <OnboardingTextQuestion
+                      level={q.level}
+                      title={q.content}
+                      onAnswer={(val) => updateAnswer(q.level, val)}
+                    />
+                  )}
+                </motion.div>
+
+                {/* 마지막 질문 구분선 제외 */}
+                {!isLast && <div className="w-full h-px bg-peelie-gray-150 mb-4" />}
+              </div>
+            );
+          })}
         </div>
       )}
       <Button
