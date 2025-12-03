@@ -5,7 +5,7 @@ import { friendQuery } from '@/entities/friend/api/friend.queries';
 
 const FriendListPage = () => {
   const { data, isLoading, isError } = useQuery(friendQuery.friendList());
-  console.log(data);
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-full">
