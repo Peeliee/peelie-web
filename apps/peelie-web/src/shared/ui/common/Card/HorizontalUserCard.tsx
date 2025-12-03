@@ -106,10 +106,12 @@ const UserCardInteractionStyle = ({
 
 const UserCardFlipped = ({
   onClick,
+  onClickQuestion
 }: {
   userName: string;
   stage: number;
   onClick: () => void;
+  onClickQuestion: () => void
 }) => {
   return (
     <div
@@ -133,7 +135,7 @@ const UserCardFlipped = ({
           친구 프로필 보기
         </button>
 
-        <button className="body-2-regular px-5 py-2">바로 교류 퀴즈 풀기</button>
+        <button className="body-2-regular px-5 py-2" onClick={onClickQuestion}>바로 교류 퀴즈 풀기</button>
       </div>
     </div>
   );
