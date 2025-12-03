@@ -21,14 +21,15 @@ const stageMap = ['stage1', 'stage2', 'stage3'] as const;
 const FriendPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
+  // 임시임시임시임시임시임시
+  const [showTempSheet, setShowTempSheet] = useState(false);
   const { id } = useParams<{ id: string }>();
   const { data: user, isLoading, isError } = useQuery(friendQuery.friendProfile(Number(id)));
 
   const unlockStage = location.state?.unlockStage ?? null;
   const [showUnlockedModal, setShowUnlockedModal] = useState(false);
   const [showDetailModal, setShowDetailModal] = useState(false);
-
+  console.log(unlockStage);
   const [current, setCurrent] = useState<number>(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -136,7 +137,7 @@ const FriendPage = () => {
             setShowUnlockedModal(false);
             setShowDetailModal(true);
           }}
-          className='z-9999'
+          className="z-9999"
         />
       )}
 
@@ -147,7 +148,10 @@ const FriendPage = () => {
           open={showDetailModal}
           stage={unlockStage}
           // type="detail"
-          onClose={() => setShowDetailModal(false)}
+          onClose={() => {
+            setShowDetailModal(false);
+            setShowTempSheet(true); // 임시
+          }}
           onAction={() => {
             if (unlockStage === 3) {
               const isWebView = typeof window.ReactNativeWebView !== 'undefined';
@@ -175,6 +179,15 @@ const FriendPage = () => {
         title={user.data.card[stageMap[current]].title ?? ''}
         subTitle={user.data.card[stageMap[current]].subtitle ?? ''}
         content={user.data.card[stageMap[current]].content ?? ''}
+      />
+
+      <FriendInfoBottomSheet
+        open={showTempSheet}
+        onOpenChange={setShowTempSheet}
+        level={unlockStage}
+        title={user.data.card[stageMap[(unlockStage ?? 1) - 1]].title}
+        subTitle={user.data.card[stageMap[(unlockStage ?? 1) - 1]].subtitle}
+        content={user.data.card[stageMap[(unlockStage ?? 1) - 1]].content}
       />
     </div>
   );
