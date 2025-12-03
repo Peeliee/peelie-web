@@ -105,8 +105,6 @@ const UserCardInteractionStyle = ({
 };
 
 const UserCardFlipped = ({
-  userName,
-  stage,
   onClick,
 }: {
   userName: string;
@@ -116,22 +114,27 @@ const UserCardFlipped = ({
   return (
     <div
       className={cn(
-        'w-full h-60 rounded-2xl bg-gradient-to-br from-[#FFAD33] to-[#FF823D]',
-        'p-6 flex flex-col items-center justify-center text-center text-white aspect-[4/3]',
+        'w-full h-60 rounded-2xl bg-peelie-primary-600',
+        'p-4 flex flex-row items-center justify-between text-white',
       )}
     >
-      <MockImg className="w-20" />
-      {userName}님과 나의 교류껍질은 아직 단단해요! <br /> 한 겹 더 친해질 시간이에요 {stage}
-      <div className="w-full border-t border-white/30 mb-3" />
-      <button
-        onClick={onClick}
-        className={cn(
-          'flex items-center justify-center gap-1 text-sm font-medium',
-          'text-white hover:text-white/90 transition',
-        )}
-      >
-        친구 프로필 바로가기
-      </button>
+      {/* 왼쪽 캐릭터 이미지 */}
+      <MockImg className="w-[126px]" />
+
+      {/* 오른쪽 텍스트 그룹 */}
+      <div className="flex flex-col items-center gap-4 mr-3">
+        <button
+          onClick={onClick}
+          className={cn(
+            'px-5 py-2 rounded-full bg-[#FFC94A] body-2-regular',
+            'hover:bg-[#ffdd85] transition',
+          )}
+        >
+          친구 프로필 보기
+        </button>
+
+        <button className="body-2-regular px-5 py-2">바로 교류 퀴즈 풀기</button>
+      </div>
     </div>
   );
 };

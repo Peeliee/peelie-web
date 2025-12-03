@@ -50,8 +50,8 @@ export const CoverflowSwiper = ({ children, onChange, className }: CoverflowSwip
         grabCursor={true}
         centeredSlides={true}
         slidesPerView={1.5}
-        initialSlide={Math.floor(childArray.length / 2)}
-        // pagination={{ clickable: true }}
+        // initialSlide={Math.floor(childArray.length / 2)}
+        initialSlide={0}
         onSlideChange={(swiper) => {
           const idx = swiper.activeIndex;
           setActiveIndex(idx);

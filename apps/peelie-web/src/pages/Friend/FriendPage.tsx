@@ -3,13 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useLayoutEffect, useState, useEffect } from 'react';
 
 import { UnlockModal } from '@/shared/ui/common/Modal/ModalPresets';
-import {
-  HorizontalUserCard,
-  UserCardImage,
-  UserCardName,
-  UserCardDescription,
-  UserCardInteractionStyle,
-} from '@/shared/ui/common/Card/HorizontalUserCard';
+import { HorizontalUserCard, UserCardName } from '@/shared/ui/common/Card/HorizontalUserCard';
 import { friendQuery } from '@/entities/friend/api/friend.queries';
 import { InteractionStyle } from '@/shared/constants/interactionStyle';
 import { useHeader } from '@/shared/context/headerContext';
@@ -20,21 +14,22 @@ import { Button } from '@/shared/ui/common/button';
 import { FriendInfoBottomSheet } from '@/entities/friend/ui/FriendInfoBottomSheet';
 import Background from '@/assets/friendProfileBackground.svg?react';
 import Character from '@/assets/characterMock.svg?react';
-import MockImg from '@/assets/mockImg.svg';
+import { Badge } from '@/shared/ui/common/Badge/Badge';
 
 const stageMap = ['stage1', 'stage2', 'stage3'] as const;
 
 const FriendPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
+  // 임시임시임시임시임시임시
+  const [showTempSheet, setShowTempSheet] = useState(false);
   const { id } = useParams<{ id: string }>();
   const { data: user, isLoading, isError } = useQuery(friendQuery.friendProfile(Number(id)));
 
   const unlockStage = location.state?.unlockStage ?? null;
   const [showUnlockedModal, setShowUnlockedModal] = useState(false);
   const [showDetailModal, setShowDetailModal] = useState(false);
-
+  console.log(unlockStage);
   const [current, setCurrent] = useState<number>(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -82,28 +77,30 @@ const FriendPage = () => {
 
   return (
     <div>
-      <div className="relative pb-20">
+      <div className="pb-20">
         {/* TODO : 배경 작업 필요 */}
         <div className="relative w-full flex justify-center items-center h-[260px]">
           <Background className="absolute inset-0 w-full h-79" />
 
           <FriendBioBubble bio={user.data.bio} className="bottom-34 w-80" />
-
+          <Badge className="absolute right-10 top-40" variant="green">
+            {InteractionStyle[user.data.interactionStyle]}
+          </Badge>
           <Character className="relative z-10 w-25 h-full top-22" />
         </div>
-        <HorizontalUserCard
-          onClick={() => console.log('카드 클릭')}
-          className="mt-4 border-0 shadow-none"
-        >
-          <UserCardImage src={MockImg} />
+
+        <HorizontalUserCard className="mt-4 h-36 border-0 shadow-none bg-transparent">
           <div className="flex flex-col flex-1">
             <div className="flex items-center justify-between">
               <UserCardName>{user.data.userName}</UserCardName>
-              <UserCardInteractionStyle>
+              <div>
+                나와의 교류 단계는{' '}
+                <span className="font-bold text-peelie-primary-600">{user.data.stage}단계</span>
+              </div>
+              {/* <UserCardInteractionStyle>
                 {InteractionStyle[user.data.interactionStyle]}
-              </UserCardInteractionStyle>
+              </UserCardInteractionStyle> */}
             </div>
-            <UserCardDescription>test</UserCardDescription>
           </div>
         </HorizontalUserCard>
 
@@ -140,6 +137,7 @@ const FriendPage = () => {
             setShowUnlockedModal(false);
             setShowDetailModal(true);
           }}
+          className="z-9999"
         />
       )}
 
@@ -150,7 +148,10 @@ const FriendPage = () => {
           open={showDetailModal}
           stage={unlockStage}
           // type="detail"
-          onClose={() => setShowDetailModal(false)}
+          onClose={() => {
+            setShowDetailModal(false);
+            setShowTempSheet(true); // 임시
+          }}
           onAction={() => {
             if (unlockStage === 3) {
               const isWebView = typeof window.ReactNativeWebView !== 'undefined';
@@ -171,21 +172,22 @@ const FriendPage = () => {
         />
       )}
 
-      {/* <UserInfoModal
-        open={isModalOpen}
-        onOpenChange={setIsModalOpen}
-        title={user.data.card[stageMap[current]].title ?? ''}
-        subTitle={user.data.card[stageMap[current]].subtitle ?? ''}
-        content={user.data.card[stageMap[current]].content ?? ''}
-      /> */}
-
       <FriendInfoBottomSheet
         open={isModalOpen}
         onOpenChange={setIsModalOpen}
-        level={stage}
+        level={current + 1}
         title={user.data.card[stageMap[current]].title ?? ''}
         subTitle={user.data.card[stageMap[current]].subtitle ?? ''}
         content={user.data.card[stageMap[current]].content ?? ''}
+      />
+
+      <FriendInfoBottomSheet
+        open={showTempSheet}
+        onOpenChange={setShowTempSheet}
+        level={unlockStage}
+        title={user.data.card[stageMap[(unlockStage ?? 1) - 1]].title}
+        subTitle={user.data.card[stageMap[(unlockStage ?? 1) - 1]].subtitle}
+        content={user.data.card[stageMap[(unlockStage ?? 1) - 1]].content}
       />
     </div>
   );

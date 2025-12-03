@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React,{ useState } from 'react';
 import { SpeechBubble } from '@/shared/ui/common/SpeechBubble/SpeechBubble';
 import { TypedText } from '@/features/friend/ui/TypedText';
 import { bioToHTML } from '@/features/friend/lib/bioToHTML';
@@ -26,29 +26,25 @@ interface FriendBioBubbleProps {
   className?: string;
 }
 
-export const FriendBioBubble = ({
-  bio,
-  variant,
-  tailPosition,
-  repeat = true,
-  className,
-}: FriendBioBubbleProps) => {
-  const [motionKey, setMotionKey] = useState<number>(0);
+export const FriendBioBubble = React.memo(
+  ({ bio, variant, tailPosition, repeat = true, className }: FriendBioBubbleProps) => {
+    const [motionKey, setMotionKey] = useState<number>(0);
 
-  return (
-    <SpeechBubble
-      key={motionKey}
-      variant={variant}
-      tailPosition={tailPosition}
-      className={cn('absolute z-990 body-1-regular', className)}
-    >
-      <TypedText
-        htmlString={bioToHTML(bio)}
-        speed={30}
-        repeat={repeat}
-        delayBetweenLoops={3000}
-        onRestart={() => setMotionKey((prev) => prev + 1)}
-      />
-    </SpeechBubble>
-  );
-};
+    return (
+      <SpeechBubble
+        key={motionKey}
+        variant={variant}
+        tailPosition={tailPosition}
+        className={cn('absolute z-990 body-1-regular', className)}
+      >
+        <TypedText
+          htmlString={bioToHTML(bio)}
+          speed={30}
+          repeat={repeat}
+          delayBetweenLoops={3000}
+          onRestart={() => setMotionKey((prev) => prev + 1)}
+        />
+      </SpeechBubble>
+    );
+  },
+);
