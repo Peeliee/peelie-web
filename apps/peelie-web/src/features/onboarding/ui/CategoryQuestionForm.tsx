@@ -65,7 +65,7 @@ export const CategoryQuestionForm = ({
         selected={answers.L0}
       />
       {answers.L0 && <div className="w-full h-px bg-peelie-gray-150 my-4" />}
-      
+
       {/* sub 질문 */}
       {answers.L0 && (
         <div key={answers.L0}>
@@ -110,7 +110,7 @@ export const CategoryQuestionForm = ({
         disabled={!isCompleted}
         className={cn('fixed bottom-10 inset-x-4')}
       >
-        {isPending ? '...로딩 중' : '계속하기'}
+        {isPending ? '...로딩 중' : '다음으로'}
       </Button>
     </div>
   );

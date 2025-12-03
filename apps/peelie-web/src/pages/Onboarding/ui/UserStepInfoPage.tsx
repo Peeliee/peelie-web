@@ -22,7 +22,7 @@ const stageMap = ['stage1', 'stage2', 'stage3'] as const;
 const UserStepInfoPage = ({ onNext, history }: UserStepInfoPageProps) => {
   const { user } = useUser();
   const { data, isError } = useUserStepInfo();
-  const [current, setCurrent] = useState<number>(1);
+  const [current, setCurrent] = useState<number>(0);
 
   const { hideHeader, setBackAction } = useHeader();
 
@@ -88,13 +88,13 @@ const UserStepInfoPage = ({ onNext, history }: UserStepInfoPageProps) => {
         <CoverflowSwiper className="w-screen" onChange={setCurrent}>
           <UserInfoCard
             level={1}
-            title={data.data.card.stage2.title}
+            title={data.data.card.stage1.title}
             onClick={handleClickInfoCard}
             isActive={current === 0}
           />
           <UserInfoCard
             level={2}
-            title={data.data.card.stage1.title}
+            title={data.data.card.stage2.title}
             onClick={handleClickInfoCard}
             isActive={current === 1}
           />

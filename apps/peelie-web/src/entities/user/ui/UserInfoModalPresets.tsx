@@ -24,6 +24,11 @@ interface EditModeProps {
 export const ViewMode = ({ title, subTitle, content, onClose, onEdit }: ViewModeProps) => (
   <>
     <ModalWrapper.Header className="w-full text-start mt-1">
+      <span className="detail-bold text-peelie-primary-600 text-center">
+        내가 입력한 정보가
+        <br />
+        상대방에게는 ‘나에 관한 퀴즈’로 보여져요.
+      </span>
       <p className="heading-3-medium whitespace-pre-line text-center">{`나의 온보딩 정보를\n기반으로 생성된 정보를 확인해봐요`}</p>
     </ModalWrapper.Header>
     <div className="flex flex-col w-full text-start">
@@ -63,6 +68,11 @@ export const ViewMode = ({ title, subTitle, content, onClose, onEdit }: ViewMode
 export const EditMode = ({ form, setForm, onApply }: EditModeProps) => (
   <>
     <ModalWrapper.Header className="w-full text-start mt-1">
+      <span className="detail-bold text-peelie-primary-600 text-center">
+        내가 입력한 정보가
+        <br />
+        상대방에게는 ‘나에 관한 퀴즈’로 보여져요.
+      </span>
       <p className="heading-3-medium whitespace-pre-line text-center">{`나의 온보딩 정보를\n기반으로 생성된 내용을 수정해봐요`}</p>
     </ModalWrapper.Header>
     <div className="flex flex-col w-full text-start">
