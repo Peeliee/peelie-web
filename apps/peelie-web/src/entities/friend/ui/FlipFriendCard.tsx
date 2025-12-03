@@ -37,7 +37,7 @@ export const FlipFriendCard = ({ friend, isFlipped, onFlip, onClick }: FlipFrien
           )}
         >
           {/* 상단 "나와의 교류 단계는 1단계" */}
-          <div className="text-right detail-bold mb-3">
+          <div className="text-right detail-bold mb-3 text-peelie-gray-600">
             나와의 교류 단계는 <span className="font-bold text-peelie-primary-600">{friend.stage}단계</span>
           </div>
 

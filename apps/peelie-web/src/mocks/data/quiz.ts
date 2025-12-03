@@ -6,7 +6,7 @@ export const quizMock: { data: Quiz[]; delay: number } = {
   data: [
     {
       quizId: 1,
-      quiz: '최근 스트레스 좀 쌓인 김용희... 퇴근 후 딱 한 편만 본다면?',
+      quiz: '최근 스트레스 좀 쌓인 김나은... 퇴근 후 딱 한 편만 본다면?',
       answerId: 1,
       answer: [
         {
@@ -21,31 +21,31 @@ export const quizMock: { data: Quiz[]; delay: number } = {
     },
     {
       quizId: 2,
-      quiz: '김용희가 직관을 간다면, 어느 팀 응원석에 더 자연스럽게 앉을까?',
-      answerId: 2,
+      quiz: 'Q. 힘든 날, 자기 전에 넷플 들어간 김나은. 오늘 밤 선택은?',
+      answerId: 1,
       answer: [
         {
           optionId: 1,
-          text: '두산 베어스 응원가 들으면 자동으로 박수 나오는 편이다',
+          text: '잔잔하지만 여운이 오래 가는 감정 서사물',
         },
         {
           optionId: 2,
-          text: '엘지 트윈스 경기만 보면 텐션이 더 올라간다',
+          text: '보는 동안 감정선이 1도 필요 없는 좀비영화',
         },
       ],
     },
     {
       quizId: 3,
-      quiz: '김용희는 집에 돌아왔을 때 반갑게 달려오는 동물이 좋을까, 아니면 슬쩍 다가와 옆에 앉는 동물이 좋을까?',
+      quiz: 'Q. 매주 화요일, 씻은 후에 휴대폰을 킨 김나은..가장 먼저 킨 어플은?',
       answerId: 1,
       answer: [
         {
           optionId: 1,
-          text: '활발하게 먼저 다가와 주는 개가 더 좋다',
+          text: '나는 솔로를 보기 위한 SBS plus+',
         },
         {
           optionId: 2,
-          text: '조용히 옆에 와주는 고양이가 더 좋다',
+          text: '음악을 듣기 위한 Apple music',
         },
       ],
     },

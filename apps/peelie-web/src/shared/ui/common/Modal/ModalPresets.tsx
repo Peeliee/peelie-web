@@ -24,7 +24,7 @@ export const QrModal = ({
         <Button>{children}</Button>
       </ModalWrapper.Trigger>
 
-      <ModalWrapper.Content className="bg-peelie-primary-100 px-4 pt-4 w-66">
+      <ModalWrapper.Content className="bg-peelie-primary-100 px-4 pt-4 w-66 z-999">
         <ModalWrapper.Header>
           <ModalWrapper.Title className="text-peelie-white">
             <span className="heading-1-medium text-peelie-gray-900">나의 QR 공유</span>
@@ -38,7 +38,15 @@ export const QrModal = ({
         </ModalWrapper.Header>
 
         <ModalWrapper.QRImage value={url ?? 'https://naver.com'} />
-        <Button variant="secondary" buttonType="fill" size="large" className='w-full' onClick={() => setOpen(false)}>닫기</Button>
+        <Button
+          variant="secondary"
+          buttonType="fill"
+          size="large"
+          className="w-full"
+          onClick={() => setOpen(false)}
+        >
+          닫기
+        </Button>
       </ModalWrapper.Content>
     </ModalWrapper>
   );
@@ -65,7 +73,7 @@ export const QuizModal = ({
     <ModalWrapper open={open} onOpenChange={onClose}>
       <ModalWrapper.Content
         className={cn(
-          'bg-linear-to-t from-peelie-primary-600 to-peelie-secondary-200 p-4 gap-4 rounded-400',
+          'bg-linear-to-t from-peelie-primary-600 to-peelie-secondary-200 p-4 gap-4 rounded-400 z-9999',
           className,
         )}
       >
@@ -136,12 +144,14 @@ export const UnlockModal = ({
   open,
   onClose,
   onAction,
+  className,
 }: {
   stage: 1 | 2 | 3;
   name: string;
   open: boolean;
   onClose: () => void;
   onAction?: () => void;
+  className?: string;
 }) => {
   const config = UNLOCK_MODAL_MAP[stage];
 
@@ -175,9 +185,11 @@ export const UnlockModal = ({
 
   return (
     <ModalWrapper open={open} onOpenChange={(v) => !v && onClose()}>
+
       <ModalWrapper.Content
         className={cn(
           'bg-linear-to-t from-peelie-primary-600 to-peelie-secondary-200 p-4 gap-4 rounded-400',
+          className,
         )}
       >
         {config.showIcon && (
