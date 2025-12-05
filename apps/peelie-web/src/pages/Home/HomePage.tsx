@@ -5,6 +5,7 @@ import { GlobalNavigationBar } from '@/app/layout/navigation/ui/GlobalNavigation
 import { ProfileShareSection } from '@/widgets/ProfileShareSection/ProfileShareSection';
 import { RandomUserCarousel } from '@/widgets/Carousel/RandomUserCarousel';
 
+
 const HomePage = () => {
   const navigate = useNavigate();
 
