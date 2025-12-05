@@ -1,20 +1,18 @@
-import { FormValues, Watchers, Watcher, FieldWatchers } from "../types";
+import { FormValues, FieldWatchers } from "../types";
 
-// 리액트 없이 구현하기 위해 옵저버 패턴 사용
-export const createWatch = (
-    values: FormValues,
-    watchers: Watchers,
-    fieldWatchers: FieldWatchers
+export const createWatch = <TValues extends FormValues>(
+    values: TValues,
+    fieldWatchers: FieldWatchers<TValues>
 ) => {
-    return (field, callback) => {
+    return <K extends keyof TValues>(field: K, callback: (value: TValues[K]) => void) => {
         if (!fieldWatchers[field]) {
             fieldWatchers[field] = new Set();
         }
 
-        const watchers = fieldWatchers[field];
+        const watchers = fieldWatchers[field]!;
         watchers.add(callback);
 
-        // 초기값 즉시 호출
+        // 초기값 즉시 전달
         callback(values[field]);
 
         return () => watchers.delete(callback);

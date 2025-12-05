@@ -1,8 +1,15 @@
 import { useState, useMemo, useEffect } from "react";
 
+import type { FormValues } from "./types";
 import { createFormControl } from "./logic/createFormControl";
 
-export const useForm = (defaultValues: any) => {
+type UseFormProps<TValues extends FormValues> = {
+    defaultValues?: TValues;
+};
+
+export const useForm = <TValues extends FormValues>(props: UseFormProps<TValues>) => {
+    const defaultValues = props.defaultValues ?? ({} as TValues);
+
     const form = useMemo(() => createFormControl(defaultValues), []);
     const [state, setState] = useState(form.getValues());
     const [formState, setFormState] = useState(form.formState);

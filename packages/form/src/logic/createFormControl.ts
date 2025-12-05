@@ -1,4 +1,11 @@
-import { FormValues, FormErrors, Watchers, FormState } from "../types";
+import {
+    FormValues,
+    FormErrors,
+    FieldWatchers,
+    FieldOptions,
+    RegisterOptions,
+    FormState,
+} from "../types";
 
 import { createRegister } from "./register";
 import { createSetValue } from "./setValue";
@@ -6,36 +13,44 @@ import { createWatch } from "./watch";
 import { createGetValues } from "./getValues";
 import { createFormState } from "./formState";
 
-export const createFormControl = (defaultValues: FormValues = {}) => {
-    const values: FormValues = { ...defaultValues };
-    const errors: FormErrors = {};
-    const watchers: Watchers = new Set();
+export const createFormControl = <TValues extends FormValues>(defaultValues: TValues) => {
+    const values: TValues = { ...defaultValues };
+    const errors: FormErrors<TValues> = {};
 
     const {
         formState,
         update: updateFormState,
         subscribe: subscribeFormState,
-    } = createFormState(errors);
+    } = createFormState<TValues>(errors);
 
-    const fieldOptions = {};
-    const fieldWatchers = {};
+    const fieldOptions: FieldOptions<TValues> = {};
+    const fieldWatchers: FieldWatchers<TValues> = {};
 
-    const register = createRegister(values, errors, watchers, updateFormState, fieldOptions, fieldWatchers);
-    const setValue = createSetValue(values, errors, watchers, updateFormState, fieldWatchers);
-    const watch = createWatch(values, watchers, fieldWatchers);
-    const getValues = createGetValues(values);
+    const register = createRegister<TValues>(
+        values,
+        errors,
+        fieldOptions,
+        fieldWatchers
+    );
 
-    const handleSubmit = (onValid: (values: FormValues) => void) => {
+    const setValue = createSetValue<TValues>(values, errors, updateFormState, fieldWatchers);
+
+    const watch = createWatch<TValues>(values, fieldWatchers);
+
+    const getValues = createGetValues<TValues>(values);
+
+    const handleSubmit = (onValid: (values: TValues) => void) => {
         return () => {
-            // 1 .errors 초기화
+            // 1. errors 초기화
             for (const key in errors) delete errors[key];
 
-            // 2. 각 필드에 대해 validation 수행
+            // 2. validation
             for (const key in values) {
                 const opts = fieldOptions[key];
 
                 if (!opts) continue;
 
+                // required
                 if (opts.required && !values[key]) {
                     errors[key] =
                         typeof opts.required === "string"
@@ -43,6 +58,7 @@ export const createFormControl = (defaultValues: FormValues = {}) => {
                             : "This field is required";
                 }
 
+                // validate
                 if (opts.validate) {
                     const result = opts.validate(values[key]);
                     if (result !== true) errors[key] = result;
@@ -52,7 +68,7 @@ export const createFormControl = (defaultValues: FormValues = {}) => {
             // 3. formState 업데이트
             updateFormState();
 
-            // 4. 성공일 때만 onValid 실행
+            // 4. 성공 시 validation
             if (formState.isValid) {
                 onValid(values);
             }

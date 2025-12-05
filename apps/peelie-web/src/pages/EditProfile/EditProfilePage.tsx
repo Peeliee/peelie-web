@@ -53,13 +53,28 @@ const EditProfilePage = () => {
   watch('userName', (value) => {
     console.log('username 변경됨:', value);
   });
+  watch('instagramId', (value) => {
+    console.log('instagramId 변경됨:', value);
+  });
+  watch('stage0Bio', (value) => {
+    console.log('stage0Bio 변경됨:', value);
+  });
+  watch('stage1Bio', (value) => {
+    console.log('stage1Bio 변경됨:', value);
+  });
+  watch('stage2Bio', (value) => {
+    console.log('stage2Bio 변경됨:', value);
+  });
+  watch('stage3Bio', (value) => {
+    console.log('stage3Bio 변경됨:', value);
+  });
 
   // handleSubmit 테스트
   const onSubmit = (data) => {
     console.log('폼 제출 데이터:', data);
     alert('제출 완료! 콘솔을 확인하세요.');
   };
-  
+
   console.log('EditProfilePage render');
 
   // 여긴 그냥 임시 파일 업로드

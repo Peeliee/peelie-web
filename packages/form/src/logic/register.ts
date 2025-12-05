@@ -1,38 +1,43 @@
 import {
     FormValues,
     FormErrors,
-    Watchers,
+    FieldWatchers,
     RegisterOptions,
     RegisterReturn,
-    UpdateFormState,
+    FieldOptions,
 } from "../types";
 
-export const createRegister = (
-    values: FormValues,
-    errors: FormErrors,
-    watchers: Watchers,
-    updateFormState: UpdateFormState,
-    fieldOptions,
-    fieldWatchers
+export const createRegister = <TValues extends FormValues>(
+    values: TValues,
+    errors: FormErrors<TValues>,
+    fieldOptions: FieldOptions<TValues>,
+    fieldWatchers: FieldWatchers<TValues>
 ) => {
-    return (name: string, options?: RegisterOptions): RegisterReturn => {
+    return <K extends keyof TValues>(
+        name: K,
+        options: RegisterOptions<TValues[K]> = {}
+    ): RegisterReturn<TValues[K]> => {
         fieldOptions[name] = options;
 
-        const fieldRef = { current: null };
+        const fieldRef = { current: null as HTMLInputElement | null };
 
         return {
-            name,
-            ref: (el: any) => {
+            name: name as string,
+
+            ref: (el: HTMLElement | null) => {
                 if (!el) return;
+                if (!(el instanceof HTMLInputElement)) return;
                 fieldRef.current = el;
-                // mount 시에만 초기값 넣기
                 el.value = values[name] ?? "";
             },
+
             onChange: (e: any) => {
-                const value = e.target.value;
+                const value = e.target.value as TValues[K];
+
                 values[name] = value;
+
                 if (fieldWatchers[name]) {
-                    fieldWatchers[name].forEach((cb) => cb(value));
+                    fieldWatchers[name]!.forEach((cb) => cb(value));
                 }
             },
         };

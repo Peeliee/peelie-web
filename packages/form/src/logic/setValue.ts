@@ -1,19 +1,20 @@
-import { FormValues, FormErrors, Watchers, UpdateFormState, FieldWatchers } from "../types";
+import { FormValues, FormErrors, UpdateFormState, FieldWatchers } from "../types";
 
-export const createSetValue = (
-    values: FormValues,
-    errors: FormErrors,
-    watchers: Watchers,
+export const createSetValue = <TValues extends FormValues>(
+    values: TValues,
+    errors: FormErrors<TValues>,
     updateFormState: UpdateFormState,
-    fieldWatchers: FieldWatchers
+    fieldWatchers: FieldWatchers<TValues>
 ) => {
-    return (name: string, value: string) => {
+    return <K extends keyof TValues>(name: K, value: TValues[K]) => {
         values[name] = value;
-        errors[name] = undefined; // 직접 값 넣으면 error는 개발자 판단에 따라 초기화
-        // watchers.forEach((fn) => fn(values));
+        errors[name] = undefined;
+
+        // 필드 watch callback 실행
         if (fieldWatchers[name]) {
-            fieldWatchers[name].forEach((cb) => cb(value));
+            fieldWatchers[name]!.forEach((cb) => cb(value));
         }
+
         updateFormState();
     };
 };
