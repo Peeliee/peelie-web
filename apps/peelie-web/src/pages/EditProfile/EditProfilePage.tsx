@@ -8,15 +8,6 @@ import { cn } from '@/shared/lib/utils';
 import { TextInput } from '@/shared/ui/common/TextInput/TextInput';
 import { useEditProfile } from '@/entities/user/hooks/useEditProfile';
 
-interface EditProfileForm {
-  userName: string;
-  instagramId: string;
-  stage0Bio: string;
-  stage1Bio: string;
-  stage2Bio: string;
-  stage3Bio: string;
-}
-
 const EditProfilePage = () => {
   const navigate = useNavigate();
 
@@ -26,19 +17,40 @@ const EditProfilePage = () => {
   const { mutate, isPending } = useEditProfile();
 
   // 2) user 로딩된 이후 → defaultValues 한번에 넣기
-  const { register, setValue, getValues, watch, formState, handleSubmit } = useForm({
-    // userName: user?.userName ?? '',
-    userName: 'kim',
-    instagramId: user?.instagramId ?? '',
-    stage0Bio: user?.bio.find((b) => b.stage === 0)?.bio ?? '',
-    stage1Bio: user?.bio.find((b) => b.stage === 1)?.bio ?? '',
-    stage2Bio: user?.bio.find((b) => b.stage === 2)?.bio ?? '',
-    stage3Bio: user?.bio.find((b) => b.stage === 3)?.bio ?? '',
+  const {
+    register,
+    setValue,
+    getValues,
+    watch,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
+    defaultValues: {
+      userName: '',
+      instagramId: '',
+      stage0Bio: '',
+      stage1Bio: '',
+      stage2Bio: '',
+      stage3Bio: '',
+    },
   });
 
-  watch("userName", (values) => {
-    console.log('userName 변경됨 : ', values);
-  });
+  // defaultValue 초기화.. 이렇게 하기 싫은데 어려움..
+  useEffect(() => {
+    if (!user) return;
+    setValue('userName', user.userName);
+    setValue('instagramId', user.instagramId ?? '');
+    setValue('stage0Bio', user?.bio.find((b) => b.stage === 0)?.bio ?? '');
+    setValue('stage1Bio', user?.bio.find((b) => b.stage === 1)?.bio ?? '');
+    setValue('stage2Bio', user?.bio.find((b) => b.stage === 2)?.bio ?? '');
+    setValue('stage3Bio', user?.bio.find((b) => b.stage === 3)?.bio ?? '');
+  }, [user]);
+
+  // console.log('stage0Bio : ', getValues('stage0Bio'));
+
+  // watch('userName', (values) => {
+  //   console.log('userName 변경됨 : ', values);
+  // });
 
   const onSubmit = (data) => {
     console.log('폼 제출 데이터:', data);
@@ -55,7 +67,7 @@ const EditProfilePage = () => {
     setPreview(imageUrl);
   };
 
-  console.log('render');
+  console.log('EditProfilePage render');
 
   return (
     <div className="h-full mt-12 mb-16 p-4">
@@ -94,15 +106,36 @@ const EditProfilePage = () => {
         <TextInput
           label="닉네임"
           placeholder="닉네임을 입력해주세요"
-          {...register('userName', { required: true })}
+          {...register('userName', { required: '이름은 필수입니다' })}
+          error={!!errors.userName}
+          errorText={errors.userName}
         />
-        <TextInput label="0단계 한 줄 소개" {...register('stage0Bio', { required: true })} />
+        <TextInput
+          label="0단계 한 줄 소개"
+          {...register('stage0Bio', { required: '0단계 한 줄 소개는 필수입니다' })}
+          error={!!errors.stage0Bio}
+          errorText={errors.stage0Bio}
+        />
+        <TextInput
+          label="1단계 한 줄 소개"
+          {...register('stage1Bio', { required: '1단계 한 줄 소개는 필수입니다' })}
+          error={!!errors.stage1Bio}
+          errorText={errors.stage1Bio}
+        />
 
-        <TextInput label="1단계 한 줄 소개" {...register('stage1Bio', { required: true })} />
+        <TextInput
+          label="2단계 한 줄 소개"
+          {...register('stage2Bio', { required: '2단계 한 줄 소개는 필수입니다' })}
+          error={!!errors.stage2Bio}
+          errorText={errors.stage2Bio}
+        />
 
-        <TextInput label="2단계 한 줄 소개" {...register('stage2Bio', { required: true })} />
-
-        <TextInput label="3단계 한 줄 소개" {...register('stage3Bio', { required: true })} />
+        <TextInput
+          label="3단계 한 줄 소개"
+          {...register('stage3Bio', { required: '3단계 한 줄 소개는 필수입니다' })}
+          error={!!errors.stage3Bio}
+          errorText={errors.stage3Bio}
+        />
 
         <TextInput label="인스타그램 ID" {...register('instagramId', { required: true })} />
       </div>

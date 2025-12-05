@@ -10,7 +10,7 @@ export type Watchers = Set<Watcher>;
 
 /** register 옵션 (추가 가능) */
 export type RegisterOptions = {
-    required?: boolean;
+    required?: boolean | string;
     validate?: (value: unknown) => string | true;
 };
 

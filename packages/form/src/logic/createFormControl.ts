@@ -19,7 +19,7 @@ export const createFormControl = (defaultValues: FormValues = {}) => {
 
     const fieldOptions = {};
 
-    const register = createRegister(values, errors, watchers, updateFormState);
+    const register = createRegister(values, errors, watchers, updateFormState, fieldOptions);
     const setValue = createSetValue(values, errors, watchers, updateFormState);
     const watch = createWatch(values, watchers);
     const getValues = createGetValues(values);
@@ -31,24 +31,20 @@ export const createFormControl = (defaultValues: FormValues = {}) => {
 
             // 2. 각 필드에 대해 validation 수행
             for (const key in values) {
-                const value = values[key];
                 const opts = fieldOptions[key];
 
                 if (!opts) continue;
 
-                // required
-                if (opts.required && !value) {
-                    errors[key] = "This field is required";
-                    continue;
+                if (opts.required && !values[key]) {
+                    errors[key] =
+                        typeof opts.required === "string"
+                            ? opts.required
+                            : "This field is required";
                 }
 
-                // validate
                 if (opts.validate) {
-                    const result = opts.validate(value);
-                    if (result !== true) {
-                        errors[key] = result;
-                        continue;
-                    }
+                    const result = opts.validate(values[key]);
+                    if (result !== true) errors[key] = result;
                 }
             }
 
