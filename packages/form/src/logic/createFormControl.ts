@@ -18,10 +18,11 @@ export const createFormControl = (defaultValues: FormValues = {}) => {
     } = createFormState(errors);
 
     const fieldOptions = {};
+    const fieldWatchers = {};
 
-    const register = createRegister(values, errors, watchers, updateFormState, fieldOptions);
-    const setValue = createSetValue(values, errors, watchers, updateFormState);
-    const watch = createWatch(values, watchers);
+    const register = createRegister(values, errors, watchers, updateFormState, fieldOptions, fieldWatchers);
+    const setValue = createSetValue(values, errors, watchers, updateFormState, fieldWatchers);
+    const watch = createWatch(values, watchers, fieldWatchers);
     const getValues = createGetValues(values);
 
     const handleSubmit = (onValid: (values: FormValues) => void) => {

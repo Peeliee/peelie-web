@@ -46,28 +46,33 @@ const EditProfilePage = () => {
     setValue('stage3Bio', user?.bio.find((b) => b.stage === 3)?.bio ?? '');
   }, [user]);
 
-  // console.log('stage0Bio : ', getValues('stage0Bio'));
+  // getValue 테스트
+  console.log('stage0Bio : ', getValues('stage0Bio'));
 
-  // watch('userName', (values) => {
-  //   console.log('userName 변경됨 : ', values);
-  // });
+  // watch 테스트
+  watch('userName', (value) => {
+    console.log('username 변경됨:', value);
+  });
 
+  // handleSubmit 테스트
   const onSubmit = (data) => {
     console.log('폼 제출 데이터:', data);
     alert('제출 완료! 콘솔을 확인하세요.');
   };
+  
+  console.log('EditProfilePage render');
 
+  // 여긴 그냥 임시 파일 업로드
   const [preview, setPreview] = useState<string | null>(user?.profileImageUrl ?? null);
 
   const handleFileSelect = () => fileInputRef.current?.click();
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
     const imageUrl = URL.createObjectURL(file);
     setPreview(imageUrl);
   };
-
-  console.log('EditProfilePage render');
 
   return (
     <div className="h-full mt-12 mb-16 p-4">
@@ -112,12 +117,14 @@ const EditProfilePage = () => {
         />
         <TextInput
           label="0단계 한 줄 소개"
+          placeholder="0단계 한 줄 소개를 입력해주세요"
           {...register('stage0Bio', { required: '0단계 한 줄 소개는 필수입니다' })}
           error={!!errors.stage0Bio}
           errorText={errors.stage0Bio}
         />
         <TextInput
           label="1단계 한 줄 소개"
+          placeholder="1단계 한 줄 소개를 입력해주세요"
           {...register('stage1Bio', { required: '1단계 한 줄 소개는 필수입니다' })}
           error={!!errors.stage1Bio}
           errorText={errors.stage1Bio}
@@ -125,6 +132,7 @@ const EditProfilePage = () => {
 
         <TextInput
           label="2단계 한 줄 소개"
+          placeholder="2단계 한 줄 소개를 입력해주세요"
           {...register('stage2Bio', { required: '2단계 한 줄 소개는 필수입니다' })}
           error={!!errors.stage2Bio}
           errorText={errors.stage2Bio}
@@ -132,6 +140,7 @@ const EditProfilePage = () => {
 
         <TextInput
           label="3단계 한 줄 소개"
+          placeholder="3단계 한 줄 소개를 입력해주세요"
           {...register('stage3Bio', { required: '3단계 한 줄 소개는 필수입니다' })}
           error={!!errors.stage3Bio}
           errorText={errors.stage3Bio}

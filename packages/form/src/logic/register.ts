@@ -13,6 +13,7 @@ export const createRegister = (
     watchers: Watchers,
     updateFormState: UpdateFormState,
     fieldOptions,
+    fieldWatchers
 ) => {
     return (name: string, options?: RegisterOptions): RegisterReturn => {
         fieldOptions[name] = options;
@@ -30,7 +31,9 @@ export const createRegister = (
             onChange: (e: any) => {
                 const value = e.target.value;
                 values[name] = value;
-                watchers.forEach((fn) => fn(values));
+                if (fieldWatchers[name]) {
+                    fieldWatchers[name].forEach((cb) => cb(value));
+                }
             },
         };
     };

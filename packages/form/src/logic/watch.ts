@@ -1,30 +1,22 @@
-import { FormValues, Watchers, Watcher } from "../types";
+import { FormValues, Watchers, Watcher, FieldWatchers } from "../types";
 
 // 리액트 없이 구현하기 위해 옵저버 패턴 사용
-export const createWatch = (values: FormValues, watchers: Watchers) => {
-    return (arg1, arg2) => {
-        // watch("field", callback)
-        if (typeof arg1 === "string" && typeof arg2 === "function") {
-            const field = arg1;
-            const callback = arg2;
-
-            const fn = (changedValues) => {
-                callback(changedValues[field]);
-            };
-
-            watchers.add(fn);
-            callback(values[field]); // 초기값
-
-            return () => watchers.delete(fn);
+export const createWatch = (
+    values: FormValues,
+    watchers: Watchers,
+    fieldWatchers: FieldWatchers
+) => {
+    return (field, callback) => {
+        if (!fieldWatchers[field]) {
+            fieldWatchers[field] = new Set();
         }
 
-        // watch(callback)
-        if (typeof arg1 === "function") {
-            watchers.add(arg1);
-            arg1(values);
-            return () => watchers.delete(arg1);
-        }
+        const watchers = fieldWatchers[field];
+        watchers.add(callback);
 
-        throw new Error("Invalid watch usage");
+        // 초기값 즉시 호출
+        callback(values[field]);
+
+        return () => watchers.delete(callback);
     };
 };

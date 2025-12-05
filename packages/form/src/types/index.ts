@@ -4,6 +4,7 @@ export type UpdateFormState = () => void;
 
 /** watch 콜백 */
 export type Watcher = (values: FormValues) => void;
+export type FieldWatchers = Record<string, Set<(value: any) => void>>;
 
 /** watchers Set */
 export type Watchers = Set<Watcher>;
