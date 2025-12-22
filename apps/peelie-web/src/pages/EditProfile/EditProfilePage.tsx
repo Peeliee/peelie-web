@@ -1,3 +1,4 @@
+import { useForm } from '@peelie/form';
 import { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,47 +8,80 @@ import { cn } from '@/shared/lib/utils';
 import { TextInput } from '@/shared/ui/common/TextInput/TextInput';
 import { useEditProfile } from '@/entities/user/hooks/useEditProfile';
 
-interface EditProfileForm {
-  userName: string;
-  instagramId: string;
-  stage0Bio: string;
-  stage1Bio: string;
-  stage2Bio: string;
-  stage3Bio: string;
-}
-
 const EditProfilePage = () => {
   const navigate = useNavigate();
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const { user } = useUser();
+
   const { mutate, isPending } = useEditProfile();
 
-  const [form, setForm] = useState<EditProfileForm>({
-    userName: '',
-    instagramId: '',
-    stage0Bio: '',
-    stage1Bio: '',
-    stage2Bio: '',
-    stage3Bio: '',
+  // 2) user 로딩된 이후 → defaultValues 한번에 넣기
+  const {
+    register,
+    setValue,
+    getValues,
+    watch,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
+    defaultValues: {
+      userName: '',
+      instagramId: '',
+      stage0Bio: '',
+      stage1Bio: '',
+      stage2Bio: '',
+      stage3Bio: '',
+    },
   });
 
+  // defaultValue 초기화.. 이렇게 하기 싫은데 어려움..
   useEffect(() => {
-    if (user) {
-      setForm({
-        userName: user.userName ?? '',
-        instagramId: user.instagramId ?? '',
-        stage0Bio: user.bio.find((b) => b.stage === 0)?.bio ?? '',
-        stage1Bio: user.bio.find((b) => b.stage === 1)?.bio ?? '',
-        stage2Bio: user.bio.find((b) => b.stage === 2)?.bio ?? '',
-        stage3Bio: user.bio.find((b) => b.stage === 3)?.bio ?? '',
-      });
-    }
+    if (!user) return;
+    setValue('userName', user.userName);
+    setValue('instagramId', user.instagramId ?? '');
+    setValue('stage0Bio', user?.bio.find((b) => b.stage === 0)?.bio ?? '');
+    setValue('stage1Bio', user?.bio.find((b) => b.stage === 1)?.bio ?? '');
+    setValue('stage2Bio', user?.bio.find((b) => b.stage === 2)?.bio ?? '');
+    setValue('stage3Bio', user?.bio.find((b) => b.stage === 3)?.bio ?? '');
   }, [user]);
 
+  // getValue 테스트
+  console.log('stage0Bio : ', getValues('stage0Bio'));
+
+  // watch 테스트
+  watch('userName', (value) => {
+    console.log('username 변경됨:', value);
+  });
+  watch('instagramId', (value) => {
+    console.log('instagramId 변경됨:', value);
+  });
+  watch('stage0Bio', (value) => {
+    console.log('stage0Bio 변경됨:', value);
+  });
+  watch('stage1Bio', (value) => {
+    console.log('stage1Bio 변경됨:', value);
+  });
+  watch('stage2Bio', (value) => {
+    console.log('stage2Bio 변경됨:', value);
+  });
+  watch('stage3Bio', (value) => {
+    console.log('stage3Bio 변경됨:', value);
+  });
+
+  // handleSubmit 테스트
+  const onSubmit = (data) => {
+    console.log('폼 제출 데이터:', data);
+    alert('제출 완료! 콘솔을 확인하세요.');
+  };
+
+  console.log('EditProfilePage render');
+
+  // 여긴 그냥 임시 파일 업로드
   const [preview, setPreview] = useState<string | null>(user?.profileImageUrl ?? null);
 
   const handleFileSelect = () => fileInputRef.current?.click();
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -55,27 +89,6 @@ const EditProfilePage = () => {
     setPreview(imageUrl);
   };
 
-  const handleChange = (key: keyof EditProfileForm, value: string) => {
-    setForm((prev) => ({ ...prev, [key]: value }));
-  };
-
-  const handleSubmit = () => {
-    // 전송 형식 맞게 변환
-    const payload = {
-      userName: form.userName,
-      instagramId: form.instagramId,
-      interactionStyle: user?.interactionStyle ?? 'BALANCED', // 일단 변경 금지
-      profileImageUrl: user?.profileImageUrl ?? '', // TODO :이미지 업로드 api 나오면 작업
-      stage0Bio: form.stage0Bio,
-      stage1Bio: form.stage1Bio,
-      stage2Bio: form.stage2Bio,
-      stage3Bio: form.stage3Bio,
-    };
-
-    mutate(payload);
-  };
-
-  console.log(user);
   return (
     <div className="h-full mt-12 mb-16 p-4">
       {/* 프로필 */}
@@ -112,40 +125,43 @@ const EditProfilePage = () => {
       <div className="flex flex-col gap-8 mt-8 mb-8">
         <TextInput
           label="닉네임"
-          value={form.userName}
           placeholder="닉네임을 입력해주세요"
-          onChange={(e) => handleChange('userName', e.target.value)}
+          {...register('userName', { required: '이름은 필수입니다' })}
+          error={!!errors.userName}
+          errorText={errors.userName}
         />
         <TextInput
           label="0단계 한 줄 소개"
-          value={form.stage0Bio}
-          placeholder="띄어쓰기 포함 30자 이내로 입력해주세요"
-          onChange={(e) => handleChange('stage0Bio', e.target.value)}
+          placeholder="0단계 한 줄 소개를 입력해주세요"
+          {...register('stage0Bio', { required: '0단계 한 줄 소개는 필수입니다' })}
+          error={!!errors.stage0Bio}
+          errorText={errors.stage0Bio}
         />
         <TextInput
           label="1단계 한 줄 소개"
-          value={form.stage1Bio}
-          placeholder="띄어쓰기 포함 30자 이내로 입력해주세요"
-          onChange={(e) => handleChange('stage1Bio', e.target.value)}
+          placeholder="1단계 한 줄 소개를 입력해주세요"
+          {...register('stage1Bio', { required: '1단계 한 줄 소개는 필수입니다' })}
+          error={!!errors.stage1Bio}
+          errorText={errors.stage1Bio}
         />
+
         <TextInput
           label="2단계 한 줄 소개"
-          value={form.stage2Bio}
-          placeholder="띄어쓰기 포함 30자 이내로 입력해주세요"
-          onChange={(e) => handleChange('stage2Bio', e.target.value)}
+          placeholder="2단계 한 줄 소개를 입력해주세요"
+          {...register('stage2Bio', { required: '2단계 한 줄 소개는 필수입니다' })}
+          error={!!errors.stage2Bio}
+          errorText={errors.stage2Bio}
         />
+
         <TextInput
           label="3단계 한 줄 소개"
-          value={form.stage3Bio}
-          placeholder="띄어쓰기 포함 30자 이내로 입력해주세요"
-          onChange={(e) => handleChange('stage3Bio', e.target.value)}
+          placeholder="3단계 한 줄 소개를 입력해주세요"
+          {...register('stage3Bio', { required: '3단계 한 줄 소개는 필수입니다' })}
+          error={!!errors.stage3Bio}
+          errorText={errors.stage3Bio}
         />
-        <TextInput
-          label="인스타그램 ID"
-          value={form.instagramId}
-          placeholder="인스타그램 ID 를 입력해주세요"
-          onChange={(e) => handleChange('instagramId', e.target.value)}
-        />
+
+        <TextInput label="인스타그램 ID" {...register('instagramId', { required: true })} />
       </div>
       <Button
         variant={'primary'}
@@ -161,7 +177,7 @@ const EditProfilePage = () => {
         variant={'primary'}
         size={'large'}
         state={isPending ? 'disabled' : 'default'}
-        onClick={handleSubmit}
+        onClick={handleSubmit(onSubmit)}
         disabled={isPending}
         className={cn(
           'fixed bottom-2 left-4 right-4 shadow-elevation-3',
