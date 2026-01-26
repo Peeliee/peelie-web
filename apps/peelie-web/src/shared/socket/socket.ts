@@ -14,7 +14,7 @@ let socket: Socket | null = null;
 export function getSocket() {
   if (socket) return socket;
 
-  socket = io(import.meta.env.VITE_SOCKET_URL ?? 'http://localhost:4000', {
+  socket = io(import.meta.env.VITE_SOCKET_URL ?? 'http://localhost:5173', {
     transports: ['websocket'],
     autoConnect: false, // 중요
   });
