@@ -25,7 +25,7 @@ This is a pnpm workspace monorepo:
 ## Where rules live
 
 - Web rules: `apps/peelie-web/AGENTS.md` (+ `apps/peelie-web/src/AGENTS.md` for FSD)
-- RN rules: `apps/peelie-app/AGENTS.md`
+- RN rules: `apps/peelie-app/AGENTS.md` // will be add soon... TODO
 - Shared package rules: `packages/*/AGENTS.md`
 
 ## When unsure
