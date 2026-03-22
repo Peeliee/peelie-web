@@ -27,6 +27,8 @@ dist-ssr
 *storybook.log
 storybook-static
 storybook-static/
+playwright-report
+test-results
 
 # SSH keys
 key
