@@ -10,6 +10,12 @@
     "scripts": {
         "dev:web": "pnpm --filter peelie-web dev",
         "dev:app": "pnpm --filter peelie-app start",
-        "build:web": "pnpm --filter peelie-web build"
+        "build:web": "pnpm --filter peelie-web build",
+        "lint:web": "pnpm --filter peelie-web lint",
+        "lint:app": "pnpm --filter peelie-app lint",
+        "lint": "pnpm --filter peelie-web lint && pnpm --filter peelie-app lint",
+        "check:web": "pnpm --filter peelie-web lint && pnpm --filter peelie-web build",
+        "check": "pnpm --filter peelie-web lint && pnpm --filter peelie-app lint && pnpm --filter peelie-web build",
+        "storybook:web": "pnpm --filter peelie-web storybook"
     }
 }
