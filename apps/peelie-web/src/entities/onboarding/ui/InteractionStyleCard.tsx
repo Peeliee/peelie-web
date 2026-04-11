@@ -20,7 +20,7 @@ const CONFIG = {
     bubbleText: `
           나는 상황을 잘 읽고 조율하는
           <br />
-          <span class="body-1-bold leading-none">균형형</span>이야
+          <span class="text-title-subhead-3 leading-none">균형형</span>이야
         `,
     CharacterImage: BalancedCharacter,
     progress: [2, 4, 2],
@@ -33,7 +33,7 @@ const CONFIG = {
     bubbleText: `
       난 생각보다 행동이 먼저인
       <br />
-      <span class="body-1-bold leading-none">신속형</span>이야
+      <span class="text-title-subhead-3 leading-none">신속형</span>이야
     `,
     CharacterImage: FastCharacter,
     progress: [1, 3, 4],
@@ -46,7 +46,7 @@ const CONFIG = {
     bubbleText: `
       나는 상황을 잘 읽고 조율하는
       <br />
-      <span class="body-1-bold leading-none">신중형</span>이야
+      <span class="text-title-subhead-3 leading-none">신중형</span>이야
     `,
     CharacterImage: CautiousCharacter,
     progress: [4, 2, 1],
@@ -70,7 +70,7 @@ export const InteractionStyleCard = ({ type, isActive }: InteractionStyleCardPro
         <div className="relative top-50 right-40">
           <SpeechBubble
             key={`${type}-${isActive}`}
-            className="absolute bottom-28.5 left-11 z-990 body-1-regular w-56"
+            className="absolute bottom-28.5 left-11 z-990 text-body-2 w-56"
             variant={bubbleColor}
           >
             <span dangerouslySetInnerHTML={{ __html: bubbleText }} />
@@ -94,7 +94,7 @@ export const InteractionStyleCard = ({ type, isActive }: InteractionStyleCardPro
         {label}
       </Badge>
       {/* 하단 정보 */}
-      <div className="flex flex-col w-full rounded-xl gap-2 text-left detail-regular">
+      <div className="flex flex-col w-full rounded-xl gap-2 text-left text-caption">
         <div>
           <p className="mb-1">판단력</p>
           <StatusProgress currentStep={progress[0]} />

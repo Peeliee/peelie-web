@@ -110,7 +110,7 @@ const EditProfilePage = () => {
           <Button variant="primary" buttonType="outline" size="medium" onClick={handleFileSelect}>
             프로필 사진 변경
           </Button>
-          <p className="body-2-regular">20MB 이내의 이미지 파일을 업로드 해주세요.</p>
+          <p className="text-body-1">20MB 이내의 이미지 파일을 업로드 해주세요.</p>
           {/* 실제 파일 input은 숨김 */}
           <input
             ref={fileInputRef}

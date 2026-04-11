@@ -25,7 +25,7 @@ const MyPage = () => {
   return (
     <div className="flex flex-col justify-center items-center p-4">
       <div className="flex justify-center">
-        <p className="heading-4-medium">마이페이지</p>
+        <p className="text-title-subhead-3">마이페이지</p>
       </div>
       <img src={user?.profileImageUrl ?? ''} className="w-50 h-50" />
       <p>{user?.userName}</p>
@@ -40,7 +40,7 @@ const MyPage = () => {
 
       <div className="w-screen h-0.5 bg-peelie-gray-150 mt-4 mb-4" />
 
-      <p className="flex w-full justify-start heading-4-medium mb-4">나의 단계별 교류 카드</p>
+      <p className="flex w-full justify-start text-title-subhead-3 mb-4">나의 단계별 교류 카드</p>
       <CoverflowSwiper className='w-screen' onChange={setCurrent}>
         <UserInfoCard
           level={1}

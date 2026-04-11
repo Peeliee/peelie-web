@@ -54,8 +54,8 @@ export const VerticalUserCard = ({
       </div>
 
       {/* 한줄 소개 */}
-      <span className=" body-2-regular justify-start w-full pt-4">한줄소개</span>
-      {description && <div className="body-2-regular text-gray-500 text-start">{description}</div>}
+      <span className=" text-body-1 justify-start w-full pt-4">한줄소개</span>
+      {description && <div className="text-body-1 text-gray-500 text-start">{description}</div>}
     </div>
   );
 };

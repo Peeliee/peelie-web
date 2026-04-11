@@ -130,7 +130,7 @@ const UserStepInfoPage = ({ onNext, history }: UserStepInfoPageProps) => {
           onClick: goBackToSelectCategory,
         }}
       />
-      <div className="w-full heading-3-medium text-center mt-4">
+      <div className="w-full text-title-headline-1 text-center mt-4">
         <span>친구에게 공개될 {user?.userName}님의 정보가 </span>
         <br />
         <span>어떻게 보일 지 한 눈에 확인할 수 있어요</span>

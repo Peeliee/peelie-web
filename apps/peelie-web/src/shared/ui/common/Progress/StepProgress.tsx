@@ -42,7 +42,7 @@ export const StepProgress = ({ currentStep }: StepProgressProps) => {
         />
       </div>
 
-      <div className="flex justify-between mt-2 detail-regular">
+      <div className="flex justify-between mt-2 text-caption">
         {labels.map((label, i) => (
           <div key={i} className="flex flex-col items-center gap-1">
             <div

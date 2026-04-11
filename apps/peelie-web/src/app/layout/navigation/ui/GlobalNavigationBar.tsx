@@ -45,7 +45,7 @@ export const GlobalNavigationBar = () => {
                   {isActive ? item.activeIcon : item.icon}
                 </div>
                 <span
-                  className={`${isActive ? 'text-peelie-primary-600 body-2-regular' : 'text-peelie-gray-500 body-2-regular'}`}
+                  className={`${isActive ? 'text-peelie-primary-600 text-body-1' : 'text-peelie-gray-500 text-body-1'}`}
                 >
                   {item.label}
                 </span>

@@ -30,7 +30,7 @@ export const ProfileShareSection = ({ className }: ProfileShareSectionProps) => 
     <div
       className={cn('w-full p-4 bg-peelie-primary-100 shadow-elevation-3 rounded-400', className)}
     >
-      <h2 className="heading-4-medium text-peelie-gray-900 mb-4">프로필 공유하기</h2>
+      <h2 className="text-title-subhead-3 text-peelie-gray-900 mb-4">프로필 공유하기</h2>
       <div className="flex flex-row gap-4">
         {/* TODO : 친구추가 기능 연동 */}
         <QrModal url="https://naver.com" className="flex-1">

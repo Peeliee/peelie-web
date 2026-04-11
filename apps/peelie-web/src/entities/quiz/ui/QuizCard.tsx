@@ -20,7 +20,7 @@ export const QuizCard = ({
 }: QuizCardProps) => {
   return (
     <div className="w-full flex flex-col items-center">
-      <div className="text-center heading-2-medium mb-4 whitespace-pre-line">
+      <div className="text-center text-title-headline-1 mb-4 whitespace-pre-line">
         {splitIntoMultiLines(`Q. ${question}`)}
       </div>
 
@@ -37,13 +37,13 @@ export const QuizCard = ({
           }
         `}
       >
-        <span className="body-1-regular whitespace-pre-line">
+        <span className="text-body-2 whitespace-pre-line">
           {splitIntoMultiLines(options[0].text)}
         </span>
       </button>
 
       {/* VS 텍스트 */}
-      <div className="my-2 text-peelie-primary-600 heading-4-medium">VS</div>
+      <div className="my-2 text-peelie-primary-600 text-title-subhead-3">VS</div>
 
       {/* 옵션 2 */}
       <button
@@ -58,7 +58,7 @@ export const QuizCard = ({
           }
         `}
       >
-        <span className="body-1-regular whitespace-pre-line">
+        <span className="text-body-2 whitespace-pre-line">
           {splitIntoMultiLines(options[1].text)}
         </span>
       </button>

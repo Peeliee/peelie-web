@@ -24,24 +24,24 @@ interface EditModeProps {
 export const ViewMode = ({ title, subTitle, content, onClose, onEdit }: ViewModeProps) => (
   <>
     <ModalWrapper.Header className="w-full text-start mt-1">
-      <span className="detail-bold text-peelie-primary-600 text-center">
+      <span className="text-title-subhead-1 text-peelie-primary-600 text-center">
         내가 입력한 정보가
         <br />
         상대방에게는 ‘나에 관한 퀴즈’로 보여져요.
       </span>
-      <p className="heading-3-medium whitespace-pre-line text-center">{`나의 온보딩 정보를\n기반으로 생성된 정보를 확인해봐요`}</p>
+      <p className="text-title-headline-1 whitespace-pre-line text-center">{`나의 온보딩 정보를\n기반으로 생성된 정보를 확인해봐요`}</p>
     </ModalWrapper.Header>
     <div className="flex flex-col w-full text-start">
-      <span className="text-peelie-gray-600 detail-regular mb-1">제목</span>
-      <p className="body-1-bold p-2 bg-peelie-primary-50 rounded-100 mb-4">{title}</p>
+      <span className="text-peelie-gray-600 text-caption mb-1">제목</span>
+      <p className="text-title-subhead-3 p-2 bg-peelie-primary-50 rounded-100 mb-4">{title}</p>
 
-      <span className="text-peelie-gray-600 detail-regular mb-1">부제목</span>
-      <p className="body-1-regular p-2 bg-peelie-primary-50 rounded-100 mb-4">{subTitle}</p>
+      <span className="text-peelie-gray-600 text-caption mb-1">부제목</span>
+      <p className="text-body-2 p-2 bg-peelie-primary-50 rounded-100 mb-4">{subTitle}</p>
 
-      <span className="text-peelie-gray-600 detail-regular mb-1">본문</span>
+      <span className="text-peelie-gray-600 text-caption mb-1">본문</span>
       <div
         className="
-            body-1-regular 
+            text-body-2 
             p-3 
             bg-peelie-primary-50 
             rounded-100 
@@ -68,32 +68,32 @@ export const ViewMode = ({ title, subTitle, content, onClose, onEdit }: ViewMode
 export const EditMode = ({ form, setForm, onApply }: EditModeProps) => (
   <>
     <ModalWrapper.Header className="w-full text-start mt-1">
-      <span className="detail-bold text-peelie-primary-600 text-center">
+      <span className="text-title-subhead-1 text-peelie-primary-600 text-center">
         내가 입력한 정보가
         <br />
         상대방에게는 ‘나에 관한 퀴즈’로 보여져요.
       </span>
-      <p className="heading-3-medium whitespace-pre-line text-center">{`나의 온보딩 정보를\n기반으로 생성된 내용을 수정해봐요`}</p>
+      <p className="text-title-headline-1 whitespace-pre-line text-center">{`나의 온보딩 정보를\n기반으로 생성된 내용을 수정해봐요`}</p>
     </ModalWrapper.Header>
     <div className="flex flex-col w-full text-start">
-      <span className="text-peelie-gray-600 detail-regular mb-1">제목</span>
+      <span className="text-peelie-gray-600 text-caption mb-1">제목</span>
       <input
-        className="body-1-bold p-2 bg-peelie-primary-50 rounded-100 mb-4 border border-peelie-primary-500"
+        className="text-title-subhead-3 p-2 bg-peelie-primary-50 rounded-100 mb-4 border border-peelie-primary-500"
         value={form.title}
         onChange={(e) => setForm({ ...form, title: e.target.value })}
       />
 
-      <span className="text-peelie-gray-600 detail-regular mb-1">부제목</span>
+      <span className="text-peelie-gray-600 text-caption mb-1">부제목</span>
       <input
-        className="body-1-regular p-2 bg-peelie-primary-50 rounded-100 mb-4 border border-peelie-primary-500"
+        className="text-body-2 p-2 bg-peelie-primary-50 rounded-100 mb-4 border border-peelie-primary-500"
         value={form.subTitle}
         onChange={(e) => setForm({ ...form, subTitle: e.target.value })}
       />
 
-      <span className="text-peelie-gray-600 detail-regular mb-1">본문</span>
+      <span className="text-peelie-gray-600 text-caption mb-1">본문</span>
       <textarea
         className="
-            body-1-regular 
+            text-body-2 
             p-3
             bg-peelie-primary-50 
             rounded-100 

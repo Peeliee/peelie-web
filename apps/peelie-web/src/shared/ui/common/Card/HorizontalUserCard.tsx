@@ -128,14 +128,14 @@ const UserCardFlipped = ({
         <button
           onClick={onClick}
           className={cn(
-            'px-5 py-2 rounded-full bg-[#FFC94A] body-2-regular',
+            'px-5 py-2 rounded-full bg-[#FFC94A] text-body-1',
             'hover:bg-[#ffdd85] transition',
           )}
         >
           친구 프로필 보기
         </button>
 
-        <button className="body-2-regular px-5 py-2" onClick={onClickQuestion}>바로 교류 퀴즈 풀기</button>
+        <button className="text-body-1 px-5 py-2" onClick={onClickQuestion}>바로 교류 퀴즈 풀기</button>
       </div>
     </div>
   );

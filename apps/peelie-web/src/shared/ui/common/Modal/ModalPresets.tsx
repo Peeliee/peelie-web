@@ -27,10 +27,10 @@ export const QrModal = ({
       <ModalWrapper.Content className="bg-peelie-primary-100 px-4 pt-4 w-66 z-999">
         <ModalWrapper.Header>
           <ModalWrapper.Title className="text-peelie-white">
-            <span className="heading-1-medium text-peelie-gray-900">나의 QR 공유</span>
+            <span className="text-title-headline-2 text-peelie-gray-900">나의 QR 공유</span>
           </ModalWrapper.Title>
           <ModalWrapper.Description className="text-peelie-gray-150">
-            <span className="body-1-regular text-peelie-gray-600">
+            <span className="text-body-2 text-peelie-gray-600">
               QR을 스캔하면 나의 프로필이
               <br /> 상대방에게 제공됩니다.
             </span>
@@ -79,10 +79,10 @@ export const QuizModal = ({
       >
         <ModalWrapper.Header>
           <ModalWrapper.Title className="text-peelie-white">
-            <span className="heading-1-medium">{title}</span>
+            <span className="text-title-headline-2">{title}</span>
           </ModalWrapper.Title>
 
-          <ModalWrapper.Description className="text-peelie-gray-150 body-1-regular text-center">
+          <ModalWrapper.Description className="text-peelie-gray-150 text-body-2 text-center">
             {description}
           </ModalWrapper.Description>
         </ModalWrapper.Header>
@@ -193,14 +193,14 @@ export const UnlockModal = ({
         )}
       >
         {config.showIcon && (
-          <div aria-hidden className="confetti-placeholder heading-1-medium">
+          <div aria-hidden className="confetti-placeholder text-title-headline-2">
             🎉
           </div>
         )}
 
         {stage === 1 && <ModalWrapper.CloseButton onClose={onClose} />}
 
-        <div className="heading-1-medium text-peelie-white whitespace-pre-line">
+        <div className="text-title-headline-2 text-peelie-white whitespace-pre-line">
           {config.title(name)}
         </div>
 
@@ -224,7 +224,7 @@ export const UnlockModal = ({
         )}
 
         {config.autoClose && (
-          <p className="text-peelie-gray-150 body-2-regular text-center mt-2">
+          <p className="text-peelie-gray-150 text-body-1 text-center mt-2">
             {counter}초 뒤 자동으로 사라져요
           </p>
         )}

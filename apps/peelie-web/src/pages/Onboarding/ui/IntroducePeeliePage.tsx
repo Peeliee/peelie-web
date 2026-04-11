@@ -51,7 +51,7 @@ const IntroducePeeliePage = ({ onNext }: IntroducePeeliePageProps) => {
         <AnimatePresence mode="wait">
           <motion.p
             key={`main-${index}`}
-            className="heading-3-medium mt-10 ml-4 whitespace-pre-line"
+            className="text-title-headline-1 mt-10 ml-4 whitespace-pre-line"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -64,7 +64,7 @@ const IntroducePeeliePage = ({ onNext }: IntroducePeeliePageProps) => {
         <AnimatePresence mode="wait">
           <motion.p
             key={`sub-${index}`}
-            className="body-2-regular text-peelie-gray-500 mt-3 ml-4 whitespace-pre-line"
+            className="text-body-1 text-peelie-gray-500 mt-3 ml-4 whitespace-pre-line"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

@@ -35,7 +35,7 @@ export const FriendBioBubble = React.memo(
         key={motionKey}
         variant={variant}
         tailPosition={tailPosition}
-        className={cn('absolute z-990 body-1-regular', className)}
+        className={cn('absolute z-990 text-body-2', className)}
       >
         <TypedText
           htmlString={bioToHTML(bio)}

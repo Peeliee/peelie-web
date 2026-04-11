@@ -62,7 +62,7 @@ export const QuizForm = ({ quizList, onFinish, className }: QuizFormProps) => {
 
   return (
     <div className={cn('flex flex-col', className)}>
-      <div className="heading-1-medium text-center text-peelie-gray-600 mb-2">
+      <div className="text-title-headline-2 text-center text-peelie-gray-600 mb-2">
         <span className="text-peelie-primary-600">{currentIndex + 1}</span>/{quizList.length}
       </div>
 

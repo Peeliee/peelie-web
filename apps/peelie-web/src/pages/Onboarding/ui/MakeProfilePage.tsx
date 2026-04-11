@@ -66,8 +66,8 @@ const MakeProfilePage = ({ onNext }: MakeProfilePageProps) => {
     <div className="h-full px-5">
       {/* 상단 타이틀 */}
       <div className="text-center">
-        <h2 className="heading-1-medium mb-2">나를 소개해볼까요?</h2>
-        <p className="body-1-regular text-peelie-gray-500 mt-2">
+        <h2 className="text-title-headline-2 mb-2">나를 소개해볼까요?</h2>
+        <p className="text-body-2 text-peelie-gray-500 mt-2">
           인스타그램을 연결하고,
           <br />
           이름과 사진으로 프로필을 완성하세요.
@@ -84,7 +84,7 @@ const MakeProfilePage = ({ onNext }: MakeProfilePageProps) => {
           <Button variant="primary" buttonType="outline" size="medium" onClick={handleFileSelect}>
             프로필 사진 업로드
           </Button>
-          <p className="body-2-regular text-peelie-gray-400">
+          <p className="text-body-1 text-peelie-gray-400">
             10MB 이내의 이미지 파일을 업로드해주세요.
           </p>
 

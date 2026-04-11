@@ -51,19 +51,19 @@ export const FriendInfoBottomSheet = ({
       >
         {/* 헤더 */}
         <div className="flex flex-row h-11.5 items-center justify-center">
-          <span className="heading-4-medium whitespace-pre-line w-full">Lv {level} 교류 정보</span>
+          <span className="text-title-subhead-3 whitespace-pre-line w-full">Lv {level} 교류 정보</span>
           <ModalWrapper.CloseButton onClose={() => onOpenChange(false)} />
         </div>
 
         {/* 내용 */}
         <div className="pb-6 overflow-y-auto flex-1 pr-1">
-          <p className="heading-3-medium text-peelie-black mb-6">{title}</p>
+          <p className="text-title-headline-1 text-peelie-black mb-6">{title}</p>
 
-          <p className="heading-4-medium text-peelie-gray-800 whitespace-pre-line mb-6">
+          <p className="text-title-subhead-3 text-peelie-gray-800 whitespace-pre-line mb-6">
             {subTitle}
           </p>
 
-          <p className="body-1-regular text-peelie-black whitespace-pre-line">
+          <p className="text-body-2 text-peelie-black whitespace-pre-line">
             {splitSentences(content)}
           </p>
         </div>
