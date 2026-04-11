@@ -294,6 +294,7 @@ body {
   --radius-xsmall: 4px;
   --radius-small: 8px;
   --radius-medium: 16px;
+  --radius-large: 24px;
   --radius-full: 999px;
 }
 
