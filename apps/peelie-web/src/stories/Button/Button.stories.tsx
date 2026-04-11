@@ -9,11 +9,12 @@ const meta = {
     docs: {
       description: {
         component: `
-btn/primary 컴포넌트 (Figma node-id=4233-19570)
+btn 컴포넌트 (Figma node-id=4233-20285)
 
+- **color**: 색상 계열 (\`primary\`=하늘, \`secondary\`=보라, \`tertiary\`=회색)
 - **variant**: 스타일 (\`default\`=filled, \`line\`=outlined)
 - **size**: 높이 (\`xs\`=h24, \`sm\`=h32, \`md\`=h48, \`lg\`=h56)
-- **radius**: 라운딩 (\`none\`=r0, \`sm\`=r8, \`md\`=r16, \`full\`=r100)
+- **radius**: 라운딩 (\`none\`=r0, \`xsmall\`=4, \`small\`=r8, \`medium\`=r16, \`full\`=r100)
 - **iconLeft / iconRight**: 아이콘 슬롯
 - **disabled**: 비활성화
 - pressed 상태는 CSS \`:active\`로 자동 처리
@@ -22,6 +23,11 @@ btn/primary 컴포넌트 (Figma node-id=4233-19570)
     },
   },
   argTypes: {
+    color: {
+      control: 'select',
+      options: ['primary', 'secondary', 'tertiary'],
+      description: 'Figma btn/primary, btn/secondary, btn/tertiary',
+    },
     variant: {
       control: 'select',
       options: ['default', 'line'],
@@ -34,8 +40,8 @@ btn/primary 컴포넌트 (Figma node-id=4233-19570)
     },
     radius: {
       control: 'select',
-      options: ['none', 'sm', 'md', 'full'],
-      description: 'Figma radius (none=r0, sm=r8, md=r16, full=r100)',
+      options: ['none', 'xsmall', 'small', 'medium', 'full'],
+      description: 'Figma radius (none=r0, xsmall=4, small=r8, medium=r16, full=r100)',
     },
     disabled: {
       control: 'boolean',
@@ -47,9 +53,10 @@ btn/primary 컴포넌트 (Figma node-id=4233-19570)
     },
   },
   args: {
+    color: 'primary',
     variant: 'default',
     size: 'md',
-    radius: 'sm',
+    radius: 'small',
     disabled: false,
     children: '버튼 레이블',
   },
@@ -61,17 +68,34 @@ type Story = StoryObj<typeof meta>;
 /** 전체 props 컨트롤 가능한 기본 스토리 */
 export const Playground: Story = {};
 
-/** default(filled) / line(outlined) 비교 — default, disabled 상태 */
-export const Variants: Story = {
+/** Primary / Secondary / Tertiary 색상 비교 — default + line */
+export const Colors: Story = {
   render: () => (
-    <div className="flex flex-col gap-4">
-      <div className="flex items-center gap-4">
-        <Button variant="default">Default</Button>
-        <Button variant="default" disabled>Default Disabled</Button>
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-2">
+        <p className="text-title-subhead-2">default (filled)</p>
+        <div className="flex items-center gap-4">
+          <Button color="primary">Primary</Button>
+          <Button color="secondary">Secondary</Button>
+          <Button color="tertiary">Tertiary</Button>
+        </div>
       </div>
-      <div className="flex items-center gap-4">
-        <Button variant="line">Line</Button>
-        <Button variant="line" disabled>Line Disabled</Button>
+      <div className="flex flex-col gap-2">
+        <p className="text-title-subhead-2">line (outlined)</p>
+        <div className="flex items-center gap-4">
+          <Button color="primary" variant="line">Primary</Button>
+          <Button color="secondary" variant="line">Secondary</Button>
+          <Button color="tertiary" variant="line">Tertiary</Button>
+        </div>
+      </div>
+      <div className="flex flex-col gap-2">
+        <p className="text-title-subhead-2">disabled</p>
+        <div className="flex items-center gap-4">
+          <Button color="primary" disabled>Primary</Button>
+          <Button color="secondary" disabled>Secondary</Button>
+          <Button color="tertiary" disabled>Tertiary</Button>
+          <Button color="primary" variant="line" disabled>Line</Button>
+        </div>
       </div>
     </div>
   ),
@@ -89,14 +113,15 @@ export const Sizes: Story = {
   ),
 };
 
-/** none / sm / md / full radius 비교 */
+/** none / xsmall / small / medium / full radius 비교 */
 export const Radiuses: Story = {
   render: () => (
     <div className="flex items-center gap-4">
-      <Button radius="none">None (r0)</Button>
-      <Button radius="sm">SM (r8)</Button>
-      <Button radius="md">MD (r16)</Button>
-      <Button radius="full">Full (r100)</Button>
+      <Button radius="none">None</Button>
+      <Button radius="xsmall">XSmall</Button>
+      <Button radius="small">Small</Button>
+      <Button radius="medium">Medium</Button>
+      <Button radius="full">Full</Button>
     </div>
   ),
 };
@@ -112,13 +137,17 @@ export const WithIcons: Story = {
     return (
       <div className="flex flex-col gap-4">
         <div className="flex items-center gap-4">
-          <Button iconLeft={icon}>Icon Left</Button>
+          <Button iconLeft={icon}>Primary + Icon</Button>
+          <Button color="secondary" iconLeft={icon}>Secondary + Icon</Button>
+          <Button color="tertiary" iconLeft={icon}>Tertiary + Icon</Button>
+        </div>
+        <div className="flex items-center gap-4">
           <Button iconRight={icon}>Icon Right</Button>
           <Button iconLeft={icon} iconRight={icon}>Both Icons</Button>
         </div>
         <div className="flex items-center gap-4">
           <Button variant="line" iconLeft={icon}>Line + Icon</Button>
-          <Button variant="line" iconRight={icon}>Line + Icon</Button>
+          <Button color="secondary" variant="line" iconLeft={icon}>Line + Icon</Button>
         </div>
       </div>
     );
