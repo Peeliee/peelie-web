@@ -180,7 +180,7 @@ const EditProfilePage = () => {
         onClick={handleSubmit(onSubmit)}
         disabled={isPending}
         className={cn(
-          'fixed bottom-2 left-4 right-4 shadow-elevation-3',
+          'fixed bottom-2 left-4 right-4 shadow-card-01',
           isPending && 'cursor-not-allowed',
         )}
       >

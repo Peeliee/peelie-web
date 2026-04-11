@@ -121,7 +121,7 @@ const MakeProfilePage = ({ onNext }: MakeProfilePageProps) => {
         onClick={handleSubmit}
         disabled={isPending || !form.userName.length || !form.instagramId.length}
         className={cn(
-          'fixed bottom-6 inset-x-4 shadow-elevation-3',
+          'fixed bottom-6 inset-x-4 shadow-card-01',
           isPending && 'cursor-not-allowed',
         )}
       >

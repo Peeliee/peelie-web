@@ -61,7 +61,7 @@ export const InteractionStyleCard = ({ type, isActive }: InteractionStyleCardPro
   return (
     <div
       className={cn(
-        'relative flex flex-col items-center justify-start rounded-2xl p-4 w-[278px] shadow-elevation-3',
+        'relative flex flex-col items-center justify-start rounded-2xl p-4 w-[278px] shadow-card-01',
         bg,
       )}
     >

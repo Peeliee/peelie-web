@@ -35,7 +35,7 @@ export const FlipFriendCard = ({ friend, isFlipped, onFlip, onClick }: FlipFrien
         {/* 앞면 */}
         <div
           className={cn(
-            'w-full rounded-3xl p-6 bg-[#FFF2C9] shadow-elevation-3 flex flex-col',
+            'w-full rounded-3xl p-6 bg-[#FFF2C9] shadow-card-01 flex flex-col',
             'text-gray-800',
           )}
         >
