@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { getSocket } from '@/shared/socket/socket';
 
 import { QueryProvider } from './provider/QueryProvider';
+import { ThemeProvider } from './provider/ThemeProvider';
 import { UserProvider } from './provider/userContext';
 
 export function useDevSocketConnect() {
@@ -27,13 +28,15 @@ const App = () => {
   }, []);
   // useDevSocketConnect();
   return (
-    <main>
-      <QueryProvider>
-        <UserProvider>
-          <Outlet />
-        </UserProvider>
-      </QueryProvider>
-    </main>
+    <ThemeProvider>
+      <main>
+        <QueryProvider>
+          <UserProvider>
+            <Outlet />
+          </UserProvider>
+        </QueryProvider>
+      </main>
+    </ThemeProvider>
   );
 };
 

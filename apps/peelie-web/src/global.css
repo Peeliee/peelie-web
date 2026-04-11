@@ -44,6 +44,32 @@
   --sidebar-accent-foreground: oklch(0.21 0.034 264.665);
   --sidebar-border: oklch(0.928 0.006 264.531);
   --sidebar-ring: oklch(0.707 0.022 261.325);
+
+  /* --------- Primitive Color Tokens (Light) --------- */
+  --gray-01: #FFFFFF;
+  --gray-05: #FBFBFB;
+  --gray-10: #F7F7F7;
+  --gray-19: #F5F4F3;
+  --gray-30: #ECECEC;
+  --gray-39: #C1C1C1;
+  --gray-50: #8B8B8B;
+  --gray-59: #555555;
+  --gray-70: #333333;
+  --gray-79: #242424;
+  --gray-90: #171717;
+  --gray-99: #000000;
+  --alpha-05: rgba(176, 179, 188, 0.1);
+  --alpha-10: rgba(176, 179, 188, 0.3);
+  --alpha-15: rgba(176, 179, 188, 0.5);
+  --alpha-20: rgba(176, 179, 188, 0.7);
+  --red-50: #FF5449;
+  --blue-50: #0073CB;
+  --brand-30: #E0E9FF;
+  --brand-50: #AFE8FF;
+  --brand-100: #9ED1E6;
+  --brand-sub-30: #F3E5FE;
+  --brand-sub-50: #D7ACFD;
+  --brand-sub-100: #C29BE4;
 }
 
 body {
@@ -86,6 +112,32 @@ body {
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  /* --------- Primitive Color Tokens --------- */
+  --color-gray-01: var(--gray-01);
+  --color-gray-05: var(--gray-05);
+  --color-gray-10: var(--gray-10);
+  --color-gray-19: var(--gray-19);
+  --color-gray-30: var(--gray-30);
+  --color-gray-39: var(--gray-39);
+  --color-gray-50: var(--gray-50);
+  --color-gray-59: var(--gray-59);
+  --color-gray-70: var(--gray-70);
+  --color-gray-79: var(--gray-79);
+  --color-gray-90: var(--gray-90);
+  --color-gray-99: var(--gray-99);
+  --color-alpha-05: var(--alpha-05);
+  --color-alpha-10: var(--alpha-10);
+  --color-alpha-15: var(--alpha-15);
+  --color-alpha-20: var(--alpha-20);
+  --color-red-50: var(--red-50);
+  --color-blue-50: var(--blue-50);
+  --color-brand-30: var(--brand-30);
+  --color-brand-50: var(--brand-50);
+  --color-brand-100: var(--brand-100);
+  --color-brand-sub-30: var(--brand-sub-30);
+  --color-brand-sub-50: var(--brand-sub-50);
+  --color-brand-sub-100: var(--brand-sub-100);
 }
 
 .dark {
@@ -120,6 +172,27 @@ body {
   --sidebar-accent-foreground: oklch(0.985 0.002 247.839);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.551 0.027 264.364);
+
+  /* --------- Primitive Color Tokens (Dark) --------- */
+  --gray-01: #000000;
+  --gray-05: #121212;
+  --gray-10: #171717;
+  --gray-19: #1F1F1F;
+  --gray-30: #242424;
+  --gray-39: #333333;
+  --gray-50: #555555;
+  --gray-59: #8B8B8B;
+  --gray-70: #C1C1C1;
+  --gray-79: #ECECEC;
+  --gray-90: #F5F5F5;
+  --gray-99: #FFFFFF;
+  --alpha-05: rgba(255, 255, 255, 0.1);
+  --alpha-10: rgba(255, 255, 255, 0.3);
+  --alpha-15: rgba(255, 255, 255, 0.5);
+  --alpha-20: rgba(255, 255, 255, 0.7);
+  --brand-30: #1A2A33;
+  --brand-100: #9ED0E6;
+  --brand-sub-30: #2A1F33;
 }
 
 @layer base {
@@ -132,64 +205,6 @@ body {
 }
 
 @theme {
-  /* --------- Color Tokens --------- */
-
-  /* Primary */
-  --color-peelie-primary-50: #fffbec;
-  --color-peelie-primary-100: #fff5d3;
-  --color-peelie-primary-200: #ffe8a5;
-  --color-peelie-primary-300: #ffd66d;
-  --color-peelie-primary-400: #ffb832;
-  --color-peelie-primary-500: #ffa00a;
-  --color-peelie-primary-600: #ff8800;
-  --color-peelie-primary-700: #cc6402;
-  --color-peelie-primary-800: #a14d08;
-  --color-peelie-primary-900: #82410c;
-
-  /* Secondary */
-  --color-peelie-secondary-100: #fff4cc;
-  --color-peelie-secondary-200: #ffb200;
-  --color-peelie-secondary-300: #bf7e00;
-
-  /* Gray */
-  --color-peelie-gray-000: #ffffff;
-  --color-peelie-gray-050: #fafafa;
-  --color-peelie-gray-100: #f6f6f6;
-  --color-peelie-gray-150: #e5e5e5;
-  --color-peelie-gray-200: #cccccc;
-  --color-peelie-gray-400: #c6c6c6;
-  --color-peelie-gray-500: #b1b1b1;
-  --color-peelie-gray-600: #888888;
-  --color-peelie-gray-700: #666666;
-  --color-peelie-gray-800: #4c4c4c;
-  --color-peelie-gray-900: #333333;
-  --color-peelie-gray-950: #191919;
-
-  /* Error */
-  --color-peelie-error-100: #f5bcbd;
-  --color-peelie-error-200: #d54049;
-  --color-peelie-error-300: #a4412c;
-
-  /* ===========================
-     Positive Colors
-  ============================ */
-  --color-peelie-positive-50: #efffee;
-  --color-peelie-positive-100: #d8ffd7;
-  --color-peelie-positive-600: #00c400;
-  --color-peelie-positive-700: #049105;
-
-  /* ===========================
-     Warning Colors
-  ============================ */
-  --color-peelie-warning-50: #fff1f1;
-  --color-peelie-warning-100: #ffdfdf;
-  --color-peelie-warning-600: #ef2b2a;
-  --color-peelie-warning-700: #c70e0f;
-
-  /* Etc */
-  --color-peelie-black: #000000;
-  --color-peelie-white: #ffffff;
-
   /* --------- Font Tokens --------- */
 
   /* Font Weights */
@@ -391,7 +406,7 @@ body {
 
 html,
 body {
-  @apply bg-peelie-gray-050;
+  @apply bg-gray-05;
 }
 
 /* html, body, #root {
