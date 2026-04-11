@@ -2,7 +2,6 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import PATH from '@/shared/constants/path';
 import App from '../App';
 import SsgoiLayout from '../layout/SsgoiLayout';
-import NavBarLayout from '../layout/NavBarLayout';
 import HomePage from '@/pages/Home/HomePage';
 import TestPage from '@/pages/Test/TestPage';
 import AiChatPage from '@/pages/AiChat/AiChatPage';
@@ -17,14 +16,9 @@ export default function AppRouter() {
         {
           element: <SsgoiLayout />,
           children: [
-            {
-              element: <NavBarLayout />,
-              children: [
-                { index: true, element: <HomePage /> },
-                { path: 'ai-chat', element: <AiChatPage /> },
-                { path: 'my', element: <MyPage /> },
-              ],
-            },
+            { index: true, element: <HomePage /> },
+            { path: 'ai-chat', element: <AiChatPage /> },
+            { path: 'my', element: <MyPage /> },
             { path: 'test', element: <TestPage /> },
           ],
         },
