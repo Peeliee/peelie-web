@@ -28,7 +28,7 @@ export const ProfileShareSection = ({ className }: ProfileShareSectionProps) => 
 
   return (
     <div
-      className={cn('w-full p-4 bg-peelie-primary-100 shadow-card-01 rounded-400', className)}
+      className={cn('w-full p-4 bg-peelie-primary-100 shadow-card-01 rounded-m', className)}
     >
       <h2 className="text-title-subhead-3 text-peelie-gray-900 mb-4">프로필 공유하기</h2>
       <div className="flex flex-row gap-4">

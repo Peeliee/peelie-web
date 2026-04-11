@@ -34,7 +34,7 @@ export const VerticalUserCard = ({
     <div
       onClick={onClick}
       className={cn(
-        'flex flex-col items-center rounded-400 border p-4 bg-peelie-gray-000',
+        'flex flex-col items-center rounded-m border p-4 bg-peelie-gray-000',
         className,
       )}
     >

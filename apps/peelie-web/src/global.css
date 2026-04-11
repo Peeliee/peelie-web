@@ -70,6 +70,26 @@
   --brand-sub-30: #f3e5fe;
   --brand-sub-50: #d7acfd;
   --brand-sub-100: #c29be4;
+
+  /* --------- Semantic Color Tokens --------- */
+  /* background */
+  --bg-main: var(--gray-01);
+  --bg-sub: var(--gray-10);
+  --bg-point: var(--brand-50);
+  /* text */
+  --text-main: var(--gray-99);
+  --text-sub: var(--gray-59);
+  --text-disabled: var(--gray-39);
+  /* border */
+  --border-main: var(--alpha-15);
+  /* status */
+  --status-warning: var(--red-50);
+  --status-success: #00CD3C;
+  /* brand */
+  --brand-main: var(--brand-50);
+  --brand-main-pressed: var(--brand-100);
+  --brand-sub-main: var(--brand-sub-50);
+  --brand-sub-pressed: var(--brand-sub-100);
 }
 
 body {
@@ -138,6 +158,21 @@ body {
   --color-brand-sub-30: var(--brand-sub-30);
   --color-brand-sub-50: var(--brand-sub-50);
   --color-brand-sub-100: var(--brand-sub-100);
+
+  /* --------- Semantic Color Tokens --------- */
+  --color-bg-main: var(--bg-main);
+  --color-bg-sub: var(--bg-sub);
+  --color-bg-point: var(--bg-point);
+  --color-text-main: var(--text-main);
+  --color-text-sub: var(--text-sub);
+  --color-text-disabled: var(--text-disabled);
+  --color-border-main: var(--border-main);
+  --color-status-warning: var(--status-warning);
+  --color-status-success: var(--status-success);
+  --color-brand-main: var(--brand-main);
+  --color-brand-main-pressed: var(--brand-main-pressed);
+  --color-brand-sub-main: var(--brand-sub-main);
+  --color-brand-sub-pressed: var(--brand-sub-pressed);
 }
 
 .dark {
@@ -255,11 +290,10 @@ body {
   --shadow-profile: 0px 0px 1px 0px rgba(0, 0, 0, 0.25);
 
   /* --------- Radius Tokens --------- */
-  --radius-000: 0px;
-  --radius-100: 3px;
-  --radius-200: 5px;
-  --radius-300: 7px;
-  --radius-400: 12px;
+  --radius-xs: 4px;
+  --radius-s: 8px;
+  --radius-m: 16px;
+  --radius-full: 999px;
 }
 
 @layer components {

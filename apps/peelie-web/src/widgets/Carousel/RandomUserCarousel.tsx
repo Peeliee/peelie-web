@@ -39,8 +39,8 @@ export const RandomUserCarousel = ({ friendList, isLoading, isError }: RandomUse
       <div className="flex w-full justify-center mt-5">
         <EmptyCard className="absolute left-1/2 -translate-x-1/2 top-15 z-0" />
 
-        <div className="relative flex flex-col w-65 h-98.5 bg-[#F1F1F1] p-4 rounded-400 z-10">
-          <div className="flex flex-col w-full h-full mb-5 bg-[#FFF] rounded-400 text-peelie-gray-500 items-center justify-center z-10 relative">
+        <div className="relative flex flex-col w-65 h-98.5 bg-[#F1F1F1] p-4 rounded-m z-10">
+          <div className="flex flex-col w-full h-full mb-5 bg-[#FFF] rounded-m text-peelie-gray-500 items-center justify-center z-10 relative">
             <p className="z-30">추천할 친구가 없어요</p>
             <p className="z-30">정보가 궁금한 친구를 추가해봐요</p>
             <CharacterShadow className="absolute bottom-16 z-20" />

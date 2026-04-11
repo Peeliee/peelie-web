@@ -73,7 +73,7 @@ export const QuizModal = ({
     <ModalWrapper open={open} onOpenChange={onClose}>
       <ModalWrapper.Content
         className={cn(
-          'bg-linear-to-t from-peelie-primary-600 to-peelie-secondary-200 p-4 gap-4 rounded-400 z-9999',
+          'bg-linear-to-t from-peelie-primary-600 to-peelie-secondary-200 p-4 gap-4 rounded-m z-9999',
           className,
         )}
       >
@@ -87,7 +87,7 @@ export const QuizModal = ({
           </ModalWrapper.Description>
         </ModalWrapper.Header>
 
-        <div className="flex w-full aspect-square items-center justify-center rounded-400 bg-white overflow-hidden">
+        <div className="flex w-full aspect-square items-center justify-center rounded-m bg-white overflow-hidden">
           <MockImg />
         </div>
 
@@ -188,7 +188,7 @@ export const UnlockModal = ({
 
       <ModalWrapper.Content
         className={cn(
-          'bg-linear-to-t from-peelie-primary-600 to-peelie-secondary-200 p-4 gap-4 rounded-400',
+          'bg-linear-to-t from-peelie-primary-600 to-peelie-secondary-200 p-4 gap-4 rounded-m',
           className,
         )}
       >
@@ -205,7 +205,7 @@ export const UnlockModal = ({
         </div>
 
         {stage !== 3 && (
-          <div className="flex w-full aspect-square items-center justify-center rounded-400 bg-white overflow-hidden">
+          <div className="flex w-full aspect-square items-center justify-center rounded-m bg-white overflow-hidden">
             <MockImg />
           </div>
         )}

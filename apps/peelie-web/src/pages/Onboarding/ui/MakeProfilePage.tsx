@@ -76,7 +76,7 @@ const MakeProfilePage = ({ onNext }: MakeProfilePageProps) => {
 
       {/* 프로필 영역 */}
       <div className="flex flex-row justify-between mt-16">
-        <div className={cn('w-25 h-25 overflow-hidden rounded-200 bg-peelie-gray-100')}>
+        <div className={cn('w-25 h-25 overflow-hidden rounded-s bg-peelie-gray-100')}>
           {preview && <img src={preview} alt="프로필" className="w-full h-full object-cover" />}
         </div>
 

@@ -33,10 +33,10 @@ export const ViewMode = ({ title, subTitle, content, onClose, onEdit }: ViewMode
     </ModalWrapper.Header>
     <div className="flex flex-col w-full text-start">
       <span className="text-peelie-gray-600 text-caption mb-1">제목</span>
-      <p className="text-title-subhead-3 p-2 bg-peelie-primary-50 rounded-100 mb-4">{title}</p>
+      <p className="text-title-subhead-3 p-2 bg-peelie-primary-50 rounded-xs mb-4">{title}</p>
 
       <span className="text-peelie-gray-600 text-caption mb-1">부제목</span>
-      <p className="text-body-2 p-2 bg-peelie-primary-50 rounded-100 mb-4">{subTitle}</p>
+      <p className="text-body-2 p-2 bg-peelie-primary-50 rounded-xs mb-4">{subTitle}</p>
 
       <span className="text-peelie-gray-600 text-caption mb-1">본문</span>
       <div
@@ -44,7 +44,7 @@ export const ViewMode = ({ title, subTitle, content, onClose, onEdit }: ViewMode
             text-body-2 
             p-3 
             bg-peelie-primary-50 
-            rounded-100 
+            rounded-xs 
             border border-peelie-primary-100
             h-[140px] 
             overflow-y-auto
@@ -78,14 +78,14 @@ export const EditMode = ({ form, setForm, onApply }: EditModeProps) => (
     <div className="flex flex-col w-full text-start">
       <span className="text-peelie-gray-600 text-caption mb-1">제목</span>
       <input
-        className="text-title-subhead-3 p-2 bg-peelie-primary-50 rounded-100 mb-4 border border-peelie-primary-500"
+        className="text-title-subhead-3 p-2 bg-peelie-primary-50 rounded-xs mb-4 border border-peelie-primary-500"
         value={form.title}
         onChange={(e) => setForm({ ...form, title: e.target.value })}
       />
 
       <span className="text-peelie-gray-600 text-caption mb-1">부제목</span>
       <input
-        className="text-body-2 p-2 bg-peelie-primary-50 rounded-100 mb-4 border border-peelie-primary-500"
+        className="text-body-2 p-2 bg-peelie-primary-50 rounded-xs mb-4 border border-peelie-primary-500"
         value={form.subTitle}
         onChange={(e) => setForm({ ...form, subTitle: e.target.value })}
       />
@@ -96,7 +96,7 @@ export const EditMode = ({ form, setForm, onApply }: EditModeProps) => (
             text-body-2 
             p-3
             bg-peelie-primary-50 
-            rounded-100 
+            rounded-xs 
             border border-peelie-primary-500
             resize-none
             h-[130px]

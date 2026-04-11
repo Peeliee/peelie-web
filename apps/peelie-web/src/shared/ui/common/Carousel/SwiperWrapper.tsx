@@ -201,11 +201,11 @@ export const EffectCardWrapper = ({
             onChange?.(swiper.activeIndex);
             setActiveIndex(swiper.activeIndex);
           }}
-          className="mySwiper overflow-visible! rounded-400"
+          className="mySwiper overflow-visible! rounded-m"
         >
           {slides.map((child, i) => {
             return (
-              <SwiperSlide key={i} className={cn('overflow-hidden rounded-400')}>
+              <SwiperSlide key={i} className={cn('overflow-hidden rounded-m')}>
                 {child}
               </SwiperSlide>
             );

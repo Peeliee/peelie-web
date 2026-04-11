@@ -17,7 +17,7 @@ export function StatusProgress({ currentStep, className }: StatusProgressProps) 
   return (
     <div
       className={cn(
-        'relative w-full h-3 bg-peelie-gray-200 rounded-400 overflow-hidden',
+        'relative w-full h-3 bg-peelie-gray-200 rounded-m overflow-hidden',
         className,
       )}
     >

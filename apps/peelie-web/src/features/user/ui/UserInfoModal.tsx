@@ -38,7 +38,7 @@ export const UserInfoModal = ({
 
   return (
     <ModalWrapper open={open} onOpenChange={onOpenChange}>
-      <ModalWrapper.Content className="w-76.5 p-4 bg-peelie-white rounded-300">
+      <ModalWrapper.Content className="w-76.5 p-4 bg-peelie-white rounded-s">
         {/* <ModalWrapper.CloseButton onClose={() => onOpenChange(false)} /> */}
 
         {!isEditMode ? (

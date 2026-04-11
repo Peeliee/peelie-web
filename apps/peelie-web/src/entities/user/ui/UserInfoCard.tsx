@@ -15,7 +15,7 @@ export const UserInfoCard = ({ level, title, isActive, onClick, className }: Use
   return (
     <div
       className={cn(
-        'relative w-58 h-79 rounded-400 p-4 bg-linear-to-t from-peelie-primary-600 to-peelie-secondary-200',
+        'relative w-58 h-79 rounded-m p-4 bg-linear-to-t from-peelie-primary-600 to-peelie-secondary-200',
         className,
       )}
       onClick={onClick}

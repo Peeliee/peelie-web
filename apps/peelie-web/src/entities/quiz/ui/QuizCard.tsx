@@ -28,7 +28,7 @@ export const QuizCard = ({
       <button
         onClick={() => onSelectOption(options[0].optionId)}
         className={`
-          w-full p-4 text-center border rounded-300 
+          w-full p-4 text-center border rounded-s 
           transition-all
           ${
             selectedOptionId === options[0].optionId
@@ -49,7 +49,7 @@ export const QuizCard = ({
       <button
         onClick={() => onSelectOption(options[1].optionId)}
         className={`
-            w-full p-4 text-center border rounded-300 
+            w-full p-4 text-center border rounded-s 
           transition-all
           ${
             selectedOptionId === options[1].optionId

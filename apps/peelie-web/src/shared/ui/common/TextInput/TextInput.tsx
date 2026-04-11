@@ -26,7 +26,7 @@ export function TextInput({
         placeholder={placeholder}
         data-slot="input"
         className={cn(
-          'w-full h-10 px-3 rounded-300 outline-none transition-all text-body-2',
+          'w-full h-10 px-3 rounded-s outline-none transition-all text-body-2',
           // 기본
           'bg-peelie-neutral-5 border border-peelie-neutral-30 text-peelie-black placeholder:text-peelie-gray-400',
           // focus

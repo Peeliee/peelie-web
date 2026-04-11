@@ -135,8 +135,8 @@ const UserStepInfoPage = ({ onNext, history }: UserStepInfoPageProps) => {
         <br />
         <span>어떻게 보일 지 한 눈에 확인할 수 있어요</span>
         <div className='mt-2'>
-          <p className='w-full bg-peelie-primary-300 p-3 rounded-200 mb-2'>내가 즐겨하는 취미는 무엇인지</p>
-          <p className='w-full bg-peelie-primary-300 p-3 rounded-200'>내가 즐겨하는 취미는 무엇인지???</p>
+          <p className='w-full bg-peelie-primary-300 p-3 rounded-s mb-2'>내가 즐겨하는 취미는 무엇인지</p>
+          <p className='w-full bg-peelie-primary-300 p-3 rounded-s'>내가 즐겨하는 취미는 무엇인지???</p>
         </div>
       </div>
       <UserInfoModal
