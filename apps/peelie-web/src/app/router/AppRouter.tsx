@@ -1,16 +1,5 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import LoginPage from '@/pages/Login/LoginPage';
-import OnboardingPage from '@/pages/Onboarding/OnboardingPage';
-import FriendPage from '@/pages/Friend/FriendPage';
-import FriendListPage from '@/pages/FriendList/FriendListPage';
-import HomePage from '@/pages/Home/HomePage';
-import MyPage from '@/pages/mypage/MyPage';
-import EditProfilePage from '@/pages/EditProfile/EditProfilePage';
-import QuizPage from '@/pages/quiz/QuizPage';
-import CardRegeneratePage from '@/pages/EditProfile/ui/CardRegeneratePage';
 import PATH from '@/shared/constants/path';
-import { GNBLayout } from '@/app/layout/navigation/GNBLayout';
-import { BackHeaderLayout, LogoHeaderLayout } from '@/app/layout/header/HeaderLayout';
 import App from '../App';
 
 const AppRouter = () => {
@@ -18,46 +7,7 @@ const AppRouter = () => {
     {
       path: PATH.HOME,
       element: <App />,
-      // GNB 없는 페이지
-      children: [
-        // BackButton 있는 페이지
-        {
-          element: <BackHeaderLayout />,
-          children: [
-            { path: 'onboarding', element: <OnboardingPage /> },
-            {
-              path: 'friend/:id',
-              children: [
-                { index: true, element: <FriendPage /> }, // /friend/:id
-                { path: 'quiz', element: <QuizPage /> }, // /friend/:id/quiz
-              ],
-            },
-            { path: 'login', element: <LoginPage /> },
-            {
-              path: 'mypage/edit-profile',
-
-              children: [
-                { index: true, element: <EditProfilePage /> },
-                { path: 'card-regenerate', element: <CardRegeneratePage /> },
-              ],
-            },
-          ],
-        },
-        // GNB 있는 페이지
-        {
-          element: <GNBLayout />,
-          children: [
-            {
-              element: <LogoHeaderLayout />,
-              children: [
-                { path: 'mypage', element: <MyPage /> },
-                { path: '', element: <HomePage /> },
-                { path: 'friendslist', element: <FriendListPage /> },
-              ],
-            },
-          ],
-        },
-      ],
+      children: [],
     },
   ]);
 
