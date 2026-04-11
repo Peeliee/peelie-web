@@ -1,0 +1,13 @@
+import type { ComponentProps } from 'react';
+
+export function HomeIcon(props: ComponentProps<'svg'>) {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <path
+        d="M22 20V9.44141C22 8.75649 21.6495 8.1192 21.0711 7.7524L13.0711 2.67922C12.4172 2.26458 11.5828 2.26458 10.9289 2.67922L2.92892 7.75239C2.35049 8.1192 2 8.75649 2 9.44141V20C2 21.1046 2.89543 22 4 22H20C21.1046 22 22 21.1046 22 20Z"
+        fill="currentColor"
+      />
+      <rect x="11" y="13" width="2" height="6" rx="1" fill="white" />
+    </svg>
+  );
+}
