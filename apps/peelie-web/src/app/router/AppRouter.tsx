@@ -4,6 +4,8 @@ import App from '../App';
 import SsgoiLayout from '../layout/SsgoiLayout';
 import HomePage from '@/pages/Home/HomePage';
 import TestPage from '@/pages/Test/TestPage';
+import AiChatPage from '@/pages/AiChat/AiChatPage';
+import MyPage from '@/pages/My/MyPage';
 
 export default function AppRouter() {
   const router = createBrowserRouter([
@@ -15,6 +17,8 @@ export default function AppRouter() {
           element: <SsgoiLayout />,
           children: [
             { index: true, element: <HomePage /> },
+            { path: 'ai-chat', element: <AiChatPage /> },
+            { path: 'my', element: <MyPage /> },
             { path: 'test', element: <TestPage /> },
           ],
         },

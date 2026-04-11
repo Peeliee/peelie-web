@@ -138,10 +138,7 @@ function Button({
     iconRight?: React.ReactNode;
   }) {
   return (
-    <button
-      className={cn(buttonVariants({ color, variant, size, radius }), className)}
-      {...props}
-    >
+    <button className={cn(buttonVariants({ color, variant, size, radius }), className)} {...props}>
       {iconLeft && <span className="shrink-0">{iconLeft}</span>}
       {children}
       {iconRight && <span className="shrink-0">{iconRight}</span>}
