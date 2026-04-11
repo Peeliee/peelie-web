@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { SsgoiTransition } from '@ssgoi/react';
 import PATH from '@/shared/constants/path';
 
-const TestPage = () => {
+export default function TestPage() {
   return (
     <SsgoiTransition id="/test">
       <div className="flex flex-col items-center justify-center min-h-screen gap-6 bg-amber-100">
@@ -16,6 +16,4 @@ const TestPage = () => {
       </div>
     </SsgoiTransition>
   );
-};
-
-export default TestPage;
+}

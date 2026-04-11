@@ -3,7 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { Ssgoi } from '@ssgoi/react';
 import { fade, drill } from '@ssgoi/react/view-transitions';
 
-const SsgoiLayout = () => {
+export default function SsgoiLayout() {
   const location = useLocation();
 
   const usePathname = useCallback(() => location.pathname, [location.pathname]);
@@ -35,6 +35,4 @@ const SsgoiLayout = () => {
       </div>
     </Ssgoi>
   );
-};
-
-export default SsgoiLayout;
+}

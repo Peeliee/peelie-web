@@ -5,7 +5,7 @@ import SsgoiLayout from '../layout/SsgoiLayout';
 import HomePage from '@/pages/Home/HomePage';
 import TestPage from '@/pages/Test/TestPage';
 
-const AppRouter = () => {
+export default function AppRouter() {
   const router = createBrowserRouter([
     {
       path: PATH.HOME,
@@ -23,6 +23,4 @@ const AppRouter = () => {
   ]);
 
   return <RouterProvider router={router} />;
-};
-
-export default AppRouter;
+}

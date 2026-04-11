@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { QueryProvider } from './provider/QueryProvider';
 import { ThemeProvider } from './provider/ThemeProvider';
 
-const App = () => {
+export default function App() {
   return (
     <ThemeProvider>
       <main>
@@ -13,6 +13,4 @@ const App = () => {
       </main>
     </ThemeProvider>
   );
-};
-
-export default App;
+}
