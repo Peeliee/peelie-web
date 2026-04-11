@@ -131,6 +131,12 @@ importers:
       '@radix-ui/react-tabs':
         specifier: ^1.1.13
         version: 1.1.13(@types/react-dom@19.2.2(@types/react@19.1.17))(@types/react@19.1.17)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@ssgoi/core':
+        specifier: ^4.4.1
+        version: 4.4.1
+      '@ssgoi/react':
+        specifier: ^4.2.1
+        version: 4.2.1
       '@tanstack/react-query':
         specifier: ^5.90.2
         version: 5.90.7(react@19.2.0)
@@ -1865,6 +1871,14 @@ packages:
 
   '@socket.io/component-emitter@3.1.2':
     resolution: {integrity: sha512-9BCxFwvbGg/RsZK9tjXd8s4UcwR0MWeFQ1XEKIQVVvAGJyINdrqKMcTRyLoK8Rse1GjzLV9cwjWV1olXRWEXVA==}
+
+  '@ssgoi/core@4.4.1':
+    resolution: {integrity: sha512-+5sGQU90zi/WrZ5Cy7etzegXjfFFFn7yb1omVxl0103RVJviyw22JxDFYeWk/0EVQFhnH0015JxnofBD77KoyQ==}
+    engines: {node: '>=18.0.0'}
+
+  '@ssgoi/react@4.2.1':
+    resolution: {integrity: sha512-hKhZXPif93TI1Ab9TvC8zUmn7pGDbVhqk3iEOq+AnNANWJcGSTtwDVtqiuAe2evK2T3rtc9vkzkQ4GEnvdx3tw==}
+    engines: {node: '>=18.0.0'}
 
   '@storybook/addon-a11y@9.1.16':
     resolution: {integrity: sha512-DpUqAMOgkC/K/DgB9osqbBYmiWWj7V444HeYLHcx7GdPtg2guq1jAcalsOnQeU3wXgUE+wNuyMm6qZKm7of11g==}
@@ -5858,6 +5872,10 @@ packages:
     resolution: {integrity: sha512-4/u/j4FrCKdi17jaxuJA0jClGxB1AvU2hw/IuayPc4ay1XGaJs/rbb4v5WKwAjNifjmXK9PIFyuPiaK8azyR9w==}
     engines: {node: '>=14.0.0'}
 
+  unplugin@2.3.11:
+    resolution: {integrity: sha512-5uKD0nqiYVzlmCRs01Fhs2BdkEgBS3SAVP6ndrBsuK42iC2+JHyxM05Rm9G8+5mkmRtzMZGY8Ct5+mliZxU/Ww==}
+    engines: {node: '>=18.12.0'}
+
   unrs-resolver@1.11.1:
     resolution: {integrity: sha512-bSjt9pjaEBnNiGgc9rUiHGKv5l4/TGzDmYw3RhnkJGtLhbnnA/5qJj7x3dNDCRx/PJxu774LlH8lCOlB4hEfKg==}
 
@@ -8203,6 +8221,16 @@ snapshots:
       '@sinonjs/commons': 3.0.1
 
   '@socket.io/component-emitter@3.1.2': {}
+
+  '@ssgoi/core@4.4.1': {}
+
+  '@ssgoi/react@4.2.1':
+    dependencies:
+      '@babel/core': 7.28.5
+      '@ssgoi/core': 4.4.1
+      unplugin: 2.3.11
+    transitivePeerDependencies:
+      - supports-color
 
   '@storybook/addon-a11y@9.1.16(storybook@9.1.16(@testing-library/dom@10.4.1)(msw@2.12.0(@types/node@24.10.0)(typescript@5.8.3))(prettier@3.6.2)(vite@7.2.1(@types/node@24.10.0)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.1)(yaml@2.8.1)))':
     dependencies:
@@ -12961,6 +12989,13 @@ snapshots:
   unplugin@1.16.1:
     dependencies:
       acorn: 8.15.0
+      webpack-virtual-modules: 0.6.2
+
+  unplugin@2.3.11:
+    dependencies:
+      '@jridgewell/remapping': 2.3.5
+      acorn: 8.15.0
+      picomatch: 4.0.3
       webpack-virtual-modules: 0.6.2
 
   unrs-resolver@1.11.1:
