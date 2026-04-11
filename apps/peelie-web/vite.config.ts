@@ -4,6 +4,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
 import tailwindcss from '@tailwindcss/vite';
+import SsgoiAutoKey from '@ssgoi/react/unplugin/vite';
 
 // https://vite.dev/config/
 import { fileURLToPath } from 'node:url';
@@ -19,6 +20,7 @@ export default defineConfig({
         plugins: ['babel-plugin-react-compiler'],
       },
     }),
+    SsgoiAutoKey(),
     tailwindcss(),
     svgr(),
   ],

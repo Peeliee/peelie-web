@@ -1,189 +1,151 @@
 import * as React from 'react';
-import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
 
 import { cn } from '@/shared/lib/utils';
 
+/**
+ * btn 컴포넌트 (primary / secondary / tertiary)
+ *
+ * Figma variant 매핑:
+ * - color: btn/primary, btn/secondary, btn/tertiary에 대응
+ *   - primary: brand-main (하늘색), secondary: brand-sub (보라색), tertiary: gray (회색)
+ * - size: height 속성에 대응 (xs=h24, sm=h32, md=h48, lg=h56)
+ * - radius: radius 속성에 대응 (none=r0, xsmall=r4, small=r8, medium=r16, full=r100)
+ * - variant: style 속성에 대응 (default=filled, line=outlined)
+ * - status: default/pressed는 CSS :active로 처리, disabled는 native disabled
+ * - icon-left/icon-right: iconLeft, iconRight prop (동일 동작)
+ * - 텍스트 스타일: 외부에서 className으로 제어
+ *
+ * @see Figma node-id=4233-20285
+ */
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap transition-all disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0",
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap transition-all cursor-pointer disabled:cursor-not-allowed shrink-0',
   {
     variants: {
+      /** @default 'default' — Figma style (default=filled, line=outlined) */
       variant: {
-        primary: '',
-        inactive: '',
-        secondary: '',
-        error: '',
-      },
-      buttonType: {
-        fill: '',
-        outline: 'border',
-        ghost: 'bg-transparent border-none',
-      },
-      state: {
         default: '',
-        disabled: '',
-        pressed: '',
+        line: 'bg-transparent border',
       },
+      /** @default 'primary' — Figma btn/primary, btn/secondary, btn/tertiary */
+      color: {
+        primary: '',
+        secondary: '',
+        tertiary: '',
+      },
+      /** @default 'md' — Figma height (xs=h24, sm=h32, md=h48, lg=h56) */
       size: {
-        small: 'h-6 px-2 rounded-400 body-1-regular',
-        medium: 'h-8 px-3 rounded-400 body-1-regular',
-        large: 'h-10 px-4 rounded-400 body-1-regular',
-        extraLarge: 'h-12 px-6 rounded-400 heading-4-medium',
+        xs: 'h-6 px-2',
+        sm: 'h-8 px-3',
+        md: 'h-12 px-4',
+        lg: 'h-14 px-6',
       },
-    },
-    defaultVariants: {
-      variant: 'primary',
-      buttonType: 'fill',
-      size: 'medium',
-      state: 'default',
+      /** @default 'small' — Figma radius (none=r0, xsmall=4, small=r8, medium=r16, full=r100) */
+      radius: {
+        none: 'rounded-none',
+        xsmall: 'rounded-xsmall',
+        small: 'rounded-small',
+        medium: 'rounded-medium',
+        full: 'rounded-full',
+      },
     },
     compoundVariants: [
-      // Primary fill
+      // ── Primary × default (filled) ──
       {
-        variant: 'primary',
-        buttonType: 'fill',
-        class: cn(
-          'bg-gradient-to-b from-[var(--color-peelie-secondary-200)] to-[var(--color-peelie-primary-600)] text-peelie-white',
-          'disabled:bg-peelie-primary-600 disabled:opacity-32',
-          'active:from-[var(--color-peelie-primary-700)] active:to-[var(--color-peelie-primary-700)]',
-        ),
+        color: 'primary',
+        variant: 'default',
+        class: [
+          'bg-brand-main text-gray-99',
+          'active:bg-brand-main-pressed',
+          'disabled:bg-gray-30 disabled:text-text-disabled',
+        ],
       },
-      // Primary outline
+      // ── Primary × line (outlined) ──
       {
-        variant: 'primary',
-        buttonType: 'outline',
-        class: cn(
-          'bg-peelie-primary-100 border-peelie-primary-600 text-peelie-primary-600',
-          'disabled:opacity-32',
-          'active:bg-peelie-primary-100 active:border-peelie-primary-700 active:text-peelie-primary-700',
-        ),
+        color: 'primary',
+        variant: 'line',
+        class: [
+          'border-brand-main text-gray-99',
+          'active:border-brand-main-pressed',
+          'disabled:border-gray-39 disabled:text-text-disabled disabled:bg-transparent',
+        ],
       },
-      // Primary ghost
+      // ── Secondary × default (filled) ──
       {
-        variant: 'primary',
-        buttonType: 'ghost',
-        class: cn(
-          'bg-transparent text-peelie-primary-600',
-          'disabled:opacity-32',
-          'active:text-peelie-primary-700',
-        ),
+        color: 'secondary',
+        variant: 'default',
+        class: [
+          'bg-brand-sub-main text-gray-99',
+          'active:bg-brand-sub-pressed',
+          'disabled:bg-gray-30 disabled:text-text-disabled',
+        ],
       },
-      // Inactive fill
+      // ── Secondary × line (outlined) ──
       {
-        variant: 'inactive',
-        buttonType: 'fill',
-        class: cn(
-          'bg-peelie-gray-200 text-peelie-black',
-          'disabled:opacity-32',
-          'active:bg-peelie-gray-500 active:text-peelie-gray-950',
-        ),
+        color: 'secondary',
+        variant: 'line',
+        class: [
+          'border-brand-sub-main text-gray-99',
+          'active:border-brand-sub-pressed',
+          'disabled:border-gray-39 disabled:text-text-disabled disabled:bg-transparent',
+        ],
       },
-      // Inactive outline
+      // ── Tertiary × default (filled) ──
       {
-        variant: 'inactive',
-        buttonType: 'outline',
-        class: cn(
-          'bg-peelie-gray-100 border-peelie-gray-200 text-peelie-black',
-          'disabled:opacity-32',
-          'active:bg-peelie-gray-150 active:border-gray-500 active:text-peelie-gray-950',
-        ),
+        color: 'tertiary',
+        variant: 'default',
+        class: [
+          'bg-gray-39 text-gray-99',
+          'active:bg-gray-50',
+          'disabled:bg-gray-30 disabled:text-text-disabled',
+        ],
       },
-      // Inactive ghost
+      // ── Tertiary × line (outlined) ──
       {
-        variant: 'inactive',
-        buttonType: 'ghost',
-        class: cn(
-          'bg-transparent text-peelie-gray-900',
-          'disabled:opacity-32',
-          'active:text-peelie-gray-950',
-        ),
-      },
-      // Secondary fill
-      {
-        variant: 'secondary',
-        buttonType: 'fill',
-        class: cn(
-          'bg-peelie-secondary-200 text-peelie-white',
-          'disabled:opacity-32',
-          'active:bg-peelie-secondary-300',
-        ),
-      },
-      // Secondary outline
-      {
-        variant: 'secondary',
-        buttonType: 'outline',
-        class: cn(
-          'bg-peelie-secondary-100 border-peelie-secondary-200 text-peelie-secondary-200',
-          'disabled:opacity-32',
-          'active:border-peelie-secondary-300 active:text-peelie-secondary-300',
-        ),
-      },
-      // Secondary ghost
-      {
-        variant: 'secondary',
-        buttonType: 'ghost',
-        class: cn(
-          'bg-transparent text-peelie-secondary-200',
-          'disabled:opacity-32',
-          'active:text-peelie-secondary-300',
-        ),
-      },
-      // Error fill
-      {
-        variant: 'error',
-        buttonType: 'fill',
-        class: cn(
-          'bg-peelie-error-200 text-peelie-white',
-          'disabled:opacity-32',
-          'active:bg-peelie-error-300',
-        ),
-      },
-      // Error outline
-      {
-        variant: 'error',
-        buttonType: 'outline',
-        class: cn(
-          'bg-peelie-error-100 border-peelie-error-200 text-peelie-error-200',
-          'disabled:opacity-32',
-          'active:border-peelie-error-300 active:text-peelie-error-300',
-        ),
-      },
-      // Error ghost
-      {
-        variant: 'error',
-        buttonType: 'ghost',
-        class: cn(
-          'bg-transparent text-peelie-error-200',
-          'disabled:opacity-32',
-          'active:text-peelie-error-300',
-        ),
+        color: 'tertiary',
+        variant: 'line',
+        class: [
+          'border-gray-39 text-gray-99',
+          'active:border-gray-50',
+          'disabled:border-gray-30 disabled:text-text-disabled disabled:bg-transparent',
+        ],
       },
     ],
+    defaultVariants: {
+      color: 'primary',
+      variant: 'default',
+      size: 'md',
+      radius: 'small',
+    },
   },
 );
 
 function Button({
   className,
+  color,
   variant,
-  buttonType,
-  state,
-  disabled,
   size,
-  asChild = false,
+  radius,
+  iconLeft,
+  iconRight,
+  children,
   ...props
 }: React.ComponentProps<'button'> &
   VariantProps<typeof buttonVariants> & {
-    asChild?: boolean;
+    /** Figma icon-left=on 일 때 렌더링 */
+    iconLeft?: React.ReactNode;
+    /** Figma icon-right=on 일 때 렌더링 (icon-left와 동일 동작) */
+    iconRight?: React.ReactNode;
   }) {
-  const Comp = asChild ? Slot : 'button';
-
   return (
-    <Comp
-      data-slot="button"
-      disabled={disabled || state === 'disabled'}
-      className={cn(buttonVariants({ variant, buttonType, size, className }))}
+    <button
+      className={cn(buttonVariants({ color, variant, size, radius }), className)}
       {...props}
-    />
+    >
+      {iconLeft && <span className="shrink-0">{iconLeft}</span>}
+      {children}
+      {iconRight && <span className="shrink-0">{iconRight}</span>}
+    </button>
   );
 }
 

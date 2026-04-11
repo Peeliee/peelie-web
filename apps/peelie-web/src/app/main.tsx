@@ -8,12 +8,12 @@ import '../global.css';
 //   worker.start();
 // }
 
-if (import.meta.env.VITE_MSW_ENABLED === 'true') {
-  const { worker } = await import('@/mocks/browers');
-  await worker.start({
-    onUnhandledRequest: 'bypass',
-  });
-}
+// if (import.meta.env.VITE_MSW_ENABLED === 'true') {
+//   const { worker } = await import('@/mocks/browers');
+//   await worker.start({
+//     onUnhandledRequest: 'bypass',
+//   });
+// }
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
