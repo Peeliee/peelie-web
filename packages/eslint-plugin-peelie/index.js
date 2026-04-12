@@ -1,3 +1,7 @@
+import noLongClassname from './rules/no-long-classname.js';
+
 export default {
-  rules: {},
+  rules: {
+    'no-long-classname': noLongClassname,
+  },
 };
