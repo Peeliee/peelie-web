@@ -126,21 +126,12 @@ export default {
           messageId: 'tooMany',
           data: { count: String(count), max: String(maxClasses) },
           fix(fixer) {
+            if (!cnImportPath) return null;
+
             const groups = splitClasses(result.str, maxClasses);
             if (groups.length <= 1) return null;
 
-            // Mode A: 줄바꿈만 (cnImportPath 없음)
-            if (!cnImportPath) {
-              const newValue = groups.join('\n');
-              // Shape A: className="..." → 따옴표 유지
-              if (node.value.type === 'Literal') {
-                return fixer.replaceText(node.value, `"${newValue}"`);
-              }
-              // Shape B: className={"..."} → expression container 전체 교체
-              return fixer.replaceText(node.value, `{"${newValue}"}`);
-            }
-
-            // Mode B: cn() 래핑 (cnImportPath 설정됨)
+            // cn() 래핑 (cnImportPath 설정됨)
             const cnCall = `{cn(${groups.map((g) => `'${g}'`).join(', ')})}`;
             const fixes = [fixer.replaceText(node.value, cnCall)];
 
