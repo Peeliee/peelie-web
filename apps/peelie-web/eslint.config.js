@@ -3,6 +3,7 @@ import globals from 'globals';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import tseslint from 'typescript-eslint';
+import peeliePlugin from '@peelie/eslint-plugin';
 
 export default tseslint.config(
   { ignores: ['dist', 'storybook-static'] },
@@ -16,10 +17,12 @@ export default tseslint.config(
     plugins: {
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
+      peelie: peeliePlugin,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+      'peelie/no-long-classname': ['warn', { maxClasses: 5, cnImportPath: '@/shared/lib/utils' }],
     },
   },
 );

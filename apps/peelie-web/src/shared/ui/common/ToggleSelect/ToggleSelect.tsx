@@ -25,7 +25,7 @@ export default function ToggleSelect({ items, value, onChange, className }: Togg
     >
       {/* 슬라이딩 인디케이터 */}
       <div
-        className="absolute top-[4px] bottom-[4px] rounded-full bg-gray-01 shadow-tooltip transition-transform duration-300 ease-out"
+        className={cn('absolute top-[4px] bottom-[4px] rounded-full bg-gray-01', 'shadow-tooltip transition-transform duration-300 ease-out')}
         style={{
           width: `calc((100% - 8px) / ${items.length})`,
           transform: `translateX(calc(${selectedIndex} * 100%))`,
