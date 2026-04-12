@@ -1,5 +1,5 @@
 /**
- * @fileoverview className string literal의 한 줄당 클래스 개수가 threshold를 넘으면 warn
+ * @fileoverview className string literal의 한 줄당 클래스 개수가 threshold를 넘으면 warn + autofix
  */
 
 /**
@@ -41,14 +41,62 @@ function extractStringLiteral(valueNode) {
   return null;
 }
 
+/**
+ * 클래스 목록을 maxClasses개씩 그룹으로 분할
+ * @param {string} str
+ * @param {number} maxClasses
+ * @returns {string[]}
+ */
+function splitClasses(str, maxClasses) {
+  const classes = str.trim().split(/\s+/).filter(Boolean);
+  const groups = [];
+  for (let i = 0; i < classes.length; i += maxClasses) {
+    groups.push(classes.slice(i, i + maxClasses).join(' '));
+  }
+  return groups;
+}
+
+/**
+ * Program의 ImportDeclaration에서 cn import 상태 확인
+ * @param {import('estree').Program} programBody
+ * @param {string} cnImportPath
+ * @returns {{ hasCn: boolean, importNode: import('estree').Node | null, lastImportNode: import('estree').Node | null }}
+ */
+function findCnImport(programBody, cnImportPath) {
+  let matchingImport = null;
+  let lastImportNode = null;
+  let hasCn = false;
+
+  for (const node of programBody) {
+    if (node.type === 'ImportDeclaration') {
+      lastImportNode = node;
+      if (node.source.value === cnImportPath) {
+        matchingImport = node;
+        for (const specifier of node.specifiers) {
+          if (
+            specifier.type === 'ImportSpecifier' &&
+            specifier.imported.name === 'cn'
+          ) {
+            hasCn = true;
+          }
+        }
+      }
+    }
+  }
+
+  return { hasCn, importNode: matchingImport, lastImportNode };
+}
+
 export default {
   meta: {
     type: 'suggestion',
+    fixable: 'code',
     schema: [
       {
         type: 'object',
         properties: {
           maxClasses: { type: 'integer', minimum: 1 },
+          cnImportPath: { type: ['string', 'null'] },
         },
         additionalProperties: false,
       },
@@ -60,7 +108,7 @@ export default {
   },
 
   create(context) {
-    const { maxClasses = 5 } = context.options[0] ?? {};
+    const { maxClasses = 5, cnImportPath = null } = context.options[0] ?? {};
 
     return {
       JSXAttribute(node) {
@@ -71,13 +119,69 @@ export default {
         if (!result) return;
 
         const count = countMaxClassesPerLine(result.str);
-        if (count > maxClasses) {
-          context.report({
-            node: result.literalNode,
-            messageId: 'tooMany',
-            data: { count: String(count), max: String(maxClasses) },
-          });
-        }
+        if (count <= maxClasses) return;
+
+        context.report({
+          node: result.literalNode,
+          messageId: 'tooMany',
+          data: { count: String(count), max: String(maxClasses) },
+          fix(fixer) {
+            const groups = splitClasses(result.str, maxClasses);
+            if (groups.length <= 1) return null;
+
+            // Mode A: 줄바꿈만 (cnImportPath 없음)
+            if (!cnImportPath) {
+              const newValue = groups.join('\n');
+              // Shape A: className="..." → 따옴표 유지
+              if (node.value.type === 'Literal') {
+                return fixer.replaceText(node.value, `"${newValue}"`);
+              }
+              // Shape B: className={"..."} → expression container 전체 교체
+              return fixer.replaceText(node.value, `{"${newValue}"}`);
+            }
+
+            // Mode B: cn() 래핑 (cnImportPath 설정됨)
+            const cnCall = `{cn(${groups.map((g) => `'${g}'`).join(', ')})}`;
+            const fixes = [fixer.replaceText(node.value, cnCall)];
+
+            // import 처리
+            const sourceCode = context.sourceCode;
+            const programBody = sourceCode.ast.body;
+            const { hasCn, importNode, lastImportNode } = findCnImport(
+              programBody,
+              cnImportPath,
+            );
+
+            if (!hasCn) {
+              if (importNode) {
+                // 같은 경로 import 있지만 cn 없음 → cn 추가
+                const lastSpecifier =
+                  importNode.specifiers[importNode.specifiers.length - 1];
+                fixes.push(
+                  fixer.insertTextAfter(lastSpecifier, ', cn'),
+                );
+              } else if (lastImportNode) {
+                // import 자체 없음 → 마지막 import 뒤에 삽입
+                fixes.push(
+                  fixer.insertTextAfter(
+                    lastImportNode,
+                    `\nimport { cn } from '${cnImportPath}';`,
+                  ),
+                );
+              } else {
+                // import가 하나도 없음 → 파일 맨 위에 삽입
+                fixes.push(
+                  fixer.insertTextBefore(
+                    programBody[0],
+                    `import { cn } from '${cnImportPath}';\n`,
+                  ),
+                );
+              }
+            }
+
+            return fixes;
+          },
+        });
       },
     };
   },
