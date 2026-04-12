@@ -5,6 +5,7 @@ import PATH from '@/shared/constants/path';
 import ToggleSelect from '@/shared/ui/common/ToggleSelect/ToggleSelect';
 import Modal from '@/shared/ui/common/Modal/Modal';
 import { Button } from '@/shared/ui/common/button';
+import { cn } from '@/shared/lib/utils';
 
 export default function HomePage() {
   const [selected, setSelected] = useState('share');
@@ -12,7 +13,7 @@ export default function HomePage() {
 
   return (
     <SsgoiTransition id="/">
-      <div className="flex flex-col items-center justify-center min-h-screen gap-6 bg-amber-300">
+      <div className={cn('flex flex-col items-center justify-center min-h-screen', 'gap-6 bg-amber-300')}>
         <h1 className="heading-1-medium text-gray-99">Home</h1>
 
         <ToggleSelect
