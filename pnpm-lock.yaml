@@ -207,6 +207,9 @@ importers:
       '@eslint/js':
         specifier: ^9.33.0
         version: 9.39.1
+      '@peelie/eslint-plugin':
+        specifier: workspace:*
+        version: link:../../packages/eslint-plugin-peelie
       '@playwright/test':
         specifier: ^1.58.2
         version: 1.58.2
@@ -306,6 +309,12 @@ importers:
       vitest:
         specifier: ^3.2.4
         version: 3.2.4(@types/node@24.10.0)(@vitest/browser@3.2.4)(jiti@2.6.1)(lightningcss@1.30.2)(msw@2.12.0(@types/node@24.10.0)(typescript@5.8.3))(terser@5.44.1)(yaml@2.8.1)
+
+  packages/eslint-plugin-peelie:
+    dependencies:
+      eslint:
+        specifier: '>=9.0.0'
+        version: 9.39.1(jiti@2.6.1)
 
   packages/form:
     dependencies:
