@@ -42,6 +42,41 @@ function extractStringLiteral(valueNode) {
 }
 
 /**
+ * 자동 수정은 불가하지만 검사 가능한 형태에서 string literal을 추출한다
+ * Shape C: className={cn('a', 'b', ...)} — CallExpression 인자 중 Literal
+ * Shape D: className={cond ? 'a' : 'b'} — ConditionalExpression 분기 중 Literal
+ * @param {import('estree').Node | null} valueNode
+ * @returns {Array<{ str: string, literalNode: import('estree').Node }>}
+ */
+function extractInnerLiterals(valueNode) {
+  if (!valueNode) return [];
+  if (valueNode.type !== 'JSXExpressionContainer') return [];
+
+  const expr = valueNode.expression;
+  const literals = [];
+
+  // Shape C: className={cn('a', 'b', ...)}
+  if (expr.type === 'CallExpression') {
+    for (const arg of expr.arguments) {
+      if (arg.type === 'Literal' && typeof arg.value === 'string') {
+        literals.push({ str: arg.value, literalNode: arg });
+      }
+    }
+  }
+
+  // Shape D: className={cond ? 'a' : 'b'}
+  if (expr.type === 'ConditionalExpression') {
+    for (const branch of [expr.consequent, expr.alternate]) {
+      if (branch.type === 'Literal' && typeof branch.value === 'string') {
+        literals.push({ str: branch.value, literalNode: branch });
+      }
+    }
+  }
+
+  return literals;
+}
+
+/**
  * 클래스 목록을 maxClasses개씩 그룹으로 분할
  * @param {string} str
  * @param {number} maxClasses
@@ -115,64 +150,76 @@ export default {
         if (node.name.name !== 'className') return;
         if (node.value === null) return;
 
+        // Shape A/B: 자동 수정 가능
         const result = extractStringLiteral(node.value);
-        if (!result) return;
+        if (result) {
+          const count = countMaxClassesPerLine(result.str);
+          if (count <= maxClasses) return;
 
-        const count = countMaxClassesPerLine(result.str);
-        if (count <= maxClasses) return;
+          context.report({
+            node: result.literalNode,
+            messageId: 'tooMany',
+            data: { count: String(count), max: String(maxClasses) },
+            fix(fixer) {
+              if (!cnImportPath) return null;
 
-        context.report({
-          node: result.literalNode,
-          messageId: 'tooMany',
-          data: { count: String(count), max: String(maxClasses) },
-          fix(fixer) {
-            if (!cnImportPath) return null;
+              const groups = splitClasses(result.str, maxClasses);
+              if (groups.length <= 1) return null;
 
-            const groups = splitClasses(result.str, maxClasses);
-            if (groups.length <= 1) return null;
+              // cn() 래핑 (cnImportPath 설정됨)
+              const cnCall = `{cn(${groups.map((g) => `'${g}'`).join(', ')})}`;
+              const fixes = [fixer.replaceText(node.value, cnCall)];
 
-            // cn() 래핑 (cnImportPath 설정됨)
-            const cnCall = `{cn(${groups.map((g) => `'${g}'`).join(', ')})}`;
-            const fixes = [fixer.replaceText(node.value, cnCall)];
+              // import 처리
+              const sourceCode = context.sourceCode;
+              const programBody = sourceCode.ast.body;
+              const { hasCn, importNode, lastImportNode } = findCnImport(
+                programBody,
+                cnImportPath,
+              );
 
-            // import 처리
-            const sourceCode = context.sourceCode;
-            const programBody = sourceCode.ast.body;
-            const { hasCn, importNode, lastImportNode } = findCnImport(
-              programBody,
-              cnImportPath,
-            );
-
-            if (!hasCn) {
-              if (importNode) {
-                // 같은 경로 import 있지만 cn 없음 → cn 추가
-                const lastSpecifier =
-                  importNode.specifiers[importNode.specifiers.length - 1];
-                fixes.push(
-                  fixer.insertTextAfter(lastSpecifier, ', cn'),
-                );
-              } else if (lastImportNode) {
-                // import 자체 없음 → 마지막 import 뒤에 삽입
-                fixes.push(
-                  fixer.insertTextAfter(
-                    lastImportNode,
-                    `\nimport { cn } from '${cnImportPath}';`,
-                  ),
-                );
-              } else {
-                // import가 하나도 없음 → 파일 맨 위에 삽입
-                fixes.push(
-                  fixer.insertTextBefore(
-                    programBody[0],
-                    `import { cn } from '${cnImportPath}';\n`,
-                  ),
-                );
+              if (!hasCn) {
+                if (importNode) {
+                  // 같은 경로 import 있지만 cn 없음 → cn 추가
+                  const lastSpecifier =
+                    importNode.specifiers[importNode.specifiers.length - 1];
+                  fixes.push(fixer.insertTextAfter(lastSpecifier, ', cn'));
+                } else if (lastImportNode) {
+                  // import 자체 없음 → 마지막 import 뒤에 삽입
+                  fixes.push(
+                    fixer.insertTextAfter(
+                      lastImportNode,
+                      `\nimport { cn } from '${cnImportPath}';`,
+                    ),
+                  );
+                } else {
+                  // import가 하나도 없음 → 파일 맨 위에 삽입
+                  fixes.push(
+                    fixer.insertTextBefore(
+                      programBody[0],
+                      `import { cn } from '${cnImportPath}';\n`,
+                    ),
+                  );
+                }
               }
-            }
 
-            return fixes;
-          },
-        });
+              return fixes;
+            },
+          });
+          return;
+        }
+
+        // Shape C/D: 경고만 (자동 수정 없음)
+        const innerLiterals = extractInnerLiterals(node.value);
+        for (const lit of innerLiterals) {
+          const count = countMaxClassesPerLine(lit.str);
+          if (count <= maxClasses) continue;
+          context.report({
+            node: lit.literalNode,
+            messageId: 'tooMany',
+            data: { count: String(count), max: String(maxClasses) },
+          });
+        }
       },
     };
   },
