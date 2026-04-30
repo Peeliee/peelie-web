@@ -18,7 +18,7 @@ const logOnDev = (message: string) => {
 
 const api = ky.create({
   prefixUrl: import.meta.env.VITE_API_BASE_URL + '/api/v1', // TODO: 추후 url 고치기
-  credentials: 'include',
+  // credentials: 'include',
   timeout: 5000,
   retry: 2,
   headers: { 'Content-Type': 'application/json' },
@@ -26,6 +26,8 @@ const api = ky.create({
     beforeRequest: [
       (request) => {
         const token = localStorage.getItem('accessToken');
+        // const token =
+        //   'eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c3JfS3E3eHlmQWFCRHkzNDZKMyIsInRva2VuVHlwZSI6IkFDQ0VTUyIsImlhdCI6MTc3NTkxNjExMiwiZXhwIjoxODA3NDUyMTEyfQ.PVNXEnQOWMTDBDxeSsA-k_ehQeSM8KpL-OAZgtvOtr8CDBvS37y9OPg7CJ0AabBt';
         if (token) {
           request.headers.set('Authorization', `Bearer ${token}`);
         }

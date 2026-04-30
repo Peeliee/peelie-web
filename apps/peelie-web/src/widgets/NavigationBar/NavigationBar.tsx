@@ -4,16 +4,6 @@ import { HomeIcon } from '@/shared/ui/icons/HomeIcon';
 import { AiChatIcon } from '@/shared/ui/icons/AiChatIcon';
 import { MyProfileIcon } from '@/shared/ui/icons/MyProfileIcon';
 
-/**
- * 하단 네비게이션 바
- *
- * Figma variant 매핑:
- * - state: 홈 / AI챗 / 마이 — 현재 라우트 경로에서 자동 판단
- * - 활성: text-brand-main, 비활성: text-gray-30
- *
- * @see Figma node-id=4234-23931
- */
-
 const tabs = [
   { path: '/', label: '홈', icon: HomeIcon },
   { path: '/ai-chat', label: 'AI챗', icon: AiChatIcon },
@@ -28,7 +18,7 @@ export function NavigationBar({ className }: NavigationBarProps) {
   const { pathname } = useLocation();
 
   return (
-    <nav className={cn('flex items-center border-t border-gray-30 bg-bg-main', className)}>
+    <nav className={cn('flex items-center rounded-t-md bg-gray-79', className)}>
       {tabs.map((tab) => {
         const isActive = pathname === tab.path;
         const Icon = tab.icon;
@@ -39,7 +29,7 @@ export function NavigationBar({ className }: NavigationBarProps) {
             to={tab.path}
             className={cn(
               'flex flex-1 flex-col items-center justify-end h-12 gap-0.5',
-              isActive ? 'text-brand-main' : 'text-gray-30',
+              isActive ? 'text-brand-main' : 'text-gray-59',
             )}
           >
             {tab.icon === AiChatIcon ? (
