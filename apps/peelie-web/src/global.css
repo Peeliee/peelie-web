@@ -64,7 +64,7 @@
   --alpha-20: rgba(176, 179, 188, 0.7);
   --red-50: #ff5449;
   --blue-50: #0073cb;
-  --brand-30: #e0e9ff;
+  --brand-30: #e6f8ff;
   --brand-50: #afe8ff;
   --brand-100: #9ed1e6;
   --brand-sub-30: #f3e5fe;
@@ -84,7 +84,7 @@
   --border-main: var(--alpha-15);
   /* status */
   --status-warning: var(--red-50);
-  --status-success: #00CD3C;
+  --status-success: #00cd3c;
   /* brand */
   --brand-main: var(--brand-50);
   --brand-main-pressed: var(--brand-100);
@@ -251,6 +251,7 @@ body {
   --font-size-12: 12px;
   --font-size-14: 14px;
   --font-size-16: 16px;
+  --font-size-18: 18px;
   --font-size-20: 20px;
   --font-size-24: 24px;
 
@@ -362,6 +363,13 @@ body {
     font-weight: var(--font-weight-regular);
   }
 
+  .text-title-l-600 {
+    font-family: var(--font-family-pretendard);
+    font-size: var(--font-size-24);
+    line-height: var(--line-height-34);
+    font-weight: var(--font-weight-bold);
+  }
+
   .text-body-2-long {
     font-family: var(--font-family-pretendard);
     font-size: var(--font-size-16);
@@ -385,6 +393,37 @@ body {
 
   /* Caption */
   .text-caption {
+    font-family: var(--font-family-pretendard);
+    font-size: var(--font-size-12);
+    line-height: var(--line-height-18);
+    font-weight: var(--font-weight-regular);
+  }
+
+  /* ===========================
+    타이포 새 버전 ??
+  ============================ */
+  .text-body-l-500 {
+    font-family: var(--font-family-pretendard);
+    font-size: var(--font-size-18);
+    line-height: var(--line-height-24);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .text-body-m-400 {
+    font-family: var(--font-family-pretendard);
+    font-size: var(--font-size-16);
+    line-height: var(--line-height-28);
+    font-weight: var(--font-weight-regular);
+  }
+
+  .text-body-s-400 {
+    font-family: var(--font-family-pretendard);
+    font-size: var(--font-size-14);
+    line-height: var(--line-height-24);
+    font-weight: var(--font-weight-regular);
+  }
+
+  .text-caption-m-400 {
     font-family: var(--font-family-pretendard);
     font-size: var(--font-size-12);
     line-height: var(--line-height-18);
@@ -467,7 +506,7 @@ body {
 
 html,
 body {
-  background: transparent;
+  background-color: var(--gray-10);
 }
 
 /* html, body, #root {

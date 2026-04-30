@@ -6,6 +6,7 @@ import HomePage from '@/pages/Home/HomePage';
 import TestPage from '@/pages/Test/TestPage';
 import AiChatPage from '@/pages/AiChat/AiChatPage';
 import MyPage from '@/pages/My/MyPage';
+import LoginPage from '@/pages/Login/LoginPage';
 
 export default function AppRouter() {
   const router = createBrowserRouter([
@@ -20,6 +21,7 @@ export default function AppRouter() {
             { path: 'ai-chat', element: <AiChatPage /> },
             { path: 'my', element: <MyPage /> },
             { path: 'test', element: <TestPage /> },
+            { path: 'login', element: <LoginPage /> },
           ],
         },
       ],

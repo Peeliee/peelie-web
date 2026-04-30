@@ -41,8 +41,8 @@ export default function ToggleSelect({ items, value, onChange, className }: Togg
             key={item.value}
             type="button"
             className={cn(
-              'relative z-10 flex flex-1 items-center justify-center rounded-full px-4 py-1 text-center text-body-2 transition-all duration-300',
-              isSelected ? 'font-medium text-gray-99' : 'font-regular text-gray-59',
+              'relative z-10 flex flex-1 items-center justify-center rounded-full px-4 py-1 text-center text-body-2 transition-all duration-300 text-body-s-400',
+              isSelected ? 'text-gray-99 text-body-s-400' : 'text-gray-59 text-body-s-400',
             )}
             onClick={() => onChange(item.value)}
           >
