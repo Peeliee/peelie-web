@@ -504,6 +504,22 @@ body {
   display: none; /* 크롬, 사파리, 엣지 */
 }
 
+.show-scrollbar::-webkit-scrollbar {
+  display: block;
+  width: 4px;
+}
+.show-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.show-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--gray-30);
+  border-radius: 9999px;
+}
+.show-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--gray-30) transparent;
+}
+
 html,
 body {
   background-color: var(--gray-10);
