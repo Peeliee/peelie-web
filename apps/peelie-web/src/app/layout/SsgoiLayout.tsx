@@ -1,7 +1,7 @@
 import { useMemo, useCallback } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { Ssgoi } from '@ssgoi/react';
-import { fade, drill } from '@ssgoi/react/view-transitions';
+import { fade, drill, snap } from '@ssgoi/react/view-transitions';
 import { NavigationBar } from '@/widgets/NavigationBar/NavigationBar';
 
 const NAV_ROUTES = ['/', '/ai-chat', '/my'];
@@ -15,26 +15,69 @@ export default function SsgoiLayout() {
   const config = useMemo(
     () => ({
       transitions: [
+        // 홈 <-> ai채팅
         {
           from: '/',
-          to: '/test',
-          transition: drill({ direction: 'enter' }),
-          symmetric: true
+          to: '/ai-chat',
+          transition: snap({ direction: 'left' }),
         },
         {
-          from: '/test',
+          from: '/ai-chat',
           to: '/',
-          transition: drill({ direction: 'exit' }),
+          transition: snap({ direction: 'right' }),
+        },
+
+        // 홈 <-> 마이페이지
+        {
+          from: '/',
+          to: '/my',
+          transition: snap({ direction: 'left' }),
+        },
+        {
+          from: '/my',
+          to: '/',
+          transition: snap({ direction: 'right' }),
+        },
+
+        // ai챗 <-> 마이페이지
+        {
+          from: '/ai-chat',
+          to: '/my',
+          transition: snap({ direction: 'left' }),
+        },
+        {
+          from: '/my',
+          to: '/ai-chat',
+          transition: snap({ direction: 'right' }),
+        },
+
+        {
+          from: '/ai-chat',
+          to: '/chat-room',
+          transition: fade(),
+        },
+        {
+          from: '/chat-room',
+          to: '/ai-chat',
+          transition: fade(),
         },
       ],
-      defaultTransition: fade(),
+      defaultTransition: snap(),
     }),
     [],
   );
 
   return (
     <Ssgoi config={config} usePathname={usePathname}>
-      <div style={{ position: 'relative', minHeight: '100vh', width: '100%', overflow: 'hidden', background: 'transparent' }}>
+      <div
+        style={{
+          position: 'relative',
+          minHeight: '100vh',
+          width: '100%',
+          overflow: 'hidden',
+          background: 'transparent',
+        }}
+      >
         <div className={showNav ? 'pb-12' : ''}>
           <Outlet />
         </div>

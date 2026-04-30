@@ -4,6 +4,7 @@ import { Button } from '@/shared/ui/common/button';
 import { Header } from '@/widgets/header/Header';
 import { cn } from '@/shared/lib/utils';
 import { PlusIcon } from '@/shared/ui/icons/PlusIcon';
+import { ShareIcon } from '@/shared/ui/icons/ShareIcon';
 import { FriendCodeModal } from '@/widgets/FriendCodeModal';
 import { ScheduleModal } from '@/widgets/ScheduleModal';
 
@@ -13,7 +14,11 @@ export default function HomePage() {
 
   return (
     <SsgoiTransition id="/">
-      <Header onShareClick={() => setIsFriendCodeOpen(true)} />
+      <Header>
+        <button type="button" onClick={() => setIsFriendCodeOpen(true)} aria-label="공유">
+          <ShareIcon className="size-6 text-gray-70" />
+        </button>
+      </Header>
 
       <div className={cn('flex flex-col items-center justify-center', 'min-h-screen gap-6 ')}>
         <h1 className="heading-1-medium text-gray-99">Home</h1>
