@@ -119,6 +119,9 @@ importers:
       '@peelie/form':
         specifier: workspace:*
         version: link:../../packages/form
+      '@peelie/sse':
+        specifier: workspace:*
+        version: link:../../packages/sse
       '@radix-ui/react-alert-dialog':
         specifier: ^1.1.15
         version: 1.1.15(@types/react-dom@19.2.2(@types/react@19.1.17))(@types/react@19.1.17)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -200,6 +203,9 @@ importers:
       typed.js:
         specifier: ^2.1.0
         version: 2.1.0
+      zod:
+        specifier: ^3.23.8
+        version: 3.25.76
     devDependencies:
       '@chromatic-com/storybook':
         specifier: ^4.1.1
@@ -328,6 +334,8 @@ importers:
       '@types/react':
         specifier: ^18.0.0
         version: 18.3.27
+
+  packages/sse: {}
 
 packages:
 

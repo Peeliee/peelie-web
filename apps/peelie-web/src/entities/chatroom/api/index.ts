@@ -1,0 +1,1 @@
+export { parseAvatarStreamEvent } from './parseAvatarStreamEvent';
