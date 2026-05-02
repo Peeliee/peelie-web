@@ -1,3 +1,5 @@
+import type { ApiResponse } from '@/shared/api/types';
+
 export type ChatRole = 'USER' | 'AVATAR';
 
 export interface ChatMessage {
@@ -10,3 +12,5 @@ export interface ChatMessage {
 export interface ChatMessageList {
   messages: ChatMessage[];
 }
+
+export type ChatMessageListResponseDTO = ApiResponse<ChatMessageList>;

@@ -1,3 +1,2 @@
-export * from './getChatRooms';
-export * from './getChatMessages';
-export * from './queryKeys';
+export * from './aiChat.api';
+export * from './aiChat.queries';

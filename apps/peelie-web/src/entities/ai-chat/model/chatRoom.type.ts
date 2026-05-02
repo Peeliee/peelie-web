@@ -1,11 +1,13 @@
-// 채팅방 목록 단일 아이템
+import type { ApiResponse } from '@/shared/api/types';
+
 export interface ChatRoomItem {
   chatRoomPublicId: string;
   friendId: number;
   lastMessageAt: string;
 }
 
-// 채팅방 목록
 export interface ChatRoomList {
   chatRooms: ChatRoomItem[];
 }
+
+export type ChatRoomListResponseDTO = ApiResponse<ChatRoomList>;

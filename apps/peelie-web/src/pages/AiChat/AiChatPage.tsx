@@ -4,9 +4,9 @@ import { SsgoiTransition } from '@ssgoi/react';
 import { Header } from '@/widgets/header/Header';
 import { Button } from '@/shared/ui/common/button';
 import { cn } from '@/shared/lib/utils';
+import { ChatListItem } from '@/entities/ai-chat/ui/ChatListItem';
 
 import { SearchInput } from './ui/SearchInput';
-import { ChatListItem } from './ui/ChatListItem';
 
 export default function AiChatPage() {
   const navigate = useNavigate();
