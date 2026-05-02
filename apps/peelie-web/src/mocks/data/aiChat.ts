@@ -28,12 +28,18 @@ export const ChatMessagesMock: { data: Record<string, ChatMessageList>; delay: n
   data: {
     chr_abc123: {
       messages: [
-        { id: 1, role: 'USER',   content: '안녕! 오늘 뭐했어?',                         createdAt: '2026-05-01T21:20:00' },
-        { id: 2, role: 'AVATAR', content: '오늘은 집에서 영화 봤어요. 요즘 감성 영화에 빠졌거든요 🎬', createdAt: '2026-05-01T21:20:05' },
-        { id: 3, role: 'USER',   content: '오 어떤 영화?',                              createdAt: '2026-05-01T21:25:00' },
-        { id: 4, role: 'AVATAR', content: '비포 선라이즈요. 처음 봤는데 대화가 너무 좋더라고요.',   createdAt: '2026-05-01T21:25:08' },
-        { id: 5, role: 'USER',   content: '고전이지~ 나도 좋아해',                        createdAt: '2026-05-01T21:30:00' },
-        { id: 6, role: 'AVATAR', content: '진짜요? 나중에 같이 보면서 이야기 나눠요!',         createdAt: '2026-05-01T21:30:10' },
+        { id: 1,  role: 'USER',   content: '안녕! 처음 이야기해보는 거지?',                        createdAt: '2026-04-29T10:10:00' },
+        { id: 2,  role: 'AVATAR', content: '맞아요! 반가워요 😊 앞으로 잘 부탁해요.',              createdAt: '2026-04-29T10:10:08' },
+        { id: 3,  role: 'USER',   content: '나는 영화 보는 거 엄청 좋아하는데 너는?',               createdAt: '2026-04-29T10:12:00' },
+        { id: 4,  role: 'AVATAR', content: '저도 영화 좋아해요! 특히 감성적인 영화들이요 🎬',        createdAt: '2026-04-29T10:12:10' },
+        { id: 5,  role: 'USER',   content: '오 그래? 추천해줘',                                  createdAt: '2026-04-30T09:00:00' },
+        { id: 6,  role: 'AVATAR', content: '비포 선라이즈 봤어요? 대화가 정말 좋은 영화예요.',       createdAt: '2026-04-30T09:00:07' },
+        { id: 7,  role: 'USER',   content: '고전이지~ 나도 좋아해',                               createdAt: '2026-04-30T09:05:00' },
+        { id: 8,  role: 'AVATAR', content: '진짜요? 나중에 같이 보면서 이야기 나눠요!',             createdAt: '2026-04-30T09:05:12' },
+        { id: 9,  role: 'USER',   content: '안녕! 오늘 뭐했어?',                                 createdAt: '2026-05-01T21:20:00' },
+        { id: 10, role: 'AVATAR', content: '오늘은 집에서 영화 봤어요. 요즘 감성 영화에 빠졌거든요 🎬', createdAt: '2026-05-01T21:20:05' },
+        { id: 11, role: 'USER',   content: '오 또 봤어?',                                       createdAt: '2026-05-01T21:25:00' },
+        { id: 12, role: 'AVATAR', content: '네ㅎㅎ 이번엔 비포 선셋이요. 연작이라 더 좋더라고요.',   createdAt: '2026-05-01T21:25:08' },
       ],
     },
     chr_def456: {

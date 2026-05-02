@@ -20,7 +20,7 @@ export function ChatListItem({
     <button
       type="button"
       onClick={onClick}
-      className="flex w-full items-center gap-4 py-5 pl-5 text-left"
+      className="flex w-full items-center gap-4 py-5 text-left"
     >
       {/* 아바타 */}
       <div className="relative size-[46px] shrink-0 overflow-hidden rounded-full bg-gray-79">

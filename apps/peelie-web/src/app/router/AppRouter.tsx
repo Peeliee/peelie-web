@@ -23,7 +23,7 @@ export default function AppRouter() {
             { path: 'my', element: <MyPage /> },
             { path: 'test', element: <TestPage /> },
             { path: 'login', element: <LoginPage /> },
-            { path: 'chat-room', element: <ChatRoomPage /> },
+            { path: 'chat-room/:chatRoomPublicId', element: <ChatRoomPage /> },
           ],
         },
       ],
