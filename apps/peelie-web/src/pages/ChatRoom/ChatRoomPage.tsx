@@ -2,15 +2,25 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { SsgoiTransition } from '@ssgoi/react';
 import { ChatRoomHeader } from './ui/ChatRoomHeader';
-import { AvatarMessage } from '@/features/chatroom';
+import { AvatarMessage, useSendAiMessage } from '@/features/chatroom';
 import { UserBubble, DateSeparator, ChatInput, isSameDay } from '@/entities/chatroom';
 import { useGetChatMessagesQuery } from '@/entities/ai-chat';
+
+// TODO: 친구 PublicId 전달 경로 정해지면 교체 (현재는 mock 테스트용)
+const TEMP_FRIEND_PUBLIC_ID = 'usr_mock_friend';
 
 export default function ChatRoomPage() {
   const { chatRoomPublicId = '' } = useParams<{ chatRoomPublicId: string }>();
   const { data } = useGetChatMessagesQuery(chatRoomPublicId);
   const messages = data?.data.messages ?? [];
   const [inputValue, setInputValue] = useState('');
+  const { state: streamState, history, send } = useSendAiMessage(TEMP_FRIEND_PUBLIC_ID);
+
+  const handleSubmit = () => {
+    if (!inputValue.trim()) return;
+    send(inputValue);
+    setInputValue('');
+  };
 
   return (
     <SsgoiTransition id="/chat-room">
@@ -44,11 +54,42 @@ export default function ChatRoomPage() {
               </div>
             );
           })}
+
+          {history.map((exchange, i) => (
+            <div key={`hist-${i}`}>
+              <div className="flex justify-end">
+                <UserBubble content={exchange.userMessage} createdAt={exchange.completedAt} />
+              </div>
+              <AvatarMessage content={exchange.answer} createdAt={exchange.completedAt} />
+            </div>
+          ))}
+
+          {(streamState.status === 'sending' || streamState.status === 'streaming') && (
+            <>
+              <div className="flex justify-end">
+                <UserBubble
+                  content={streamState.userMessage}
+                  createdAt={new Date().toISOString()}
+                />
+              </div>
+              <AvatarMessage
+                content={streamState.status === 'streaming' ? streamState.content : '...'}
+                createdAt={new Date().toISOString()}
+              />
+            </>
+          )}
+          {streamState.status === 'error' && (
+            <div className="flex justify-center py-2">
+              <span className="px-4 py-1 text-caption-m-400 text-gray-01">
+                전송 실패: {streamState.message}
+              </span>
+            </div>
+          )}
         </div>
         <ChatInput
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          onSubmit={() => setInputValue('')}
+          onSubmit={handleSubmit}
         />
       </div>
     </SsgoiTransition>

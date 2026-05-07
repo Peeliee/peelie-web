@@ -409,6 +409,13 @@ body {
     font-weight: var(--font-weight-medium);
   }
 
+  .text-body-m-500 {
+    font-family: var(--font-family-pretendard);
+    font-size: var(--font-size-16);
+    line-height: var(--line-height-28);
+    font-weight: var(--font-weight-medium);
+  }
+
   .text-body-m-400 {
     font-family: var(--font-family-pretendard);
     font-size: var(--font-size-16);

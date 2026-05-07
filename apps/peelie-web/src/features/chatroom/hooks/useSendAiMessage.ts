@@ -1,31 +1,36 @@
-import { useCallback, useEffect, useReducer, useRef } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
-import { aiChatQueries } from '@/entities/ai-chat';
+import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import { streamAvatarMessage } from '../api/streamAvatarMessage';
 
 type State =
   | { status: 'idle' }
-  | { status: 'sending' }
-  | { status: 'streaming'; roomId: string; content: string }
+  | { status: 'sending'; userMessage: string }
+  | { status: 'streaming'; roomId: string; userMessage: string; content: string }
   | { status: 'done'; roomId: string; answer: string }
   | { status: 'error'; message: string };
 
 type Action =
-  | { type: 'SEND' }
+  | { type: 'SEND'; userMessage: string }
   | { type: 'META'; roomId: string }
   | { type: 'DELTA'; content: string }
   | { type: 'DONE'; roomId: string; answer: string }
   | { type: 'ERROR'; message: string }
   | { type: 'RESET' };
 
+export interface CompletedExchange {
+  userMessage: string;
+  answer: string;
+  completedAt: string;
+}
+
 const initialState: State = { status: 'idle' };
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
     case 'SEND':
-      return { status: 'sending' };
+      return { status: 'sending', userMessage: action.userMessage };
     case 'META':
-      return { status: 'streaming', roomId: action.roomId, content: '' };
+      if (state.status !== 'sending') return state;
+      return { status: 'streaming', roomId: action.roomId, userMessage: state.userMessage, content: '' };
     case 'DELTA':
       if (state.status !== 'streaming') return state;
       return { ...state, content: state.content + action.content };
@@ -42,7 +47,7 @@ function reducer(state: State, action: Action): State {
 
 export function useSendAiMessage(friendPublicId: string) {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const queryClient = useQueryClient();
+  const [history, setHistory] = useState<CompletedExchange[]>([]);
   const abortRef = useRef<AbortController | null>(null);
 
   const send = useCallback(
@@ -53,7 +58,10 @@ export function useSendAiMessage(friendPublicId: string) {
 
       const controller = new AbortController();
       abortRef.current = controller;
-      dispatch({ type: 'SEND' });
+      dispatch({ type: 'SEND', userMessage: trimmed });
+
+      let finalAnswer: string | null = null;
+      let errored = false;
 
       try {
         await streamAvatarMessage(
@@ -65,8 +73,10 @@ export function useSendAiMessage(friendPublicId: string) {
               case 'delta':
                 return dispatch({ type: 'DELTA', content: event.content });
               case 'done':
+                finalAnswer = event.answer;
                 return dispatch({ type: 'DONE', roomId: event.roomId, answer: event.answer });
               case 'error':
+                errored = true;
                 return dispatch({ type: 'ERROR', message: event.message });
             }
           },
@@ -74,19 +84,25 @@ export function useSendAiMessage(friendPublicId: string) {
         );
       } catch (e) {
         if (controller.signal.aborted) return;
+        errored = true;
         const msg = e instanceof Error ? e.message : '메시지 전송에 실패했습니다.';
         dispatch({ type: 'ERROR', message: msg });
+      }
+
+      if (finalAnswer !== null && !errored) {
+        setHistory((prev) => [
+          ...prev,
+          {
+            userMessage: trimmed,
+            answer: finalAnswer as string,
+            completedAt: new Date().toISOString(),
+          },
+        ]);
+        dispatch({ type: 'RESET' });
       }
     },
     [friendPublicId, state.status],
   );
-
-  useEffect(() => {
-    if (state.status !== 'done') return;
-    queryClient.invalidateQueries({
-      queryKey: aiChatQueries.chatMessages(state.roomId).queryKey,
-    });
-  }, [state, queryClient]);
 
   useEffect(() => {
     return () => abortRef.current?.abort();
@@ -99,5 +115,5 @@ export function useSendAiMessage(friendPublicId: string) {
 
   const reset = useCallback(() => dispatch({ type: 'RESET' }), []);
 
-  return { state, send, abort, reset };
+  return { state, history, send, abort, reset };
 }
