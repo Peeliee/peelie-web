@@ -1,7 +1,7 @@
 import { useMemo, useCallback } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { Ssgoi } from '@ssgoi/react';
-import { fade, drill, snap } from '@ssgoi/react/view-transitions';
+import { fade, snap } from '@ssgoi/react/view-transitions';
 import { NavigationBar } from '@/widgets/NavigationBar/NavigationBar';
 
 const NAV_ROUTES = ['/', '/ai-chat', '/my'];
@@ -14,6 +14,10 @@ export default function SsgoiLayout() {
 
   const config = useMemo(
     () => ({
+      middleware: (from: string, to: string) => ({
+        from: from.replace(/^\/chat-room\/[^/]+/, '/chat-room'),
+        to: to.replace(/^\/chat-room\/[^/]+/, '/chat-room'),
+      }),
       transitions: [
         // 홈 <-> ai채팅
         {

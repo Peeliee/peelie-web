@@ -1,13 +1,4 @@
-import { categoryHandlers } from './handlers/categoryHandlers';
-import { onboardingHandlers } from './handlers/onboardingHandlers';
-import { friendHandlers } from './handlers/friendHandlers';
-import { userHandlers } from './handlers/userHandlers';
-import { quizHandlers } from './handlers/quizHandlers';
+import { aiChatHandlers } from './handlers/aiChatHandlers';
+import { avatarStreamHandler } from './handlers/avatarStreamHandler';
 
-export const handlers = [
-  ...categoryHandlers,
-  ...onboardingHandlers,
-  ...friendHandlers,
-  ...userHandlers,
-  ...quizHandlers,
-];
+export const handlers = [...aiChatHandlers, avatarStreamHandler];
