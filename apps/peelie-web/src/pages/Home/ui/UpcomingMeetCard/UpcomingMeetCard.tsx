@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PATH from '@/shared/constants/path';
+import { cn } from '@/shared/lib/utils';
 import { MainCard } from './MainCard';
 import { MeetList } from './MeetList';
 import { NextMeetPanel } from './NextMeetPanel';
@@ -74,9 +75,8 @@ export function UpcomingMeetCard() {
   const handleToggle = () => setIsOpen((prev) => !prev);
 
   return (
-    <div className="isolate flex w-full flex-col">
-      <div className="z-[2] flex w-full flex-col">
-
+    <div className={cn('isolate flex w-full flex-col', showToggle && 'pb-3')}>
+      <div className="z-2 flex w-full flex-col">
         <MainCard meet={main} onChatClick={goToChatRoom} />
 
         {showPanel && (
@@ -90,7 +90,7 @@ export function UpcomingMeetCard() {
       </div>
 
       {showToggle && (
-        <div className="z-[1] -mt-3">
+        <div className="z-1 -mt-3">
           <MeetList meets={restMeets} isOpen={isOpen} onItemClick={goToChatRoom} />
         </div>
       )}
