@@ -41,3 +41,6 @@ export type { NativeBridge, UnboundNativeBridge, Handlers } from './core/native'
 
 export type { Transport } from './transport/types'
 export { createMockTransportPair } from './transport/mock-transport'
+export { webTransport } from './transport/web-transport'
+export { rnTransport } from './transport/rn-transport'
+export type { RnTransport } from './transport/rn-transport'
