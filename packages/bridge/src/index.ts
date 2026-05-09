@@ -32,3 +32,12 @@ export {
   BridgeHandlerError,
   BridgeDisposedError,
 } from './errors'
+
+export { createWebBridge } from './core/web'
+export type { WebBridge } from './core/web'
+
+export { createNativeBridge } from './core/native'
+export type { NativeBridge, UnboundNativeBridge, Handlers } from './core/native'
+
+export type { Transport } from './transport/types'
+export { createMockTransportPair } from './transport/mock-transport'

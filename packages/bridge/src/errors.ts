@@ -6,22 +6,18 @@ export class BridgeError extends Error {
 }
 
 export class BridgeTimeoutError extends BridgeError {
-  constructor(
-    public readonly messageName: string,
-    public readonly id: string,
-  ) {
-    super(`bridge request "${messageName}" (id=${id}) timed out`)
+  constructor(public readonly id: string) {
+    super(`bridge request (id=${id}) timed out`)
     this.name = 'BridgeTimeoutError'
   }
 }
 
 export class BridgeHandlerError extends BridgeError {
   constructor(
-    public readonly messageName: string,
     public readonly code: string,
-    message: string,
+    public readonly detail: string,
   ) {
-    super(`bridge handler "${messageName}" failed: ${code} — ${message}`)
+    super(`bridge handler failed: ${code} — ${detail}`)
     this.name = 'BridgeHandlerError'
   }
 }
