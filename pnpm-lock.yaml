@@ -319,6 +319,14 @@ importers:
         specifier: ^3.2.4
         version: 3.2.4(@types/node@24.10.0)(@vitest/browser@3.2.4)(jiti@2.6.1)(lightningcss@1.30.2)(msw@2.12.0(@types/node@24.10.0)(typescript@5.8.3))(terser@5.44.1)(yaml@2.8.1)
 
+  packages/bridge: {}
+
+  packages/bridge-contracts:
+    dependencies:
+      '@peelie/bridge':
+        specifier: workspace:*
+        version: link:../bridge
+
   packages/eslint-plugin-peelie:
     dependencies:
       eslint:
