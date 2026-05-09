@@ -7,14 +7,15 @@ import { ShareIcon } from '@/shared/ui/icons/ShareIcon';
 import { FriendCodeModal } from '@/widgets/FriendCodeModal';
 import { ScheduleModal } from '@/widgets/ScheduleModal';
 
-import { ChevronDownIcon } from '@/shared/ui/icons/ChevronDownIcon';
 import { FriendDDayCard } from './ui/FriendDDayCard';
 import { SearchBar } from './ui/SearchBar';
+import { SortDropdown, type SortOrder } from './ui/SortDropdown';
 import { UpcomingMeetCard } from './ui/UpcomingMeetCard';
 
 export default function HomePage() {
   const [isFriendCodeOpen, setIsFriendCodeOpen] = useState(false);
   const [isScheduleOpen, setIsScheduleOpen] = useState(false);
+  const [sortOrder, setSortOrder] = useState<SortOrder>('최신순');
 
   return (
     <SsgoiTransition id="/">
@@ -31,10 +32,7 @@ export default function HomePage() {
           <p className="text-caption-m-400">스몰 토크를 위해 친구와</p>
           <div className="flex items-center justify-between">
             <p className="text-title-headline-1 text-text-main">대화 중인 목록</p>
-            <button type="button" className="flex items-center gap-1">
-              <span className="text-caption-m-400 text-gray-50">최신순</span>
-              <ChevronDownIcon className="size-6 text-gray-50" />
-            </button>
+            <SortDropdown value={sortOrder} onChange={setSortOrder} />
           </div>
         </div>
 
