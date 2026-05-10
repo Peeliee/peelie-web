@@ -42,12 +42,27 @@ schema는 `parse(value: unknown): T` 메서드를 가진 객체면 됩니다.
 
 ## 2. 웹 측
 
+컴포넌트 밖에서 한 번 만들 수 있으면 싱글톤으로 사용합니다.
+
 ```ts
 // app/bridge.ts
 import { createWebBridge, webTransport } from "@peelie/bridge";
 import { contract } from "@/shared/bridge-contract";
 
 export const bridge = createWebBridge(webTransport(), contract);
+```
+
+컴포넌트 안에서 만들어야 한다면 `useWebBridge` hook을 사용합니다. bridge 인스턴스 고정과 unmount 시 자동 dispose가 처리됩니다.
+
+```tsx
+import { useWebBridge } from "@peelie/bridge/react";
+import { contract } from "@/shared/bridge-contract";
+
+export function CameraButton() {
+    const bridge = useWebBridge(contract);
+
+    return <button onClick={() => bridge.send("OPEN_CAMERA")}>Open camera</button>;
+}
 ```
 
 ```ts
@@ -61,38 +76,32 @@ useEffect(() => bridge.on("PHOTO_TAKEN", ({ uri }) => upload(uri)), []);
 
 ## 3. 네이티브 측
 
-`.bind`에 contract의 모든 request/command 키를 적습니다.
+`useNativeBridge` hook을 쓰면 transport/bridge 인스턴스 고정 + unmount 시 자동 dispose가 처리됩니다.
 
 ```tsx
-import { useRef, useMemo } from "react";
+import { useRef } from "react";
 import { WebView } from "react-native-webview";
-import { createNativeBridge, rnTransport } from "@peelie/bridge";
+import { useNativeBridge } from "@peelie/bridge/react-native";
 import { contract } from "@/shared/bridge-contract";
 
 export default function App() {
     const ref = useRef<WebView>(null);
-    const transport = useMemo(() => rnTransport(ref), []);
-
-    const bridge = useMemo(
-        () =>
-            createNativeBridge(transport, contract).bind({
-                GET_FCM_TOKEN: async () => ({ token: await messaging().getToken() }),
-                KAKAO_LOGIN: async () => kakaoLogin(),
-                PING: () => {},
-                OPEN_CAMERA: () => router.push("/screen/CameraScreen"),
-                OPEN_INSTAGRAM: ({ username }) =>
-                    Linking.openURL(`instagram://user?username=${username}`).catch(() =>
-                        Linking.openURL(`https://instagram.com/${username}`),
-                    ),
-            }),
-        [transport],
-    );
+    const { bridge, pushMessage } = useNativeBridge(ref, contract, {
+        GET_FCM_TOKEN: async () => ({ token: await messaging().getToken() }),
+        KAKAO_LOGIN: async () => kakaoLogin(),
+        PING: () => {},
+        OPEN_CAMERA: () => router.push("/screen/CameraScreen"),
+        OPEN_INSTAGRAM: ({ username }) =>
+            Linking.openURL(`instagram://user?username=${username}`).catch(() =>
+                Linking.openURL(`https://instagram.com/${username}`),
+            ),
+    });
 
     return (
         <WebView
             ref={ref}
             source={{ uri: "https://your-web.app" }}
-            onMessage={(e) => transport.pushMessage(e.nativeEvent.data)}
+            onMessage={(e) => pushMessage(e.nativeEvent.data)}
         />
     );
 }
@@ -107,6 +116,8 @@ AppState.addEventListener("change", (s) => {
     if (s === "active") bridge.emit("APP_FOREGROUND");
 });
 ```
+
+> hook을 안 쓰고 직접 만들고 싶으면 `createNativeBridge` + `rnTransport`를 import해서 `useMemo`로 고정하고 unmount 시 `dispose()`를 호출. handler는 매 렌더 새로 생기지 않게 주의 (보통 hook이 더 안전).
 
 ## 옵션
 

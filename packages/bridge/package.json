@@ -12,6 +12,14 @@
     "./testing": {
       "types": "./src/testing.ts",
       "import": "./src/testing.ts"
+    },
+    "./react": {
+      "types": "./src/react.ts",
+      "import": "./src/react.ts"
+    },
+    "./react-native": {
+      "types": "./src/react-native.ts",
+      "import": "./src/react-native.ts"
     }
   },
   "scripts": {
@@ -19,7 +27,17 @@
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit"
   },
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
   "devDependencies": {
+    "@types/react": "*",
+    "react": "*",
     "vitest": "^3.2.4"
   }
 }
