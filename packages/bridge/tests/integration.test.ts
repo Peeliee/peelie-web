@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { command, defineContract, event, request } from "./define";
-import { BridgeDisposedError, BridgeHandlerError, BridgeTimeoutError } from "./errors";
-import { createTestBridge } from "./testing";
+import { command, defineContract, event, request } from "../src/define";
+import { BridgeDisposedError, BridgeHandlerError, BridgeTimeoutError } from "../src/errors";
+import { createTestBridge } from "../src/testing";
 
 const contract = defineContract({
     GET_TOKEN: request<void, { token: string }>(),
@@ -61,6 +61,30 @@ describe("integration: web ↔ native via mock transport", () => {
         web.send("OPEN_INSTAGRAM", { username: "peelie" });
         await flush();
         expect(handler).toHaveBeenCalledWith({ username: "peelie" });
+    });
+
+    it("command handler accepts sync void return", async () => {
+        let captured: string | null = null;
+        const { web } = createTestBridge(contract, {
+            OPEN_INSTAGRAM: ({ username }: { username: string }): void => {
+                captured = username;
+            },
+        });
+        web.send("OPEN_INSTAGRAM", { username: "peelie" });
+        await flush();
+        expect(captured).toBe("peelie");
+    });
+
+    it("command handler accepts async void return", async () => {
+        let captured: string | null = null;
+        const { web } = createTestBridge(contract, {
+            OPEN_INSTAGRAM: async ({ username }: { username: string }): Promise<void> => {
+                captured = username;
+            },
+        });
+        web.send("OPEN_INSTAGRAM", { username: "peelie" });
+        await flush();
+        expect(captured).toBe("peelie");
     });
 
     it("subscribes to events emitted from native", async () => {
