@@ -52,12 +52,12 @@ export function defineContract<C extends BridgeSchema>(contract: C): C {
 }
 
 // 인스턴스 옵션 surface (timeout, logger 두 개로 한정 — §3.7.2).
-export type Logger = {
+export type Logger = Partial<{
     debug: (...args: unknown[]) => void;
     info: (...args: unknown[]) => void;
     warn: (...args: unknown[]) => void;
     error: (...args: unknown[]) => void;
-};
+}>;
 
 export type BridgeOptions = {
     defaultOptions?: { request?: { timeout?: number | "none" } };
