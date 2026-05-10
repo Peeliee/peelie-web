@@ -20,8 +20,28 @@ export function useWebBridge<S extends BridgeSchema>(
         () => createWebBridge(webTransport(), contract, optionsRef.current),
         [contract],
     );
+    const latestBridgeRef = useRef(bridge);
+    const effectVersionRef = useRef(0);
+    latestBridgeRef.current = bridge;
 
-    useEffect(() => () => bridge.dispose(), [bridge]);
+    useEffect(() => {
+        const effectVersion = ++effectVersionRef.current;
+        return () => {
+            if (latestBridgeRef.current !== bridge) {
+                bridge.dispose();
+                return;
+            }
+            // React StrictMode can run cleanup during a dev-only remount probe.
+            queueMicrotask(() => {
+                if (
+                    latestBridgeRef.current === bridge &&
+                    effectVersionRef.current === effectVersion
+                ) {
+                    bridge.dispose();
+                }
+            });
+        };
+    }, [bridge]);
 
     return bridge;
 }

@@ -1,12 +1,14 @@
+import { useEffect, useRef } from "react";
 import { WebView } from "react-native-webview";
 import { SafeAreaView, SafeAreaProvider, useSafeAreaInsets } from "react-native-safe-area-context";
-import { StyleSheet, Platform, Linking } from "react-native";
-import { useRouter } from "expo-router";
+import { StyleSheet, Platform } from "react-native";
+import { useNativeBridge } from "@peelie/bridge/react-native";
+import { testContract } from "@peelie/bridge-contracts";
 
 export default function HomeScreen() {
-    const router = useRouter();
+    const ref = useRef<WebView>(null);
 
-    const DEV_URL = "http://10.221.43.192:5173";
+    const DEV_URL = "http://172.20.10.11:5173/test";
     const PROD_URL = "https://peelie.vercel.app";
     const sourceUrl = __DEV__ ? DEV_URL : PROD_URL;
 
@@ -22,29 +24,27 @@ export default function HomeScreen() {
         true;
     `;
 
-    const handleMessage = (event) => {
-        try {
-            const data = JSON.parse(event.nativeEvent.data);
-            console.log("버튼눌림");
-            if (data.type === "OPEN_CAMERA") {
-                router.push("/screen/CameraScreen");
-            }
+    const { bridge, pushMessage } = useNativeBridge(ref, testContract, {
+        PING: () => ({ ok: true as const }),
+        ECHO: ({ message }) => ({ message }),
+        GET_TIME: () => ({ now: Date.now() }),
+        LOG: ({ message }) => {
+            console.log("[bridge:log]", message);
+        },
+        TRIGGER: () => {
+            console.log("[bridge:trigger]");
+        },
+    });
 
-            if (data.type === "OPEN_INSTAGRAM") {
-                const username = data.username;
-
-                // 인스타 앱 열기
-                const url = `instagram://user?username=${username}`;
-
-                Linking.openURL(url).catch(() => {
-                    // 앱 없으면 웹으로 fallback
-                    Linking.openURL(`https://instagram.com/${username}`);
-                });
-            }
-        } catch (e) {
-            console.log("Invalid message", e);
-        }
-    };
+    useEffect(() => {
+        let count = 0;
+        const tick = setInterval(() => {
+            count += 1;
+            bridge.emit("TICK", { count });
+            if (count <= 5) bridge.emit("APP_READY");
+        }, 1000);
+        return () => clearInterval(tick);
+    }, [bridge]);
 
     return (
         <SafeAreaProvider>
@@ -57,6 +57,7 @@ export default function HomeScreen() {
                 ]}
             >
                 <WebView
+                    ref={ref}
                     source={{ uri: sourceUrl }}
                     originWhitelist={["*"]}
                     allowsInlineMediaPlayback
@@ -68,7 +69,7 @@ export default function HomeScreen() {
                     onLoadStart={() => console.log("WebView 시작")}
                     onLoadEnd={() => console.log("WebView 완료")}
                     onError={(e) => console.log("WebView 오류:", e.nativeEvent)}
-                    onMessage={handleMessage}
+                    onMessage={(e) => pushMessage(e.nativeEvent.data)}
                     injectedJavaScript={injectedJavaScript}
                 />
             </SafeAreaView>

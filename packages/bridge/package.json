@@ -36,8 +36,7 @@
     }
   },
   "devDependencies": {
-    "@types/react": "*",
-    "react": "*",
+    "@types/react": "^19.1.0",
     "vitest": "^3.2.4"
   }
 }

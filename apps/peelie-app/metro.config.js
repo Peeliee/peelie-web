@@ -1,7 +1,18 @@
 const { getDefaultConfig } = require("expo/metro-config");
 const path = require("path");
 
-const config = getDefaultConfig(__dirname);
+const projectRoot = __dirname;
+const monorepoRoot = path.resolve(projectRoot, "../..");
+
+const config = getDefaultConfig(projectRoot);
+
+// pnpm 모노레포 — workspace 패키지 + .pnpm 심볼릭 링크 해결.
+// hierarchical lookup은 끄지 말 것 (.pnpm/<pkg>@<ver>/node_modules/* 도 Metro가 walk up해서 찾아야 함).
+config.watchFolders = [monorepoRoot];
+config.resolver.nodeModulesPaths = [
+    path.resolve(projectRoot, "node_modules"),
+    path.resolve(monorepoRoot, "node_modules"),
+];
 
 // SVG 설정
 config.resolver.assetExts = config.resolver.assetExts.filter((ext) => ext !== "svg");

@@ -54,8 +54,28 @@ export function useNativeBridge<S extends BridgeSchema>(
         // options는 일부러 deps에서 제외 — 첫 렌더 값으로 고정 (위 docstring 참고).
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [transport, contract]);
+    const latestBridgeRef = useRef(bridge);
+    const effectVersionRef = useRef(0);
+    latestBridgeRef.current = bridge;
 
-    useEffect(() => () => bridge.dispose(), [bridge]);
+    useEffect(() => {
+        const effectVersion = ++effectVersionRef.current;
+        return () => {
+            if (latestBridgeRef.current !== bridge) {
+                bridge.dispose();
+                return;
+            }
+            // React StrictMode can run cleanup during a dev-only remount probe.
+            queueMicrotask(() => {
+                if (
+                    latestBridgeRef.current === bridge &&
+                    effectVersionRef.current === effectVersion
+                ) {
+                    bridge.dispose();
+                }
+            });
+        };
+    }, [bridge]);
 
     return { bridge, pushMessage: transport.pushMessage };
 }

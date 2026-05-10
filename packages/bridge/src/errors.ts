@@ -6,19 +6,22 @@ export class BridgeError extends Error {
 }
 
 export class BridgeTimeoutError extends BridgeError {
-    constructor(public readonly id: string) {
+    readonly id: string;
+    constructor(id: string) {
         super(`bridge request (id=${id}) timed out`);
         this.name = "BridgeTimeoutError";
+        this.id = id;
     }
 }
 
 export class BridgeHandlerError extends BridgeError {
-    constructor(
-        public readonly code: string,
-        public readonly detail: string,
-    ) {
+    readonly code: string;
+    readonly detail: string;
+    constructor(code: string, detail: string) {
         super(`bridge handler failed: ${code} — ${detail}`);
         this.name = "BridgeHandlerError";
+        this.code = code;
+        this.detail = detail;
     }
 }
 
@@ -32,11 +35,10 @@ export class BridgeDisposedError extends BridgeError {
 // schema.parse 실패 시 발생. cause에 원본 검증기 에러(예: ZodError)가 담김.
 // caller가 instanceof로 timeout 등과 구분 가능 — 검증 실패는 재시도 무의미.
 export class BridgeValidationError extends BridgeError {
-    constructor(
-        message: string,
-        public readonly cause?: unknown,
-    ) {
+    readonly cause?: unknown;
+    constructor(message: string, cause?: unknown) {
         super(message);
         this.name = "BridgeValidationError";
+        this.cause = cause;
     }
 }
