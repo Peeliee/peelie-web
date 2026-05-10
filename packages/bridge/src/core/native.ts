@@ -1,7 +1,7 @@
 import type { BridgeOptions } from "../define";
 import type { Envelope } from "../envelope";
 import { PROTOCOL_VERSION, isValidEnvelope } from "../envelope";
-import { BridgeDisposedError } from "../errors";
+import { BridgeDisposedError, BridgeValidationError } from "../errors";
 import type { Transport } from "../transport/types";
 import type {
     BridgeSchema,
@@ -15,6 +15,8 @@ import type {
 
 type RequestHandler<Req, Res> = (payload: Req) => Res | Promise<Res>;
 type CommandHandler<Req> = (payload: Req) => void | Promise<void>;
+type RuntimeHandler = (payload: unknown) => unknown;
+type RuntimeHandlers = Record<string, RuntimeHandler>;
 
 // .bind 인자 타입 — contract의 모든 request/command 키 강제.
 // 누락 / 추가 / 시그니처 어긋남 모두 컴파일 에러.
@@ -38,11 +40,11 @@ export type UnboundNativeBridge<S extends BridgeSchema> = {
 
 export function createNativeBridge<S extends BridgeSchema>(
     transport: Transport,
-    _contract: S,
+    contract: S,
     options?: BridgeOptions,
 ): UnboundNativeBridge<S> {
     const logger = options?.logger;
-    let handlers: Record<string, (payload: unknown) => unknown> | null = null;
+    let handlers: RuntimeHandlers | null = null;
     let disposed = false;
 
     const off = transport.onMessage((data) => {
@@ -69,8 +71,11 @@ export function createNativeBridge<S extends BridgeSchema>(
         switch (envelope.kind) {
             case "request": {
                 const { id, name, payload } = envelope;
+                const def = contract[name as keyof S];
                 const handler = handlers?.[name];
-                if (!handler) {
+                // contract에 이름이 없거나 / kind가 request가 아니거나 / handler 미바인딩 → 거절.
+                // 셋 다 web 입장에선 "이 이름은 처리 못함" 동일 사실. UNKNOWN_MESSAGE로 통합.
+                if (!def || def.kind !== "request" || !handler) {
                     transport.send(
                         JSON.stringify({
                             v: PROTOCOL_VERSION,
@@ -85,15 +90,59 @@ export function createNativeBridge<S extends BridgeSchema>(
                     );
                     return;
                 }
+                // 들어온 payload 검증 (schema 있을 때).
+                let validatedPayload = payload;
+                if (def.payload) {
+                    try {
+                        validatedPayload = def.payload.parse(payload);
+                    } catch (e) {
+                        logger?.warn("[bridge:native] invalid request payload", name, e);
+                        transport.send(
+                            JSON.stringify({
+                                v: PROTOCOL_VERSION,
+                                kind: "response",
+                                id,
+                                ok: false,
+                                error: {
+                                    code: "VALIDATION_FAILED",
+                                    message: `invalid payload for "${name}"`,
+                                },
+                            }),
+                        );
+                        return;
+                    }
+                }
                 try {
-                    const data = await handler(payload);
+                    const data = await handler(validatedPayload);
+                    // 나가는 response 검증 (handler 결과가 schema와 안 맞으면 native 코드 버그).
+                    let validatedData = data;
+                    if (def.response) {
+                        try {
+                            validatedData = def.response.parse(data);
+                        } catch (e) {
+                            logger?.error("[bridge:native] invalid response", name, e);
+                            transport.send(
+                                JSON.stringify({
+                                    v: PROTOCOL_VERSION,
+                                    kind: "response",
+                                    id,
+                                    ok: false,
+                                    error: {
+                                        code: "VALIDATION_FAILED",
+                                        message: `invalid response for "${name}"`,
+                                    },
+                                }),
+                            );
+                            return;
+                        }
+                    }
                     transport.send(
                         JSON.stringify({
                             v: PROTOCOL_VERSION,
                             kind: "response",
                             id,
                             ok: true,
-                            data,
+                            data: validatedData,
                         }),
                     );
                 } catch (e) {
@@ -115,13 +164,25 @@ export function createNativeBridge<S extends BridgeSchema>(
             }
             case "command": {
                 const { name, payload } = envelope;
+                const def = contract[name as keyof S];
                 const handler = handlers?.[name];
-                if (!handler) {
+                // command는 응답 채널이 없음 → drop + log.
+                if (!def || def.kind !== "command" || !handler) {
                     logger?.warn("[bridge:native] unknown command", name);
                     return;
                 }
+                // 들어온 command payload 검증 (실패 시 drop + log).
+                let validatedPayload = payload;
+                if (def.payload) {
+                    try {
+                        validatedPayload = def.payload.parse(payload);
+                    } catch (e) {
+                        logger?.warn("[bridge:native] invalid command payload", name, e);
+                        return;
+                    }
+                }
                 try {
-                    await handler(payload);
+                    await handler(validatedPayload);
                 } catch (e) {
                     logger?.error("[bridge:native] command handler threw", name, e);
                 }
@@ -136,12 +197,22 @@ export function createNativeBridge<S extends BridgeSchema>(
 
     function doEmit(name: string, payload: unknown): void {
         if (disposed) throw new BridgeDisposedError();
+        const def = contract[name as keyof S];
+        // 나가는 event payload 검증 — parse 결과를 그대로 전송 (양방향 일관).
+        let outgoingPayload = payload;
+        if (def?.kind === "event" && def.payload) {
+            try {
+                outgoingPayload = def.payload.parse(payload);
+            } catch (e) {
+                throw new BridgeValidationError(`invalid event payload for "${name}"`, e);
+            }
+        }
         transport.send(
             JSON.stringify({
                 v: PROTOCOL_VERSION,
                 kind: "event",
                 name,
-                payload,
+                payload: outgoingPayload,
             }),
         );
     }
@@ -155,7 +226,7 @@ export function createNativeBridge<S extends BridgeSchema>(
 
     return {
         bind(boundHandlers: Handlers<S>): NativeBridge<S> {
-            handlers = boundHandlers as unknown as Record<string, (payload: unknown) => unknown>;
+            handlers = boundHandlers as RuntimeHandlers;
             return {
                 emit: ((...args: unknown[]) => {
                     const [name, payload] = args as [string, unknown?];

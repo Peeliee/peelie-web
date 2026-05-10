@@ -1,5 +1,5 @@
 import { createNativeBridge } from "./core/native";
-import type { NativeBridge } from "./core/native";
+import type { Handlers, NativeBridge } from "./core/native";
 import { createWebBridge } from "./core/web";
 import type { WebBridge } from "./core/web";
 import { createMockTransportPair } from "./transport/mock-transport";
@@ -22,6 +22,7 @@ export function createTestBridge<S extends BridgeSchema>(
 ): { web: WebBridge<S>; native: NativeBridge<S> } {
     const { web: webT, native: nativeT } = createMockTransportPair();
     const web = createWebBridge(webT, contract);
-    const native = createNativeBridge(nativeT, contract).bind(partialHandlers as never);
+    // 테스트에서는 handler 누락 경로를 검증해야 하므로 full Handlers<S> 요구를 의도적으로 우회한다.
+    const native = createNativeBridge(nativeT, contract).bind(partialHandlers as Handlers<S>);
     return { web, native };
 }

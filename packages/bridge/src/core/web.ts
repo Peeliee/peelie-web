@@ -1,7 +1,12 @@
 import type { BridgeOptions } from "../define";
 import type { Envelope } from "../envelope";
 import { PROTOCOL_VERSION, isValidEnvelope } from "../envelope";
-import { BridgeDisposedError, BridgeHandlerError, BridgeTimeoutError } from "../errors";
+import {
+    BridgeDisposedError,
+    BridgeHandlerError,
+    BridgeTimeoutError,
+    BridgeValidationError,
+} from "../errors";
 import type { Transport } from "../transport/types";
 import type {
     BridgeSchema,
@@ -68,16 +73,39 @@ export function createWebBridge<S extends BridgeSchema>(
         switch (envelope.kind) {
             case "response":
                 pending.settle(envelope.id, (entry) => {
-                    if (envelope.ok) entry.resolve(envelope.data);
-                    else
-                        entry.reject(
-                            new BridgeHandlerError(envelope.error.code, envelope.error.message),
-                        );
+                    if (envelope.ok) {
+                        entry.resolve(envelope.data);
+                        return;
+                    }
+                    // VALIDATION_FAILED는 BridgeValidationError로 끌어올림 (caller가 instanceof로 분기 가능).
+                    const { code, message } = envelope.error;
+                    if (code === "VALIDATION_FAILED") {
+                        entry.reject(new BridgeValidationError(message));
+                    } else {
+                        entry.reject(new BridgeHandlerError(code, message));
+                    }
                 });
                 return;
-            case "event":
-                subscribers.emit(envelope.name, envelope.payload);
+            case "event": {
+                const def = contract[envelope.name as keyof S];
+                // contract에 없거나 kind가 event 아니면 drop + log.
+                if (!def || def.kind !== "event") {
+                    logger?.warn("[bridge:web] unknown event", envelope.name);
+                    return;
+                }
+                // payload schema 있으면 들어온 페이로드 검증, 실패 시 drop + log.
+                let payload = envelope.payload;
+                if (def.payload) {
+                    try {
+                        payload = def.payload.parse(payload);
+                    } catch (e) {
+                        logger?.warn("[bridge:web] invalid event payload", envelope.name, e);
+                        return;
+                    }
+                }
+                subscribers.emit(envelope.name, payload);
                 return;
+            }
             case "request":
             case "command":
                 logger?.warn("[bridge:web] received unexpected", envelope.kind);
@@ -91,17 +119,38 @@ export function createWebBridge<S extends BridgeSchema>(
         opts: { timeout?: number | "none" } | undefined,
     ): Promise<unknown> {
         if (disposed) return Promise.reject(new BridgeDisposedError());
-        const id = nextId();
         const def = contract[name as keyof S];
+        // 나가는 payload 검증 (caller 버그를 호출 위치에서 즉시 감지).
+        // parse 결과(transform/coerce 적용된 값)를 그대로 transport에 태움 — 양방향 일관.
+        let outgoingPayload = payload;
+        if (def?.kind === "request" && def.payload) {
+            try {
+                outgoingPayload = def.payload.parse(payload);
+            } catch (e) {
+                return Promise.reject(
+                    new BridgeValidationError(`invalid request payload for "${name}"`, e),
+                );
+            }
+        }
+        const id = nextId();
         const contractTimeout =
-            def && def.kind === "request" && def.options?.timeout !== undefined
-                ? def.options.timeout
-                : undefined;
+            def?.kind === "request" && def.timeout !== undefined ? def.timeout : undefined;
         const timeout = opts?.timeout ?? contractTimeout ?? defaultTimeout;
         return new Promise((resolve, reject) => {
             pending.add({
                 id,
-                resolve,
+                // 들어온 응답 검증 (response schema 있으면). 실패 시 caller에게 reject.
+                resolve: (data) => {
+                    if (def?.kind === "request" && def.response) {
+                        try {
+                            resolve(def.response.parse(data));
+                        } catch (e) {
+                            reject(new BridgeValidationError(`invalid response for "${name}"`, e));
+                        }
+                        return;
+                    }
+                    resolve(data);
+                },
                 reject,
                 timeout,
                 onTimeout: () => reject(new BridgeTimeoutError(id)),
@@ -112,7 +161,7 @@ export function createWebBridge<S extends BridgeSchema>(
                     kind: "request",
                     id,
                     name,
-                    payload,
+                    payload: outgoingPayload,
                 }),
             );
         });
@@ -120,12 +169,22 @@ export function createWebBridge<S extends BridgeSchema>(
 
     function doSend(name: string, payload: unknown): void {
         if (disposed) throw new BridgeDisposedError();
+        const def = contract[name as keyof S];
+        // 나가는 command payload 검증 — parse 결과를 그대로 전송.
+        let outgoingPayload = payload;
+        if (def?.kind === "command" && def.payload) {
+            try {
+                outgoingPayload = def.payload.parse(payload);
+            } catch (e) {
+                throw new BridgeValidationError(`invalid command payload for "${name}"`, e);
+            }
+        }
         transport.send(
             JSON.stringify({
                 v: PROTOCOL_VERSION,
                 kind: "command",
                 name,
-                payload,
+                payload: outgoingPayload,
             }),
         );
     }
