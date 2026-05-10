@@ -24,17 +24,24 @@ export default function HomeScreen() {
         true;
     `;
 
-    const { bridge, pushMessage } = useNativeBridge(ref, testContract, {
-        PING: () => ({ ok: true as const }),
-        ECHO: ({ message }) => ({ message }),
-        GET_TIME: () => ({ now: Date.now() }),
-        LOG: ({ message }) => {
-            console.log("[bridge:log]", message);
+    const { bridge, pushMessage } = useNativeBridge(
+        ref,
+        testContract,
+        {
+            PING: () => ({ ok: true as const }),
+            ECHO: ({ message }) => ({ message: String(Date.now() + message + "응답임") }),
+            GET_TIME: () => ({ now: Date.now() }),
+            LOG: ({ message }) => {
+                console.log("[bridge:log]", message);
+            },
+            TRIGGER: () => {
+                console.log("[bridge:trigger]");
+            },
         },
-        TRIGGER: () => {
-            console.log("[bridge:trigger]");
+        {
+            logger: console,
         },
-    });
+    );
 
     useEffect(() => {
         let count = 0;

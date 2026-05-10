@@ -17,11 +17,11 @@ export const testContract = defineContract({
 
     // command — 응답 없음 (web → native)
     LOG: command({ payload: MessagePayload }), // payload 있음
-    TRIGGER: command(), // void
+    // TRIGGER: command(), // void
 
     // event — 자발적 발행 (native → web)
     TICK: event({ payload: TickPayload }), // payload 있음
-    APP_READY: event(), // void
+    APP_READY: event(),
 });
 
 export type TestContract = typeof testContract;

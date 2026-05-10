@@ -5,6 +5,7 @@ import {
     BridgeDisposedError,
     BridgeHandlerError,
     BridgeTimeoutError,
+    BridgeUnknownMessageError,
     BridgeValidationError,
 } from "../errors";
 import type { Transport } from "../transport/types";
@@ -55,15 +56,15 @@ export function createWebBridge<S extends BridgeSchema>(
         try {
             parsed = JSON.parse(data);
         } catch {
-            logger?.warn("[bridge:web] invalid JSON", data);
+            logger?.warn?.("[bridge:web] invalid JSON", data);
             return;
         }
         if (!isValidEnvelope(parsed)) {
-            logger?.warn("[bridge:web] malformed envelope", parsed);
+            logger?.warn?.("[bridge:web] malformed envelope", parsed);
             return;
         }
         if (parsed.v !== PROTOCOL_VERSION) {
-            logger?.warn("[bridge:web] unsupported protocolVersion", parsed.v);
+            logger?.warn?.("[bridge:web] unsupported protocolVersion", parsed.v);
             return;
         }
         dispatch(parsed);
@@ -90,7 +91,7 @@ export function createWebBridge<S extends BridgeSchema>(
                 const def = contract[envelope.name as keyof S];
                 // contract에 없거나 kind가 event 아니면 drop + log.
                 if (!def || def.kind !== "event") {
-                    logger?.warn("[bridge:web] unknown event", envelope.name);
+                    logger?.warn?.("[bridge:web] unknown event", envelope.name);
                     return;
                 }
                 // payload schema 있으면 들어온 페이로드 검증, 실패 시 drop + log.
@@ -99,7 +100,7 @@ export function createWebBridge<S extends BridgeSchema>(
                     try {
                         payload = def.payload.parse(payload);
                     } catch (e) {
-                        logger?.warn("[bridge:web] invalid event payload", envelope.name, e);
+                        logger?.warn?.("[bridge:web] invalid event payload", envelope.name, e);
                         return;
                     }
                 }
@@ -108,7 +109,7 @@ export function createWebBridge<S extends BridgeSchema>(
             }
             case "request":
             case "command":
-                logger?.warn("[bridge:web] received unexpected", envelope.kind);
+                logger?.warn?.("[bridge:web] received unexpected", envelope.kind);
                 return;
         }
     }
@@ -120,10 +121,13 @@ export function createWebBridge<S extends BridgeSchema>(
     ): Promise<unknown> {
         if (disposed) return Promise.reject(new BridgeDisposedError());
         const def = contract[name as keyof S];
+        if (!def || def.kind !== "request") {
+            return Promise.reject(new BridgeUnknownMessageError(name, "request", def?.kind));
+        }
         // 나가는 payload 검증 (caller 버그를 호출 위치에서 즉시 감지).
         // parse 결과(transform/coerce 적용된 값)를 그대로 transport에 태움 — 양방향 일관.
         let outgoingPayload = payload;
-        if (def?.kind === "request" && def.payload) {
+        if (def.payload) {
             try {
                 outgoingPayload = def.payload.parse(payload);
             } catch (e) {
@@ -133,15 +137,14 @@ export function createWebBridge<S extends BridgeSchema>(
             }
         }
         const id = nextId();
-        const contractTimeout =
-            def?.kind === "request" && def.timeout !== undefined ? def.timeout : undefined;
+        const contractTimeout = def.timeout;
         const timeout = opts?.timeout ?? contractTimeout ?? defaultTimeout;
         return new Promise((resolve, reject) => {
             pending.add({
                 id,
                 // 들어온 응답 검증 (response schema 있으면). 실패 시 caller에게 reject.
                 resolve: (data) => {
-                    if (def?.kind === "request" && def.response) {
+                    if (def.response) {
                         try {
                             resolve(def.response.parse(data));
                         } catch (e) {
@@ -170,9 +173,12 @@ export function createWebBridge<S extends BridgeSchema>(
     function doSend(name: string, payload: unknown): void {
         if (disposed) throw new BridgeDisposedError();
         const def = contract[name as keyof S];
+        if (!def || def.kind !== "command") {
+            throw new BridgeUnknownMessageError(name, "command", def?.kind);
+        }
         // 나가는 command payload 검증 — parse 결과를 그대로 전송.
         let outgoingPayload = payload;
-        if (def?.kind === "command" && def.payload) {
+        if (def.payload) {
             try {
                 outgoingPayload = def.payload.parse(payload);
             } catch (e) {

@@ -6,6 +6,7 @@ import {
     BridgeDisposedError,
     BridgeHandlerError,
     BridgeTimeoutError,
+    BridgeUnknownMessageError,
     BridgeValidationError,
 } from "../src/errors";
 import { createTestBridge } from "../src/testing";
@@ -154,6 +155,53 @@ describe("integration: web ↔ native via mock transport", () => {
         });
         web.dispose();
         await expect(web.request("GET_TOKEN")).rejects.toBeInstanceOf(BridgeDisposedError);
+    });
+
+    it("rejects before sending when requesting a name outside the contract", async () => {
+        const { web: webT, native: nativeT } = createMockTransportPair();
+        const nativeSeen = vi.fn();
+        nativeT.onMessage(nativeSeen);
+        const web = createWebBridge(webT, contract);
+
+        const err = await (web.request as unknown as (name: string) => Promise<unknown>)(
+            "MISSING",
+        ).catch((e) => e);
+
+        expect(err).toBeInstanceOf(BridgeUnknownMessageError);
+        const bridgeError = err as BridgeUnknownMessageError;
+        expect(bridgeError.messageName).toBe("MISSING");
+        expect(bridgeError.expectedKind).toBe("request");
+        await flush();
+        expect(nativeSeen).not.toHaveBeenCalled();
+    });
+
+    it("throws before sending when sending a command name outside the contract kind", async () => {
+        const { web: webT, native: nativeT } = createMockTransportPair();
+        const nativeSeen = vi.fn();
+        nativeT.onMessage(nativeSeen);
+        const web = createWebBridge(webT, contract);
+
+        let err: unknown;
+        try {
+            (web.send as unknown as (name: string) => void)("GET_TOKEN");
+        } catch (e) {
+            err = e;
+        }
+        expect(err).toBeInstanceOf(BridgeUnknownMessageError);
+        const bridgeError = err as BridgeUnknownMessageError;
+        expect(bridgeError.messageName).toBe("GET_TOKEN");
+        expect(bridgeError.expectedKind).toBe("command");
+        expect(bridgeError.actualKind).toBe("request");
+        await flush();
+        expect(nativeSeen).not.toHaveBeenCalled();
+    });
+
+    it("throws before sending when emitting an event name outside the contract", () => {
+        const { native } = createTestBridge(contract);
+
+        expect(() =>
+            (native.emit as unknown as (name: string) => void)("MISSING"),
+        ).toThrow(BridgeUnknownMessageError);
     });
 });
 

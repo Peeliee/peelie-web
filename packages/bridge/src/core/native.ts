@@ -1,7 +1,7 @@
 import type { BridgeOptions } from "../define";
 import type { Envelope } from "../envelope";
 import { PROTOCOL_VERSION, isValidEnvelope } from "../envelope";
-import { BridgeDisposedError, BridgeValidationError } from "../errors";
+import { BridgeDisposedError, BridgeUnknownMessageError, BridgeValidationError } from "../errors";
 import type { Transport } from "../transport/types";
 import type {
     BridgeSchema,
@@ -53,15 +53,15 @@ export function createNativeBridge<S extends BridgeSchema>(
         try {
             parsed = JSON.parse(data);
         } catch {
-            logger?.warn("[bridge:native] invalid JSON", data);
+            logger?.warn?.("[bridge:native] invalid JSON", data);
             return;
         }
         if (!isValidEnvelope(parsed)) {
-            logger?.warn("[bridge:native] malformed envelope", parsed);
+            logger?.warn?.("[bridge:native] malformed envelope", parsed);
             return;
         }
         if (parsed.v !== PROTOCOL_VERSION) {
-            logger?.warn("[bridge:native] unsupported protocolVersion", parsed.v);
+            logger?.warn?.("[bridge:native] unsupported protocolVersion", parsed.v);
             return;
         }
         void dispatch(parsed);
@@ -96,7 +96,7 @@ export function createNativeBridge<S extends BridgeSchema>(
                     try {
                         validatedPayload = def.payload.parse(payload);
                     } catch (e) {
-                        logger?.warn("[bridge:native] invalid request payload", name, e);
+                        logger?.warn?.("[bridge:native] invalid request payload", name, e);
                         transport.send(
                             JSON.stringify({
                                 v: PROTOCOL_VERSION,
@@ -120,7 +120,7 @@ export function createNativeBridge<S extends BridgeSchema>(
                         try {
                             validatedData = def.response.parse(data);
                         } catch (e) {
-                            logger?.error("[bridge:native] invalid response", name, e);
+                            logger?.error?.("[bridge:native] invalid response", name, e);
                             transport.send(
                                 JSON.stringify({
                                     v: PROTOCOL_VERSION,
@@ -168,7 +168,7 @@ export function createNativeBridge<S extends BridgeSchema>(
                 const handler = handlers?.[name];
                 // command는 응답 채널이 없음 → drop + log.
                 if (!def || def.kind !== "command" || !handler) {
-                    logger?.warn("[bridge:native] unknown command", name);
+                    logger?.warn?.("[bridge:native] unknown command", name);
                     return;
                 }
                 // 들어온 command payload 검증 (실패 시 drop + log).
@@ -177,20 +177,20 @@ export function createNativeBridge<S extends BridgeSchema>(
                     try {
                         validatedPayload = def.payload.parse(payload);
                     } catch (e) {
-                        logger?.warn("[bridge:native] invalid command payload", name, e);
+                        logger?.warn?.("[bridge:native] invalid command payload", name, e);
                         return;
                     }
                 }
                 try {
                     await handler(validatedPayload);
                 } catch (e) {
-                    logger?.error("[bridge:native] command handler threw", name, e);
+                    logger?.error?.("[bridge:native] command handler threw", name, e);
                 }
                 return;
             }
             case "response":
             case "event":
-                logger?.warn("[bridge:native] received unexpected", envelope.kind);
+                logger?.warn?.("[bridge:native] received unexpected", envelope.kind);
                 return;
         }
     }
@@ -198,9 +198,12 @@ export function createNativeBridge<S extends BridgeSchema>(
     function doEmit(name: string, payload: unknown): void {
         if (disposed) throw new BridgeDisposedError();
         const def = contract[name as keyof S];
+        if (!def || def.kind !== "event") {
+            throw new BridgeUnknownMessageError(name, "event", def?.kind);
+        }
         // 나가는 event payload 검증 — parse 결과를 그대로 전송 (양방향 일관).
         let outgoingPayload = payload;
-        if (def?.kind === "event" && def.payload) {
+        if (def.payload) {
             try {
                 outgoingPayload = def.payload.parse(payload);
             } catch (e) {

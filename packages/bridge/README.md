@@ -134,6 +134,7 @@ createWebBridge(webTransport(), contract, {
 
 schema가 붙은 자리는 양방향(나가는/들어오는) 모두 런타임 검증됩니다. 실패 시:
 
+- contract에 없는 메시지를 보내는 쪽 → `BridgeUnknownMessageError` throw / Promise reject
 - 나가는 쪽 → `BridgeValidationError` throw / Promise reject
 - 들어오는 request → 보낸 쪽으로 `BridgeValidationError` reject
 - 들어오는 command/event → drop + `logger.warn`
@@ -147,6 +148,7 @@ import {
     BridgeDisposedError,
     BridgeHandlerError,
     BridgeTimeoutError,
+    BridgeUnknownMessageError,
     BridgeValidationError,
 } from "@peelie/bridge";
 
@@ -158,6 +160,9 @@ try {
     }
     if (e instanceof BridgeValidationError) {
         // schema 검증 실패
+    }
+    if (e instanceof BridgeUnknownMessageError) {
+        // contract에 없는 이름이거나 kind가 다른 메시지 호출
     }
     if (e instanceof BridgeHandlerError) {
         // native handler 에러 응답

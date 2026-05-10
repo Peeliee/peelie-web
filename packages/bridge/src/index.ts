@@ -32,8 +32,10 @@ export {
     BridgeTimeoutError,
     BridgeHandlerError,
     BridgeDisposedError,
+    BridgeUnknownMessageError,
     BridgeValidationError,
 } from "./errors";
+export type { BridgeMessageKind } from "./errors";
 
 export { createWebBridge } from "./core/web";
 export type { WebBridge } from "./core/web";
