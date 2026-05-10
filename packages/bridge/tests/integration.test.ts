@@ -50,11 +50,12 @@ describe("integration: web ↔ native via mock transport", () => {
         });
     });
 
-    it("rejects with UNKNOWN_MESSAGE when no handler is bound", async () => {
+    it("rejects with BridgeUnknownMessageError when no handler is bound on native", async () => {
         const { web } = createTestBridge(contract, {});
         const err = await web.request("NEVER_BOUND").catch((e) => e);
-        expect(err).toBeInstanceOf(BridgeHandlerError);
-        expect(err.code).toBe("UNKNOWN_MESSAGE");
+        expect(err).toBeInstanceOf(BridgeUnknownMessageError);
+        expect((err as BridgeUnknownMessageError).messageName).toBe("NEVER_BOUND");
+        expect((err as BridgeUnknownMessageError).expectedKind).toBe("request");
     });
 
     it("rejects with HANDLER_ERROR when handler throws", async () => {
@@ -175,33 +176,32 @@ describe("integration: web ↔ native via mock transport", () => {
         expect(nativeSeen).not.toHaveBeenCalled();
     });
 
-    it("throws before sending when sending a command name outside the contract kind", async () => {
+    it("warns and drops before sending when sending a command name outside the contract kind", async () => {
         const { web: webT, native: nativeT } = createMockTransportPair();
+        const logger = { warn: vi.fn() };
         const nativeSeen = vi.fn();
         nativeT.onMessage(nativeSeen);
-        const web = createWebBridge(webT, contract);
+        const web = createWebBridge(webT, contract, { logger });
 
-        let err: unknown;
-        try {
-            (web.send as unknown as (name: string) => void)("GET_TOKEN");
-        } catch (e) {
-            err = e;
-        }
-        expect(err).toBeInstanceOf(BridgeUnknownMessageError);
-        const bridgeError = err as BridgeUnknownMessageError;
-        expect(bridgeError.messageName).toBe("GET_TOKEN");
-        expect(bridgeError.expectedKind).toBe("command");
-        expect(bridgeError.actualKind).toBe("request");
+        expect(() => (web.send as unknown as (name: string) => void)("GET_TOKEN")).not.toThrow();
         await flush();
+        expect(logger.warn).toHaveBeenCalledWith("[bridge:web] unknown command", "GET_TOKEN");
         expect(nativeSeen).not.toHaveBeenCalled();
     });
 
-    it("throws before sending when emitting an event name outside the contract", () => {
-        const { native } = createTestBridge(contract);
+    it("warns and drops before sending when emitting an event name outside the contract", async () => {
+        const { web: webT, native: nativeT } = createMockTransportPair();
+        const logger = { warn: vi.fn() };
+        const webSeen = vi.fn();
+        webT.onMessage(webSeen);
+        const native = createNativeBridge(nativeT, contract, { logger }).bind({} as never);
 
         expect(() =>
             (native.emit as unknown as (name: string) => void)("MISSING"),
-        ).toThrow(BridgeUnknownMessageError);
+        ).not.toThrow();
+        await flush();
+        expect(logger.warn).toHaveBeenCalledWith("[bridge:native] unknown event", "MISSING");
+        expect(webSeen).not.toHaveBeenCalled();
     });
 });
 

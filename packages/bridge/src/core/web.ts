@@ -140,6 +140,15 @@ export function createWebBridge<S extends BridgeSchema>(
         const contractTimeout = def.timeout;
         const timeout = opts?.timeout ?? contractTimeout ?? defaultTimeout;
         return new Promise((resolve, reject) => {
+            // native가 UNKNOWN_MESSAGE 응답으로 거절한 경우 (handler 미바인딩 등) →
+            // 나가는 쪽 path와 동일 클래스로 끌어올림 (caller가 instanceof로 일관 분기).
+            const wrappedReject = (e: unknown): void => {
+                if (e instanceof BridgeHandlerError && e.code === "UNKNOWN_MESSAGE") {
+                    reject(new BridgeUnknownMessageError(name, "request"));
+                    return;
+                }
+                reject(e as Error);
+            };
             pending.add({
                 id,
                 // 들어온 응답 검증 (response schema 있으면). 실패 시 caller에게 reject.
@@ -154,7 +163,7 @@ export function createWebBridge<S extends BridgeSchema>(
                     }
                     resolve(data);
                 },
-                reject,
+                reject: wrappedReject,
                 timeout,
                 onTimeout: () => reject(new BridgeTimeoutError(id)),
             });
@@ -174,7 +183,8 @@ export function createWebBridge<S extends BridgeSchema>(
         if (disposed) throw new BridgeDisposedError();
         const def = contract[name as keyof S];
         if (!def || def.kind !== "command") {
-            throw new BridgeUnknownMessageError(name, "command", def?.kind);
+            logger?.warn?.("[bridge:web] unknown command", name);
+            return;
         }
         // 나가는 command payload 검증 — parse 결과를 그대로 전송.
         let outgoingPayload = payload;

@@ -199,7 +199,8 @@ export function createNativeBridge<S extends BridgeSchema>(
         if (disposed) throw new BridgeDisposedError();
         const def = contract[name as keyof S];
         if (!def || def.kind !== "event") {
-            throw new BridgeUnknownMessageError(name, "event", def?.kind);
+            logger?.warn?.("[bridge:native] unknown event", name);
+            return;
         }
         // 나가는 event payload 검증 — parse 결과를 그대로 전송 (양방향 일관).
         let outgoingPayload = payload;
