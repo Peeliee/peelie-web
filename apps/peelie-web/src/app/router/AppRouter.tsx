@@ -8,6 +8,8 @@ import AiChatPage from '@/pages/AiChat/AiChatPage';
 import ChatRoomPage from '@/pages/ChatRoom/ChatRoomPage';
 import MyPage from '@/pages/My/MyPage';
 import LoginPage from '@/pages/Login/LoginPage';
+import OnboardingPage from '@/pages/Onboarding/OnboardingPage';
+import AuthGate from './AuthGate';
 
 export default function AppRouter() {
   const router = createBrowserRouter([
@@ -15,15 +17,21 @@ export default function AppRouter() {
       path: PATH.HOME,
       element: <App />,
       children: [
+        { path: 'login', element: <LoginPage /> },
+        { path: 'onboarding', element: <OnboardingPage /> },
+        { path: 'test', element: <TestPage /> },
         {
-          element: <SsgoiLayout />,
+          element: <AuthGate />,
           children: [
-            { index: true, element: <HomePage /> },
-            { path: 'ai-chat', element: <AiChatPage /> },
-            { path: 'my', element: <MyPage /> },
-            { path: 'test', element: <TestPage /> },
-            { path: 'login', element: <LoginPage /> },
-            { path: 'chat-room/:chatRoomPublicId', element: <ChatRoomPage /> },
+            {
+              element: <SsgoiLayout />,
+              children: [
+                { index: true, element: <HomePage /> },
+                { path: 'ai-chat', element: <AiChatPage /> },
+                { path: 'my', element: <MyPage /> },
+                { path: 'chat-room/:chatRoomPublicId', element: <ChatRoomPage /> },
+              ],
+            },
           ],
         },
       ],
