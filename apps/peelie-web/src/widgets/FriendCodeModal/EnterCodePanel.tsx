@@ -1,14 +1,17 @@
 import { useState } from 'react';
+import { useAddFriendshipMutation } from '@/entities/friendship';
+import type { FriendSummary } from '@/entities/friendship/model/friendship.type';
 import { cn } from '@/shared/lib/utils';
 import { Input } from '@/shared/ui/common/Input';
 import { ModalCharacterIcon } from '@/shared/ui/icons/ModalCharacterIcon';
 
 interface EnterCodePanelProps {
-  onRegister: (code: string) => void;
+  onRegister: (friend: FriendSummary) => void;
 }
 
 export function EnterCodePanel({ onRegister }: EnterCodePanelProps) {
   const [code, setCode] = useState('');
+  const { mutate: addFriendship, isPending } = useAddFriendshipMutation();
 
   return (
     <div className="relative h-[400px] w-full overflow-hidden rounded-large bg-gray-01">
@@ -47,8 +50,9 @@ export function EnterCodePanel({ onRegister }: EnterCodePanelProps) {
       <div className="absolute left-1/2 top-[302px] flex -translate-x-1/2 flex-col items-center gap-2">
         <button
           type="button"
-          onClick={() => onRegister(code)}
-          className="flex h-12 w-[264px] items-center justify-center rounded-full bg-gray-70 text-body-m-400 text-gray-01"
+          onClick={() => addFriendship({ friendCode: code }, { onSuccess: onRegister })}
+          disabled={isPending || !code}
+          className="flex h-12 w-[264px] items-center justify-center rounded-full bg-gray-70 text-body-m-400 text-gray-01 disabled:opacity-50"
         >
           코드 등록하기
         </button>

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Modal from '@/shared/ui/common/Modal/Modal';
 import ToggleSelect from '@/shared/ui/common/ToggleSelect/ToggleSelect';
 import { XIcon } from '@/shared/ui/icons/XIcon';
+import type { FriendSummary } from '@/entities/friendship/model/friendship.type';
 import { CompletePanel } from './CompletePanel';
 import { EnterCodePanel } from './EnterCodePanel';
 import { RelationshipPanel } from './RelationshipPanel';
@@ -18,10 +19,9 @@ const TABS = [
 interface FriendCodeModalProps {
   isOpen: boolean;
   onClose: () => void;
-  myCode: string;
 }
 
-export function FriendCodeModal({ isOpen, onClose, myCode }: FriendCodeModalProps) {
+export function FriendCodeModal({ isOpen, onClose }: FriendCodeModalProps) {
   const [step, setStep] = useState<Step>('input');
   const [tab, setTab] = useState<Tab>('share');
   const [friendName, setFriendName] = useState('');
@@ -41,9 +41,8 @@ export function FriendCodeModal({ isOpen, onClose, myCode }: FriendCodeModalProp
     // TODO: 코드 공유 로직 (Web Share API 또는 클립보드 복사)
   };
 
-  const handleRegisterCode = (_code: string) => {
-    // TODO: 친구 코드 등록 API 호출
-    setFriendName('지원'); // TODO: API 응답에서 친구 이름 받아오기
+  const handleRegisterCode = (friend: FriendSummary) => {
+    setFriendName(friend.name);
     setStep('relationship');
   };
 
@@ -66,7 +65,7 @@ export function FriendCodeModal({ isOpen, onClose, myCode }: FriendCodeModalProp
           <>
             <ToggleSelect items={TABS} value={tab} onChange={(v) => setTab(v as Tab)} />
             {tab === 'share' ? (
-              <ShareCodePanel myCode={myCode} onShare={handleShare} />
+              <ShareCodePanel onShare={handleShare} />
             ) : (
               <EnterCodePanel onRegister={handleRegisterCode} />
             )}

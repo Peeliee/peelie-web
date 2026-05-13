@@ -1,12 +1,13 @@
+import { useGetMeQuery } from '@/entities/auth';
 import { ModalCharacterIcon } from '@/shared/ui/icons/ModalCharacterIcon';
 import { ShareCodeIcon } from '@/shared/ui/icons/ShareCodeIcon';
 
 interface ShareCodePanelProps {
-  myCode: string;
   onShare: () => void;
 }
 
-export function ShareCodePanel({ myCode, onShare }: ShareCodePanelProps) {
+export function ShareCodePanel({ onShare }: ShareCodePanelProps) {
+  const { data: me } = useGetMeQuery();
   return (
     <div className="relative h-[400px] w-full overflow-hidden rounded-large bg-gray-01">
       {/* 상단: 캐릭터 + 안내 문구 */}
@@ -19,7 +20,7 @@ export function ShareCodePanel({ myCode, onShare }: ShareCodePanelProps) {
 
       {/* 내 코드 */}
       <p className="absolute left-1/2 top-[138px] -translate-x-1/2 whitespace-nowrap text-title-l-600 text-gray-99">
-        {myCode}
+        {me?.friendCode}
       </p>
 
       {/* 캐릭터 + 말풍선 (이미지) */}

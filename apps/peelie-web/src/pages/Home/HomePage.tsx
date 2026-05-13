@@ -90,7 +90,6 @@ export default function HomePage() {
         <FriendCodeModal
           isOpen={isFriendCodeOpen}
           onClose={() => setIsFriendCodeOpen(false)}
-          myCode="n7f0yure"
         />
 
         <ScheduleModal
