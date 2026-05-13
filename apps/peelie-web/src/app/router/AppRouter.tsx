@@ -29,7 +29,7 @@ export default function AppRouter() {
                 { index: true, element: <HomePage /> },
                 { path: 'ai-chat', element: <AiChatPage /> },
                 { path: 'my', element: <MyPage /> },
-                { path: 'chat-room/:chatRoomPublicId', element: <ChatRoomPage /> },
+                { path: 'chat-room/:chatRoomId', element: <ChatRoomPage /> },
               ],
             },
           ],
