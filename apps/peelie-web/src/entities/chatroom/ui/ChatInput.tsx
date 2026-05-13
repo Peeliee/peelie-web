@@ -8,10 +8,24 @@ interface ChatInputProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onSubmit: () => void;
   onRecommend?: () => void;
+  /** 스트리밍 중 등 입력/전송 차단. */
+  disabled?: boolean;
   className?: string;
 }
 
-export function ChatInput({ value, onChange, onSubmit, onRecommend, className }: ChatInputProps) {
+export function ChatInput({
+  value,
+  onChange,
+  onSubmit,
+  onRecommend,
+  disabled,
+  className,
+}: ChatInputProps) {
+  const handleSubmit = () => {
+    if (disabled) return;
+    onSubmit();
+  };
+
   return (
     <div className={cn('fixed bottom-0 left-0 right-0 px-5 py-2', className)}>
       <div className="rounded-[12px] border border-border-main bg-background-main px-4 py-3  bg-bg-main">
@@ -20,22 +34,25 @@ export function ChatInput({ value, onChange, onSubmit, onRecommend, className }:
             value={value}
             onChange={onChange}
             placeholder="채팅을 보내보세요"
-            className="w-full bg-transparent text-body-s-400 text-text-main outline-none placeholder:text-text-disabled"
+            disabled={disabled}
+            className="w-full bg-transparent text-body-s-400 text-text-main outline-none placeholder:text-text-disabled disabled:opacity-60"
           />
           <div className="h-px w-full rounded-full bg-alpha-10" />
           <div className="flex items-center justify-between">
             <button
               type="button"
               onClick={onRecommend}
-              className="flex h-8 items-center gap-1 rounded-full px-2"
+              disabled={disabled}
+              className="flex h-8 items-center gap-1 rounded-full px-2 disabled:opacity-60"
             >
               <LoaderIcon className="size-4 text-text-main" />
               <span className="text-caption-m-400 text-text-main">추천 답변</span>
             </button>
             <button
               type="button"
-              onClick={onSubmit}
-              className="flex items-center justify-center rounded-full border border-border-main px-2 py-1"
+              onClick={handleSubmit}
+              disabled={disabled}
+              className="flex items-center justify-center rounded-full border border-border-main px-2 py-1 disabled:opacity-60"
             >
               <ChevronUpIcon className="size-[22px] text-text-main" />
             </button>
