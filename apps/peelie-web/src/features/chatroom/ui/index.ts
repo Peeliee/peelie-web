@@ -1,1 +1,2 @@
-export * from './AvatarMessage';
+export { AvatarMessage } from './AvatarMessage';
+export { SuggestionList } from './SuggestionList';
