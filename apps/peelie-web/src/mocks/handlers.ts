@@ -1,4 +1,4 @@
-import { aiChatHandlers } from './handlers/aiChatHandlers';
-import { avatarStreamHandler } from './handlers/avatarStreamHandler';
+import { chatroomHandlers } from './handlers/chatroomHandlers';
+import { chatStreamHandlers } from './handlers/chatStreamHandler';
 
-export const handlers = [...aiChatHandlers, avatarStreamHandler];
+export const handlers = [...chatroomHandlers, ...chatStreamHandlers];

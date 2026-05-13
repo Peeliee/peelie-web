@@ -1,1 +1,2 @@
-export { useSendAiMessage } from './useSendAiMessage';
+export { useSendChatMessage } from './useSendChatMessage';
+export { useGreeting } from './useGreeting';

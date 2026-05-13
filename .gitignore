@@ -1,4 +1,5 @@
 node_modules
 .env
 .omc
-plan
+.plan
+plan/

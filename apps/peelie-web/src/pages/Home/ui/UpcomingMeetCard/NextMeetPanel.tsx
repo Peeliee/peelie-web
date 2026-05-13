@@ -25,7 +25,6 @@ export function NextMeetPanel({ meet, showToggle, isOpen, onToggle }: NextMeetPa
           'rounded-medium border border-border-main bg-brand-30',
         )}
       >
-
         <div className="flex h-full items-center justify-between px-4 py-2.5">
           <div className="flex items-center gap-5">
             <div className="rounded-full bg-brand-50 px-3 py-1">

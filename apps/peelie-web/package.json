@@ -25,6 +25,8 @@
   },
   "dependencies": {
     "@lukemorales/query-key-factory": "^1.3.4",
+    "@peelie/bridge": "workspace:*",
+    "@peelie/bridge-contracts": "workspace:*",
     "@peelie/form": "workspace:*",
     "@peelie/sse": "workspace:*",
     "@radix-ui/react-alert-dialog": "^1.1.15",

@@ -63,7 +63,14 @@ export function PokiLogoIcon(props: ComponentProps<'svg'>) {
         stroke="url(#paint8_radial_4576_12238)"
         strokeWidth="0.0304121"
       />
-      <circle cx="21.8697" cy="3.57112" r="1.2469" fill="url(#paint9_radial_4576_12238)" stroke="url(#paint10_radial_4576_12238)" strokeWidth="0.0304121" />
+      <circle
+        cx="21.8697"
+        cy="3.57112"
+        r="1.2469"
+        fill="url(#paint9_radial_4576_12238)"
+        stroke="url(#paint10_radial_4576_12238)"
+        strokeWidth="0.0304121"
+      />
       <g filter="url(#filter1_f_4576_12238)">
         <path
           d="M6.49213 12.5275C6.49213 12.5275 6.81489 11.4392 7.34984 10.9178C8.1173 10.1697 9.38128 10.249 9.38128 10.249"
@@ -96,8 +103,22 @@ export function PokiLogoIcon(props: ComponentProps<'svg'>) {
         stroke="url(#paint15_radial_4576_12238)"
         strokeWidth="0.0259589"
       />
-      <circle cx="9.91063" cy="14.75" r="0.259589" fill="white" stroke="url(#paint16_radial_4576_12238)" strokeWidth="0.0259589" />
-      <circle cx="6.27635" cy="14.75" r="0.259589" fill="white" stroke="url(#paint17_radial_4576_12238)" strokeWidth="0.0259589" />
+      <circle
+        cx="9.91063"
+        cy="14.75"
+        r="0.259589"
+        fill="white"
+        stroke="url(#paint16_radial_4576_12238)"
+        strokeWidth="0.0259589"
+      />
+      <circle
+        cx="6.27635"
+        cy="14.75"
+        r="0.259589"
+        fill="white"
+        stroke="url(#paint17_radial_4576_12238)"
+        strokeWidth="0.0259589"
+      />
       <path
         d="M9.23572 17.3456C9.96518 17.3456 10.5599 18.0301 10.5599 18.8778C10.5598 19.7253 9.96507 20.409 9.23572 20.4091C8.50635 20.4091 7.91167 19.7253 7.9115 18.8778C7.9115 18.0301 8.50624 17.3456 9.23572 17.3456Z"
         fill="url(#paint18_linear_4576_12238)"
@@ -118,7 +139,13 @@ export function PokiLogoIcon(props: ComponentProps<'svg'>) {
         strokeWidth="0.0259589"
       />
       <g filter="url(#filter2_f_4576_12238)">
-        <ellipse cx="9.15547" cy="18.7962" rx="0.57783" ry="0.714684" fill="url(#paint22_linear_4576_12238)" />
+        <ellipse
+          cx="9.15547"
+          cy="18.7962"
+          rx="0.57783"
+          ry="0.714684"
+          fill="url(#paint22_linear_4576_12238)"
+        />
         <path
           d="M9.15576 18.0942C9.46515 18.0944 9.72021 18.4063 9.72021 18.7964C9.72015 19.1864 9.4651 19.4974 9.15576 19.4976C8.84629 19.4976 8.5904 19.1866 8.59033 18.7964C8.59033 18.4061 8.84624 18.0942 9.15576 18.0942Z"
           stroke="url(#paint23_radial_4576_12238)"
@@ -138,162 +165,438 @@ export function PokiLogoIcon(props: ComponentProps<'svg'>) {
           shapeRendering="crispEdges"
         />
       </g>
-      <circle cx="11.8007" cy="18.7462" r="0.988393" transform="rotate(78.5226 11.8007 18.7462)" fill="url(#paint26_radial_4576_12238)" stroke="url(#paint27_radial_4576_12238)" strokeWidth="0.0304121" />
+      <circle
+        cx="11.8007"
+        cy="18.7462"
+        r="0.988393"
+        transform="rotate(78.5226 11.8007 18.7462)"
+        fill="url(#paint26_radial_4576_12238)"
+        stroke="url(#paint27_radial_4576_12238)"
+        strokeWidth="0.0304121"
+      />
       <defs>
-        <filter id="filter0_dd_4576_12238" x="6.85453e-06" y="-7.7486e-07" width="27.017" height="30.3908" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+        <filter
+          id="filter0_dd_4576_12238"
+          x="6.85453e-06"
+          y="-7.7486e-07"
+          width="27.017"
+          height="30.3908"
+          filterUnits="userSpaceOnUse"
+          colorInterpolationFilters="sRGB"
+        >
           <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
           <feOffset dx="0.284024" dy="0.568047" />
           <feGaussianBlur stdDeviation="0.284024" />
           <feComposite in2="hardAlpha" operator="out" />
           <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0" />
           <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_4576_12238" />
-          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
           <feOffset />
           <feGaussianBlur stdDeviation="0.284024" />
           <feComposite in2="hardAlpha" operator="out" />
           <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.04 0" />
-          <feBlend mode="normal" in2="effect1_dropShadow_4576_12238" result="effect2_dropShadow_4576_12238" />
-          <feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_4576_12238" result="shape" />
+          <feBlend
+            mode="normal"
+            in2="effect1_dropShadow_4576_12238"
+            result="effect2_dropShadow_4576_12238"
+          />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="effect2_dropShadow_4576_12238"
+            result="shape"
+          />
         </filter>
-        <filter id="filter1_f_4576_12238" x="5.12339" y="8.87803" width="5.62646" height="5.0182" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+        <filter
+          id="filter1_f_4576_12238"
+          x="5.12339"
+          y="8.87803"
+          width="5.62646"
+          height="5.0182"
+          filterUnits="userSpaceOnUse"
+          colorInterpolationFilters="sRGB"
+        >
           <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
           <feGaussianBlur stdDeviation="0.304121" result="effect1_foregroundBlur_4576_12238" />
         </filter>
-        <filter id="filter2_f_4576_12238" x="8.45599" y="17.9599" width="1.39897" height="1.67266" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+        <filter
+          id="filter2_f_4576_12238"
+          x="8.45599"
+          y="17.9599"
+          width="1.39897"
+          height="1.67266"
+          filterUnits="userSpaceOnUse"
+          colorInterpolationFilters="sRGB"
+        >
           <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
           <feGaussianBlur stdDeviation="0.0608242" result="effect1_foregroundBlur_4576_12238" />
         </filter>
-        <filter id="filter3_di_4576_12238" x="9.81385" y="17.4254" width="6.73812" height="6.75748" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+        <filter
+          id="filter3_di_4576_12238"
+          x="9.81385"
+          y="17.4254"
+          width="6.73812"
+          height="6.75748"
+          filterUnits="userSpaceOnUse"
+          colorInterpolationFilters="sRGB"
+        >
           <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
           <feOffset dx="-0.304121" dy="0.0304121" />
           <feGaussianBlur stdDeviation="0.0912363" />
           <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix type="matrix" values="0 0 0 0 0.657432 0 0 0 0 0.729134 0 0 0 0 0.786001 0 0 0 0.3 0" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0.657432 0 0 0 0 0.729134 0 0 0 0 0.786001 0 0 0 0.3 0"
+          />
           <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_4576_12238" />
-          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_4576_12238" result="shape" />
-          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="effect1_dropShadow_4576_12238"
+            result="shape"
+          />
+          <feColorMatrix
+            in="SourceAlpha"
+            type="matrix"
+            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            result="hardAlpha"
+          />
           <feOffset dx="0.669066" dy="0.547418" />
           <feGaussianBlur stdDeviation="0.228091" />
           <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix type="matrix" values="0 0 0 0 0.709442 0 0 0 0 0.810486 0 0 0 0 0.976487 0 0 0 0.3 0" />
+          <feColorMatrix
+            type="matrix"
+            values="0 0 0 0 0.709442 0 0 0 0 0.810486 0 0 0 0 0.976487 0 0 0 0.3 0"
+          />
           <feBlend mode="normal" in2="shape" result="effect2_innerShadow_4576_12238" />
         </filter>
-        <linearGradient id="paint0_linear_4576_12238" x1="19.4753" y1="9.14487" x2="3.78268" y2="25.7604" gradientUnits="userSpaceOnUse">
+        <linearGradient
+          id="paint0_linear_4576_12238"
+          x1="19.4753"
+          y1="9.14487"
+          x2="3.78268"
+          y2="25.7604"
+          gradientUnits="userSpaceOnUse"
+        >
           <stop stopColor="#B5E9FF" />
           <stop offset="1" stopColor="#E9E6FF" />
         </linearGradient>
-        <radialGradient id="paint1_radial_4576_12238" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(3.89197 26.1242) rotate(-16.4205) scale(0.410563 0.167267)">
+        <radialGradient
+          id="paint1_radial_4576_12238"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientUnits="userSpaceOnUse"
+          gradientTransform="translate(3.89197 26.1242) rotate(-16.4205) scale(0.410563 0.167267)"
+        >
           <stop stopColor="white" />
           <stop offset="1" stopColor="white" stopOpacity="0" />
         </radialGradient>
-        <radialGradient id="paint2_radial_4576_12238" cx="0" cy="0" r="1" gradientTransform="matrix(-0.222133 0.380918 -0.772216 0.00705715 3.75738 26.0987)" gradientUnits="userSpaceOnUse">
+        <radialGradient
+          id="paint2_radial_4576_12238"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientTransform="matrix(-0.222133 0.380918 -0.772216 0.00705715 3.75738 26.0987)"
+          gradientUnits="userSpaceOnUse"
+        >
           <stop stopColor="white" stopOpacity="0.7" />
           <stop offset="1" stopColor="white" stopOpacity="0" />
         </radialGradient>
-        <radialGradient id="paint3_radial_4576_12238" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(5.32172 26.163) rotate(15) scale(1.20128 0.760303)">
+        <radialGradient
+          id="paint3_radial_4576_12238"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientUnits="userSpaceOnUse"
+          gradientTransform="translate(5.32172 26.163) rotate(15) scale(1.20128 0.760303)"
+        >
           <stop stopColor="#B6B1DF" />
           <stop offset="1" stopColor="#E9E6FF" stopOpacity="0" />
         </radialGradient>
-        <radialGradient id="paint4_radial_4576_12238" cx="0" cy="0" r="1" gradientTransform="matrix(-1.08451 0.421365 -1.97466 -1.0268 5.11241 25.5662)" gradientUnits="userSpaceOnUse">
+        <radialGradient
+          id="paint4_radial_4576_12238"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientTransform="matrix(-1.08451 0.421365 -1.97466 -1.0268 5.11241 25.5662)"
+          gradientUnits="userSpaceOnUse"
+        >
           <stop stopColor="white" stopOpacity="0.7" />
           <stop offset="1" stopColor="white" stopOpacity="0" />
         </radialGradient>
-        <radialGradient id="paint5_radial_4576_12238" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(12.5399 27.1553) scale(1.20128 0.760303)">
+        <radialGradient
+          id="paint5_radial_4576_12238"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientUnits="userSpaceOnUse"
+          gradientTransform="translate(12.5399 27.1553) scale(1.20128 0.760303)"
+        >
           <stop stopColor="#A09BC1" />
           <stop offset="1" stopColor="#E9E6FF" stopOpacity="0" />
         </radialGradient>
-        <radialGradient id="paint6_radial_4576_12238" cx="0" cy="0" r="1" gradientTransform="matrix(-0.938498 0.687699 -2.17313 -0.480737 12.1833 26.633)" gradientUnits="userSpaceOnUse">
+        <radialGradient
+          id="paint6_radial_4576_12238"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientTransform="matrix(-0.938498 0.687699 -2.17313 -0.480737 12.1833 26.633)"
+          gradientUnits="userSpaceOnUse"
+        >
           <stop stopColor="white" stopOpacity="0.7" />
           <stop offset="1" stopColor="white" stopOpacity="0" />
         </radialGradient>
-        <radialGradient id="paint7_radial_4576_12238" cx="0" cy="0" r="1" gradientTransform="matrix(-0.997897 0.660191 -2.31067 -0.461507 10.3911 12.756)" gradientUnits="userSpaceOnUse">
+        <radialGradient
+          id="paint7_radial_4576_12238"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientTransform="matrix(-0.997897 0.660191 -2.31067 -0.461507 10.3911 12.756)"
+          gradientUnits="userSpaceOnUse"
+        >
           <stop stopColor="white" stopOpacity="0.7" />
           <stop offset="1" stopColor="white" stopOpacity="0" />
         </radialGradient>
-        <radialGradient id="paint8_radial_4576_12238" cx="0" cy="0" r="1" gradientTransform="matrix(0.997897 0.660191 2.31067 -0.461507 8.35156 12.756)" gradientUnits="userSpaceOnUse">
+        <radialGradient
+          id="paint8_radial_4576_12238"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientTransform="matrix(0.997897 0.660191 2.31067 -0.461507 8.35156 12.756)"
+          gradientUnits="userSpaceOnUse"
+        >
           <stop stopColor="white" stopOpacity="0.7" />
           <stop offset="1" stopColor="white" stopOpacity="0" />
         </radialGradient>
-        <radialGradient id="paint9_radial_4576_12238" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(21.8697 3.57112) rotate(90) scale(1.2621)">
+        <radialGradient
+          id="paint9_radial_4576_12238"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientUnits="userSpaceOnUse"
+          gradientTransform="translate(21.8697 3.57112) rotate(90) scale(1.2621)"
+        >
           <stop stopColor="white" stopOpacity="0.6" />
           <stop offset="1" stopColor="white" stopOpacity="0" />
         </radialGradient>
-        <radialGradient id="paint10_radial_4576_12238" cx="0" cy="0" r="1" gradientTransform="matrix(-0.986017 2.28316 -2.28316 -1.59605 21.495 3.09934)" gradientUnits="userSpaceOnUse">
+        <radialGradient
+          id="paint10_radial_4576_12238"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientTransform="matrix(-0.986017 2.28316 -2.28316 -1.59605 21.495 3.09934)"
+          gradientUnits="userSpaceOnUse"
+        >
           <stop stopColor="white" stopOpacity="0.7" />
           <stop offset="1" stopColor="white" stopOpacity="0" />
         </radialGradient>
-        <radialGradient id="paint11_radial_4576_12238" cx="0" cy="0" r="1" gradientTransform="matrix(-1.12857 2.0631 -2.61326 -1.44221 7.50784 10.9607)" gradientUnits="userSpaceOnUse">
+        <radialGradient
+          id="paint11_radial_4576_12238"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientTransform="matrix(-1.12857 2.0631 -2.61326 -1.44221 7.50784 10.9607)"
+          gradientUnits="userSpaceOnUse"
+        >
           <stop stopColor="white" stopOpacity="0.7" />
           <stop offset="1" stopColor="white" stopOpacity="0" />
         </radialGradient>
-        <radialGradient id="paint12_radial_4576_12238" cx="0" cy="0" r="1" gradientTransform="matrix(-1.41963 4.08552 -3.2872 -2.85599 6.89207 14.6716)" gradientUnits="userSpaceOnUse">
+        <radialGradient
+          id="paint12_radial_4576_12238"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientTransform="matrix(-1.41963 4.08552 -3.2872 -2.85599 6.89207 14.6716)"
+          gradientUnits="userSpaceOnUse"
+        >
           <stop stopColor="white" stopOpacity="0.7" />
           <stop offset="1" stopColor="white" stopOpacity="0" />
         </radialGradient>
-        <radialGradient id="paint13_radial_4576_12238" cx="0" cy="0" r="1" gradientTransform="matrix(-1.41963 4.08552 -3.2872 -2.85599 10.5263 14.6716)" gradientUnits="userSpaceOnUse">
+        <radialGradient
+          id="paint13_radial_4576_12238"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientTransform="matrix(-1.41963 4.08552 -3.2872 -2.85599 10.5263 14.6716)"
+          gradientUnits="userSpaceOnUse"
+        >
           <stop stopColor="white" stopOpacity="0.7" />
           <stop offset="1" stopColor="white" stopOpacity="0" />
         </radialGradient>
-        <radialGradient id="paint14_radial_4576_12238" cx="0" cy="0" r="1" gradientTransform="matrix(-1.01402 2.91152 -2.348 -2.0353 10.317 15.1219)" gradientUnits="userSpaceOnUse">
+        <radialGradient
+          id="paint14_radial_4576_12238"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientTransform="matrix(-1.01402 2.91152 -2.348 -2.0353 10.317 15.1219)"
+          gradientUnits="userSpaceOnUse"
+        >
           <stop stopColor="white" stopOpacity="0.7" />
           <stop offset="1" stopColor="white" stopOpacity="0" />
         </radialGradient>
-        <radialGradient id="paint15_radial_4576_12238" cx="0" cy="0" r="1" gradientTransform="matrix(-1.01402 2.91152 -2.348 -2.0353 6.68279 15.1219)" gradientUnits="userSpaceOnUse">
+        <radialGradient
+          id="paint15_radial_4576_12238"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientTransform="matrix(-1.01402 2.91152 -2.348 -2.0353 6.68279 15.1219)"
+          gradientUnits="userSpaceOnUse"
+        >
           <stop stopColor="white" stopOpacity="0.7" />
           <stop offset="1" stopColor="white" stopOpacity="0" />
         </radialGradient>
-        <radialGradient id="paint16_radial_4576_12238" cx="0" cy="0" r="1" gradientTransform="matrix(-0.212944 0.49308 -0.49308 -0.344688 9.82971 14.6482)" gradientUnits="userSpaceOnUse">
+        <radialGradient
+          id="paint16_radial_4576_12238"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientTransform="matrix(-0.212944 0.49308 -0.49308 -0.344688 9.82971 14.6482)"
+          gradientUnits="userSpaceOnUse"
+        >
           <stop stopColor="white" stopOpacity="0.7" />
           <stop offset="1" stopColor="white" stopOpacity="0" />
         </radialGradient>
-        <radialGradient id="paint17_radial_4576_12238" cx="0" cy="0" r="1" gradientTransform="matrix(-0.212944 0.49308 -0.49308 -0.344688 6.19543 14.6482)" gradientUnits="userSpaceOnUse">
+        <radialGradient
+          id="paint17_radial_4576_12238"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientTransform="matrix(-0.212944 0.49308 -0.49308 -0.344688 6.19543 14.6482)"
+          gradientUnits="userSpaceOnUse"
+        >
           <stop stopColor="white" stopOpacity="0.7" />
           <stop offset="1" stopColor="white" stopOpacity="0" />
         </radialGradient>
-        <linearGradient id="paint18_linear_4576_12238" x1="8.62525" y1="17.5455" x2="9.88735" y2="20.1913" gradientUnits="userSpaceOnUse">
+        <linearGradient
+          id="paint18_linear_4576_12238"
+          x1="8.62525"
+          y1="17.5455"
+          x2="9.88735"
+          y2="20.1913"
+          gradientUnits="userSpaceOnUse"
+        >
           <stop stopColor="#EEDBFF" />
           <stop offset="1" stopColor="#C29BE4" />
         </linearGradient>
-        <radialGradient id="paint19_radial_4576_12238" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(9.11184 18.7315) rotate(85.81) scale(1.69499 1.4671)">
+        <radialGradient
+          id="paint19_radial_4576_12238"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientUnits="userSpaceOnUse"
+          gradientTransform="translate(9.11184 18.7315) rotate(85.81) scale(1.69499 1.4671)"
+        >
           <stop offset="0.461527" stopColor="white" stopOpacity="0" />
           <stop offset="0.600361" stopColor="white" />
           <stop offset="0.757959" stopColor="white" stopOpacity="0" />
         </radialGradient>
-        <radialGradient id="paint20_radial_4576_12238" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(9.15746 18.7467) rotate(74.1975) scale(1.67515 1.44992)">
+        <radialGradient
+          id="paint20_radial_4576_12238"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientUnits="userSpaceOnUse"
+          gradientTransform="translate(9.15746 18.7467) rotate(74.1975) scale(1.67515 1.44992)"
+        >
           <stop offset="0.696658" stopColor="#C29BE4" stopOpacity="0" />
           <stop offset="0.861784" stopColor="#9C68C9" />
           <stop offset="1" stopColor="#8800FF" stopOpacity="0" />
         </radialGradient>
-        <radialGradient id="paint21_radial_4576_12238" cx="0" cy="0" r="1" gradientTransform="matrix(-1.04444 2.79412 -2.41844 -1.95323 8.8388 18.3001)" gradientUnits="userSpaceOnUse">
+        <radialGradient
+          id="paint21_radial_4576_12238"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientTransform="matrix(-1.04444 2.79412 -2.41844 -1.95323 8.8388 18.3001)"
+          gradientUnits="userSpaceOnUse"
+        >
           <stop stopColor="white" stopOpacity="0.7" />
           <stop offset="1" stopColor="white" stopOpacity="0" />
         </radialGradient>
-        <linearGradient id="paint22_linear_4576_12238" x1="9.64206" y1="19.2524" x2="8.55731" y2="18.8689" gradientUnits="userSpaceOnUse">
+        <linearGradient
+          id="paint22_linear_4576_12238"
+          x1="9.64206"
+          y1="19.2524"
+          x2="8.55731"
+          y2="18.8689"
+          gradientUnits="userSpaceOnUse"
+        >
           <stop stopColor="#C29BE4" />
           <stop offset="1" stopColor="#D3B5ED" />
         </linearGradient>
-        <radialGradient id="paint23_radial_4576_12238" cx="0" cy="0" r="1" gradientTransform="matrix(-0.45143 1.29287 -1.0453 -0.903785 8.98392 18.5291)" gradientUnits="userSpaceOnUse">
+        <radialGradient
+          id="paint23_radial_4576_12238"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientTransform="matrix(-0.45143 1.29287 -1.0453 -0.903785 8.98392 18.5291)"
+          gradientUnits="userSpaceOnUse"
+        >
           <stop stopColor="white" stopOpacity="0.7" />
           <stop offset="1" stopColor="white" stopOpacity="0" />
         </radialGradient>
-        <linearGradient id="paint24_linear_4576_12238" x1="10.5328" y1="18.5334" x2="14.0212" y2="24.8674" gradientUnits="userSpaceOnUse">
+        <linearGradient
+          id="paint24_linear_4576_12238"
+          x1="10.5328"
+          y1="18.5334"
+          x2="14.0212"
+          y2="24.8674"
+          gradientUnits="userSpaceOnUse"
+        >
           <stop stopColor="#DAE8FF" />
           <stop offset="0.858628" stopColor="#DAE8FF" stopOpacity="0.5" />
           <stop offset="1" stopColor="#DAE8FF" stopOpacity="0" />
         </linearGradient>
-        <radialGradient id="paint25_radial_4576_12238" cx="0" cy="0" r="1" gradientTransform="matrix(-4.64242 -6.00494 4.98946 -1.71463 14.509 21.4352)" gradientUnits="userSpaceOnUse">
+        <radialGradient
+          id="paint25_radial_4576_12238"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientTransform="matrix(-4.64242 -6.00494 4.98946 -1.71463 14.509 21.4352)"
+          gradientUnits="userSpaceOnUse"
+        >
           <stop stopColor="white" stopOpacity="0.7" />
           <stop offset="1" stopColor="white" stopOpacity="0" />
         </radialGradient>
-        <radialGradient id="paint26_radial_4576_12238" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(11.8007 18.7462) rotate(90) scale(1.0036)">
+        <radialGradient
+          id="paint26_radial_4576_12238"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientUnits="userSpaceOnUse"
+          gradientTransform="translate(11.8007 18.7462) rotate(90) scale(1.0036)"
+        >
           <stop stopColor="white" stopOpacity="0.6" />
           <stop offset="1" stopColor="white" stopOpacity="0" />
         </radialGradient>
-        <radialGradient id="paint27_radial_4576_12238" cx="0" cy="0" r="1" gradientTransform="matrix(-0.784062 1.81552 -1.81552 -1.26914 11.5027 18.371)" gradientUnits="userSpaceOnUse">
+        <radialGradient
+          id="paint27_radial_4576_12238"
+          cx="0"
+          cy="0"
+          r="1"
+          gradientTransform="matrix(-0.784062 1.81552 -1.81552 -1.26914 11.5027 18.371)"
+          gradientUnits="userSpaceOnUse"
+        >
           <stop stopColor="white" stopOpacity="0.7" />
           <stop offset="1" stopColor="white" stopOpacity="0" />
         </radialGradient>

@@ -2,7 +2,14 @@ import type { ComponentProps } from 'react';
 
 export function MyProfileIcon(props: ComponentProps<'svg'>) {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
       <circle cx="12.0547" cy="7" r="5" fill="currentColor" />
       <path
         d="M2.05469 20.2C2.05469 16.2236 5.27824 13 9.25469 13H14.8547C18.8311 13 22.0547 16.2235 22.0547 20.2C22.0547 21.1941 21.2488 22 20.2547 22H3.85469C2.86057 22 2.05469 21.1941 2.05469 20.2Z"

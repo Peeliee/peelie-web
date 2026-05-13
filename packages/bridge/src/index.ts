@@ -10,6 +10,7 @@ export type {
     ReqOf,
     ResOf,
     PayloadOf,
+    Schema,
 } from "./types";
 
 export type {
@@ -26,7 +27,15 @@ export { isValidEnvelope, PROTOCOL_VERSION } from "./envelope";
 export { defineContract, request, command, event } from "./define";
 export type { BridgeOptions, Logger } from "./define";
 
-export { BridgeError, BridgeTimeoutError, BridgeHandlerError, BridgeDisposedError } from "./errors";
+export {
+    BridgeError,
+    BridgeTimeoutError,
+    BridgeHandlerError,
+    BridgeDisposedError,
+    BridgeUnknownMessageError,
+    BridgeValidationError,
+} from "./errors";
+export type { BridgeMessageKind } from "./errors";
 
 export { createWebBridge } from "./core/web";
 export type { WebBridge } from "./core/web";

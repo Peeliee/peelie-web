@@ -1,5 +1,7 @@
 import ky from 'ky';
 import type { ExtendedKyHttpError, KyHttpError } from './types';
+import { getApiBaseUrl } from './baseUrl';
+import { clearAuthAndRedirectToLogin, getAuthHeader } from './auth';
 
 const errorInterceptor = async (error: KyHttpError): Promise<ExtendedKyHttpError> => {
   const responseData = await error.response.json();
@@ -16,20 +18,27 @@ const logOnDev = (message: string) => {
   }
 };
 
+/**
+ * 401 자동 로그아웃에서 제외할 path.
+ * 카카오 콜백/온보딩 같은 공개 인증 API는 401 가능성이 있어도
+ * /login 으로 튕기면 안 됨 (호출부에서 직접 처리).
+ */
+const SKIP_401_REDIRECT_PATHS = [
+  '/auth/oauth/kakao/web/login',
+  '/auth/onboarding/complete',
+  '/auth/dev/signup-token',
+];
+
 const api = ky.create({
-  prefixUrl: import.meta.env.VITE_API_BASE_URL + '/api/v1', // TODO: 추후 url 고치기
-  // credentials: 'include',
+  prefixUrl: getApiBaseUrl(),
   timeout: 5000,
   retry: 2,
   headers: { 'Content-Type': 'application/json' },
   hooks: {
     beforeRequest: [
       (request) => {
-        const token = localStorage.getItem('accessToken');
-        // const token =
-        //   'eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c3JfS3E3eHlmQWFCRHkzNDZKMyIsInRva2VuVHlwZSI6IkFDQ0VTUyIsImlhdCI6MTc3NTkxNjExMiwiZXhwIjoxODA3NDUyMTEyfQ.PVNXEnQOWMTDBDxeSsA-k_ehQeSM8KpL-OAZgtvOtr8CDBvS37y9OPg7CJ0AabBt';
-        if (token) {
-          request.headers.set('Authorization', `Bearer ${token}`);
+        for (const [key, value] of Object.entries(getAuthHeader())) {
+          request.headers.set(key, value);
         }
         logOnDev(`[API REQUEST] ${request.method} ${request.url}`);
       },
@@ -38,8 +47,11 @@ const api = ky.create({
       async (req, _opt, res) => {
         logOnDev(`[API RESPONSE ${res.status}] ${req.method} ${req.url}`);
         if (res.status === 401) {
-          // TODO: refresh token 처리 or 로그인 페이지 리다이렉트
-          window.location.href = '/login';
+          const pathname = new URL(req.url).pathname;
+          const shouldSkip = SKIP_401_REDIRECT_PATHS.some((p) => pathname.endsWith(p));
+          if (!shouldSkip) {
+            clearAuthAndRedirectToLogin();
+          }
         }
         return res;
       },

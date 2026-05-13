@@ -83,18 +83,32 @@ export const Colors: Story = {
       <div className="flex flex-col gap-2">
         <p className="text-title-subhead-2">line (outlined)</p>
         <div className="flex items-center gap-4">
-          <Button color="primary" variant="line">Primary</Button>
-          <Button color="secondary" variant="line">Secondary</Button>
-          <Button color="tertiary" variant="line">Tertiary</Button>
+          <Button color="primary" variant="line">
+            Primary
+          </Button>
+          <Button color="secondary" variant="line">
+            Secondary
+          </Button>
+          <Button color="tertiary" variant="line">
+            Tertiary
+          </Button>
         </div>
       </div>
       <div className="flex flex-col gap-2">
         <p className="text-title-subhead-2">disabled</p>
         <div className="flex items-center gap-4">
-          <Button color="primary" disabled>Primary</Button>
-          <Button color="secondary" disabled>Secondary</Button>
-          <Button color="tertiary" disabled>Tertiary</Button>
-          <Button color="primary" variant="line" disabled>Line</Button>
+          <Button color="primary" disabled>
+            Primary
+          </Button>
+          <Button color="secondary" disabled>
+            Secondary
+          </Button>
+          <Button color="tertiary" disabled>
+            Tertiary
+          </Button>
+          <Button color="primary" variant="line" disabled>
+            Line
+          </Button>
         </div>
       </div>
     </div>
@@ -138,16 +152,26 @@ export const WithIcons: Story = {
       <div className="flex flex-col gap-4">
         <div className="flex items-center gap-4">
           <Button iconLeft={icon}>Primary + Icon</Button>
-          <Button color="secondary" iconLeft={icon}>Secondary + Icon</Button>
-          <Button color="tertiary" iconLeft={icon}>Tertiary + Icon</Button>
+          <Button color="secondary" iconLeft={icon}>
+            Secondary + Icon
+          </Button>
+          <Button color="tertiary" iconLeft={icon}>
+            Tertiary + Icon
+          </Button>
         </div>
         <div className="flex items-center gap-4">
           <Button iconRight={icon}>Icon Right</Button>
-          <Button iconLeft={icon} iconRight={icon}>Both Icons</Button>
+          <Button iconLeft={icon} iconRight={icon}>
+            Both Icons
+          </Button>
         </div>
         <div className="flex items-center gap-4">
-          <Button variant="line" iconLeft={icon}>Line + Icon</Button>
-          <Button color="secondary" variant="line" iconLeft={icon}>Line + Icon</Button>
+          <Button variant="line" iconLeft={icon}>
+            Line + Icon
+          </Button>
+          <Button color="secondary" variant="line" iconLeft={icon}>
+            Line + Icon
+          </Button>
         </div>
       </div>
     );

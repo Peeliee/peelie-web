@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
+import type { FriendSummary } from '@/entities/friendship/model/friendship.type';
 import Modal from '@/shared/ui/common/Modal/Modal';
 import ToggleSelect from '@/shared/ui/common/ToggleSelect/ToggleSelect';
 import { XIcon } from '@/shared/ui/icons/XIcon';
 import { CompletePanel } from './CompletePanel';
 import { EnterCodePanel } from './EnterCodePanel';
-import { RelationshipPanel } from './RelationshipPanel';
 import { ShareCodePanel } from './ShareCodePanel';
 
 type Tab = 'share' | 'enter';
-type Step = 'input' | 'relationship' | 'complete';
+type Step = 'input' | 'complete';
 
 const TABS = [
   { value: 'share', label: '내 코드 공유' },
@@ -18,10 +18,9 @@ const TABS = [
 interface FriendCodeModalProps {
   isOpen: boolean;
   onClose: () => void;
-  myCode: string;
 }
 
-export function FriendCodeModal({ isOpen, onClose, myCode }: FriendCodeModalProps) {
+export function FriendCodeModal({ isOpen, onClose }: FriendCodeModalProps) {
   const [step, setStep] = useState<Step>('input');
   const [tab, setTab] = useState<Tab>('share');
   const [friendName, setFriendName] = useState('');
@@ -41,14 +40,8 @@ export function FriendCodeModal({ isOpen, onClose, myCode }: FriendCodeModalProp
     // TODO: 코드 공유 로직 (Web Share API 또는 클립보드 복사)
   };
 
-  const handleRegisterCode = (_code: string) => {
-    // TODO: 친구 코드 등록 API 호출
-    setFriendName('지원'); // TODO: API 응답에서 친구 이름 받아오기
-    setStep('relationship');
-  };
-
-  const handleSubmitRelationship = (_relationship: string) => {
-    // TODO: 친구 관계 등록 API 호출
+  const handleRegisterCode = (friend: FriendSummary) => {
+    setFriendName(friend.name);
     setStep('complete');
   };
 
@@ -66,7 +59,7 @@ export function FriendCodeModal({ isOpen, onClose, myCode }: FriendCodeModalProp
           <>
             <ToggleSelect items={TABS} value={tab} onChange={(v) => setTab(v as Tab)} />
             {tab === 'share' ? (
-              <ShareCodePanel myCode={myCode} onShare={handleShare} />
+              <ShareCodePanel onShare={handleShare} />
             ) : (
               <EnterCodePanel onRegister={handleRegisterCode} />
             )}
@@ -74,11 +67,8 @@ export function FriendCodeModal({ isOpen, onClose, myCode }: FriendCodeModalProp
         )}
 
         {/* 2번째 스텝 */}
-        {step === 'relationship' && <RelationshipPanel onSubmit={handleSubmitRelationship} />}
-
-        {/* 3번째 스텝 */}
         {step === 'complete' && <CompletePanel friendName={friendName} onHome={onClose} />}
-        
+
         <button type="button" onClick={onClose} aria-label="닫기">
           <XIcon />
         </button>
