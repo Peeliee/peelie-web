@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react';
+import type { FriendSummary } from '@/entities/friendship/model/friendship.type';
 import Modal from '@/shared/ui/common/Modal/Modal';
 import ToggleSelect from '@/shared/ui/common/ToggleSelect/ToggleSelect';
 import { XIcon } from '@/shared/ui/icons/XIcon';
-import type { FriendSummary } from '@/entities/friendship/model/friendship.type';
 import { CompletePanel } from './CompletePanel';
 import { EnterCodePanel } from './EnterCodePanel';
-import { RelationshipPanel } from './RelationshipPanel';
 import { ShareCodePanel } from './ShareCodePanel';
 
 type Tab = 'share' | 'enter';
-type Step = 'input' | 'relationship' | 'complete';
+type Step = 'input' | 'complete';
 
 const TABS = [
   { value: 'share', label: '내 코드 공유' },
@@ -43,11 +42,6 @@ export function FriendCodeModal({ isOpen, onClose }: FriendCodeModalProps) {
 
   const handleRegisterCode = (friend: FriendSummary) => {
     setFriendName(friend.name);
-    setStep('relationship');
-  };
-
-  const handleSubmitRelationship = (_relationship: string) => {
-    // TODO: 친구 관계 등록 API 호출
     setStep('complete');
   };
 
@@ -73,9 +67,6 @@ export function FriendCodeModal({ isOpen, onClose }: FriendCodeModalProps) {
         )}
 
         {/* 2번째 스텝 */}
-        {step === 'relationship' && <RelationshipPanel onSubmit={handleSubmitRelationship} />}
-
-        {/* 3번째 스텝 */}
         {step === 'complete' && <CompletePanel friendName={friendName} onHome={onClose} />}
         
         <button type="button" onClick={onClose} aria-label="닫기">
