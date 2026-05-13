@@ -1,0 +1,7 @@
+export type PersonalityType =
+  | 'STRAIGHT_SHOOTER'
+  | 'ENERGETIC_TALKER'
+  | 'QUIET_CHARMER'
+  | 'ANALYTICAL_OBSERVER'
+  | 'HEART_COLLECTOR'
+  | 'STAGE_SETTER';
