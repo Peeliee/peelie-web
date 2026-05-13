@@ -87,7 +87,11 @@ export default function TestPage() {
             className="rounded bg-black px-3 py-1 text-white"
             onClick={async () => {
               try {
-                await handle('ECHO', () => bridge.request('ECHO', { message: 'hello' }), setEchoResult);
+                await handle(
+                  'ECHO',
+                  () => bridge.request('ECHO', { message: 'hello' }),
+                  setEchoResult,
+                );
               } catch (e) {
                 toastError('ECHO', e);
               }

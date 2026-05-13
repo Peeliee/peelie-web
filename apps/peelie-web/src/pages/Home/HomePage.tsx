@@ -87,10 +87,7 @@ export default function HomePage() {
           일정 추가하기
         </Button>
 
-        <FriendCodeModal
-          isOpen={isFriendCodeOpen}
-          onClose={() => setIsFriendCodeOpen(false)}
-        />
+        <FriendCodeModal isOpen={isFriendCodeOpen} onClose={() => setIsFriendCodeOpen(false)} />
 
         <ScheduleModal
           isOpen={isScheduleOpen}

@@ -1,16 +1,11 @@
 import api from '@/shared/api/ky';
 import type { ApiResponse } from '@/shared/api/types';
 
-import type {
-  AddFriendshipRequest,
-  FriendSummary,
-} from '../model/friendship.type';
+import type { AddFriendshipRequest, FriendSummary } from '../model/friendship.type';
 
 export const friendshipGet = {
   list: async (): Promise<FriendSummary[]> => {
-    const wrapped = await api
-      .get('friendships')
-      .json<ApiResponse<FriendSummary[]>>();
+    const wrapped = await api.get('friendships').json<ApiResponse<FriendSummary[]>>();
     return wrapped.data;
   },
 };

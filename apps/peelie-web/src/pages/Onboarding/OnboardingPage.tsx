@@ -35,8 +35,7 @@ export default function OnboardingPage() {
     );
   };
 
-  const isSubmitDisabled =
-    nickname.trim().length === 0 || completeOnboarding.isPending;
+  const isSubmitDisabled = nickname.trim().length === 0 || completeOnboarding.isPending;
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-brand-30 to-background-main to-[80%]">

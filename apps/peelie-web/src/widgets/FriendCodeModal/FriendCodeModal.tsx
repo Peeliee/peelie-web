@@ -68,7 +68,7 @@ export function FriendCodeModal({ isOpen, onClose }: FriendCodeModalProps) {
 
         {/* 2번째 스텝 */}
         {step === 'complete' && <CompletePanel friendName={friendName} onHome={onClose} />}
-        
+
         <button type="button" onClick={onClose} aria-label="닫기">
           <XIcon />
         </button>

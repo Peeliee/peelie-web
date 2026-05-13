@@ -40,7 +40,10 @@ export function MemoPanel({ friendName, memo, onMemoChange, onSubmit }: MemoPane
             maxLength={MEMO_MAX_LENGTH}
             onChange={(e) => onMemoChange((e.target as HTMLTextAreaElement).value)}
             placeholder="작성해주세요."
-            className={cn('size-full resize-none bg-transparent text-body-s-400 text-text-main', 'outline-none placeholder:text-text-disabled')}
+            className={cn(
+              'size-full resize-none bg-transparent text-body-s-400 text-text-main',
+              'outline-none placeholder:text-text-disabled',
+            )}
           />
         </div>
         <span className="text-caption-m-400 text-text-disabled">
