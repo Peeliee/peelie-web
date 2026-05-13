@@ -1,5 +1,7 @@
 import ky from 'ky';
 import type { ExtendedKyHttpError, KyHttpError } from './types';
+import { getApiBaseUrl } from './baseUrl';
+import { clearAuthAndRedirectToLogin, getAuthHeader } from './auth';
 
 const errorInterceptor = async (error: KyHttpError): Promise<ExtendedKyHttpError> => {
   const responseData = await error.response.json();
@@ -28,17 +30,15 @@ const SKIP_401_REDIRECT_PATHS = [
 ];
 
 const api = ky.create({
-  prefixUrl: import.meta.env.VITE_API_BASE_URL + '/api/v1', // TODO: 추후 url 고치기
-  // credentials: 'include',
+  prefixUrl: getApiBaseUrl(),
   timeout: 5000,
   retry: 2,
   headers: { 'Content-Type': 'application/json' },
   hooks: {
     beforeRequest: [
       (request) => {
-        const token = localStorage.getItem('accessToken');
-        if (token) {
-          request.headers.set('Authorization', `Bearer ${token}`);
+        for (const [key, value] of Object.entries(getAuthHeader())) {
+          request.headers.set(key, value);
         }
         logOnDev(`[API REQUEST] ${request.method} ${request.url}`);
       },
@@ -48,13 +48,9 @@ const api = ky.create({
         logOnDev(`[API RESPONSE ${res.status}] ${req.method} ${req.url}`);
         if (res.status === 401) {
           const pathname = new URL(req.url).pathname;
-          const shouldSkip = SKIP_401_REDIRECT_PATHS.some((p) =>
-            pathname.endsWith(p),
-          );
+          const shouldSkip = SKIP_401_REDIRECT_PATHS.some((p) => pathname.endsWith(p));
           if (!shouldSkip) {
-            localStorage.removeItem('accessToken');
-            localStorage.removeItem('refreshToken');
-            window.location.href = '/login';
+            clearAuthAndRedirectToLogin();
           }
         }
         return res;
