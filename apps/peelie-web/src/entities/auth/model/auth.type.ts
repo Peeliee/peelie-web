@@ -1,3 +1,11 @@
+export type PersonalityType =
+  | 'STRAIGHT_SHOOTER'
+  | 'ENERGETIC_TALKER'
+  | 'QUIET_CHARMER'
+  | 'ANALYTICAL_OBSERVER'
+  | 'HEART_COLLECTOR'
+  | 'STAGE_SETTER';
+
 export interface KakaoWebLoginRequest {
   code: string;
 }
@@ -18,19 +26,17 @@ export interface SignupNeededData {
 
 export type KakaoWebLoginData = LoginSuccessData | SignupNeededData;
 
-export type Personality = 'STRAIGHT_SHOOTER';
-
 export interface CompleteOnboardingRequest {
   signupToken: string;
   nickname: string;
-  personality: Personality;
+  personality: PersonalityType;
 }
 
 export interface CompleteOnboardingData extends LoginTokens {
   user: {
     id: string;
     nickname: string;
-    personality: Personality;
+    personality: PersonalityType;
     friendCode: string;
   };
 }

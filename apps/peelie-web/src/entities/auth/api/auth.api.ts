@@ -9,9 +9,7 @@ import type {
 } from '../model/auth.type';
 
 export const authPost = {
-  kakaoWebLogin: async (
-    request: KakaoWebLoginRequest,
-  ): Promise<KakaoWebLoginData> => {
+  kakaoWebLogin: async (request: KakaoWebLoginRequest): Promise<KakaoWebLoginData> => {
     const wrapped = await api
       .post('auth/oauth/kakao/web/login', { json: request })
       .json<ApiResponse<KakaoWebLoginData>>();
