@@ -33,7 +33,7 @@ export function ChatInput({
           <Input
             value={value}
             onChange={onChange}
-            placeholder="채팅을 보내보세요"
+            placeholder="직접 입력해보세요"
             disabled={disabled}
             className="w-full bg-transparent text-body-s-400 text-text-main outline-none placeholder:text-text-disabled disabled:opacity-60"
           />

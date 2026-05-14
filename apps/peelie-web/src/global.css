@@ -560,3 +560,19 @@ main > div[style*="min-height: 100vh"] {
 main {
   padding-bottom: 64px; /* nav 높이(48px) + 여유 */
 }
+
+/* 채팅 메시지가 하단에서 위로 슬라이드 + fade-in 으로 등장. */
+@keyframes chat-slide-up-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.chat-slide-up-in {
+  animation: chat-slide-up-in 300ms ease-out;
+}

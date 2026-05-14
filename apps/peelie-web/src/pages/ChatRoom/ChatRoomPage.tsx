@@ -1,4 +1,4 @@
-import { Fragment, useMemo, useState } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { SsgoiTransition } from '@ssgoi/react';
 
@@ -9,6 +9,7 @@ import {
   useSendChatMessage,
 } from '@/features/chatroom';
 import {
+  AvatarTypingBubble,
   buildRenderItems,
   ChatInput,
   DateSeparator,
@@ -23,13 +24,16 @@ import {
 
 import { ChatRoomHeader } from './ui/ChatRoomHeader';
 
+const NEAR_BOTTOM_THRESHOLD_PX = 80;
+const SUGGESTIONS_DELAY_MS = 500;
+
 export default function ChatRoomPage() {
   const { chatRoomId = '' } = useParams<{ chatRoomId: string }>();
 
   const { data: messagesData } = useGetChatMessagesQuery(chatRoomId);
   const initialMessages = messagesData?.data.items ?? [];
 
-  const { turn: greetingTurn } = useGreeting(chatRoomId);
+  const { turn: greetingTurn, pending: greetingPending } = useGreeting(chatRoomId);
   const { state: sendState, history, send } = useSendChatMessage(chatRoomId);
 
   const [input, setInput] = useState('');
@@ -57,10 +61,80 @@ export default function ChatRoomPage() {
         greetingTurn,
         history,
         streaming,
+        greetingPending,
         nowIso: new Date().toISOString(),
       }),
-    [initialMessages, greetingTurn, history, streaming],
+    [initialMessages, greetingTurn, history, streaming, greetingPending],
   );
+
+  // 표시 대상 suggestions 의 ID (마지막 AVATAR message 의 suggestions 가 있을 때).
+  // streaming-avatar 의 suggestions 는 idle 전환 후 history 메시지로 옮겨와 처리하므로 여기선 무시.
+  const targetSuggestionsId = useMemo(() => {
+    for (let i = items.length - 1; i >= 0; i--) {
+      const it = items[i];
+      if (it.kind === 'message' && it.isLastAvatarTurn && it.message.suggestions.length > 0) {
+        return it.message.id;
+      }
+    }
+    return null;
+  }, [items]);
+
+  const [delayedSuggestionsId, setDelayedSuggestionsId] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!targetSuggestionsId) {
+      setDelayedSuggestionsId(null);
+      return;
+    }
+    const id = setTimeout(
+      () => setDelayedSuggestionsId(targetSuggestionsId),
+      SUGGESTIONS_DELAY_MS,
+    );
+    return () => clearTimeout(id);
+  }, [targetSuggestionsId]);
+
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const isInitialScrolledRef = useRef(false);
+  // 사용자가 위로 스크롤하면 false. 그 외엔 true 유지하여 새 메시지에 항상 따라감.
+  const stickToBottomRef = useRef(true);
+
+  useEffect(() => {
+    if (isInitialScrolledRef.current) return;
+    if (!messagesData) return;
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollTop = el.scrollHeight;
+    isInitialScrolledRef.current = true;
+  }, [messagesData]);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const handleUserScroll = () => {
+      requestAnimationFrame(() => {
+        const distance = el.scrollHeight - el.scrollTop - el.clientHeight;
+        stickToBottomRef.current = distance < NEAR_BOTTOM_THRESHOLD_PX;
+      });
+    };
+    el.addEventListener('wheel', handleUserScroll, { passive: true });
+    el.addEventListener('touchmove', handleUserScroll, { passive: true });
+    return () => {
+      el.removeEventListener('wheel', handleUserScroll);
+      el.removeEventListener('touchmove', handleUserScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isInitialScrolledRef.current) return;
+    if (!stickToBottomRef.current) return;
+    const el = scrollRef.current;
+    if (!el) return;
+    // DOM reflow 직후 측정해야 새 버블 height 까지 반영된 scrollHeight 가 잡힌다.
+    const rafId = requestAnimationFrame(() => {
+      el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' });
+    });
+    return () => cancelAnimationFrame(rafId);
+  }, [items, delayedSuggestionsId]);
 
   const handleSubmit = () => {
     if (!input.trim()) return;
@@ -81,7 +155,10 @@ export default function ChatRoomPage() {
       >
         <ChatRoomHeader />
 
-        <div className="flex flex-1 flex-col gap-1 overflow-y-auto px-4 pb-28 pt-4">
+        <div
+          ref={scrollRef}
+          className="flex flex-1 flex-col gap-1 overflow-y-auto px-4 pb-30 pt-4"
+        >
           <div className="flex justify-center py-2">
             <span className="px-4 py-1 text-caption-m-400 text-gray-01 text-center">
               지금 대화는 AI를 통해 생성되었습니다.
@@ -96,7 +173,7 @@ export default function ChatRoomPage() {
             return (
               <Fragment key={getRenderItemKey(item, i)}>
                 {showDate && <DateSeparator date={getRenderItemCreatedAt(item)} />}
-                {renderItem(item, handleSuggestionSelect)}
+                {renderItem(item, handleSuggestionSelect, delayedSuggestionsId)}
               </Fragment>
             );
           })}
@@ -113,7 +190,11 @@ export default function ChatRoomPage() {
   );
 }
 
-function renderItem(item: RenderItem, onSuggestionSelect: (text: string) => void) {
+function renderItem(
+  item: RenderItem,
+  onSuggestionSelect: (text: string) => void,
+  delayedSuggestionsId: string | null,
+) {
   switch (item.kind) {
     case 'message': {
       const { message, isLastAvatarTurn } = item;
@@ -124,10 +205,14 @@ function renderItem(item: RenderItem, onSuggestionSelect: (text: string) => void
           </div>
         );
       }
+      const showSuggestions =
+        isLastAvatarTurn &&
+        message.suggestions.length > 0 &&
+        delayedSuggestionsId === message.id;
       return (
         <>
           <AvatarMessage bubbles={message.bubbles} createdAt={message.createdAt} />
-          {isLastAvatarTurn && message.suggestions.length > 0 && (
+          {showSuggestions && (
             <SuggestionList
               suggestions={message.suggestions}
               onSelect={onSuggestionSelect}
@@ -139,23 +224,15 @@ function renderItem(item: RenderItem, onSuggestionSelect: (text: string) => void
     }
     case 'streaming-user':
       return (
-        <div className="flex justify-end">
+        <div className="chat-slide-up-in flex justify-end">
           <UserBubble content={item.text} createdAt={item.createdAt} />
         </div>
       );
     case 'streaming-avatar':
-      return (
-        <>
-          <AvatarMessage bubbles={item.bubbles} createdAt={item.createdAt} />
-          {item.suggestions.length > 0 && (
-            <SuggestionList
-              suggestions={item.suggestions}
-              onSelect={onSuggestionSelect}
-              createdAt={item.createdAt}
-              disabled
-            />
-          )}
-        </>
-      );
+      // streaming 중 suggestions 가 도착해도 여기선 표시하지 않는다.
+      // done 직후 history 로 들어간 message 의 suggestions 가 0.5s 지연 후 표시됨.
+      return <AvatarMessage bubbles={item.bubbles} createdAt={item.createdAt} />;
+    case 'streaming-placeholder':
+      return <AvatarTypingBubble showHeader={item.showHeader} className="chat-slide-up-in" />;
   }
 }

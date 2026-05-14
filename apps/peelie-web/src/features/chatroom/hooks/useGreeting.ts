@@ -12,12 +12,14 @@ import { streamGreeting } from '../api/streamGreeting';
  */
 export function useGreeting(chatRoomId: string) {
   const [turn, setTurn] = useState<LocalTurn | null>(null);
+  const [pending, setPending] = useState(false);
   const abortRef = useRef<AbortController | null>(null);
 
   useEffect(() => {
     if (!chatRoomId) return;
     const controller = new AbortController();
     abortRef.current = controller;
+    setPending(true);
 
     const acc = { bubbles: [] as ChatBubble[], suggestions: [] as string[] };
     let completed: LocalTurn | null = null;
@@ -59,6 +61,7 @@ export function useGreeting(chatRoomId: string) {
       })
       .finally(() => {
         if (controller.signal.aborted) return;
+        setPending(false);
         if (!skipped && completed) {
           setTurn(completed);
         }
@@ -67,5 +70,5 @@ export function useGreeting(chatRoomId: string) {
     return () => controller.abort();
   }, [chatRoomId]);
 
-  return { turn };
+  return { turn, pending };
 }
