@@ -2,7 +2,12 @@ import { Fragment, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { SsgoiTransition } from '@ssgoi/react';
 
-import { AvatarMessage, useGreeting, useSendChatMessage } from '@/features/chatroom';
+import {
+  AvatarMessage,
+  SuggestionList,
+  useGreeting,
+  useSendChatMessage,
+} from '@/features/chatroom';
 import {
   buildRenderItems,
   ChatInput,
@@ -120,12 +125,16 @@ function renderItem(item: RenderItem, onSuggestionSelect: (text: string) => void
         );
       }
       return (
-        <AvatarMessage
-          bubbles={message.bubbles}
-          createdAt={message.createdAt}
-          suggestions={isLastAvatarTurn ? message.suggestions : undefined}
-          onSuggestionSelect={isLastAvatarTurn ? onSuggestionSelect : undefined}
-        />
+        <>
+          <AvatarMessage bubbles={message.bubbles} createdAt={message.createdAt} />
+          {isLastAvatarTurn && message.suggestions.length > 0 && (
+            <SuggestionList
+              suggestions={message.suggestions}
+              onSelect={onSuggestionSelect}
+              createdAt={message.createdAt}
+            />
+          )}
+        </>
       );
     }
     case 'streaming-user':
@@ -135,13 +144,18 @@ function renderItem(item: RenderItem, onSuggestionSelect: (text: string) => void
         </div>
       );
     case 'streaming-avatar':
-      // 스트리밍 중에는 suggestions 받았더라도 클릭 막음 (isBusy 인 상태이므로 노출만)
       return (
-        <AvatarMessage
-          bubbles={item.bubbles}
-          createdAt={item.createdAt}
-          suggestions={item.suggestions.length > 0 ? item.suggestions : undefined}
-        />
+        <>
+          <AvatarMessage bubbles={item.bubbles} createdAt={item.createdAt} />
+          {item.suggestions.length > 0 && (
+            <SuggestionList
+              suggestions={item.suggestions}
+              onSelect={onSuggestionSelect}
+              createdAt={item.createdAt}
+              disabled
+            />
+          )}
+        </>
       );
   }
 }
