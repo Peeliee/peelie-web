@@ -25,11 +25,17 @@ import {
 import { ChatRoomHeader } from './ui/ChatRoomHeader';
 
 const NEAR_BOTTOM_THRESHOLD_PX = 80;
-const SUGGESTIONS_DELAY_MS = 500;
+const SUGGESTIONS_DELAY_MS = 1000;
 const ROUTE_SCROLL_CONTAINER_ID = 'route-scroll-container';
 
 function getRouteScrollContainer() {
   return document.getElementById(ROUTE_SCROLL_CONTAINER_ID);
+}
+
+const SMOOTH_SCROLL_DURATION_MS = 600;
+
+function easeOutCubic(t: number) {
+  return 1 - Math.pow(1 - t, 3);
 }
 
 function scrollRouteToBottom(
@@ -37,15 +43,28 @@ function scrollRouteToBottom(
   behavior: ScrollBehavior = 'auto',
   syncAfterTransition = false,
 ) {
-  scrollContainer.scrollTo({ top: scrollContainer.scrollHeight, behavior });
-
-  if (syncAfterTransition) {
-    // ssgoi 는 transition 초반 몇 frame 동안 scroll 저장을 무시한다.
-    // 초기 진입 직후 bottom scroll 이 저장되지 않는 케이스를 막기 위해 한 번 더 동기화한다.
-    window.setTimeout(() => {
-      scrollContainer.scrollTo({ top: scrollContainer.scrollHeight, behavior: 'auto' });
-    }, 200);
+  if (behavior === 'auto') {
+    scrollContainer.scrollTo({ top: scrollContainer.scrollHeight });
+    if (syncAfterTransition) {
+      window.setTimeout(() => {
+        scrollContainer.scrollTo({ top: scrollContainer.scrollHeight });
+      }, 200);
+    }
+    return;
   }
+
+  const start = scrollContainer.scrollTop;
+  const end = scrollContainer.scrollHeight - scrollContainer.clientHeight;
+  const distance = end - start;
+  if (distance <= 0) return;
+
+  const startTime = performance.now();
+  function step(now: number) {
+    const t = Math.min((now - startTime) / SMOOTH_SCROLL_DURATION_MS, 1);
+    scrollContainer.scrollTop = start + distance * easeOutCubic(t);
+    if (t < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
 }
 
 export default function ChatRoomPage() {
