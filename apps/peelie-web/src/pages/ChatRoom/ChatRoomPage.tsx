@@ -26,6 +26,27 @@ import { ChatRoomHeader } from './ui/ChatRoomHeader';
 
 const NEAR_BOTTOM_THRESHOLD_PX = 80;
 const SUGGESTIONS_DELAY_MS = 500;
+const ROUTE_SCROLL_CONTAINER_ID = 'route-scroll-container';
+
+function getRouteScrollContainer() {
+  return document.getElementById(ROUTE_SCROLL_CONTAINER_ID);
+}
+
+function scrollRouteToBottom(
+  scrollContainer: HTMLElement,
+  behavior: ScrollBehavior = 'auto',
+  syncAfterTransition = false,
+) {
+  scrollContainer.scrollTo({ top: scrollContainer.scrollHeight, behavior });
+
+  if (syncAfterTransition) {
+    // ssgoi 는 transition 초반 몇 frame 동안 scroll 저장을 무시한다.
+    // 초기 진입 직후 bottom scroll 이 저장되지 않는 케이스를 막기 위해 한 번 더 동기화한다.
+    window.setTimeout(() => {
+      scrollContainer.scrollTo({ top: scrollContainer.scrollHeight, behavior: 'auto' });
+    }, 200);
+  }
+}
 
 export default function ChatRoomPage() {
   const { chatRoomId = '' } = useParams<{ chatRoomId: string }>();
@@ -86,14 +107,10 @@ export default function ChatRoomPage() {
       setDelayedSuggestionsId(null);
       return;
     }
-    const id = setTimeout(
-      () => setDelayedSuggestionsId(targetSuggestionsId),
-      SUGGESTIONS_DELAY_MS,
-    );
+    const id = setTimeout(() => setDelayedSuggestionsId(targetSuggestionsId), SUGGESTIONS_DELAY_MS);
     return () => clearTimeout(id);
   }, [targetSuggestionsId]);
 
-  const scrollRef = useRef<HTMLDivElement | null>(null);
   const isInitialScrolledRef = useRef(false);
   // 사용자가 위로 스크롤하면 false. 그 외엔 true 유지하여 새 메시지에 항상 따라감.
   const stickToBottomRef = useRef(true);
@@ -101,37 +118,45 @@ export default function ChatRoomPage() {
   useEffect(() => {
     if (isInitialScrolledRef.current) return;
     if (!messagesData) return;
-    const el = scrollRef.current;
-    if (!el) return;
-    el.scrollTop = el.scrollHeight;
-    isInitialScrolledRef.current = true;
+
+    const scrollContainer = getRouteScrollContainer();
+    if (!scrollContainer) return;
+
+    const rafId = requestAnimationFrame(() => {
+      scrollRouteToBottom(scrollContainer, 'auto', true);
+      isInitialScrolledRef.current = true;
+    });
+
+    return () => cancelAnimationFrame(rafId);
   }, [messagesData]);
 
   useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
+    const scrollContainer = getRouteScrollContainer();
+    if (!scrollContainer) return;
+
     const handleUserScroll = () => {
       requestAnimationFrame(() => {
-        const distance = el.scrollHeight - el.scrollTop - el.clientHeight;
+        const distance =
+          scrollContainer.scrollHeight - scrollContainer.scrollTop - scrollContainer.clientHeight;
         stickToBottomRef.current = distance < NEAR_BOTTOM_THRESHOLD_PX;
       });
     };
-    el.addEventListener('wheel', handleUserScroll, { passive: true });
-    el.addEventListener('touchmove', handleUserScroll, { passive: true });
+
+    scrollContainer.addEventListener('scroll', handleUserScroll, { passive: true });
+
     return () => {
-      el.removeEventListener('wheel', handleUserScroll);
-      el.removeEventListener('touchmove', handleUserScroll);
+      scrollContainer.removeEventListener('scroll', handleUserScroll);
     };
   }, []);
 
   useEffect(() => {
     if (!isInitialScrolledRef.current) return;
     if (!stickToBottomRef.current) return;
-    const el = scrollRef.current;
-    if (!el) return;
     // DOM reflow 직후 측정해야 새 버블 height 까지 반영된 scrollHeight 가 잡힌다.
     const rafId = requestAnimationFrame(() => {
-      el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' });
+      const scrollContainer = getRouteScrollContainer();
+      if (!scrollContainer) return;
+      scrollRouteToBottom(scrollContainer, 'smooth');
     });
     return () => cancelAnimationFrame(rafId);
   }, [items, delayedSuggestionsId]);
@@ -148,17 +173,18 @@ export default function ChatRoomPage() {
   };
 
   return (
-    <SsgoiTransition id="/chat-room">
+    <SsgoiTransition id={`/chat-room/${chatRoomId}`}>
       <div
-        className="flex h-screen w-full flex-col bg-cover bg-center"
+        aria-hidden
+        className="fixed inset-0 bg-cover bg-center"
         style={{ backgroundImage: 'url(/chatroom-background.png)' }}
-      >
-        <ChatRoomHeader />
+      />
+      <div className="relative flex min-h-dvh w-full flex-col">
+        <div className="sticky top-0 z-10 shrink-0 bg-gray-99/30 backdrop-blur-md">
+          <ChatRoomHeader />
+        </div>
 
-        <div
-          ref={scrollRef}
-          className="flex flex-1 flex-col gap-1 overflow-y-auto px-4 pb-30 pt-4"
-        >
+        <div className="flex flex-1 flex-col justify-end gap-1 px-4 py-2">
           <div className="flex justify-center py-2">
             <span className="px-4 py-1 text-caption-m-400 text-gray-01 text-center">
               지금 대화는 AI를 통해 생성되었습니다.
@@ -184,6 +210,8 @@ export default function ChatRoomPage() {
           onChange={(e) => setInput(e.target.value)}
           onSubmit={handleSubmit}
           disabled={isBusy}
+          position="static"
+          className="sticky bottom-0 z-10 shrink-0"
         />
       </div>
     </SsgoiTransition>
@@ -206,9 +234,7 @@ function renderItem(
         );
       }
       const showSuggestions =
-        isLastAvatarTurn &&
-        message.suggestions.length > 0 &&
-        delayedSuggestionsId === message.id;
+        isLastAvatarTurn && message.suggestions.length > 0 && delayedSuggestionsId === message.id;
       return (
         <>
           <AvatarMessage bubbles={message.bubbles} createdAt={message.createdAt} />

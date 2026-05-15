@@ -550,17 +550,6 @@ body {
   scrollbar-width: none; /* Firefox */
 }
 
-/* SsgoiLayout이 만드는 div의 스크롤 컨테이너화 해제 */
-main > div[style*="min-height: 100vh"] {
-  overflow: visible !important;
-  min-height: 0 !important;
-}
-
-/* 하단 고정 nav가 콘텐츠 가리지 않게 */
-main {
-  padding-bottom: 64px; /* nav 높이(48px) + 여유 */
-}
-
 /* 채팅 메시지가 하단에서 위로 슬라이드 + fade-in 으로 등장. */
 @keyframes chat-slide-up-in {
   from {

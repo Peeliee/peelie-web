@@ -7,18 +7,10 @@ import { NavigationBar } from '@/widgets/NavigationBar/NavigationBar';
 const NAV_ROUTES = ['/', '/ai-chat', '/my'];
 const NAV_ROUTE_SET = new Set<string>(NAV_ROUTES);
 
-function resetDocumentScroll() {
-  window.scrollTo(0, 0);
-
-  document.documentElement.scrollTop = 0;
-  document.documentElement.scrollLeft = 0;
-  document.body.scrollTop = 0;
-  document.body.scrollLeft = 0;
-}
-
 export default function SsgoiLayout() {
   const location = useLocation();
   const previousPathnameRef = useRef(location.pathname);
+  const routeScrollRef = useRef<HTMLDivElement>(null);
   const showNav = NAV_ROUTES.includes(location.pathname);
 
   const usePathname = useCallback(() => location.pathname, [location.pathname]);
@@ -32,7 +24,7 @@ export default function SsgoiLayout() {
       NAV_ROUTE_SET.has(previousPathname) &&
       NAV_ROUTE_SET.has(currentPathname)
     ) {
-      resetDocumentScroll();
+      routeScrollRef.current?.scrollTo({ top: 0, left: 0 });
     }
 
     previousPathnameRef.current = currentPathname;
@@ -44,6 +36,7 @@ export default function SsgoiLayout() {
         from: from.replace(/^\/chat-room\/[^/]+/, '/chat-room'),
         to: to.replace(/^\/chat-room\/[^/]+/, '/chat-room'),
       }),
+      experimentalPreserveScroll: true,
       transitions: [
         // 홈 <-> ai채팅
         {
@@ -102,14 +95,20 @@ export default function SsgoiLayout() {
       <div
         style={{
           position: 'relative',
-          minHeight: '100vh',
+          height: '100dvh',
           width: '100%',
-          overflowX: 'hidden',
+          overflow: 'hidden',
           background: 'transparent',
         }}
       >
-        <div className={showNav ? 'pb-12' : ''}>
-          <Outlet />
+        <div
+          id="route-scroll-container"
+          ref={routeScrollRef}
+          className="relative h-full overflow-y-auto overflow-x-hidden"
+        >
+          <div className={showNav ? 'pb-12' : ''}>
+            <Outlet />
+          </div>
         </div>
         {showNav && <NavigationBar className="fixed bottom-0 left-0 right-0" />}
       </div>
