@@ -2,16 +2,17 @@ import { Outlet } from 'react-router-dom';
 
 import Toaster from '@/shared/ui/common/sonner';
 
-import { QueryProvider } from './provider/QueryProvider';
-import { ThemeProvider } from './provider/ThemeProvider';
+import { BridgeProvider, QueryProvider, ThemeProvider } from './provider';
 
 export default function App() {
   return (
     <ThemeProvider>
       <main>
-        <QueryProvider>
-          <Outlet />
-        </QueryProvider>
+        <BridgeProvider>
+          <QueryProvider>
+            <Outlet />
+          </QueryProvider>
+        </BridgeProvider>
       </main>
       <Toaster />
     </ThemeProvider>
