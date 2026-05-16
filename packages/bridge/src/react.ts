@@ -1,17 +1,17 @@
 import { createContext, createElement, useContext, useEffect, useMemo, useRef } from 'react';
+import type { ReactElement, ReactNode } from 'react';
 import { createWebBridge } from './core/web';
 import type { WebBridge } from './core/web';
 import type { BridgeOptions } from './define';
 import { webTransport } from './transport/web-transport';
 import type { BridgeSchema, EventKey, PayloadOf } from './types';
-import type { ReactNode } from 'react';
 
 export type BridgeProviderProps = {
   children?: ReactNode;
 };
 
 export type BridgeClient<S extends BridgeSchema> = {
-  BridgeProvider: (props: BridgeProviderProps) => ReactNode;
+  BridgeProvider: (props: BridgeProviderProps) => ReactElement;
   useBridge: () => WebBridge<S>;
   useBridgeEvent: <K extends EventKey<S>>(
     name: K,
@@ -25,7 +25,7 @@ export function createBridgeClient<S extends BridgeSchema>(
 ): BridgeClient<S> {
   const BridgeContext = createContext<WebBridge<S> | null>(null);
 
-  function BridgeProvider({ children }: BridgeProviderProps): ReactNode {
+  function BridgeProvider({ children }: BridgeProviderProps): ReactElement {
     const bridge = useWebBridge(contract, options);
     return createElement(BridgeContext.Provider, { value: bridge }, children);
   }
