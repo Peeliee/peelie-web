@@ -5,6 +5,11 @@ import type { ChatListItem } from '../model/chatList.type';
 import type { ChatRoomListItem } from '../model/chatRoom.type';
 import type { ChatMessageListPayload } from '../model/chatMessage.type';
 
+export const chatroomPost = {
+  markRead: (chatRoomId: string): Promise<void> =>
+    api.post(`chatrooms/${chatRoomId}/read`).then(() => undefined),
+};
+
 export const chatroomGet = {
   /** AI 챗 페이지 — 전체 채팅방 목록 (preview + unread 포함). */
   getChatList: (): Promise<ApiResponse<ChatListItem[]>> =>

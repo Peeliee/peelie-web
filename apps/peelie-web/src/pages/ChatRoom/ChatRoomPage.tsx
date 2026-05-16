@@ -6,6 +6,7 @@ import {
   AvatarMessage,
   SuggestionList,
   useGreeting,
+  useMarkRead,
   useSendChatMessage,
 } from '@/features/chatroom';
 import {
@@ -75,6 +76,8 @@ export default function ChatRoomPage() {
 
   const { turn: greetingTurn, pending: greetingPending } = useGreeting(chatRoomId);
   const { state: sendState, history, send } = useSendChatMessage(chatRoomId);
+
+  useMarkRead({ chatRoomId, historyLength: history.length, greetingTurn });
 
   const [input, setInput] = useState('');
 

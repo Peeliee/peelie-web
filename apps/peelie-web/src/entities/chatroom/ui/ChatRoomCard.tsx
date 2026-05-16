@@ -41,40 +41,42 @@ export function ChatRoomCard({
       className="group w-full rounded-2xl px-3 py-4 text-left active:bg-gray-30"
     >
       <div className="flex items-center gap-4 transition-transform duration-150 group-active:scale-[0.97]">
-      {/* 아바타 */}
-      <div className="relative size-[46px] shrink-0 overflow-hidden rounded-full bg-gray-79">
-        <ChatItemIcon className="absolute left-1/2 top-[9px] h-[46px] w-[33px] -translate-x-1/2" />
-      </div>
+        {/* 아바타 */}
+        <div className="relative size-[46px] shrink-0 overflow-hidden rounded-full bg-gray-79">
+          <ChatItemIcon className="absolute left-1/2 top-[9px] h-[46px] w-[33px] -translate-x-1/2" />
+        </div>
 
-      {/* 콘텐츠 */}
-      <div className="flex min-w-0 flex-1 flex-col gap-1">
-        {/* 뱃지 + 이름 + 안 읽음 도트 */}
-        <div className="flex items-center gap-2">
-          <span
-            className={cn(
-              'rounded-xsmall bg-brand-main px-[6px] py-[2px]',
-              'text-caption-m-400 text-gray-70',
-            )}
-          >
-            {PERSONALITY_BADGE[personality]}
-          </span>
-          <span className="text-body-s-400 font-medium text-gray-99">{userName}</span>
-          {isUnread && (
+        {/* 콘텐츠 */}
+        <div className="flex min-w-0 flex-1 flex-col gap-1">
+          {/* 뱃지 + 이름 + 안 읽음 도트 */}
+          <div className="flex items-center gap-2">
             <span
-              aria-label="안 읽은 메시지 있음"
-              className="size-1.5 shrink-0 rounded-full bg-brand-sub-30"
-            />
-          )}
-        </div>
+              className={cn(
+                'rounded-xsmall bg-brand-main px-[6px] py-[2px]',
+                'text-caption-m-400 text-gray-70',
+              )}
+            >
+              {PERSONALITY_BADGE[personality]}
+            </span>
+            <span className="text-body-s-400 font-medium text-gray-99">{userName}</span>
+          </div>
 
-        {/* 미리보기 + 시간 */}
-        <div className="flex items-center justify-between gap-3 whitespace-nowrap">
-          <p className="truncate text-caption-m-400 text-gray-99">{lastMessage ?? ''}</p>
-          <span className="shrink-0 text-caption-m-400 text-text-disabled">
-            {formatRelativeTime(lastMessageAt)}
-          </span>
+          {/* 미리보기 + 시간 */}
+          <div className="flex items-center justify-between gap-5 whitespace-nowrap">
+            <p className="truncate text-caption-m-400 text-gray-99">{lastMessage ?? ''}</p>
+            <div className="relative shrink-0">
+              <span className="text-caption-m-400 text-text-disabled">
+                {formatRelativeTime(lastMessageAt)}
+              </span>
+              {isUnread && (
+                <span
+                  aria-label="안 읽은 메시지 있음"
+                  className="absolute left-[calc(100%+4px)] top-3.25 size-1.5 -translate-y-1/2 rounded-full bg-brand-main"
+                />
+              )}
+            </div>
+          </div>
         </div>
-      </div>
       </div>
     </button>
   );
