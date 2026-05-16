@@ -1,25 +1,10 @@
-import { useEffect, useState } from 'react';
-import { useWebBridge } from '@peelie/bridge/react';
-import { testContract } from '@peelie/bridge-contracts';
-import { BridgeValidationError } from '@peelie/bridge';
+import { useState } from 'react';
 import { toast } from 'sonner';
+import { getBridgeErrorMessage, useBridge, useBridgeEvent } from '@/app/provider/BridgeProvider';
 
 // bridge smoke test page — request / command / event 세 패턴이 잘 도는지만 확인.
 export default function TestPage() {
-  const bridge = useWebBridge(testContract, {
-    logger: {
-      warn: (...args) => toast.warning(args.map(String).join(' ')),
-      error: (...args) => toast.warning(args.map(String).join(' ')),
-      debug: (...args) => toast.error(args.map(String).join(' ')),
-      info: (...args) => toast.error(args.map(String).join(' ')),
-    },
-    defaultOptions: {
-      request: {
-        timeout: 3_000,
-      },
-    },
-  });
-
+  const bridge = useBridge();
   const [pingResult, setPingResult] = useState<string>('—');
   const [echoResult, setEchoResult] = useState<string>('—');
   const [timeResult, setTimeResult] = useState<string>('—');
@@ -34,14 +19,8 @@ export default function TestPage() {
     toast.error(`[${label}] ${message}`);
   };
 
-  useEffect(() => {
-    const offTick = bridge.on('TICK', ({ count }) => setTickCount(count));
-    const offReady = bridge.on('APP_READY', () => setAppReady(true));
-    return () => {
-      offTick();
-      offReady();
-    };
-  }, [bridge]);
+  useBridgeEvent('TICK', ({ count }) => setTickCount(count));
+  useBridgeEvent('APP_READY', () => setAppReady(true));
 
   const handle = async <T,>(label: string, fn: () => Promise<T>, set: (v: string) => void) => {
     setError(null);
@@ -49,13 +28,7 @@ export default function TestPage() {
       const r = await fn();
       set(JSON.stringify(r));
     } catch (e) {
-      if (e instanceof BridgeValidationError) {
-        setError(`[${label}] validation: ${e.message}`);
-      } else if (e instanceof Error) {
-        setError(`[${label}] ${e.name}: ${e.message}`);
-      } else {
-        setError(`[${label}] ${String(e)}`);
-      }
+      setError(getBridgeErrorMessage(label, e));
       throw e;
     }
   };
