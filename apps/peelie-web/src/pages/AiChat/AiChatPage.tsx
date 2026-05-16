@@ -4,8 +4,6 @@ import { SsgoiTransition } from '@ssgoi/react';
 
 import { Header } from '@/widgets/header/Header';
 import { ChatRoomCard, useGetChatListQuery } from '@/entities/chatroom';
-import { Button } from '@/shared/ui/common/button';
-import { cn } from '@/shared/lib/utils';
 import PATH from '@/shared/constants/path';
 
 import { SearchInput } from './ui/SearchInput';
@@ -47,12 +45,6 @@ export default function AiChatPage() {
             </li>
           ))}
         </ul>
-        <div className={cn('flex flex-col items-center justify-center min-h-screen', 'gap-4')}>
-          <h1 className="text-title-headline-1 text-gray-99">AI챗</h1>
-          <Button color="tertiary" size="sm" onClick={() => navigate(-1)}>
-            뒤로가기
-          </Button>
-        </div>
       </div>
     </SsgoiTransition>
   );

@@ -3,7 +3,8 @@ import type { ChatBubble, ChatMessage, LocalTurn } from '../model';
 export type RenderItem =
   | { kind: 'message'; message: ChatMessage; isLastAvatarTurn: boolean }
   | { kind: 'streaming-user'; text: string; createdAt: string }
-  | { kind: 'streaming-avatar'; bubbles: ChatBubble[]; suggestions: string[]; createdAt: string };
+  | { kind: 'streaming-avatar'; bubbles: ChatBubble[]; suggestions: string[]; createdAt: string }
+  | { kind: 'streaming-placeholder'; showHeader: boolean; createdAt: string };
 
 export type StreamingState =
   | { kind: 'none' }
@@ -15,6 +16,8 @@ interface BuildArgs {
   greetingTurn: LocalTurn | null;
   history: LocalTurn[];
   streaming: StreamingState;
+  /** greeting 진행 중 (suggestions 도착 전) 여부. true 면 마지막에 placeholder 추가. */
+  greetingPending?: boolean;
   /** "지금" 시각. 매 호출마다 새로 만들면 buildRenderItems 결과가 매 호출 달라져
    *  React 가 불필요한 리렌더 키 변경을 감지할 수 있어, 호출부에서 한 번만 만들어 넘긴다. */
   nowIso: string;
@@ -25,6 +28,7 @@ export function buildRenderItems({
   greetingTurn,
   history,
   streaming,
+  greetingPending,
   nowIso,
 }: BuildArgs): RenderItem[] {
   const flat: ChatMessage[] = [];
@@ -86,6 +90,18 @@ export function buildRenderItems({
       createdAt: nowIso,
     });
   }
+
+  const sendPending =
+    streaming.kind === 'sending' ||
+    (streaming.kind === 'streaming' && streaming.suggestions.length === 0);
+  if (sendPending || greetingPending) {
+    const hasStreamingAvatar = streaming.kind === 'streaming' && streaming.bubbles.length > 0;
+    items.push({
+      kind: 'streaming-placeholder',
+      showHeader: !hasStreamingAvatar,
+      createdAt: nowIso,
+    });
+  }
   return items;
 }
 
@@ -95,6 +111,7 @@ export function getRenderItemCreatedAt(item: RenderItem): string {
       return item.message.createdAt;
     case 'streaming-user':
     case 'streaming-avatar':
+    case 'streaming-placeholder':
       return item.createdAt;
   }
 }
@@ -107,5 +124,7 @@ export function getRenderItemKey(item: RenderItem, index: number): string {
       return `streaming-user-${index}`;
     case 'streaming-avatar':
       return `streaming-avatar-${index}`;
+    case 'streaming-placeholder':
+      return `streaming-placeholder-${index}`;
   }
 }

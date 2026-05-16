@@ -1,8 +1,16 @@
 import { useNavigate } from 'react-router-dom';
+
+import { PERSONALITY_LABEL } from '@/entities/chatroom';
+import type { PersonalityType } from '@/entities/chatroom';
 import { AlermIcon } from '@/shared/ui/icons/AlermIcon';
 import { ChatRoomProfileIcon } from '@/shared/ui/icons/ChatRoomProfileIcon';
 
-export function ChatRoomHeader() {
+interface ChatRoomHeaderProps {
+  name?: string;
+  personality?: PersonalityType;
+}
+
+export function ChatRoomHeader({ name, personality }: ChatRoomHeaderProps) {
   const navigate = useNavigate();
 
   return (
@@ -36,8 +44,12 @@ export function ChatRoomHeader() {
 
             {/* 이름 + 유형 */}
             <div className="flex flex-col">
-              <span className="text-caption-m-400 text-brand-50">친구 유형</span>
-              <span className="text-body-m-500 text-gray-01">김나은</span>
+              {personality && (
+                <span className="text-caption-m-400 text-brand-50">
+                  {PERSONALITY_LABEL[personality]}
+                </span>
+              )}
+              {name && <span className="text-body-m-500 text-gray-01">{name}</span>}
             </div>
           </div>
         </div>

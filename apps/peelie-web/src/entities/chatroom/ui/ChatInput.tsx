@@ -10,6 +10,7 @@ interface ChatInputProps {
   onRecommend?: () => void;
   /** 스트리밍 중 등 입력/전송 차단. */
   disabled?: boolean;
+  position?: 'fixed' | 'static';
   className?: string;
 }
 
@@ -19,6 +20,7 @@ export function ChatInput({
   onSubmit,
   onRecommend,
   disabled,
+  position = 'fixed',
   className,
 }: ChatInputProps) {
   const handleSubmit = () => {
@@ -27,13 +29,18 @@ export function ChatInput({
   };
 
   return (
-    <div className={cn('fixed bottom-0 left-0 right-0 px-5 py-2', className)}>
+    <div
+      className={cn(
+        position === 'fixed' ? 'fixed bottom-0 left-0 right-0 px-5 py-2' : 'px-5 py-2',
+        className,
+      )}
+    >
       <div className="rounded-[12px] border border-border-main bg-background-main px-4 py-3  bg-bg-main">
         <div className="flex flex-col gap-2">
           <Input
             value={value}
             onChange={onChange}
-            placeholder="채팅을 보내보세요"
+            placeholder="직접 입력해보세요"
             disabled={disabled}
             className="w-full bg-transparent text-body-s-400 text-text-main outline-none placeholder:text-text-disabled disabled:opacity-60"
           />
