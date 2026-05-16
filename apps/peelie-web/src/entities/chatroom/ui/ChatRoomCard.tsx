@@ -52,14 +52,14 @@ export function ChatRoomCard({
           {/* 미리보기 + 시간 */}
           <div className="flex items-center justify-between gap-5 whitespace-nowrap">
             <p className="truncate text-caption-m-400 text-gray-99">{lastMessage ?? ''}</p>
-            <div className="relative shrink-0">
+            <div className="relative shrink-0 flex items-center">
               <span className="text-caption-m-400 text-text-disabled">
                 {formatRelativeTime(lastMessageAt)}
               </span>
               {isUnread && (
                 <span
                   aria-label="안 읽은 메시지 있음"
-                  className="absolute left-[calc(100%+4px)] top-3.25 size-1.5 -translate-y-1/2 rounded-full bg-brand-main"
+                  className="absolute left-[calc(100%+4px)] top-2.25 size-1.5 -translate-y-1/2 rounded-full bg-brand-main"
                 />
               )}
             </div>

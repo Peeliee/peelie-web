@@ -195,7 +195,7 @@ export default function ChatRoomPage() {
 
   const handleSuggestionSelect = (text: string) => {
     if (isBusy) return;
-    send(text);
+    setInput(text);
   };
 
   return (
@@ -228,7 +228,12 @@ export default function ChatRoomPage() {
             return (
               <Fragment key={getRenderItemKey(item, i)}>
                 {showDate && <DateSeparator date={getRenderItemCreatedAt(item)} />}
-                {renderItem(item, handleSuggestionSelect, delayedSuggestionsId)}
+                {renderItem(
+                  item,
+                  handleSuggestionSelect,
+                  delayedSuggestionsId,
+                  currentRoom?.friend.name,
+                )}
               </Fragment>
             );
           })}
@@ -251,6 +256,7 @@ function renderItem(
   item: RenderItem,
   onSuggestionSelect: (text: string) => void,
   delayedSuggestionsId: string | null,
+  name: string | undefined,
 ) {
   switch (item.kind) {
     case 'message': {
@@ -266,7 +272,7 @@ function renderItem(
         isLastAvatarTurn && message.suggestions.length > 0 && delayedSuggestionsId === message.id;
       return (
         <>
-          <AvatarMessage bubbles={message.bubbles} createdAt={message.createdAt} />
+          <AvatarMessage bubbles={message.bubbles} createdAt={message.createdAt} name={name} />
           {showSuggestions && (
             <SuggestionList
               suggestions={message.suggestions}
@@ -286,8 +292,10 @@ function renderItem(
     case 'streaming-avatar':
       // streaming 중 suggestions 가 도착해도 여기선 표시하지 않는다.
       // done 직후 history 로 들어간 message 의 suggestions 가 0.5s 지연 후 표시됨.
-      return <AvatarMessage bubbles={item.bubbles} createdAt={item.createdAt} />;
+      return <AvatarMessage bubbles={item.bubbles} createdAt={item.createdAt} name={name} />;
     case 'streaming-placeholder':
-      return <AvatarTypingBubble showHeader={item.showHeader} className="chat-slide-up-in" />;
+      return (
+        <AvatarTypingBubble showHeader={item.showHeader} name={name} className="chat-slide-up-in" />
+      );
   }
 }
