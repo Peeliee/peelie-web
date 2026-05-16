@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useRef } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
+import { useEffect, useRef } from 'react';
 
-import { chatroomPost, chatroomQueries } from '@/entities/chatroom';
+import { chatroomPost, chatroomQueries, useMarkReadMutation } from '@/entities/chatroom';
 import type { LocalTurn } from '@/entities/chatroom';
+import { queryClient } from '@/shared/config/quertClient';
 
 interface UseMarkReadOptions {
   chatRoomId: string;
@@ -12,38 +12,40 @@ interface UseMarkReadOptions {
   greetingTurn: LocalTurn | null;
 }
 
-export function useMarkRead({ chatRoomId, historyLength, greetingTurn }: UseMarkReadOptions) {
-  const queryClient = useQueryClient();
+function invalidateChatList() {
+  queryClient.invalidateQueries({ queryKey: chatroomQueries.chatList.queryKey });
+}
 
-  const fire = useCallback(() => {
-    chatroomPost.markRead(chatRoomId).catch(() => {});
-    queryClient.invalidateQueries({ queryKey: chatroomQueries.chatList.queryKey });
-  }, [chatRoomId, queryClient]);
+export function useMarkRead({ chatRoomId, historyLength, greetingTurn }: UseMarkReadOptions) {
+  const { mutate } = useMarkReadMutation();
 
   // 메시지 스트림 완료 시
   const prevHistoryLengthRef = useRef(historyLength);
   useEffect(() => {
     if (historyLength > prevHistoryLengthRef.current && !document.hidden) {
-      fire();
+      mutate(chatRoomId);
     }
     prevHistoryLengthRef.current = historyLength;
-  }, [historyLength, fire]);
+  }, [historyLength, chatRoomId, mutate]);
 
   // greeting 완료 시
   const prevTurnRef = useRef(greetingTurn);
   useEffect(() => {
     if (!prevTurnRef.current && greetingTurn && !document.hidden) {
-      fire();
+      mutate(chatRoomId);
     }
     prevTurnRef.current = greetingTurn;
-  }, [greetingTurn, fire]);
+  }, [greetingTurn, chatRoomId, mutate]);
 
-  // 채팅방 unmount 시 (chatRoomId ref 사용 — stale closure 방지)
+  // 채팅방 unmount 시
   const chatRoomIdRef = useRef(chatRoomId);
   chatRoomIdRef.current = chatRoomId;
   useEffect(() => {
     return () => {
-      chatroomPost.markRead(chatRoomIdRef.current).catch(() => {});
+      chatroomPost
+        .markRead(chatRoomIdRef.current)
+        .then(invalidateChatList)
+        .catch(() => {});
     };
   }, []);
 
@@ -51,7 +53,10 @@ export function useMarkRead({ chatRoomId, historyLength, greetingTurn }: UseMark
   useEffect(() => {
     const handler = () => {
       if (document.visibilityState === 'hidden') {
-        chatroomPost.markRead(chatRoomId).catch(() => {});
+        chatroomPost
+          .markRead(chatRoomId)
+          .then(invalidateChatList)
+          .catch(() => {});
       }
     };
     document.addEventListener('visibilitychange', handler);

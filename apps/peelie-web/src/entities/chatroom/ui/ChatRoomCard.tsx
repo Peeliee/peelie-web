@@ -1,20 +1,8 @@
 import { ChatItemIcon } from '@/shared/ui/icons/ChatItemIcon';
 import { cn } from '@/shared/lib/utils';
 
+import { PERSONALITY_LABEL } from '../model';
 import type { PersonalityType } from '../model';
-
-/**
- * personality → 한글 뱃지 라벨.
- * TODO: 디자인 확정 후 정확한 라벨로 교체.
- */
-const PERSONALITY_BADGE: Record<PersonalityType, string> = {
-  STRAIGHT_SHOOTER: '직진 본능파',
-  ENERGETIC_TALKER: '불꽃 토커',
-  QUIET_CHARMER: '조용한 매력파',
-  ANALYTICAL_OBSERVER: '분석적 관찰자',
-  HEART_COLLECTOR: '하트 수집가',
-  STAGE_SETTER: '분위기 메이커',
-};
 
 interface ChatRoomCardProps {
   userName: string;
@@ -56,7 +44,7 @@ export function ChatRoomCard({
                 'text-caption-m-400 text-gray-70',
               )}
             >
-              {PERSONALITY_BADGE[personality]}
+              {PERSONALITY_LABEL[personality]}
             </span>
             <span className="text-body-s-400 font-medium text-gray-99">{userName}</span>
           </div>

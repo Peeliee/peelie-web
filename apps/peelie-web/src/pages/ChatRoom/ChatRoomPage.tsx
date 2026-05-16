@@ -18,6 +18,7 @@ import {
   getRenderItemCreatedAt,
   getRenderItemKey,
   isSameDay,
+  useGetChatListQuery,
   useGetChatMessagesQuery,
   type RenderItem,
   type StreamingState,
@@ -73,6 +74,9 @@ export default function ChatRoomPage() {
 
   const { data: messagesData } = useGetChatMessagesQuery(chatRoomId);
   const initialMessages = messagesData?.data.items ?? [];
+
+  const { data: chatListData } = useGetChatListQuery();
+  const currentRoom = chatListData?.data.find((r) => r.chatRoomId === chatRoomId);
 
   const { turn: greetingTurn, pending: greetingPending } = useGreeting(chatRoomId);
   const { state: sendState, history, send } = useSendChatMessage(chatRoomId);
@@ -203,7 +207,10 @@ export default function ChatRoomPage() {
       />
       <div className="relative flex min-h-dvh w-full flex-col">
         <div className="sticky top-0 z-10 shrink-0 bg-gray-99/30 backdrop-blur-md">
-          <ChatRoomHeader />
+          <ChatRoomHeader
+            name={currentRoom?.friend.name}
+            personality={currentRoom?.friend.personality}
+          />
         </div>
 
         <div className="flex flex-1 flex-col justify-end gap-1 px-4 py-2">
