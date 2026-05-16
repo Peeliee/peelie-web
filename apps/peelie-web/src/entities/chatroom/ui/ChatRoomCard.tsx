@@ -38,8 +38,9 @@ export function ChatRoomCard({
     <button
       type="button"
       onClick={onClick}
-      className="flex w-full items-center gap-4 py-5 text-left"
+      className="group w-full rounded-2xl px-3 py-4 text-left active:bg-gray-30"
     >
+      <div className="flex items-center gap-4 transition-transform duration-150 group-active:scale-[0.97]">
       {/* 아바타 */}
       <div className="relative size-[46px] shrink-0 overflow-hidden rounded-full bg-gray-79">
         <ChatItemIcon className="absolute left-1/2 top-[9px] h-[46px] w-[33px] -translate-x-1/2" />
@@ -73,6 +74,7 @@ export function ChatRoomCard({
             {formatRelativeTime(lastMessageAt)}
           </span>
         </div>
+      </div>
       </div>
     </button>
   );
