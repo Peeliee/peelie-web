@@ -3,7 +3,6 @@ import { toast } from 'sonner';
 import { getBridgeErrorMessage, useBridge, useBridgeEvent } from '@/app/provider/BridgeProvider';
 import { cn } from '@/shared/lib/utils';
 
-// bridge smoke test page — request / command / event 세 패턴이 잘 도는지만 확인.
 export default function TestPage() {
   const bridge = useBridge();
   const [pingResult, setPingResult] = useState<string>('—');
