@@ -12,4 +12,4 @@ the codebase instead.
 
 For each question, provide your recommended answer.
 
-Respond in Korean.
+Response in Korean.
