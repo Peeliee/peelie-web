@@ -16,7 +16,7 @@ export function AvatarMessage({ bubbles, createdAt, name, className }: AvatarMes
   return (
     <div className={cn('flex flex-col items-start gap-1', className)}>
       <div className="flex items-center gap-[7px]">
-        <div className="relative size-7 shrink-0 overflow-hidden rounded-full bg-gray-01">
+        <div className={cn('relative size-7 shrink-0 overflow-hidden rounded-full', 'bg-gray-01')}>
           <ChatRoomProfileIcon className="absolute left-1.5 top-1 h-5 w-3.5" />
         </div>
         <span className="text-body-s-400 text-brand-sub-30">{name}</span>

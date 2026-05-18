@@ -16,7 +16,10 @@ export function SearchInput({ className, ...props }: SearchInputProps) {
       <SearchIcon className="size-6 shrink-0 text-text-main" />
       <input
         type="text"
-        className="w-full bg-transparent text-body-m-400 text-text-main outline-none placeholder:text-text-disabled"
+        className={cn(
+          'w-full bg-transparent text-body-m-400 text-text-main outline-none',
+          'placeholder:text-text-disabled',
+        )}
         placeholder="찾고 싶은 대화를 검색해주세요."
         {...props}
       />

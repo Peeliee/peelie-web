@@ -3,12 +3,12 @@ import { motion, AnimatePresence } from 'motion/react';
 import { cn } from '@/shared/lib/utils';
 import { ChevronDownIcon } from '@/shared/ui/icons/ChevronDownIcon';
 import { ChevronUpIcon } from '@/shared/ui/icons/ChevronUpIcon';
-import type { Friend } from './types';
+import type { FriendSummary } from '@/entities/friendship/model/friendship.type';
 
 interface FriendSelectProps {
-  friends: Friend[];
-  selected: Friend | null;
-  onSelect: (friend: Friend) => void;
+  friends: FriendSummary[];
+  selected: FriendSummary | null;
+  onSelect: (friend: FriendSummary) => void;
 }
 
 export function FriendSelect({ friends, selected, onSelect }: FriendSelectProps) {
@@ -28,7 +28,7 @@ export function FriendSelect({ friends, selected, onSelect }: FriendSelectProps)
     );
   }
 
-  const handleSelect = (friend: Friend) => {
+  const handleSelect = (friend: FriendSummary) => {
     onSelect(friend);
     setIsOpen(false);
   };
@@ -41,7 +41,9 @@ export function FriendSelect({ friends, selected, onSelect }: FriendSelectProps)
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
         className={cn(
-          'flex h-14 w-full flex-col justify-center rounded-small border px-3 py-2 text-left transition-colors',
+          'flex h-14 w-full flex-col justify-center',
+          'rounded-small border px-3 py-2 text-left',
+          'transition-colors',
           isOpen || selected ? 'border-brand-50' : 'border-border-main',
         )}
       >
@@ -77,7 +79,11 @@ export function FriendSelect({ friends, selected, onSelect }: FriendSelectProps)
                 <button
                   type="button"
                   onClick={() => handleSelect(friend)}
-                  className="flex h-12 w-full items-center px-3 text-body-s-400 text-text-main hover:bg-brand-30 active:bg-brand-30"
+                  className={cn(
+                    'flex h-12 w-full items-center px-3',
+                    'text-body-s-400 text-text-main',
+                    'hover:bg-brand-30 active:bg-brand-30',
+                  )}
                 >
                   {friend.name}
                 </button>

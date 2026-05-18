@@ -25,6 +25,7 @@ import {
 } from '@/entities/chatroom';
 
 import { ChatRoomHeader } from './ui/ChatRoomHeader';
+import { cn } from '@/shared/lib/utils';
 
 const NEAR_BOTTOM_THRESHOLD_PX = 80;
 const SUGGESTIONS_DELAY_MS = 1000;
@@ -206,14 +207,14 @@ export default function ChatRoomPage() {
         style={{ backgroundImage: 'url(/chatroom-background.png)' }}
       />
       <div className="relative flex min-h-dvh w-full flex-col">
-        <div className="sticky top-0 z-10 shrink-0 bg-gray-99/30 backdrop-blur-md">
+        <div className={cn('sticky top-0 z-10 shrink-0 bg-gray-99/30', 'backdrop-blur-md')}>
           <ChatRoomHeader
             name={currentRoom?.friend.name}
             personality={currentRoom?.friend.personality}
           />
         </div>
 
-        <div className="flex flex-1 flex-col justify-end gap-1 px-4 py-2">
+        <div className={cn('flex flex-1 flex-col justify-end gap-1', 'px-4 py-2')}>
           <div className="flex justify-center py-2">
             <span className="px-4 py-1 text-caption-m-400 text-gray-01 text-center">
               지금 대화는 AI를 통해 생성되었습니다.

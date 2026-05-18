@@ -15,8 +15,8 @@ export interface ApiErrorMessage {
   status: number;
   success: boolean;
   message: string;
-  code: ApiErrorCode;
-  reason: string;
+  code?: ApiErrorCode;
+  reason?: string;
 }
 
 export type KyHttpError = HTTPError<ApiErrorMessage>;
@@ -25,3 +25,13 @@ export type KyHttpError = HTTPError<ApiErrorMessage>;
 export type ExtendedKyHttpError = KyHttpError & {
   errorData: ApiErrorMessage;
 };
+
+export class ApiResponseError extends Error {
+  errorData: ApiErrorMessage;
+
+  constructor(errorData: ApiErrorMessage) {
+    super(errorData.reason || errorData.message);
+    this.name = 'ApiResponseError';
+    this.errorData = errorData;
+  }
+}

@@ -1,19 +1,37 @@
-import { useMemo, useCallback, useLayoutEffect, useRef } from 'react';
+import { useMemo, useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { Ssgoi } from '@ssgoi/react';
 import { fade, snap } from '@ssgoi/react/view-transitions';
 import { NavigationBar } from '@/widgets/NavigationBar/NavigationBar';
+import { FriendCodeModal } from '@/widgets/FriendCodeModal';
+import { ScheduleModal } from '@/widgets/ScheduleModal';
+import { cn } from '@/shared/lib/utils';
+import { Button } from '@/shared/ui/common/button';
+import { PlusIcon } from '@/shared/ui/icons/PlusIcon';
 
 const NAV_ROUTES = ['/', '/ai-chat', '/my'];
 const NAV_ROUTE_SET = new Set<string>(NAV_ROUTES);
+
+interface SsgoiLayoutOutletContext {
+  openFriendCodeModal: () => void;
+}
 
 export default function SsgoiLayout() {
   const location = useLocation();
   const previousPathnameRef = useRef(location.pathname);
   const routeScrollRef = useRef<HTMLDivElement>(null);
+  const [isFriendCodeOpen, setIsFriendCodeOpen] = useState(false);
+  const [isScheduleOpen, setIsScheduleOpen] = useState(false);
   const showNav = NAV_ROUTES.includes(location.pathname);
+  const showHomeFloatingAction = location.pathname === '/';
 
   const usePathname = useCallback(() => location.pathname, [location.pathname]);
+  const outletContext = useMemo<SsgoiLayoutOutletContext>(
+    () => ({
+      openFriendCodeModal: () => setIsFriendCodeOpen(true),
+    }),
+    [],
+  );
 
   useLayoutEffect(() => {
     const previousPathname = previousPathnameRef.current;
@@ -107,10 +125,33 @@ export default function SsgoiLayout() {
           className="relative h-full overflow-y-auto overflow-x-hidden"
         >
           <div className={showNav ? 'pb-12' : ''}>
-            <Outlet />
+            <Outlet context={outletContext} />
           </div>
         </div>
+        {showHomeFloatingAction && (
+          <Button
+            size="lg"
+            radius="full"
+            iconLeft={<PlusIcon />}
+            onClick={() => setIsScheduleOpen(true)}
+            className={cn(
+              'fixed bottom-[60px] left-1/2 z-20 px-4',
+              'animate-[home-fab-in_200ms_ease-in_200ms_both]',
+            )}
+          >
+            일정 추가하기
+          </Button>
+        )}
         {showNav && <NavigationBar className="fixed bottom-0 left-0 right-0" />}
+        <FriendCodeModal isOpen={isFriendCodeOpen} onClose={() => setIsFriendCodeOpen(false)} />
+        <ScheduleModal
+          isOpen={isScheduleOpen}
+          onClose={() => setIsScheduleOpen(false)}
+          onAddFriend={() => {
+            setIsScheduleOpen(false);
+            setIsFriendCodeOpen(true);
+          }}
+        />
       </div>
     </Ssgoi>
   );

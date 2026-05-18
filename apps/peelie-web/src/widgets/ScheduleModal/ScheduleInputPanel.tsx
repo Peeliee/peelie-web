@@ -1,34 +1,19 @@
 import { ModalCharacterIcon } from '@/shared/ui/icons/ModalCharacterIcon';
 import { Button } from '@/shared/ui/common/button';
+import { useGetFriendshipsQuery } from '@/entities/friendship';
+import type { FriendSummary } from '@/entities/friendship/model/friendship.type';
+import type { ScheduleDate } from '@/entities/schedule/model/schedule.type';
 import { DatePicker } from './DatePicker';
 import { FriendSelect } from './FriendSelect';
-import type { Friend, ScheduleDate } from './types';
 import { cn } from '@/shared/lib/utils';
-
-const FRIENDS: Friend[] = [
-  { id: '1', name: '유지원' },
-  { id: '2', name: '김용희' },
-  { id: '3', name: '김나은' },
-  { id: '1', name: '유지원' },
-  { id: '2', name: '김용희' },
-  { id: '3', name: '김나은' },
-  { id: '1', name: '유지원' },
-  { id: '1', name: '유지원' },
-  { id: '2', name: '김용희' },
-  { id: '3', name: '김나은' },
-  { id: '1', name: '유지원' },
-  { id: '2', name: '김용희' },
-  { id: '3', name: '김나은' },
-  { id: '1', name: '유지원' },
-];
 
 const YEAR_MAX = 2050;
 
 interface ScheduleInputPanelProps {
   date: ScheduleDate;
   onDateChange: (next: ScheduleDate) => void;
-  friend: Friend | null;
-  onFriendChange: (friend: Friend) => void;
+  friend: FriendSummary | null;
+  onFriendChange: (friend: FriendSummary) => void;
   onAddFriend: () => void;
   onNext: () => void;
 }
@@ -41,6 +26,7 @@ export function ScheduleInputPanel({
   onAddFriend,
   onNext,
 }: ScheduleInputPanelProps) {
+  const { data: friendships = [] } = useGetFriendshipsQuery();
   const today = getToday();
 
   const yearMin = today.year;
@@ -66,12 +52,13 @@ export function ScheduleInputPanel({
   };
 
   const canProceed = friend !== null;
-  const hasFriends = FRIENDS.length > 0;
+  const hasFriends = friendships.length > 0;
 
   return (
     <div
       className={cn(
-        'flex h-[464px] w-full flex-col items-center rounded-large',
+        'flex h-[464px] w-full flex-col',
+        'items-center rounded-large',
         'bg-gray-01 pt-7 pb-7',
       )}
     >
@@ -120,7 +107,7 @@ export function ScheduleInputPanel({
         {/* 친구 입력 */}
         <div className="flex w-full flex-col gap-2">
           <span className="text-body-s-400 font-medium text-text-main">친구 입력</span>
-          <FriendSelect friends={FRIENDS} selected={friend} onSelect={onFriendChange} />
+          <FriendSelect friends={friendships} selected={friend} onSelect={onFriendChange} />
           <button
             type="button"
             onClick={onAddFriend}
@@ -138,7 +125,10 @@ export function ScheduleInputPanel({
         size="md"
         disabled={!canProceed}
         onClick={onNext}
-        className="mt-auto w-[264px] bg-gray-70 text-body-m-400 text-gray-01 disabled:bg-gray-50"
+        className={cn(
+          'mt-auto w-[264px] bg-gray-70',
+          'text-body-m-400 text-gray-01 disabled:bg-gray-50',
+        )}
       >
         다음으로
       </Button>

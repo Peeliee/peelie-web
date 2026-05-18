@@ -35,14 +35,22 @@ export function ChatInput({
         className,
       )}
     >
-      <div className="rounded-[12px] border border-border-main bg-background-main px-4 py-3  bg-bg-main">
+      <div
+        className={cn(
+          'rounded-[12px] border border-border-main bg-background-main px-4',
+          'py-3 bg-bg-main',
+        )}
+      >
         <div className="flex flex-col gap-2">
           <Input
             value={value}
             onChange={onChange}
             placeholder="직접 입력해보세요"
             disabled={disabled}
-            className="w-full bg-transparent text-body-s-400 text-text-main outline-none placeholder:text-text-disabled disabled:opacity-60"
+            className={cn(
+              'w-full bg-transparent text-body-s-400 text-text-main outline-none',
+              'placeholder:text-text-disabled disabled:opacity-60',
+            )}
           />
           <div className="h-px w-full rounded-full bg-alpha-10" />
           <div className="flex items-center justify-between">
@@ -50,7 +58,7 @@ export function ChatInput({
               type="button"
               onClick={onRecommend}
               disabled={disabled}
-              className="flex h-8 items-center gap-1 rounded-full px-2 disabled:opacity-60"
+              className={cn('flex h-8 items-center gap-1 rounded-full', 'px-2 disabled:opacity-60')}
             >
               <LoaderIcon className="size-4 text-text-main" />
               <span className="text-caption-m-400 text-text-main">추천 답변</span>
@@ -59,7 +67,10 @@ export function ChatInput({
               type="button"
               onClick={handleSubmit}
               disabled={disabled}
-              className="flex items-center justify-center rounded-full border border-border-main px-2 py-1 disabled:opacity-60"
+              className={cn(
+                'flex items-center justify-center rounded-full border',
+                'border-border-main px-2 py-1 disabled:opacity-60',
+              )}
             >
               <ChevronUpIcon className="size-[22px] text-text-main" />
             </button>

@@ -4,6 +4,7 @@ import { PERSONALITY_LABEL } from '@/entities/chatroom';
 import type { PersonalityType } from '@/entities/chatroom';
 import { AlermIcon } from '@/shared/ui/icons/AlermIcon';
 import { ChatRoomProfileIcon } from '@/shared/ui/icons/ChatRoomProfileIcon';
+import { cn } from '@/shared/lib/utils';
 
 interface ChatRoomHeaderProps {
   name?: string;
@@ -15,7 +16,7 @@ export function ChatRoomHeader({ name, personality }: ChatRoomHeaderProps) {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between pl-4 pr-5 pt-4">
+      <div className={cn('flex items-center justify-between pl-4 pr-5', 'pt-4')}>
         {/* 좌측: 뒤로가기 + 프로필 */}
         <div className="flex items-center gap-4">
           <button type="button" onClick={() => navigate(-1)} aria-label="뒤로가기">
@@ -38,7 +39,12 @@ export function ChatRoomHeader({ name, personality }: ChatRoomHeaderProps) {
 
           <div className="flex items-center gap-3">
             {/* 아바타 */}
-            <div className="relative size-[46px] shrink-0 overflow-hidden rounded-full bg-brand-30">
+            <div
+              className={cn(
+                'relative size-[46px] shrink-0 overflow-hidden rounded-full',
+                'bg-brand-30',
+              )}
+            >
               <ChatRoomProfileIcon className="absolute left-[10px] top-[6px] h-[33px] w-[25px]" />
             </div>
 

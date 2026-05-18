@@ -13,7 +13,9 @@ export function AvatarTypingBubble({ showHeader, name, className }: AvatarTyping
     <div className={cn('flex flex-col items-start gap-1', className)}>
       {showHeader && (
         <div className="flex items-center gap-[7px]">
-          <div className="relative size-7 shrink-0 overflow-hidden rounded-full bg-gray-01">
+          <div
+            className={cn('relative size-7 shrink-0 overflow-hidden rounded-full', 'bg-gray-01')}
+          >
             <ChatRoomProfileIcon className="absolute left-1.5 top-1 h-5 w-3.5" />
           </div>
           <span className="text-body-s-400 text-brand-sub-30">{name}</span>
@@ -21,7 +23,10 @@ export function AvatarTypingBubble({ showHeader, name, className }: AvatarTyping
       )}
       <div className="pl-8">
         <div
-          className="inline-flex items-center gap-1 rounded-small rounded-tl-none bg-brand-sub-30 px-3 py-3"
+          className={cn(
+            'inline-flex items-center gap-1 rounded-small rounded-tl-none',
+            'bg-brand-sub-30 px-3 py-3',
+          )}
           aria-label="응답 작성 중"
         >
           <Dot delay="0ms" />

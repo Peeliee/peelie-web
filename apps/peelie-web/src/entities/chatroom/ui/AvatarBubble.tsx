@@ -12,7 +12,9 @@ interface AvatarBubbleProps {
 export function AvatarBubble({ content, createdAt, className }: AvatarBubbleProps) {
   return (
     <div className={cn('flex flex-col items-start gap-2 pl-8', className)}>
-      <div className="max-w-[65vw] rounded-small rounded-tl-none bg-brand-sub-30 px-3 py-2">
+      <div
+        className={cn('max-w-[65vw] rounded-small rounded-tl-none bg-brand-sub-30 px-3', 'py-2')}
+      >
         <p className="whitespace-pre-line text-body-m-400 text-text-main">{content}</p>
       </div>
       {createdAt && (

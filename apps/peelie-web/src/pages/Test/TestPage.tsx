@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { getBridgeErrorMessage, useBridge, useBridgeEvent } from '@/app/provider/BridgeProvider';
+import { cn } from '@/shared/lib/utils';
 
 // bridge smoke test page — request / command / event 세 패턴이 잘 도는지만 확인.
 export default function TestPage() {
@@ -34,7 +35,7 @@ export default function TestPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col gap-6 bg-amber-50 p-6 font-mono text-sm">
+    <div className={cn('flex min-h-screen flex-col gap-6 bg-amber-50', 'p-6 font-mono text-sm')}>
       <h1 className="text-xl font-bold">Bridge smoke test</h1>
 
       <section className="flex flex-col gap-2">

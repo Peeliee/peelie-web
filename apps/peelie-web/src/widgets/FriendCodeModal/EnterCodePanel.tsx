@@ -14,9 +14,14 @@ export function EnterCodePanel({ onRegister }: EnterCodePanelProps) {
   const { mutate: addFriendship, isPending } = useAddFriendshipMutation();
 
   return (
-    <div className="relative h-[400px] w-full overflow-hidden rounded-large bg-gray-01">
+    <div className={cn('relative h-[400px] w-full overflow-hidden rounded-large', 'bg-gray-01')}>
       {/* 상단: 캐릭터 + 안내 문구 */}
-      <div className="absolute left-1/2 top-[29px] flex -translate-x-1/2 flex-col items-center gap-3">
+      <div
+        className={cn(
+          'absolute left-1/2 top-[29px] flex -translate-x-1/2',
+          'flex-col items-center gap-3',
+        )}
+      >
         <ModalCharacterIcon />
         <p className="text-body-l-500 font-medium whitespace-nowrap text-gray-99">
           친구 코드를 입력해 친구를 추가해보세요!
@@ -35,7 +40,10 @@ export function EnterCodePanel({ onRegister }: EnterCodePanelProps) {
           value={code}
           onChange={(e) => setCode((e.target as HTMLInputElement).value)}
           placeholder="코드를 입력해주세요."
-          className="w-full bg-transparent text-body-1 text-text-main outline-none placeholder:text-text-disabled"
+          className={cn(
+            'w-full bg-transparent text-body-1 text-text-main outline-none',
+            'placeholder:text-text-disabled',
+          )}
         />
       </div>
 
@@ -43,16 +51,27 @@ export function EnterCodePanel({ onRegister }: EnterCodePanelProps) {
       <img
         src="/write-friend-code.png"
         alt=""
-        className="absolute left-1/2 top-[198px] h-[111px] w-[230px] -translate-x-1/2 object-contain"
+        className={cn(
+          'absolute left-1/2 top-[198px] h-[111px] w-[230px]',
+          '-translate-x-1/2 object-contain',
+        )}
       />
 
       {/* 등록 버튼 + 안내 텍스트 */}
-      <div className="absolute left-1/2 top-[302px] flex -translate-x-1/2 flex-col items-center gap-2">
+      <div
+        className={cn(
+          'absolute left-1/2 top-[302px] flex -translate-x-1/2',
+          'flex-col items-center gap-2',
+        )}
+      >
         <button
           type="button"
           onClick={() => addFriendship({ friendCode: code }, { onSuccess: onRegister })}
           disabled={isPending || !code}
-          className="flex h-12 w-[264px] items-center justify-center rounded-full bg-gray-70 text-body-m-400 text-gray-01 disabled:opacity-50"
+          className={cn(
+            'flex h-12 w-[264px] items-center justify-center',
+            'rounded-full bg-gray-70 text-body-m-400 text-gray-01 disabled:opacity-50',
+          )}
         >
           코드 등록하기
         </button>

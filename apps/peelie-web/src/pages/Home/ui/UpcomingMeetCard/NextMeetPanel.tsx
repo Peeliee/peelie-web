@@ -13,8 +13,8 @@ interface NextMeetPanelProps {
 
 export function NextMeetPanel({ meet, showToggle, isOpen, onToggle }: NextMeetPanelProps) {
   return (
-    <div className="relative isolate flex w-full flex-col items-center">
-      <div className="z-2 -mt-1 flex w-[305px] items-center justify-between">
+    <div className={cn('relative isolate flex w-full flex-col', 'items-center')}>
+      <div className={cn('z-2 -mt-1 flex w-[305px] items-center', 'justify-between')}>
         <div className="h-3.5 w-1 rounded-full bg-gray-50" />
         <div className="h-3.5 w-1 rounded-full bg-gray-50" />
       </div>
@@ -25,7 +25,7 @@ export function NextMeetPanel({ meet, showToggle, isOpen, onToggle }: NextMeetPa
           'rounded-medium border border-border-main bg-brand-30',
         )}
       >
-        <div className="flex h-full items-center justify-between px-4 py-2.5">
+        <div className={cn('flex h-full items-center justify-between px-4', 'py-2.5')}>
           <div className="flex items-center gap-5">
             <div className="rounded-full bg-brand-50 px-3 py-1">
               <span className="text-body-m-400 font-medium text-gray-79">{getDday(meet.date)}</span>

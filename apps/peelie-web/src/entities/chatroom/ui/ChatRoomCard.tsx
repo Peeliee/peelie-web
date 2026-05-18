@@ -26,12 +26,21 @@ export function ChatRoomCard({
     <button
       type="button"
       onClick={onClick}
-      className="group w-full rounded-2xl px-3 py-4 text-left active:bg-gray-30"
+      className={cn('group w-full rounded-2xl px-3 py-4', 'text-left active:bg-gray-30')}
     >
-      <div className="flex items-center gap-4 transition-transform duration-150 group-active:scale-[0.97]">
+      <div
+        className={cn(
+          'flex items-center gap-4 transition-transform duration-150',
+          'group-active:scale-[0.97]',
+        )}
+      >
         {/* 아바타 */}
-        <div className="relative size-[46px] shrink-0 overflow-hidden rounded-full bg-gray-79">
-          <ChatItemIcon className="absolute left-1/2 top-[9px] h-[46px] w-[33px] -translate-x-1/2" />
+        <div
+          className={cn('relative size-[46px] shrink-0 overflow-hidden rounded-full', 'bg-gray-79')}
+        >
+          <ChatItemIcon
+            className={cn('absolute left-1/2 top-[9px] h-[46px] w-[33px]', '-translate-x-1/2')}
+          />
         </div>
 
         {/* 콘텐츠 */}
@@ -59,7 +68,10 @@ export function ChatRoomCard({
               {isUnread && (
                 <span
                   aria-label="안 읽은 메시지 있음"
-                  className="absolute left-[calc(100%+4px)] top-2.25 size-1.5 -translate-y-1/2 rounded-full bg-brand-main"
+                  className={cn(
+                    'absolute left-[calc(100%+4px)] top-2.25 size-1.5 -translate-y-1/2',
+                    'rounded-full bg-brand-main',
+                  )}
                 />
               )}
             </div>
