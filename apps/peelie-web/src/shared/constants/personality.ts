@@ -1,11 +1,13 @@
-export enum PersonalityType {
-  STRAIGHT_SHOOTER = 'STRAIGHT_SHOOTER',
-  ENERGETIC_TALKER = 'ENERGETIC_TALKER',
-  QUIET_CHARMER = 'QUIET_CHARMER',
-  ANALYTICAL_OBSERVER = 'ANALYTICAL_OBSERVER',
-  HEART_COLLECTOR = 'HEART_COLLECTOR',
-  STAGE_SETTER = 'STAGE_SETTER',
-}
+export const PersonalityType = {
+  STRAIGHT_SHOOTER: 'STRAIGHT_SHOOTER',
+  ENERGETIC_TALKER: 'ENERGETIC_TALKER',
+  QUIET_CHARMER: 'QUIET_CHARMER',
+  ANALYTICAL_OBSERVER: 'ANALYTICAL_OBSERVER',
+  HEART_COLLECTOR: 'HEART_COLLECTOR',
+  STAGE_SETTER: 'STAGE_SETTER',
+} as const;
+
+export type PersonalityType = (typeof PersonalityType)[keyof typeof PersonalityType];
 
 export const PERSONALITY_LABEL: Record<PersonalityType, string> = {
   [PersonalityType.STRAIGHT_SHOOTER]: '직진 본능파',
