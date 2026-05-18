@@ -1,21 +1,13 @@
 import { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 
-import { useCompleteOnboardingMutation, type PersonalityType } from '@/entities/auth';
+import { useCompleteOnboardingMutation } from '@/entities/auth';
 import PATH from '@/shared/constants/path';
+import { PERSONALITY_OPTIONS, PersonalityType } from '@/shared/constants/personality';
 import { cn } from '@/shared/lib/utils';
 import { Button } from '@/shared/ui/common/button';
 import { Input } from '@/shared/ui/common/Input';
 import { ChevronLeftIcon } from '@/shared/ui/icons/ChevronLeftIcon';
-
-const PERSONALITY_OPTIONS: { value: PersonalityType; label: string }[] = [
-  { value: 'STRAIGHT_SHOOTER', label: '직진 본능파' },
-  { value: 'ENERGETIC_TALKER', label: '불꽃토커' },
-  { value: 'QUIET_CHARMER', label: '조용한호감캐' },
-  { value: 'ANALYTICAL_OBSERVER', label: '뇌풀가동 분석파' },
-  { value: 'HEART_COLLECTOR', label: '속마음 수집가' },
-  { value: 'STAGE_SETTER', label: '판깔기 전문가' },
-];
 
 export default function OnboardingPage() {
   const navigate = useNavigate();

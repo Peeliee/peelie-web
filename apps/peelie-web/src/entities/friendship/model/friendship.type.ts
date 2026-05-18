@@ -1,10 +1,4 @@
-type PersonalityType =
-  | 'STRAIGHT_SHOOTER'
-  | 'ENERGETIC_TALKER'
-  | 'QUIET_CHARMER'
-  | 'ANALYTICAL_OBSERVER'
-  | 'HEART_COLLECTOR'
-  | 'STAGE_SETTER';
+import type { PersonalityType } from '@/shared/constants/personality';
 
 export interface FriendSummary {
   id: string;

@@ -1,4 +1,4 @@
-import type { PersonalityType } from './auth.type';
+import type { PersonalityType } from '@/shared/constants/personality';
 
 export interface MeData {
   id: string;
