@@ -1,5 +1,11 @@
 import type { PersonalityType } from '@/shared/constants/personality';
 
+export interface ScheduleDate {
+  year: number;
+  month: number;
+  day: number;
+}
+
 export interface Schedule {
   id: string;
   meetDate: string;

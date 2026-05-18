@@ -3,7 +3,8 @@ import Modal from '@/shared/ui/common/Modal/Modal';
 import { XIcon } from '@/shared/ui/icons/XIcon';
 import { MemoPanel } from './MemoPanel';
 import { ScheduleInputPanel } from './ScheduleInputPanel';
-import type { Friend, ScheduleDate } from './types';
+import type { FriendSummary } from '@/entities/friendship/model/friendship.type';
+import type { ScheduleDate } from '@/entities/schedule/model/schedule.type';
 
 type Step = 'input' | 'memo';
 
@@ -16,7 +17,7 @@ interface ScheduleModalProps {
 export function ScheduleModal({ isOpen, onClose, onAddFriend }: ScheduleModalProps) {
   const [step, setStep] = useState<Step>('input');
   const [date, setDate] = useState<ScheduleDate>(getToday);
-  const [friend, setFriend] = useState<Friend | null>(null);
+  const [friend, setFriend] = useState<FriendSummary | null>(null);
   const [memo, setMemo] = useState('');
 
   // 모달 닫힘 애니메이션 종료 후 상태 초기화
