@@ -17,7 +17,10 @@ export function SearchBar({ className, ...props }: SearchBarProps) {
       <SearchIcon className="size-6 shrink-0 text-text-main" />
       <Input
         type="text"
-        className="w-full bg-transparent text-body-m-400 text-text-main outline-none placeholder:text-text-disable h-7"
+        className={cn(
+          'w-full bg-transparent text-body-m-400 text-text-main outline-none',
+          'placeholder:text-text-disable h-7',
+        )}
         placeholder="찾고 싶은 대화를 검색해주세요."
         {...props}
       />

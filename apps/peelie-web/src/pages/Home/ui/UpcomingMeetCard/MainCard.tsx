@@ -18,14 +18,17 @@ export function MainCard({ meet, onChatClick }: MainCardProps) {
         'bg-linear-to-b from-brand-main to-brand-30',
       )}
     >
-      <div className="pointer-events-none absolute right-0 top-9 h-42 w-51">
+      <div className={cn('pointer-events-none absolute right-0 top-9 h-42', 'w-51')}>
         <img
           src="/today-meet-character.png"
-          className="absolute w-51 left-3/7 top-1/2 -translate-x-1/2 -translate-y-1/2 select-none"
+          className={cn(
+            'absolute w-51 left-3/7 top-1/2 -translate-x-1/2',
+            '-translate-y-1/2 select-none',
+          )}
         />
       </div>
 
-      <div className="relative flex h-full flex-col px-5 py-5">
+      <div className={cn('relative flex h-full flex-col px-5', 'py-5')}>
         <div className="flex items-center justify-between">
           <span className="text-title-headline-1 text-gray-79">오늘의 만남</span>
           <ChevronRightIcon className="size-6 text-gray-79" aria-hidden />
@@ -44,7 +47,10 @@ export function MainCard({ meet, onChatClick }: MainCardProps) {
         <button
           type="button"
           onClick={onChatClick}
-          className="mt-auto flex h-12 items-center gap-1 self-start rounded-full bg-gray-70 pl-4 pr-3"
+          className={cn(
+            'mt-auto flex h-12 items-center gap-1',
+            'self-start rounded-full bg-gray-70 pl-4 pr-3',
+          )}
         >
           <span className="text-body-m-500 text-gray-01">대화하기</span>
           <ChevronRightIcon className="size-6 text-gray-01" aria-hidden />

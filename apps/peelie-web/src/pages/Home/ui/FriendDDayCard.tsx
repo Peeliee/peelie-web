@@ -2,6 +2,7 @@ import type { ComponentProps, ComponentType } from 'react';
 import { ChevronRightIcon } from '@/shared/ui/icons/ChevronRightIcon';
 import { SilentGoodIcon } from '@/shared/ui/icons/SilentGoodIcon';
 import { StraightForwardIcon } from '@/shared/ui/icons/StraightForwardIcon';
+import { cn } from '@/shared/lib/utils';
 
 export type FriendType = '조용한 호감캐' | '직진 본능파';
 
@@ -55,11 +56,20 @@ export function FriendDDayCard({ type, name, registeredAt, meetDate }: FriendDDa
   const ddayLabel = dday === 0 ? 'D-day' : `D-${dday}`;
 
   return (
-    <div className="relative flex h-24 w-full flex-col justify-between overflow-hidden rounded-medium border border-border-main bg-background-main px-4 py-3">
+    <div
+      className={cn(
+        'relative flex h-24 w-full flex-col',
+        'justify-between overflow-hidden rounded-medium border border-border-main',
+        'bg-background-main px-4 py-3',
+      )}
+    >
       <img
         src={png}
         aria-hidden
-        className="pointer-events-none absolute -top-2 right-3 size-25 select-none opacity-50"
+        className={cn(
+          'pointer-events-none absolute -top-2 right-3 size-25',
+          'select-none opacity-50',
+        )}
       />
 
       <div className="flex items-center gap-3">
@@ -80,20 +90,28 @@ export function FriendDDayCard({ type, name, registeredAt, meetDate }: FriendDDa
 
       <div className="relative">
         <div
-          className="absolute -top-8.5 flex -translate-x-1/2 items-center rounded-full bg-gray-70 px-2 shadow-float"
+          className={cn(
+            'absolute -top-8.5 flex -translate-x-1/2 items-center',
+            'rounded-full bg-gray-70 px-2 shadow-float',
+          )}
           style={{ left: `${progress}%`, marginLeft: '-4px' }}
         >
           <span className="text-caption-m-400 text-gray-01">{ddayLabel}</span>
         </div>
 
         <div className="absolute inset-x-0 bottom-0 h-3">
-          <div className="absolute inset-x-0 top-[2px] h-2 rounded-full bg-gray-30" />
+          <div className={cn('absolute inset-x-0 top-[2px] h-2 rounded-full', 'bg-gray-30')} />
           <div
             className="absolute inset-y-0 left-0 flex items-center"
             style={{ width: `${progress}%` }}
           >
             <div className="-mr-1.5 h-2 flex-1 rounded-full bg-brand-50" />
-            <div className="size-3 shrink-0 rounded-full border-[1.2px] border-brand-50 bg-gray-01 shadow-float" />
+            <div
+              className={cn(
+                'size-3 shrink-0 rounded-full border-[1.2px] border-brand-50',
+                'bg-gray-01 shadow-float',
+              )}
+            />
           </div>
         </div>
       </div>

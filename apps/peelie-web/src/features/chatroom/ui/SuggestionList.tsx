@@ -28,7 +28,10 @@ export function SuggestionList({
               type="button"
               onClick={() => !disabled && onSelect(text)}
               disabled={disabled}
-              className="min-w-[98px] rounded-small rounded-tr-none bg-gray-10 px-3 py-2 text-right text-body-m-400 text-text-main"
+              className={cn(
+                'min-w-[98px] rounded-small rounded-tr-none bg-gray-10 px-3',
+                'py-2 text-right text-body-m-400 text-text-main',
+              )}
             >
               {text}
             </button>
