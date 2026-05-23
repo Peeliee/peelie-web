@@ -50,15 +50,27 @@ export default function HomePage() {
         <SearchBar className="mt-3" />
 
         <div className="mt-3 flex flex-col gap-3">
-          {chatRooms.map((room) => (
-            <FriendDDayCard
-              key={room.chatRoomId}
-              personality={room.friend.personality}
-              name={room.friend.name}
-              registeredAt={room.registeredAt}
-              meetDate={room.meetDate}
-            />
-          ))}
+          {chatRooms.length === 0 ? (
+            <div className="flex h-full flex-col items-center justify-center pt-15">
+              <p className="text-caption-m-400 text-text-sub">
+                가까운 시일 내 예정된 약속이 없어요
+              </p>
+              <p className="text-caption-m-400 text-text-sub">
+                일정을 추가하고 친구와의 만남을 미리 준비해보세요
+              </p>
+            </div>
+          ) : (
+            chatRooms.map((room) => (
+              <FriendDDayCard
+                key={room.chatRoomId}
+                chatRoomId={room.chatRoomId}
+                personality={room.friend.personality}
+                name={room.friend.name}
+                registeredAt={room.registeredAt}
+                meetDate={room.meetDate}
+              />
+            ))
+          )}
         </div>
       </section>
     </SsgoiTransition>

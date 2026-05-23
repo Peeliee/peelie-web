@@ -1,0 +1,1 @@
+export { FriendDetailModal } from './FriendDetailModal';

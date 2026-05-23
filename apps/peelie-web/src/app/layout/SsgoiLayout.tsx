@@ -80,6 +80,18 @@ export default function SsgoiLayout() {
           transition: snap({ direction: 'right' }),
         },
 
+        // 홈 <-> 채팅룸
+        {
+          from: '/',
+          to: '/chat-room',
+          transition: fade(),
+        },
+        {
+          from: '/chat-room',
+          to: '/',
+          transition: fade(),
+        },
+
         // ai챗 <-> 마이페이지
         {
           from: '/ai-chat',
