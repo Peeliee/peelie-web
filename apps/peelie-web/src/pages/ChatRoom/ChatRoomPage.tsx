@@ -261,7 +261,7 @@ function renderItem(
 ) {
   switch (item.kind) {
     case 'message': {
-      const { message, isLastAvatarTurn } = item;
+      const { message, isLastAvatarTurn, isGreeting } = item;
       if (message.role === 'USER') {
         return (
           <div className="flex justify-end">
@@ -271,14 +271,21 @@ function renderItem(
       }
       const showSuggestions =
         isLastAvatarTurn && message.suggestions.length > 0 && delayedSuggestionsId === message.id;
+      const animClass = isGreeting ? 'chat-slide-up-in' : undefined;
       return (
         <>
-          <AvatarMessage bubbles={message.bubbles} createdAt={message.createdAt} name={name} />
+          <AvatarMessage
+            bubbles={message.bubbles}
+            createdAt={message.createdAt}
+            name={name}
+            className={animClass}
+          />
           {showSuggestions && (
             <SuggestionList
               suggestions={message.suggestions}
               onSelect={onSuggestionSelect}
               createdAt={message.createdAt}
+              className={animClass}
             />
           )}
         </>
