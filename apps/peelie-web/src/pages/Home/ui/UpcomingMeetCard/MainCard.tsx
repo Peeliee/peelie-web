@@ -3,7 +3,7 @@ import { ChevronRightIcon } from '@/shared/ui/icons/ChevronRightIcon';
 import { MiniCharacterMadIcon } from '@/shared/ui/icons/MiniCharacterMadIcon';
 
 import type { Meet } from './types';
-import { formatMeetDate } from './utils';
+import { formatMeetDate, isToday } from './utils';
 
 interface MainCardProps {
   meet: Meet;
@@ -11,6 +11,7 @@ interface MainCardProps {
 }
 
 export function MainCard({ meet, onChatClick }: MainCardProps) {
+  console.log(meet);
   return (
     <div
       className={cn(
@@ -30,7 +31,9 @@ export function MainCard({ meet, onChatClick }: MainCardProps) {
 
       <div className={cn('relative flex h-full flex-col px-5', 'py-5')}>
         <div className="flex items-center justify-between">
-          <span className="text-title-headline-1 text-gray-79">오늘의 만남</span>
+          <span className="text-title-headline-1 text-gray-79">
+            {isToday(meet.date) ? '오늘의 만남' : '다가오는 만남'}
+          </span>
         </div>
 
         <div className="mt-2 flex flex-col gap-1">
@@ -38,7 +41,7 @@ export function MainCard({ meet, onChatClick }: MainCardProps) {
           <div className="flex items-center gap-1.5">
             <MiniCharacterMadIcon />
             <p className="whitespace-nowrap text-body-s-400 font-medium text-gray-59">
-              {meet.title}
+              {meet.friend.name}님과의 약속
             </p>
           </div>
         </div>

@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 
 import { useGetSchedulesQuery } from '@/entities/schedule';
 import PATH from '@/shared/constants/path';
-import { cn } from '@/shared/lib/utils';
 
 import { EmptyMeetCard } from './EmptyMeetCard';
 import { EmptyNextMeetPanel } from './EmptyNextMeetPanel';
@@ -33,7 +32,7 @@ export function UpcomingMeetCard() {
   const handleToggle = () => setIsOpen((prev) => !prev);
 
   return (
-    <div className={cn('isolate flex w-full flex-col', showToggle && 'pb-3')}>
+    <div className="relative isolate z-10 flex w-full flex-col">
       <div className="z-2 flex w-full flex-col">
         {hasMain ? <MainCard meet={main} onChatClick={goToChatRoom} /> : <EmptyMeetCard />}
 
@@ -50,7 +49,7 @@ export function UpcomingMeetCard() {
       </div>
 
       {showToggle && (
-        <div className="z-1 -mt-3">
+        <div className="absolute inset-x-0 top-full z-1 -mt-3">
           <MeetList meets={restMeets} isOpen={isOpen} onItemClick={goToChatRoom} />
         </div>
       )}

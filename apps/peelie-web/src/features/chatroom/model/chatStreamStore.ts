@@ -170,7 +170,7 @@ export async function sendMessage(
     });
     notify();
     queryClient.invalidateQueries({ queryKey: chatroomQueries.chatList.queryKey });
-    queryClient.invalidateQueries({ queryKey: chatroomQueries.rooms.queryKey });
+    queryClient.invalidateQueries({ queryKey: chatroomQueries.rooms._def });
   }
 }
 

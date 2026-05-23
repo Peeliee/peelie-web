@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import { SsgoiTransition } from '@ssgoi/react';
 import { useOutletContext } from 'react-router-dom';
-import { Header } from '@/widgets/header/Header';
+
+import { useGetChatRoomsQuery } from '@/entities/chatroom';
+import type { ChatRoomSort } from '@/entities/chatroom/model/chatRoom.type';
 import { ShareIcon } from '@/shared/ui/icons/ShareIcon';
+import { Header } from '@/widgets/header/Header';
 
 import { FriendDDayCard } from './ui/FriendDDayCard';
 import { SearchBar } from './ui/SearchBar';
@@ -13,9 +16,17 @@ interface HomeOutletContext {
   openFriendCodeModal: () => void;
 }
 
+const SORT_TO_API: Record<SortOrder, ChatRoomSort> = {
+  최신순: 'recent',
+  '오래된 순': 'stale',
+};
+
 export default function HomePage() {
   const { openFriendCodeModal } = useOutletContext<HomeOutletContext>();
   const [sortOrder, setSortOrder] = useState<SortOrder>('최신순');
+
+  const { data } = useGetChatRoomsQuery({ sort: SORT_TO_API[sortOrder] });
+  const chatRooms = data?.data ?? [];
 
   return (
     <SsgoiTransition id="/">
@@ -39,42 +50,15 @@ export default function HomePage() {
         <SearchBar className="mt-3" />
 
         <div className="mt-3 flex flex-col gap-3">
-          <FriendDDayCard
-            type="직진 본능파"
-            name="유지원"
-            registeredAt="2026-04-21"
-            meetDate="2026-05-14"
-          />
-          <FriendDDayCard
-            type="조용한 호감캐"
-            name="김나은"
-            registeredAt="2026-04-25"
-            meetDate="2026-05-22"
-          />{' '}
-          <FriendDDayCard
-            type="조용한 호감캐"
-            name="김나은"
-            registeredAt="2026-04-25"
-            meetDate="2026-05-22"
-          />{' '}
-          <FriendDDayCard
-            type="조용한 호감캐"
-            name="김나은"
-            registeredAt="2026-04-25"
-            meetDate="2026-05-22"
-          />{' '}
-          <FriendDDayCard
-            type="조용한 호감캐"
-            name="김나은"
-            registeredAt="2026-04-25"
-            meetDate="2026-05-22"
-          />{' '}
-          <FriendDDayCard
-            type="조용한 호감캐"
-            name="김나은"
-            registeredAt="2026-04-25"
-            meetDate="2026-05-22"
-          />
+          {chatRooms.map((room) => (
+            <FriendDDayCard
+              key={room.chatRoomId}
+              personality={room.friend.personality}
+              name={room.friend.name}
+              registeredAt={room.registeredAt}
+              meetDate={room.meetDate}
+            />
+          ))}
         </div>
       </section>
     </SsgoiTransition>

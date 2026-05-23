@@ -10,5 +10,12 @@ export interface ChatRoomListItem {
   chatRoomId: string;
   friend: ChatRoomListFriend;
   meetDate: string;
+  registeredAt: string;
   lastMessageAt: string;
+}
+
+export type ChatRoomSort = 'recent' | 'stale';
+
+export interface ListChatRoomsParams {
+  sort?: ChatRoomSort;
 }

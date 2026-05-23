@@ -1,30 +1,47 @@
 import type { ComponentProps, ComponentType } from 'react';
+
+import { PERSONALITY_LABEL, PersonalityType } from '@/shared/constants/personality';
+import { cn } from '@/shared/lib/utils';
 import { ChevronRightIcon } from '@/shared/ui/icons/ChevronRightIcon';
 import { SilentGoodIcon } from '@/shared/ui/icons/SilentGoodIcon';
 import { StraightForwardIcon } from '@/shared/ui/icons/StraightForwardIcon';
-import { cn } from '@/shared/lib/utils';
-
-export type FriendType = '조용한 호감캐' | '직진 본능파';
 
 interface FriendDDayCardProps {
-  type: FriendType;
+  personality: PersonalityType;
   name: string;
   registeredAt: string;
   meetDate: string;
 }
 
-const FRIEND_ASSETS: Record<
-  FriendType,
-  { png: string; FriendIcon: ComponentType<ComponentProps<'img'>> }
-> = {
-  '조용한 호감캐': { png: '/friend-card/silent-good.png', FriendIcon: SilentGoodIcon },
-  '직진 본능파': { png: '/friend-card/straight-forward.png', FriendIcon: StraightForwardIcon },
+interface FriendAsset {
+  png: string;
+  FriendIcon: ComponentType<ComponentProps<'img'>>;
+}
+
+const FALLBACK_ASSET: FriendAsset = {
+  png: '/friend-card/straight-forward.png',
+  FriendIcon: StraightForwardIcon,
+};
+
+const FRIEND_ASSETS: Record<PersonalityType, FriendAsset> = {
+  [PersonalityType.STRAIGHT_SHOOTER]: {
+    png: '/friend-card/straight-forward.png',
+    FriendIcon: StraightForwardIcon,
+  },
+  [PersonalityType.QUIET_CHARMER]: {
+    png: '/friend-card/silent-good.png',
+    FriendIcon: SilentGoodIcon,
+  },
+  [PersonalityType.ENERGETIC_TALKER]: FALLBACK_ASSET,
+  [PersonalityType.ANALYTICAL_OBSERVER]: FALLBACK_ASSET,
+  [PersonalityType.HEART_COLLECTOR]: FALLBACK_ASSET,
+  [PersonalityType.STAGE_SETTER]: FALLBACK_ASSET,
 };
 
 const MS_PER_DAY = 1000 * 60 * 60 * 24;
 
 const parseLocalDate = (iso: string): Date => {
-  const [y, m, d] = iso.split('-').map(Number);
+  const [y, m, d] = iso.slice(0, 10).split('-').map(Number);
   return new Date(y, m - 1, d);
 };
 
@@ -49,17 +66,19 @@ const computeProgress = (registeredIso: string, meetIso: string): number => {
   return ((today - start) / (end - start)) * 100;
 };
 
-export function FriendDDayCard({ type, name, registeredAt, meetDate }: FriendDDayCardProps) {
-  const { png, FriendIcon } = FRIEND_ASSETS[type];
+export function FriendDDayCard({ personality, name, registeredAt, meetDate }: FriendDDayCardProps) {
+  const { png, FriendIcon } = FRIEND_ASSETS[personality];
+  const label = PERSONALITY_LABEL[personality];
   const dday = computeDday(meetDate);
-  const progress = computeProgress(registeredAt, meetDate);
+  // const progress = computeProgress(registeredAt, meetDate);
+  const progress = 20;
   const ddayLabel = dday === 0 ? 'D-day' : `D-${dday}`;
 
   return (
     <div
       className={cn(
         'relative flex h-24 w-full flex-col',
-        'justify-between overflow-hidden rounded-medium border border-border-main',
+        'justify-between rounded-medium border border-border-main',
         'bg-background-main px-4 py-3',
       )}
     >
@@ -78,7 +97,7 @@ export function FriendDDayCard({ type, name, registeredAt, meetDate }: FriendDDa
         <div className="flex w-full flex-row justify-between">
           <div className="flex flex-col gap-1">
             <div className="flex h-5.25 items-center gap-1 text-body-s-400">
-              <span className="text-brand-main">{type}</span>
+              <span className="text-brand-main">{label}</span>
               <span className="text-text-main">{name}</span>
             </div>
             <p className="text-caption-m-400">지금 바로 대화하러 가요!</p>
@@ -91,28 +110,29 @@ export function FriendDDayCard({ type, name, registeredAt, meetDate }: FriendDDa
       <div className="relative">
         <div
           className={cn(
-            'absolute -top-8.5 flex -translate-x-1/2 items-center',
+            'absolute -top-8.5 z-10 flex -translate-x-1/2 items-center whitespace-nowrap',
             'rounded-full bg-gray-70 px-2 shadow-float',
           )}
-          style={{ left: `${progress}%`, marginLeft: '-4px' }}
+          style={{ left: `${progress}%` }}
         >
           <span className="text-caption-m-400 text-gray-01">{ddayLabel}</span>
         </div>
 
         <div className="absolute inset-x-0 bottom-0 h-3">
-          <div className={cn('absolute inset-x-0 top-[2px] h-2 rounded-full', 'bg-gray-30')} />
+          <div className="absolute inset-x-0 top-0.5 h-2 rounded-full bg-gray-30" />
+
           <div
-            className="absolute inset-y-0 left-0 flex items-center"
+            className="absolute left-0 top-0.5 h-2 rounded-full bg-brand-50"
             style={{ width: `${progress}%` }}
-          >
-            <div className="-mr-1.5 h-2 flex-1 rounded-full bg-brand-50" />
-            <div
-              className={cn(
-                'size-3 shrink-0 rounded-full border-[1.2px] border-brand-50',
-                'bg-gray-01 shadow-float',
-              )}
-            />
-          </div>
+          />
+
+          <div
+            className={cn(
+              'absolute top-1/2 size-3 -translate-x-1/2 -translate-y-1/2',
+              'rounded-full border-[1.2px] border-brand-50 bg-gray-01 shadow-float',
+            )}
+            style={{ left: `${progress}%` }}
+          />
         </div>
       </div>
     </div>

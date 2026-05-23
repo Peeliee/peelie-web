@@ -27,6 +27,14 @@ export function formatMeetDate(iso: string): string {
   return `${month}월 ${day}일(${weekday})`;
 }
 
+export function isToday(iso: string): boolean {
+  const target = new Date(iso);
+  target.setHours(0, 0, 0, 0);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return target.getTime() === today.getTime();
+}
+
 export function getDday(iso: string): string {
   const target = new Date(iso);
   target.setHours(0, 0, 0, 0);

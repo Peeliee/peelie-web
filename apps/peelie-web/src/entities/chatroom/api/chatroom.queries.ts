@@ -1,4 +1,6 @@
 import { createQueryKeys } from '@lukemorales/query-key-factory';
+
+import type { ListChatRoomsParams } from '../model/chatRoom.type';
 import { chatroomGet } from './chatroom.api';
 
 export const chatroomQueries = createQueryKeys('chatroom', {
@@ -8,10 +10,10 @@ export const chatroomQueries = createQueryKeys('chatroom', {
     queryFn: () => chatroomGet.getChatList(),
   },
   /** 홈 활성 약속 목록 */
-  rooms: {
-    queryKey: null,
-    queryFn: () => chatroomGet.getChatRooms(),
-  },
+  rooms: (params?: ListChatRoomsParams) => ({
+    queryKey: ['rooms', params ?? {}],
+    queryFn: () => chatroomGet.getChatRooms(params),
+  }),
   /** 채팅방 메시지 (첫 페이지) */
   messages: (chatRoomId: string) => ({
     queryKey: [chatRoomId],
