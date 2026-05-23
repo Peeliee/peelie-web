@@ -1,17 +1,7 @@
 import { cn } from '@/shared/lib/utils';
-import { ChevronRightIcon } from '@/shared/ui/icons/ChevronRightIcon';
 import { MiniCharacterMadIcon } from '@/shared/ui/icons/MiniCharacterMadIcon';
 
-import type { Meet } from './types';
-import { formatMeetDate, isToday } from './utils';
-
-interface MainCardProps {
-  meet: Meet;
-  onChatClick?: () => void;
-}
-
-export function MainCard({ meet, onChatClick }: MainCardProps) {
-  console.log(meet);
+export function EmptyMeetCard() {
   return (
     <div
       className={cn(
@@ -31,32 +21,18 @@ export function MainCard({ meet, onChatClick }: MainCardProps) {
 
       <div className={cn('relative flex h-full flex-col px-5', 'py-5')}>
         <div className="flex items-center justify-between">
-          <span className="text-title-headline-1 text-gray-79">
-            {isToday(meet.date) ? '오늘의 만남' : '다가오는 만남'}
-          </span>
+          <span className="text-title-headline-1 text-gray-79">다가오는 만남</span>
         </div>
 
         <div className="mt-2 flex flex-col gap-1">
-          <p className="text-body-s-400 font-medium text-gray-59">{formatMeetDate(meet.date)}</p>
+          <p className="text-body-s-400 font-medium text-gray-59">아직 약속이 없어요</p>
           <div className="flex items-center gap-1.5">
             <MiniCharacterMadIcon />
             <p className="whitespace-nowrap text-body-s-400 font-medium text-gray-59">
-              {meet.friend.name}님과의 약속
+              친구와 만남을 만들어보세요
             </p>
           </div>
         </div>
-
-        <button
-          type="button"
-          onClick={onChatClick}
-          className={cn(
-            'mt-auto flex h-12 items-center gap-1',
-            'self-start rounded-full bg-gray-70 pl-4 pr-3',
-          )}
-        >
-          <span className="text-body-m-500 text-gray-01">대화하기</span>
-          <ChevronRightIcon className="size-6 text-gray-01" aria-hidden />
-        </button>
       </div>
     </div>
   );

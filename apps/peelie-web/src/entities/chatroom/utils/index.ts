@@ -1,5 +1,6 @@
 export * from './formatChatTime';
 export * from './dateUtils';
+export * from './chatListCache';
 export {
   buildRenderItems,
   getRenderItemCreatedAt,

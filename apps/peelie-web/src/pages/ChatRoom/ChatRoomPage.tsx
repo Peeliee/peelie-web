@@ -28,7 +28,6 @@ import { ChatRoomHeader } from './ui/ChatRoomHeader';
 import { cn } from '@/shared/lib/utils';
 
 const NEAR_BOTTOM_THRESHOLD_PX = 80;
-const SUGGESTIONS_DELAY_MS = 1000;
 const ROUTE_SCROLL_CONTAINER_ID = 'route-scroll-container';
 
 function getRouteScrollContainer() {
@@ -115,29 +114,6 @@ export default function ChatRoomPage() {
     [initialMessages, greetingTurn, history, streaming, greetingPending],
   );
 
-  // 표시 대상 suggestions 의 ID (마지막 AVATAR message 의 suggestions 가 있을 때).
-  // streaming-avatar 의 suggestions 는 idle 전환 후 history 메시지로 옮겨와 처리하므로 여기선 무시.
-  const targetSuggestionsId = useMemo(() => {
-    for (let i = items.length - 1; i >= 0; i--) {
-      const it = items[i];
-      if (it.kind === 'message' && it.isLastAvatarTurn && it.message.suggestions.length > 0) {
-        return it.message.id;
-      }
-    }
-    return null;
-  }, [items]);
-
-  const [delayedSuggestionsId, setDelayedSuggestionsId] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!targetSuggestionsId) {
-      setDelayedSuggestionsId(null);
-      return;
-    }
-    const id = setTimeout(() => setDelayedSuggestionsId(targetSuggestionsId), SUGGESTIONS_DELAY_MS);
-    return () => clearTimeout(id);
-  }, [targetSuggestionsId]);
-
   const isInitialScrolledRef = useRef(false);
   // 사용자가 위로 스크롤하면 false. 그 외엔 true 유지하여 새 메시지에 항상 따라감.
   const stickToBottomRef = useRef(true);
@@ -186,7 +162,7 @@ export default function ChatRoomPage() {
       scrollRouteToBottom(scrollContainer, 'smooth');
     });
     return () => cancelAnimationFrame(rafId);
-  }, [items, delayedSuggestionsId]);
+  }, [items]);
 
   const handleSubmit = () => {
     if (!input.trim()) return;
@@ -229,12 +205,7 @@ export default function ChatRoomPage() {
             return (
               <Fragment key={getRenderItemKey(item, i)}>
                 {showDate && <DateSeparator date={getRenderItemCreatedAt(item)} />}
-                {renderItem(
-                  item,
-                  handleSuggestionSelect,
-                  delayedSuggestionsId,
-                  currentRoom?.friend.name,
-                )}
+                {renderItem(item, handleSuggestionSelect, currentRoom?.friend.name)}
               </Fragment>
             );
           })}
@@ -256,12 +227,11 @@ export default function ChatRoomPage() {
 function renderItem(
   item: RenderItem,
   onSuggestionSelect: (text: string) => void,
-  delayedSuggestionsId: string | null,
   name: string | undefined,
 ) {
   switch (item.kind) {
     case 'message': {
-      const { message, isLastAvatarTurn } = item;
+      const { message, isLastAvatarTurn, isGreeting } = item;
       if (message.role === 'USER') {
         return (
           <div className="flex justify-end">
@@ -269,16 +239,21 @@ function renderItem(
           </div>
         );
       }
-      const showSuggestions =
-        isLastAvatarTurn && message.suggestions.length > 0 && delayedSuggestionsId === message.id;
+      const showSuggestions = isLastAvatarTurn && message.suggestions.length > 0;
       return (
         <>
-          <AvatarMessage bubbles={message.bubbles} createdAt={message.createdAt} name={name} />
+          <AvatarMessage
+            bubbles={message.bubbles}
+            createdAt={message.createdAt}
+            name={name}
+            animate={isGreeting}
+          />
           {showSuggestions && (
             <SuggestionList
               suggestions={message.suggestions}
               onSelect={onSuggestionSelect}
               createdAt={message.createdAt}
+              className="chat-slide-up-in"
             />
           )}
         </>
@@ -293,7 +268,9 @@ function renderItem(
     case 'streaming-avatar':
       // streaming 중 suggestions 가 도착해도 여기선 표시하지 않는다.
       // done 직후 history 로 들어간 message 의 suggestions 가 0.5s 지연 후 표시됨.
-      return <AvatarMessage bubbles={item.bubbles} createdAt={item.createdAt} name={name} />;
+      return (
+        <AvatarMessage bubbles={item.bubbles} createdAt={item.createdAt} name={name} animate />
+      );
     case 'streaming-placeholder':
       return (
         <AvatarTypingBubble showHeader={item.showHeader} name={name} className="chat-slide-up-in" />

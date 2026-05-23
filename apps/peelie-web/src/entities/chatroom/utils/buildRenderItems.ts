@@ -1,7 +1,7 @@
 import type { ChatBubble, ChatMessage, LocalTurn } from '../model';
 
 export type RenderItem =
-  | { kind: 'message'; message: ChatMessage; isLastAvatarTurn: boolean }
+  | { kind: 'message'; message: ChatMessage; isLastAvatarTurn: boolean; isGreeting: boolean }
   | { kind: 'streaming-user'; text: string; createdAt: string }
   | { kind: 'streaming-avatar'; bubbles: ChatBubble[]; suggestions: string[]; createdAt: string }
   | { kind: 'streaming-placeholder'; showHeader: boolean; createdAt: string };
@@ -32,17 +32,20 @@ export function buildRenderItems({
   nowIso,
 }: BuildArgs): RenderItem[] {
   const flat: ChatMessage[] = [];
+  const greetingIds = new Set<string>();
 
   flat.push(...initialMessages);
 
   if (greetingTurn && greetingTurn.kind === 'greeting') {
+    const greetingId = `greeting-${greetingTurn.completedAt}`;
     flat.push({
-      id: `greeting-${greetingTurn.completedAt}`,
+      id: greetingId,
       role: 'AVATAR',
       bubbles: greetingTurn.bubbles,
       suggestions: greetingTurn.suggestions,
       createdAt: greetingTurn.completedAt,
     });
+    greetingIds.add(greetingId);
   }
 
   history.forEach((turn, i) => {
@@ -77,6 +80,7 @@ export function buildRenderItems({
     kind: 'message',
     message: m,
     isLastAvatarTurn: i === lastAvatarIdx && streaming.kind === 'none',
+    isGreeting: greetingIds.has(m.id),
   }));
 
   if (streaming.kind === 'sending' || streaming.kind === 'streaming') {

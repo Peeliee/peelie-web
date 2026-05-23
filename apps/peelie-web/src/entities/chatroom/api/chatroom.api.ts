@@ -2,7 +2,7 @@ import api from '@/shared/api/ky';
 import type { ApiResponse } from '@/shared/api/types';
 
 import type { ChatListItem } from '../model/chatList.type';
-import type { ChatRoomListItem } from '../model/chatRoom.type';
+import type { ChatRoomListItem, ListChatRoomsParams } from '../model/chatRoom.type';
 import type { ChatMessageListPayload } from '../model/chatMessage.type';
 
 export const chatroomPost = {
@@ -16,10 +16,14 @@ export const chatroomGet = {
     api.get('chat-list').json<ApiResponse<ChatListItem[]>>(),
 
   /** 홈 — KST 오늘 이후 약속의 chatRoom 만. */
-  getChatRooms: (params?: {
-    sort?: 'recent' | 'stale';
-  }): Promise<ApiResponse<ChatRoomListItem[]>> =>
-    api.get('chatrooms', { searchParams: params }).json<ApiResponse<ChatRoomListItem[]>>(),
+  getChatRooms: (params?: ListChatRoomsParams): Promise<ApiResponse<ChatRoomListItem[]>> =>
+    api
+      .get('chatrooms', {
+        searchParams: {
+          ...(params?.sort && { sort: params.sort }),
+        },
+      })
+      .json<ApiResponse<ChatRoomListItem[]>>(),
 
   /** 채팅방 메시지 페이징 (cursor: before). */
   getChatMessages: (

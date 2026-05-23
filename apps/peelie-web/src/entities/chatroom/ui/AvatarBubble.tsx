@@ -7,11 +7,18 @@ interface AvatarBubbleProps {
   /** 마지막 버블에만 전달해 시간 표시. 중간 버블에선 undefined. */
   createdAt?: string;
   className?: string;
+  animate?: boolean;
 }
 
-export function AvatarBubble({ content, createdAt, className }: AvatarBubbleProps) {
+export function AvatarBubble({ content, createdAt, className, animate }: AvatarBubbleProps) {
   return (
-    <div className={cn('flex flex-col items-start gap-2 pl-8', className)}>
+    <div
+      className={cn(
+        'flex flex-col items-start gap-2 pl-8',
+        animate && 'chat-slide-up-in',
+        className,
+      )}
+    >
       <div
         className={cn('max-w-[65vw] rounded-small rounded-tl-none bg-brand-sub-30 px-3', 'py-2')}
       >

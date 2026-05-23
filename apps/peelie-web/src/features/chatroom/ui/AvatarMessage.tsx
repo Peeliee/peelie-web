@@ -9,9 +9,16 @@ interface AvatarMessageProps {
   createdAt: string;
   name?: string;
   className?: string;
+  animate?: boolean;
 }
 
-export function AvatarMessage({ bubbles, createdAt, name, className }: AvatarMessageProps) {
+export function AvatarMessage({
+  bubbles,
+  createdAt,
+  name,
+  className,
+  animate,
+}: AvatarMessageProps) {
   if (bubbles.length === 0) return null;
   return (
     <div className={cn('flex flex-col items-start gap-1', className)}>
@@ -26,6 +33,7 @@ export function AvatarMessage({ bubbles, createdAt, name, className }: AvatarMes
           key={i}
           content={bubble.text}
           createdAt={i === bubbles.length - 1 ? createdAt : undefined}
+          animate={animate}
         />
       ))}
     </div>

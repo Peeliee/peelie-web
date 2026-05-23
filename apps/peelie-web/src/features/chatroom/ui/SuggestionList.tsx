@@ -22,20 +22,23 @@ export function SuggestionList({
     <div className={cn('flex flex-col items-end gap-2', className)}>
       <div className="flex flex-col items-end gap-1.5">
         {suggestions.map((text, i) => (
-          <div key={i} className="flex items-center gap-3">
+          <button
+            key={i}
+            type="button"
+            onClick={() => !disabled && onSelect(text)}
+            disabled={disabled}
+            className="flex items-center gap-3"
+          >
             <EditIcon className="size-5 text-gray-01" />
-            <button
-              type="button"
-              onClick={() => !disabled && onSelect(text)}
-              disabled={disabled}
+            <span
               className={cn(
-                'min-w-[98px] rounded-small rounded-tr-none bg-gray-10 px-3',
-                'py-2 text-right text-body-m-400 text-text-main',
+                'max-w-[65vw] rounded-small rounded-tr-none bg-gray-10 px-3',
+                'py-2 text-left text-body-m-400 text-text-main',
               )}
             >
               {text}
-            </button>
-          </div>
+            </span>
+          </button>
         ))}
       </div>
       {createdAt && (
