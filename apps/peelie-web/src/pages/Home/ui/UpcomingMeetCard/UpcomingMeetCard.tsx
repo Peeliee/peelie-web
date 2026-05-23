@@ -5,6 +5,8 @@ import { useGetSchedulesQuery } from '@/entities/schedule';
 import PATH from '@/shared/constants/path';
 import { cn } from '@/shared/lib/utils';
 
+import { EmptyMeetCard } from './EmptyMeetCard';
+import { EmptyNextMeetPanel } from './EmptyNextMeetPanel';
 import { MainCard } from './MainCard';
 import { MeetList } from './MeetList';
 import { NextMeetPanel } from './NextMeetPanel';
@@ -19,13 +21,12 @@ export function UpcomingMeetCard() {
     order: 'asc',
   });
 
-  if (!schedules || schedules.length === 0) return null;
-
-  const meets = schedules.map(toMeet);
+  const meets = schedules?.map(toMeet) ?? [];
   const main = meets[0];
   const next = meets[1];
   const restMeets = meets.slice(1);
-  const showPanel = meets.length >= 2;
+  const hasMain = meets.length >= 1;
+  const hasNext = meets.length >= 2;
   const showToggle = meets.length >= 3;
 
   const goToChatRoom = () => navigate(PATH.CHAT_ROOM);
@@ -34,15 +35,17 @@ export function UpcomingMeetCard() {
   return (
     <div className={cn('isolate flex w-full flex-col', showToggle && 'pb-3')}>
       <div className="z-2 flex w-full flex-col">
-        <MainCard meet={main} onChatClick={goToChatRoom} />
+        {hasMain ? <MainCard meet={main} onChatClick={goToChatRoom} /> : <EmptyMeetCard />}
 
-        {showPanel && (
+        {hasNext ? (
           <NextMeetPanel
             meet={next}
             showToggle={showToggle}
             isOpen={isOpen}
             onToggle={handleToggle}
           />
+        ) : (
+          <EmptyNextMeetPanel />
         )}
       </div>
 
