@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-import { chatroomPost, chatroomQueries, useMarkReadMutation } from '@/entities/chatroom';
+import { chatroomPost, markReadInCache, useMarkReadMutation } from '@/entities/chatroom';
 import type { LocalTurn } from '@/entities/chatroom';
 import { queryClient } from '@/shared/config/quertClient';
 
@@ -10,10 +10,6 @@ interface UseMarkReadOptions {
   historyLength: number;
   /** useGreeting 의 turn — greeting 완료 시 null → LocalTurn */
   greetingTurn: LocalTurn | null;
-}
-
-function invalidateChatList() {
-  queryClient.invalidateQueries({ queryKey: chatroomQueries.chatList.queryKey });
 }
 
 export function useMarkRead({ chatRoomId, historyLength, greetingTurn }: UseMarkReadOptions) {
@@ -42,9 +38,10 @@ export function useMarkRead({ chatRoomId, historyLength, greetingTurn }: UseMark
   chatRoomIdRef.current = chatRoomId;
   useEffect(() => {
     return () => {
+      const id = chatRoomIdRef.current;
       chatroomPost
-        .markRead(chatRoomIdRef.current)
-        .then(invalidateChatList)
+        .markRead(id)
+        .then(() => markReadInCache(queryClient, id))
         .catch(() => {});
     };
   }, []);
@@ -55,7 +52,7 @@ export function useMarkRead({ chatRoomId, historyLength, greetingTurn }: UseMark
       if (document.visibilityState === 'hidden') {
         chatroomPost
           .markRead(chatRoomId)
-          .then(invalidateChatList)
+          .then(() => markReadInCache(queryClient, chatRoomId))
           .catch(() => {});
       }
     };

@@ -4,6 +4,8 @@ import { toast } from 'sonner';
 import { chatroomQueries } from '@/entities/chatroom';
 import type { ChatBubble, LocalTurn } from '@/entities/chatroom';
 
+import { patchChatListPreview } from '@/entities/chatroom';
+
 import { streamChatMessage } from '../api/streamChatMessage';
 
 const BUBBLE_RELEASE_GAP_MS = 3000;
@@ -146,6 +148,9 @@ function releaseNext(chatRoomId: string): void {
     const [bubble, ...rest] = entry.queue;
     entries.set(chatRoomId, { ...entry, queue: rest, lastReleaseAt: Date.now() });
     applyAction(chatRoomId, { type: 'APPEND_BUBBLE', bubble });
+    if (entry.queryClient) {
+      patchChatListPreview(entry.queryClient, chatRoomId, bubble.text);
+    }
     scheduleRelease(chatRoomId);
     return;
   }
@@ -203,12 +208,18 @@ export async function sendMessage(
   const trimmed = message.trim();
   if (!trimmed) return;
 
-  entries.set(chatRoomId, { ...entry, ...emptyStreamState(), queryClient });
+  entries.set(chatRoomId, {
+    ...entry,
+    ...emptyStreamState(),
+    queryClient,
+    lastReleaseAt: Date.now(),
+  });
 
   const controller = new AbortController();
   controllers.set(chatRoomId, controller);
 
   applyAction(chatRoomId, { type: 'SEND', userMessage: trimmed });
+  patchChatListPreview(queryClient, chatRoomId, trimmed);
 
   const acc = {
     userMessage: trimmed,

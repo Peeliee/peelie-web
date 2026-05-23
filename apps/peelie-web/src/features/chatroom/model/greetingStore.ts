@@ -1,6 +1,10 @@
+import type { QueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
+import { chatroomQueries } from '@/entities/chatroom';
 import type { ChatBubble, LocalTurn } from '@/entities/chatroom';
+
+import { patchChatListPreview } from '@/entities/chatroom';
 
 import { streamGreeting } from '../api/streamGreeting';
 
@@ -18,6 +22,7 @@ interface GreetingEntry {
   streamDone: boolean;
   aborted: boolean;
   skipped: boolean;
+  queryClient: QueryClient | null;
 }
 
 const entries = new Map<string, GreetingEntry>();
@@ -43,6 +48,7 @@ function getOrCreate(chatRoomId: string): GreetingEntry {
       streamDone: false,
       aborted: false,
       skipped: false,
+      queryClient: null,
     };
     entries.set(chatRoomId, entry);
   }
@@ -103,6 +109,9 @@ function releaseNext(chatRoomId: string): void {
       lastReleaseAt: Date.now(),
     });
     notify();
+    if (entry.queryClient) {
+      patchChatListPreview(entry.queryClient, chatRoomId, bubble.text);
+    }
     scheduleRelease(chatRoomId);
     return;
   }
@@ -129,15 +138,23 @@ function releaseNext(chatRoomId: string): void {
 function finalize(chatRoomId: string): void {
   const entry = entries.get(chatRoomId);
   if (!entry) return;
-  entries.set(chatRoomId, { ...entry, pending: false, done: true });
+
+  const qc = entry.queryClient;
+  const hadTurn = entry.turn !== null;
+
+  entries.set(chatRoomId, { ...entry, pending: false, done: true, queryClient: null });
   notify();
+
+  if (qc && hadTurn) {
+    qc.invalidateQueries({ queryKey: chatroomQueries.chatList.queryKey });
+  }
 }
 
-export function startGreeting(chatRoomId: string): void {
+export function startGreeting(chatRoomId: string, queryClient: QueryClient): void {
   const entry = getOrCreate(chatRoomId);
   if (entry.done || entry.pending) return;
 
-  entries.set(chatRoomId, { ...entry, pending: true });
+  entries.set(chatRoomId, { ...entry, pending: true, queryClient });
   notify();
 
   const controller = new AbortController();
