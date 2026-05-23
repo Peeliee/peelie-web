@@ -1,11 +1,18 @@
 import api from '@/shared/api/ky';
 import type { ApiResponse } from '@/shared/api/types';
 
-import type { CreateScheduleRequest, Schedule } from '../model/schedule.type';
+import type { CreateScheduleRequest, ListSchedulesParams, Schedule } from '../model/schedule.type';
 
 export const scheduleGet = {
-  list: async (): Promise<Schedule[]> => {
-    const wrapped = await api.get('schedules').json<ApiResponse<Schedule[]>>();
+  list: async (params?: ListSchedulesParams): Promise<Schedule[]> => {
+    const wrapped = await api
+      .get('schedules', {
+        searchParams: {
+          ...(params?.filter && { filter: params.filter }),
+          ...(params?.order && { order: params.order }),
+        },
+      })
+      .json<ApiResponse<Schedule[]>>();
     return wrapped.data;
   },
 

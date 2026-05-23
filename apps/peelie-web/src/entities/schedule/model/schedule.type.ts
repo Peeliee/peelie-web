@@ -26,3 +26,11 @@ export interface CreateScheduleRequest {
   meetDate: string;
   description: string;
 }
+
+export type ScheduleFilter = 'upcoming' | 'past' | 'all';
+export type ScheduleOrder = 'asc' | 'desc';
+
+export interface ListSchedulesParams {
+  filter?: ScheduleFilter;
+  order?: ScheduleOrder;
+}

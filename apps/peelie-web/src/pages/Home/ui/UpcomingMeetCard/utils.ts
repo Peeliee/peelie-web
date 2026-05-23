@@ -1,5 +1,23 @@
+import { PERSONALITY_LABEL } from '@/shared/constants/personality';
+import type { Schedule } from '@/entities/schedule/model/schedule.type';
+
+import type { Meet } from './types';
+
 const WEEKDAY_LABELS = ['일', '월', '화', '수', '목', '금', '토'] as const;
 const MS_PER_DAY = 1000 * 60 * 60 * 24;
+
+export function toMeet(schedule: Schedule): Meet {
+  return {
+    id: schedule.id,
+    date: schedule.meetDate,
+    title: schedule.description,
+    friend: {
+      id: schedule.friendUser.id,
+      name: schedule.friendUser.name,
+      type: PERSONALITY_LABEL[schedule.friendUser.personality],
+    },
+  };
+}
 
 export function formatMeetDate(iso: string): string {
   const date = new Date(iso);
