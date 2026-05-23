@@ -4,7 +4,8 @@ import type { ChatBubble, LocalTurn } from '@/entities/chatroom';
 
 import { streamGreeting } from '../api/streamGreeting';
 
-const BUBBLE_RELEASE_GAP = 3000;
+const BUBBLE_RELEASE_GAP_MS = 3000;
+const SUGGESTIONS_RELEASE_GAP_MS = 2000;
 
 interface GreetingEntry {
   turn: LocalTurn | null;
@@ -72,7 +73,9 @@ function scheduleRelease(chatRoomId: string): void {
 
   let nextDelay = 0;
   if (entry.lastReleaseAt !== null) {
-    const gapMs = hasBubble ? Math.max(entry.queue[0].delayMs, BUBBLE_RELEASE_GAP) : 0;
+    const gapMs = hasBubble
+      ? Math.max(entry.queue[0].delayMs, BUBBLE_RELEASE_GAP_MS)
+      : SUGGESTIONS_RELEASE_GAP_MS;
     nextDelay = Math.max(0, entry.lastReleaseAt + gapMs - Date.now());
   }
 
