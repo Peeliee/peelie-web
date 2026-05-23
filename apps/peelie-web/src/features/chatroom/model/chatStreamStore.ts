@@ -6,6 +6,8 @@ import type { ChatBubble, LocalTurn } from '@/entities/chatroom';
 
 import { streamChatMessage } from '../api/streamChatMessage';
 
+const BUBBLE_RELEASE_GAP = 3000;
+
 type State =
   | { status: 'idle' }
   | { status: 'sending'; userMessage: string }
@@ -56,6 +58,13 @@ function reducer(state: State, action: Action): State {
 interface StreamEntry {
   state: State;
   history: LocalTurn[];
+  queue: ChatBubble[];
+  pendingSuggestions: string[] | null;
+  lastReleaseAt: number | null;
+  scheduleTimer: ReturnType<typeof setTimeout> | null;
+  streamDone: boolean;
+  completed: LocalTurn | null;
+  queryClient: QueryClient | null;
 }
 
 const entries = new Map<string, StreamEntry>();
@@ -68,10 +77,22 @@ function notify() {
   listeners.forEach((l) => l());
 }
 
+function emptyStreamState(): Omit<StreamEntry, 'state' | 'history'> {
+  return {
+    queue: [],
+    pendingSuggestions: null,
+    lastReleaseAt: null,
+    scheduleTimer: null,
+    streamDone: false,
+    completed: null,
+    queryClient: null,
+  };
+}
+
 function getOrCreate(chatRoomId: string): StreamEntry {
   let entry = entries.get(chatRoomId);
   if (!entry) {
-    entry = { state: { status: 'idle' }, history: [] };
+    entry = { state: { status: 'idle' }, history: [], ...emptyStreamState() };
     entries.set(chatRoomId, entry);
   }
   return entry;
@@ -86,6 +107,87 @@ function applyAction(chatRoomId: string, action: Action) {
   }
 }
 
+function scheduleRelease(chatRoomId: string): void {
+  const entry = entries.get(chatRoomId);
+  if (!entry || entry.scheduleTimer) return;
+
+  const hasBubble = entry.queue.length > 0;
+  const hasSuggestions = entry.pendingSuggestions !== null;
+
+  if (!hasBubble && !hasSuggestions) {
+    if (entry.streamDone) finalize(chatRoomId);
+    return;
+  }
+
+  let nextDelay = 0;
+  if (entry.lastReleaseAt !== null) {
+    const gapMs = hasBubble ? Math.max(entry.queue[0].delayMs, BUBBLE_RELEASE_GAP) : 0;
+    nextDelay = Math.max(0, entry.lastReleaseAt + gapMs - Date.now());
+  }
+
+  const timer = setTimeout(() => {
+    const e = entries.get(chatRoomId);
+    if (!e) return;
+    entries.set(chatRoomId, { ...e, scheduleTimer: null });
+    releaseNext(chatRoomId);
+  }, nextDelay);
+
+  entries.set(chatRoomId, { ...entry, scheduleTimer: timer });
+}
+
+function releaseNext(chatRoomId: string): void {
+  const entry = entries.get(chatRoomId);
+  if (!entry) return;
+
+  if (entry.queue.length > 0) {
+    const [bubble, ...rest] = entry.queue;
+    entries.set(chatRoomId, { ...entry, queue: rest, lastReleaseAt: Date.now() });
+    applyAction(chatRoomId, { type: 'APPEND_BUBBLE', bubble });
+    scheduleRelease(chatRoomId);
+    return;
+  }
+
+  if (entry.pendingSuggestions !== null) {
+    const suggestions = entry.pendingSuggestions;
+    entries.set(chatRoomId, { ...entry, pendingSuggestions: null, lastReleaseAt: Date.now() });
+    applyAction(chatRoomId, { type: 'SET_SUGGESTIONS', suggestions });
+    scheduleRelease(chatRoomId);
+    return;
+  }
+
+  if (entry.streamDone) {
+    finalize(chatRoomId);
+  }
+}
+
+function finalize(chatRoomId: string): void {
+  const entry = entries.get(chatRoomId);
+  if (!entry) return;
+
+  const newHistory = entry.completed ? [...entry.history, entry.completed] : entry.history;
+  const qc = entry.queryClient;
+  const hadCompleted = entry.completed !== null;
+
+  entries.set(chatRoomId, {
+    state: { status: 'idle' },
+    history: newHistory,
+    ...emptyStreamState(),
+  });
+  notify();
+
+  if (qc && hadCompleted) {
+    qc.invalidateQueries({ queryKey: chatroomQueries.chatList.queryKey });
+    qc.invalidateQueries({ queryKey: chatroomQueries.rooms._def });
+  }
+}
+
+function clearStreamState(chatRoomId: string) {
+  const entry = entries.get(chatRoomId);
+  if (!entry) return;
+  if (entry.scheduleTimer) clearTimeout(entry.scheduleTimer);
+  entries.set(chatRoomId, { ...entry, ...emptyStreamState() });
+}
+
 export async function sendMessage(
   chatRoomId: string,
   message: string,
@@ -98,6 +200,8 @@ export async function sendMessage(
   const trimmed = message.trim();
   if (!trimmed) return;
 
+  entries.set(chatRoomId, { ...entry, ...emptyStreamState(), queryClient });
+
   const controller = new AbortController();
   controllers.set(chatRoomId, controller);
 
@@ -108,14 +212,14 @@ export async function sendMessage(
     bubbles: [] as ChatBubble[],
     suggestions: [] as string[],
   };
-  let completed: LocalTurn | null = null;
-  let errored = false;
 
   try {
     await streamChatMessage(
       chatRoomId,
       trimmed,
       (event) => {
+        const current = entries.get(chatRoomId);
+        if (!current) return;
         switch (event.type) {
           case 'meta':
             applyAction(chatRoomId, { type: 'META', chatRoomId: event.chatRoomId });
@@ -123,26 +227,31 @@ export async function sendMessage(
           case 'bubble': {
             const bubble: ChatBubble = { text: event.text, delayMs: event.delayMs };
             acc.bubbles.push(bubble);
-            applyAction(chatRoomId, { type: 'APPEND_BUBBLE', bubble });
+            entries.set(chatRoomId, { ...current, queue: [...current.queue, bubble] });
+            scheduleRelease(chatRoomId);
             return;
           }
           case 'suggestions':
             acc.suggestions = event.suggestions;
-            applyAction(chatRoomId, { type: 'SET_SUGGESTIONS', suggestions: event.suggestions });
+            entries.set(chatRoomId, { ...current, pendingSuggestions: event.suggestions });
+            scheduleRelease(chatRoomId);
             return;
-          case 'done':
-            completed = {
+          case 'done': {
+            const completed: LocalTurn = {
               kind: 'send',
               userMessage: acc.userMessage,
               bubbles: acc.bubbles,
               suggestions: acc.suggestions,
               completedAt: new Date().toISOString(),
             };
+            entries.set(chatRoomId, { ...current, streamDone: true, completed });
+            scheduleRelease(chatRoomId);
             return;
+          }
           case 'error':
-            errored = true;
             toast.error(event.message);
             applyAction(chatRoomId, { type: 'ERROR', message: event.message });
+            clearStreamState(chatRoomId);
             return;
           case 'skip':
             return;
@@ -152,25 +261,19 @@ export async function sendMessage(
     );
   } catch (e) {
     if (controller.signal.aborted) return;
-    errored = true;
     const msg = e instanceof Error ? e.message : '메시지 전송에 실패했습니다.';
     toast.error(msg);
     applyAction(chatRoomId, { type: 'ERROR', message: msg });
+    clearStreamState(chatRoomId);
     return;
   } finally {
     controllers.delete(chatRoomId);
   }
 
-  if (completed && !errored) {
-    const turn = completed as LocalTurn;
-    const current = getOrCreate(chatRoomId);
-    entries.set(chatRoomId, {
-      state: { status: 'idle' },
-      history: [...current.history, turn],
-    });
-    notify();
-    queryClient.invalidateQueries({ queryKey: chatroomQueries.chatList.queryKey });
-    queryClient.invalidateQueries({ queryKey: chatroomQueries.rooms._def });
+  const current = entries.get(chatRoomId);
+  if (current && !current.streamDone) {
+    entries.set(chatRoomId, { ...current, streamDone: true });
+    scheduleRelease(chatRoomId);
   }
 }
 

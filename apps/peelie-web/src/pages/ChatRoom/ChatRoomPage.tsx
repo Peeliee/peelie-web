@@ -271,21 +271,20 @@ function renderItem(
       }
       const showSuggestions =
         isLastAvatarTurn && message.suggestions.length > 0 && delayedSuggestionsId === message.id;
-      const animClass = isGreeting ? 'chat-slide-up-in' : undefined;
       return (
         <>
           <AvatarMessage
             bubbles={message.bubbles}
             createdAt={message.createdAt}
             name={name}
-            className={animClass}
+            animate={isGreeting}
           />
           {showSuggestions && (
             <SuggestionList
               suggestions={message.suggestions}
               onSelect={onSuggestionSelect}
               createdAt={message.createdAt}
-              className={animClass}
+              className="chat-slide-up-in"
             />
           )}
         </>
@@ -300,7 +299,9 @@ function renderItem(
     case 'streaming-avatar':
       // streaming 중 suggestions 가 도착해도 여기선 표시하지 않는다.
       // done 직후 history 로 들어간 message 의 suggestions 가 0.5s 지연 후 표시됨.
-      return <AvatarMessage bubbles={item.bubbles} createdAt={item.createdAt} name={name} />;
+      return (
+        <AvatarMessage bubbles={item.bubbles} createdAt={item.createdAt} name={name} animate />
+      );
     case 'streaming-placeholder':
       return (
         <AvatarTypingBubble showHeader={item.showHeader} name={name} className="chat-slide-up-in" />
