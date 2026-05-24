@@ -29,6 +29,7 @@ import { cn } from '@/shared/lib/utils';
 
 const NEAR_BOTTOM_THRESHOLD_PX = 80;
 const ROUTE_SCROLL_CONTAINER_ID = 'route-scroll-container';
+const CHAT_ROOM_BACKGROUND_IMAGE = 'url(/chatroom-background.png)';
 
 function getRouteScrollContainer() {
   return document.getElementById(ROUTE_SCROLL_CONTAINER_ID);
@@ -179,11 +180,17 @@ export default function ChatRoomPage() {
     <SsgoiTransition id={`/chat-room/${chatRoomId}`}>
       <div
         aria-hidden
-        className="fixed inset-0 bg-cover bg-center"
-        style={{ backgroundImage: 'url(/chatroom-background.png)' }}
+        className="fixed inset-0 bg-cover bg-top"
+        style={{ backgroundImage: CHAT_ROOM_BACKGROUND_IMAGE }}
       />
       <div className="relative flex min-h-dvh w-full flex-col">
-        <div className={cn('sticky top-0 z-10 shrink-0 bg-gray-99/30', 'backdrop-blur-md')}>
+        <div
+          className={cn(
+            'sticky top-0 z-10 shrink-0 overflow-hidden',
+            'bg-cover bg-top',
+          )}
+          style={{ backgroundImage: CHAT_ROOM_BACKGROUND_IMAGE }}
+        >
           <ChatRoomHeader
             name={currentRoom?.friend.name}
             personality={currentRoom?.friend.personality}
