@@ -1,7 +1,7 @@
 import type { ChatBubble, ChatMessage, LocalTurn } from '../model';
 
 export type RenderItem =
-  | { kind: 'message'; message: ChatMessage; isLastAvatarTurn: boolean; isGreeting: boolean }
+  | { kind: 'message'; message: ChatMessage; isLastAvatarTurn: boolean; isGreeting: boolean; isFromHistory: boolean }
   | { kind: 'streaming-user'; text: string; createdAt: string }
   | { kind: 'streaming-avatar'; bubbles: ChatBubble[]; suggestions: string[]; createdAt: string }
   | { kind: 'streaming-placeholder'; showHeader: boolean; createdAt: string };
@@ -33,6 +33,7 @@ export function buildRenderItems({
 }: BuildArgs): RenderItem[] {
   const flat: ChatMessage[] = [];
   const greetingIds = new Set<string>();
+  const initialCount = initialMessages.length;
 
   flat.push(...initialMessages);
 
@@ -81,6 +82,7 @@ export function buildRenderItems({
     message: m,
     isLastAvatarTurn: i === lastAvatarIdx && streaming.kind === 'none',
     isGreeting: greetingIds.has(m.id),
+    isFromHistory: i >= initialCount,
   }));
 
   if (streaming.kind === 'sending' || streaming.kind === 'streaming') {

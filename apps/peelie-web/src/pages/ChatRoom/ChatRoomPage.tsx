@@ -274,7 +274,7 @@ function renderItem(
 ) {
   switch (item.kind) {
     case 'message': {
-      const { message, isLastAvatarTurn, isGreeting } = item;
+      const { message, isLastAvatarTurn, isGreeting, isFromHistory } = item;
       if (message.role === 'USER') {
         return (
           <div className="flex justify-end">
@@ -296,7 +296,7 @@ function renderItem(
               suggestions={message.suggestions}
               onSelect={onSuggestionSelect}
               createdAt={message.createdAt}
-              className="chat-slide-up-in"
+              className={isFromHistory ? 'chat-slide-up-in' : undefined}
             />
           )}
         </>
