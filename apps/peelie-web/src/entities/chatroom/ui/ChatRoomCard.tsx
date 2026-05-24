@@ -7,7 +7,7 @@ import type { PersonalityType } from '../model';
 interface ChatRoomCardProps {
   userName: string;
   personality: PersonalityType;
-  isDeleted?: boolean;
+  isWithdrawn?: boolean;
   /** null 이면 미리보기 비움 (메시지 없음). */
   lastMessage: string | null;
   lastMessageAt: string;
@@ -18,7 +18,7 @@ interface ChatRoomCardProps {
 export function ChatRoomCard({
   userName,
   personality,
-  isDeleted,
+  isWithdrawn,
   lastMessage,
   lastMessageAt,
   isUnread,
@@ -49,7 +49,7 @@ export function ChatRoomCard({
         <div className="flex min-w-0 flex-1 flex-col gap-1">
           {/* 뱃지 + 이름 + 안 읽음 도트 */}
           <div className="flex items-center gap-2">
-            {isDeleted ? (
+            {isWithdrawn ? (
               <span className="text-body-s-400 font-medium text-text-disabled">탈퇴한 사용자</span>
             ) : (
               <>

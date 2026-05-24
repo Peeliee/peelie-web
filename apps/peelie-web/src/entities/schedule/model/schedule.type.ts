@@ -15,6 +15,7 @@ export interface Schedule {
     id: string;
     name: string;
     personality: PersonalityType;
+    isWithdrawn: boolean;
   };
   chatRoom: {
     id: string;
