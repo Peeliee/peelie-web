@@ -57,7 +57,7 @@ export default function SsgoiLayout() {
         from: from.replace(/^\/chat-room\/[^/]+/, '/chat-room'),
         to: to.replace(/^\/chat-room\/[^/]+/, '/chat-room'),
       }),
-      experimentalPreserveScroll: true,
+      preserveScroll: false,
       transitions: [
         // 홈 <-> ai채팅
         {
@@ -87,7 +87,7 @@ export default function SsgoiLayout() {
         {
           from: '/',
           to: '/chat-room',
-          transition: fade(),
+          // transition: fade(),
         },
         {
           from: '/chat-room',
@@ -111,11 +111,13 @@ export default function SsgoiLayout() {
           from: '/ai-chat',
           to: '/chat-room',
           transition: fade(),
+          // transition: drill({direction: "enter"}),
         },
         {
           from: '/chat-room',
           to: '/ai-chat',
           transition: fade(),
+          // transition: drill({direction: "exit"}),
         },
       ],
       defaultTransition: snap(),

@@ -153,8 +153,8 @@ importers:
         specifier: ^1.1.13
         version: 1.1.13(@types/react-dom@19.2.2(@types/react@19.1.17))(@types/react@19.1.17)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       '@ssgoi/core':
-        specifier: ^4.4.1
-        version: 4.4.1
+        specifier: ^6.3.0
+        version: 6.3.0
       '@ssgoi/react':
         specifier: ^4.2.1
         version: 4.2.1
@@ -1924,6 +1924,10 @@ packages:
 
   '@ssgoi/core@4.4.1':
     resolution: {integrity: sha512-+5sGQU90zi/WrZ5Cy7etzegXjfFFFn7yb1omVxl0103RVJviyw22JxDFYeWk/0EVQFhnH0015JxnofBD77KoyQ==}
+    engines: {node: '>=18.0.0'}
+
+  '@ssgoi/core@6.3.0':
+    resolution: {integrity: sha512-jQ5ddiGLWNDWQjyojx1mp44WWeBNQoH/fpM3GZRg/anz/GP4qYzUOfRUapLvFTCu5PXpqbetC+3HOgN9Ro9txA==}
     engines: {node: '>=18.0.0'}
 
   '@ssgoi/react@4.2.1':
@@ -8302,6 +8306,8 @@ snapshots:
   '@socket.io/component-emitter@3.1.2': {}
 
   '@ssgoi/core@4.4.1': {}
+
+  '@ssgoi/core@6.3.0': {}
 
   '@ssgoi/react@4.2.1':
     dependencies:
