@@ -5,16 +5,20 @@ import { SsgoiTransition } from '@ssgoi/react';
 import { Header } from '@/widgets/header/Header';
 import { ChatRoomCard, useGetChatListQuery } from '@/entities/chatroom';
 import PATH from '@/shared/constants/path';
+import { isInWebView } from '@/shared/lib/isInWebView';
+import { cn } from '@/shared/lib/utils';
 
 import { SearchInput } from './ui/SearchInput';
 import { useDelayedSearch } from './hooks';
 
 export default function AiChatPage() {
+  const inWebView = isInWebView();
+
   const navigate = useNavigate();
   const { data } = useGetChatListQuery();
   const { keyWord, setKeyWord, query } = useDelayedSearch();
 
-  const chatList = data?.data ?? [];
+  const chatList = useMemo(() => data?.data ?? [], [data?.data]);
 
   const filteredList = useMemo(() => {
     const trimmed = query.trim();
@@ -24,6 +28,7 @@ export default function AiChatPage() {
 
   return (
     <SsgoiTransition id="/ai-chat">
+      <div className={cn(inWebView && 'pt-10')} />
       <Header />
       <div className="px-5">
         <SearchInput

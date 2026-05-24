@@ -1,4 +1,5 @@
 import { useLocation, Link } from 'react-router-dom';
+import { isInWebView } from '@/shared/lib/isInWebView';
 import { cn } from '@/shared/lib/utils';
 import { HomeIcon } from '@/shared/ui/icons/HomeIcon';
 import { AiChatIcon } from '@/shared/ui/icons/AiChatIcon';
@@ -16,9 +17,16 @@ interface NavigationBarProps {
 
 export function NavigationBar({ className }: NavigationBarProps) {
   const { pathname } = useLocation();
+  const inWebView = isInWebView();
 
   return (
-    <nav className={cn('flex items-center rounded-t-md bg-gray-79', className)}>
+    <nav
+      className={cn(
+        'flex items-center rounded-t-md bg-gray-79',
+        inWebView && 'pb-8',
+        className,
+      )}
+    >
       {tabs.map((tab) => {
         const isActive = pathname === tab.path;
         const Icon = tab.icon;

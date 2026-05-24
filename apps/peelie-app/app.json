@@ -10,7 +10,8 @@
         "newArchEnabled": true,
         "ios": {
             "supportsTablet": true,
-            "bundleIdentifier": "com.peelie.app"
+            "bundleIdentifier": "com.peelie.app",
+            "usesAppleSignIn": true
         },
         "android": {
             "adaptiveIcon": {
@@ -29,6 +30,13 @@
         },
         "plugins": [
             "expo-router",
+            "expo-apple-authentication",
+            [
+                "@react-native-seoul/kakao-login",
+                {
+                    "kakaoAppKey": "89422f338231d3c6ae20913566ccf7db"
+                }
+            ],
             [
                 "expo-splash-screen",
                 {

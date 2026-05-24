@@ -23,15 +23,23 @@ import {
   type RenderItem,
   type StreamingState,
 } from '@/entities/chatroom';
+import { cn } from '@/shared/lib/utils';
+import { isInWebView } from '@/shared/lib/isInWebView';
 
 import { ChatRoomHeader } from './ui/ChatRoomHeader';
-import { cn } from '@/shared/lib/utils';
 
 const NEAR_BOTTOM_THRESHOLD_PX = 80;
 const ROUTE_SCROLL_CONTAINER_ID = 'route-scroll-container';
+const CHAT_ROOM_BACKGROUND_IMAGE = 'url(/chatroom-background.png)';
 
 function getRouteScrollContainer() {
   return document.getElementById(ROUTE_SCROLL_CONTAINER_ID);
+}
+
+function syncRouteScrollPosition(scrollContainer: HTMLElement) {
+  // ssgoi 4.x stores scroll position from scroll events. A same-position
+  // programmatic scrollTo can skip that event, so explicitly publish it.
+  scrollContainer.dispatchEvent(new Event('scroll'));
 }
 
 const SMOOTH_SCROLL_DURATION_MS = 600;
@@ -47,9 +55,11 @@ function scrollRouteToBottom(
 ) {
   if (behavior === 'auto') {
     scrollContainer.scrollTo({ top: scrollContainer.scrollHeight });
+    syncRouteScrollPosition(scrollContainer);
     if (syncAfterTransition) {
       window.setTimeout(() => {
         scrollContainer.scrollTo({ top: scrollContainer.scrollHeight });
+        syncRouteScrollPosition(scrollContainer);
       }, 200);
     }
     return;
@@ -58,22 +68,34 @@ function scrollRouteToBottom(
   const start = scrollContainer.scrollTop;
   const end = scrollContainer.scrollHeight - scrollContainer.clientHeight;
   const distance = end - start;
-  if (distance <= 0) return;
+  if (distance <= 0) {
+    syncRouteScrollPosition(scrollContainer);
+    return;
+  }
 
   const startTime = performance.now();
   function step(now: number) {
     const t = Math.min((now - startTime) / SMOOTH_SCROLL_DURATION_MS, 1);
     scrollContainer.scrollTop = start + distance * easeOutCubic(t);
-    if (t < 1) requestAnimationFrame(step);
+    if (t < 1) {
+      requestAnimationFrame(step);
+      return;
+    }
+    syncRouteScrollPosition(scrollContainer);
   }
   requestAnimationFrame(step);
 }
 
 export default function ChatRoomPage() {
+  const inWebView = isInWebView();
+
   const { chatRoomId = '' } = useParams<{ chatRoomId: string }>();
 
   const { data: messagesData } = useGetChatMessagesQuery(chatRoomId);
-  const initialMessages = messagesData?.data.items ?? [];
+  const initialMessages = useMemo(
+    () => messagesData?.data.items ?? [],
+    [messagesData?.data.items],
+  );
 
   const { data: chatListData } = useGetChatListQuery();
   const currentRoom = chatListData?.data.find((r) => r.chatRoomId === chatRoomId);
@@ -85,17 +107,22 @@ export default function ChatRoomPage() {
 
   const [input, setInput] = useState('');
 
-  const streaming: StreamingState =
-    sendState.status === 'sending'
-      ? { kind: 'sending', userMessage: sendState.userMessage }
-      : sendState.status === 'streaming'
-        ? {
-            kind: 'streaming',
-            userMessage: sendState.userMessage,
-            bubbles: sendState.bubbles,
-            suggestions: sendState.suggestions,
-          }
-        : { kind: 'none' };
+  const streaming: StreamingState = useMemo(() => {
+    if (sendState.status === 'sending') {
+      return { kind: 'sending', userMessage: sendState.userMessage };
+    }
+
+    if (sendState.status === 'streaming') {
+      return {
+        kind: 'streaming',
+        userMessage: sendState.userMessage,
+        bubbles: sendState.bubbles,
+        suggestions: sendState.suggestions,
+      };
+    }
+
+    return { kind: 'none' };
+  }, [sendState]);
 
   const isBusy = sendState.status === 'sending' || sendState.status === 'streaming';
 
@@ -179,11 +206,18 @@ export default function ChatRoomPage() {
     <SsgoiTransition id={`/chat-room/${chatRoomId}`}>
       <div
         aria-hidden
-        className="fixed inset-0 bg-cover bg-center"
-        style={{ backgroundImage: 'url(/chatroom-background.png)' }}
+        className={cn("fixed inset-0 bg-cover bg-top")}
+        style={{ backgroundImage: CHAT_ROOM_BACKGROUND_IMAGE }}
       />
       <div className="relative flex min-h-dvh w-full flex-col">
-        <div className={cn('sticky top-0 z-10 shrink-0 bg-gray-99/30', 'backdrop-blur-md')}>
+        <div
+          className={cn(
+            'sticky top-0 z-10 shrink-0 overflow-hidden',
+            'bg-cover bg-top',
+            inWebView && 'pt-10'
+          )}
+          style={{ backgroundImage: CHAT_ROOM_BACKGROUND_IMAGE }}
+        >
           <ChatRoomHeader
             name={currentRoom?.friend.name}
             personality={currentRoom?.friend.personality}
@@ -217,7 +251,7 @@ export default function ChatRoomPage() {
           onSubmit={handleSubmit}
           disabled={isBusy}
           position="static"
-          className="sticky bottom-0 z-10 shrink-0"
+          className={cn("sticky bottom-0 z-10 shrink-0", inWebView && 'pb-8')}
         />
       </div>
     </SsgoiTransition>

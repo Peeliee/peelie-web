@@ -1,9 +1,9 @@
 import { BridgeValidationError } from '@peelie/bridge';
 import { createBridgeClient } from '@peelie/bridge/react';
-import { testContract } from '@peelie/bridge-contracts';
+import { appContract } from '@peelie/bridge-contracts';
 import { toast } from 'sonner';
 
-export const { BridgeProvider, useBridge, useBridgeEvent } = createBridgeClient(testContract, {
+export const { BridgeProvider, useBridge, useBridgeEvent } = createBridgeClient(appContract, {
   logger: {
     warn: (...args) => toast.warning(args.map(String).join(' ')),
     error: (...args) => toast.warning(args.map(String).join(' ')),

@@ -8,6 +8,7 @@ import { ScheduleModal } from '@/widgets/ScheduleModal';
 import { cn } from '@/shared/lib/utils';
 import { Button } from '@/shared/ui/common/button';
 import { PlusIcon } from '@/shared/ui/icons/PlusIcon';
+import { isInWebView } from '@/shared/lib/isInWebView';
 
 const NAV_ROUTES = ['/', '/ai-chat', '/my'];
 const NAV_ROUTE_SET = new Set<string>(NAV_ROUTES);
@@ -17,6 +18,8 @@ interface SsgoiLayoutOutletContext {
 }
 
 export default function SsgoiLayout() {
+  const inWebView = isInWebView();
+
   const location = useLocation();
   const previousPathnameRef = useRef(location.pathname);
   const routeScrollRef = useRef<HTMLDivElement>(null);
@@ -149,6 +152,7 @@ export default function SsgoiLayout() {
             className={cn(
               'fixed bottom-[60px] left-1/2 z-20 px-4',
               'animate-[home-fab-in_200ms_ease-in_200ms_both]',
+              inWebView && 'mb-8'
             )}
           >
             일정 추가하기
