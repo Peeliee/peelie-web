@@ -2,6 +2,8 @@ import api from '@/shared/api/ky';
 import type { ApiResponse } from '@/shared/api/types';
 
 import type {
+  AppleAppLoginData,
+  AppleAppLoginRequest,
   CompleteOnboardingData,
   CompleteOnboardingRequest,
   KakaoWebLoginData,
@@ -13,6 +15,13 @@ export const authPost = {
     const wrapped = await api
       .post('auth/oauth/kakao/web/login', { json: request })
       .json<ApiResponse<KakaoWebLoginData>>();
+    return wrapped.data;
+  },
+
+  appleAppLogin: async (request: AppleAppLoginRequest): Promise<AppleAppLoginData> => {
+    const wrapped = await api
+      .post('auth/oauth/apple/app/login', { json: request })
+      .json<ApiResponse<AppleAppLoginData>>();
     return wrapped.data;
   },
 

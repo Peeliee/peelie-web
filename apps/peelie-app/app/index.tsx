@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { WebView } from 'react-native-webview';
 import { SafeAreaView, SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StyleSheet, Platform } from 'react-native';
+import * as AppleAuthentication from 'expo-apple-authentication';
 import type { BridgeOptions } from '@peelie/bridge';
 import { useNativeBridge } from '@peelie/bridge/react-native';
 import { appContract } from '@peelie/bridge-contracts';
@@ -36,6 +37,20 @@ export default function HomeScreen() {
       LOG: ({ level, args }) => {
         const fn = console[level] ?? console.log;
         fn('[web]', ...args);
+      },
+      APPLE_LOGIN: async () => {
+        const credential = await AppleAuthentication.signInAsync({
+          requestedScopes: [
+            AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+            AppleAuthentication.AppleAuthenticationScope.EMAIL,
+          ],
+        });
+
+        if (!credential.authorizationCode) {
+          throw new Error('Apple authorizationCode 없음');
+        }
+        console.log(credential.authorizationCode);
+        return { authorizationCode: credential.authorizationCode };
       },
     },
     bridgeOptions,

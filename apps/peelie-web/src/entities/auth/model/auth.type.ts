@@ -20,6 +20,12 @@ export interface SignupNeededData {
 
 export type KakaoWebLoginData = LoginSuccessData | SignupNeededData;
 
+export interface AppleAppLoginRequest {
+  authorizationCode: string;
+}
+
+export type AppleAppLoginData = LoginSuccessData | SignupNeededData;
+
 export interface CompleteOnboardingRequest {
   signupToken: string;
   nickname: string;
