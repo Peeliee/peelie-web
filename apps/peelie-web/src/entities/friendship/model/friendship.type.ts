@@ -4,6 +4,7 @@ export interface FriendSummary {
   id: string;
   name: string;
   personality: PersonalityType;
+  isDeleted: boolean;
 }
 
 export interface AddFriendshipRequest {

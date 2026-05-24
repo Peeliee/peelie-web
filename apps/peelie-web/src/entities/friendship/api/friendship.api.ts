@@ -18,3 +18,9 @@ export const friendshipPost = {
     return wrapped.data;
   },
 };
+
+export const friendshipDelete = {
+  remove: async (id: string): Promise<void> => {
+    await api.delete(`friendships/${id}`);
+  },
+};

@@ -1,7 +1,6 @@
 import { useRef } from 'react';
 import { WebView } from 'react-native-webview';
-import { SafeAreaView, SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { StyleSheet, Platform } from 'react-native';
+import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import { login as kakaoLogin } from '@react-native-seoul/kakao-login';
 import type { BridgeOptions } from '@peelie/bridge';
@@ -15,7 +14,7 @@ const bridgeOptions = {
 export default function HomeScreen() {
   const ref = useRef<WebView>(null);
 
-  const DEV_URL = 'http://172.30.1.48:5173/';
+  const DEV_URL = 'http://172.30.1.95:5173';
   const PROD_URL = 'https://peelie.vercel.app';
   const sourceUrl = __DEV__ ? DEV_URL : PROD_URL;
 
@@ -82,10 +81,3 @@ export default function HomeScreen() {
     </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
-});

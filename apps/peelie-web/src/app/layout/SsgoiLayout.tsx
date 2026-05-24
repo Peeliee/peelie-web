@@ -1,7 +1,7 @@
 import { useMemo, useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { Ssgoi } from '@ssgoi/react';
-import { fade, snap } from '@ssgoi/react/view-transitions';
+import { fade, snap, drill } from '@ssgoi/react/view-transitions';
 import { NavigationBar } from '@/widgets/NavigationBar/NavigationBar';
 import { FriendCodeModal } from '@/widgets/FriendCodeModal';
 import { ScheduleModal } from '@/widgets/ScheduleModal';
@@ -152,7 +152,7 @@ export default function SsgoiLayout() {
             className={cn(
               'fixed bottom-[60px] left-1/2 z-20 px-4',
               'animate-[home-fab-in_200ms_ease-in_200ms_both]',
-              inWebView && 'mb-8'
+              inWebView && 'mb-8',
             )}
           >
             일정 추가하기
