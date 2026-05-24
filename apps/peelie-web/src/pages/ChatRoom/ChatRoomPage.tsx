@@ -36,6 +36,12 @@ function getRouteScrollContainer() {
   return document.getElementById(ROUTE_SCROLL_CONTAINER_ID);
 }
 
+function syncRouteScrollPosition(scrollContainer: HTMLElement) {
+  // ssgoi 4.x stores scroll position from scroll events. A same-position
+  // programmatic scrollTo can skip that event, so explicitly publish it.
+  scrollContainer.dispatchEvent(new Event('scroll'));
+}
+
 const SMOOTH_SCROLL_DURATION_MS = 600;
 
 function easeOutCubic(t: number) {
@@ -49,9 +55,11 @@ function scrollRouteToBottom(
 ) {
   if (behavior === 'auto') {
     scrollContainer.scrollTo({ top: scrollContainer.scrollHeight });
+    syncRouteScrollPosition(scrollContainer);
     if (syncAfterTransition) {
       window.setTimeout(() => {
         scrollContainer.scrollTo({ top: scrollContainer.scrollHeight });
+        syncRouteScrollPosition(scrollContainer);
       }, 200);
     }
     return;
@@ -60,13 +68,20 @@ function scrollRouteToBottom(
   const start = scrollContainer.scrollTop;
   const end = scrollContainer.scrollHeight - scrollContainer.clientHeight;
   const distance = end - start;
-  if (distance <= 0) return;
+  if (distance <= 0) {
+    syncRouteScrollPosition(scrollContainer);
+    return;
+  }
 
   const startTime = performance.now();
   function step(now: number) {
     const t = Math.min((now - startTime) / SMOOTH_SCROLL_DURATION_MS, 1);
     scrollContainer.scrollTop = start + distance * easeOutCubic(t);
-    if (t < 1) requestAnimationFrame(step);
+    if (t < 1) {
+      requestAnimationFrame(step);
+      return;
+    }
+    syncRouteScrollPosition(scrollContainer);
   }
   requestAnimationFrame(step);
 }
@@ -77,7 +92,10 @@ export default function ChatRoomPage() {
   const { chatRoomId = '' } = useParams<{ chatRoomId: string }>();
 
   const { data: messagesData } = useGetChatMessagesQuery(chatRoomId);
-  const initialMessages = messagesData?.data.items ?? [];
+  const initialMessages = useMemo(
+    () => messagesData?.data.items ?? [],
+    [messagesData?.data.items],
+  );
 
   const { data: chatListData } = useGetChatListQuery();
   const currentRoom = chatListData?.data.find((r) => r.chatRoomId === chatRoomId);
@@ -89,17 +107,22 @@ export default function ChatRoomPage() {
 
   const [input, setInput] = useState('');
 
-  const streaming: StreamingState =
-    sendState.status === 'sending'
-      ? { kind: 'sending', userMessage: sendState.userMessage }
-      : sendState.status === 'streaming'
-        ? {
-            kind: 'streaming',
-            userMessage: sendState.userMessage,
-            bubbles: sendState.bubbles,
-            suggestions: sendState.suggestions,
-          }
-        : { kind: 'none' };
+  const streaming: StreamingState = useMemo(() => {
+    if (sendState.status === 'sending') {
+      return { kind: 'sending', userMessage: sendState.userMessage };
+    }
+
+    if (sendState.status === 'streaming') {
+      return {
+        kind: 'streaming',
+        userMessage: sendState.userMessage,
+        bubbles: sendState.bubbles,
+        suggestions: sendState.suggestions,
+      };
+    }
+
+    return { kind: 'none' };
+  }, [sendState]);
 
   const isBusy = sendState.status === 'sending' || sendState.status === 'streaming';
 

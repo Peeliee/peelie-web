@@ -18,7 +18,7 @@ export default function AiChatPage() {
   const { data } = useGetChatListQuery();
   const { keyWord, setKeyWord, query } = useDelayedSearch();
 
-  const chatList = data?.data ?? [];
+  const chatList = useMemo(() => data?.data ?? [], [data?.data]);
 
   const filteredList = useMemo(() => {
     const trimmed = query.trim();
