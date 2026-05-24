@@ -3,6 +3,7 @@ import { SsgoiTransition } from '@ssgoi/react';
 
 import { cn } from '@/shared/lib/utils';
 import { isInWebView } from '@/shared/lib/isInWebView';
+import { clearAuthAndRedirectToLogin } from '@/shared/api/auth';
 import { AlermIcon } from '@/shared/ui/icons/AlermIcon';
 import { ChevronRightIcon } from '@/shared/ui/icons/ChevronRightIcon';
 import { StraightForwardCharacterIcon } from '@/shared/ui/icons/character/StraightForwardCharacterIcon';
@@ -40,7 +41,7 @@ export default function MyPage() {
             <MenuRow
               icon={<LogoutIcon className="size-6 text-gray-99" />}
               label="로그아웃"
-              showChevron={false}
+              onClick={clearAuthAndRedirectToLogin}
             />
           </div>
         </div>
@@ -118,13 +119,17 @@ interface MenuRowProps {
 
 function MenuRow({ icon, label, showChevron = true, onClick }: MenuRowProps) {
   return (
-    <button type="button" onClick={onClick} className="flex items-center justify-between w-full">
+    <div className="flex items-center justify-between w-full">
       <div className="flex items-center gap-2">
         {icon}
         <span className="text-body-m-500 text-gray-99">{label}</span>
       </div>
-      {showChevron && <ChevronRightIcon className="size-6 text-gray-99" />}
-    </button>
+      {showChevron && (
+        <button type="button" onClick={onClick} className="-mr-1 p-1">
+          <ChevronRightIcon className="size-6 text-gray-99" />
+        </button>
+      )}
+    </div>
   );
 }
 
