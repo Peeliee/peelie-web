@@ -26,7 +26,9 @@ import {
 import { cn } from '@/shared/lib/utils';
 import { isInWebView } from '@/shared/lib/isInWebView';
 
+import { ChatBlockedModal } from './ui/ChatBlockedModal';
 import { ChatRoomHeader } from './ui/ChatRoomHeader';
+import { useChatGuard } from './hooks/useChatGuard';
 
 const NEAR_BOTTOM_THRESHOLD_PX = 80;
 const ROUTE_SCROLL_CONTAINER_ID = 'route-scroll-container';
@@ -100,8 +102,12 @@ export default function ChatRoomPage() {
   const { data: chatListData } = useGetChatListQuery();
   const currentRoom = chatListData?.data.find((r) => r.chatRoomId === chatRoomId);
 
-  const { turn: greetingTurn, pending: greetingPending } = useGreeting(chatRoomId);
   const { state: sendState, history, send } = useSendChatMessage(chatRoomId);
+  const { isBlocked, blockReason, guardedSend, modalOpen, closeModal } = useChatGuard({
+    currentRoom,
+    send,
+  });
+  const { turn: greetingTurn, pending: greetingPending } = useGreeting(chatRoomId, !isBlocked);
 
   useMarkRead({ chatRoomId, historyLength: history.length, greetingTurn });
 
@@ -193,7 +199,7 @@ export default function ChatRoomPage() {
 
   const handleSubmit = () => {
     if (!input.trim()) return;
-    send(input);
+    guardedSend(input);
     setInput('');
   };
 
@@ -254,6 +260,9 @@ export default function ChatRoomPage() {
           className={cn("sticky bottom-0 z-10 shrink-0", inWebView && 'pb-8')}
         />
       </div>
+      {blockReason && (
+        <ChatBlockedModal isOpen={modalOpen} reason={blockReason} onClose={closeModal} />
+      )}
     </SsgoiTransition>
   );
 }
