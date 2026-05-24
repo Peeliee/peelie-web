@@ -20,7 +20,11 @@ export function BottomSheet({ isOpen, onClose, children, className }: BottomShee
   useEffect(() => {
     if (isOpen) {
       setMounted(true);
-      requestAnimationFrame(() => requestAnimationFrame(() => setVisible(true)));
+      setVisible(false);
+      const id = requestAnimationFrame(() =>
+        requestAnimationFrame(() => setVisible(true)),
+      );
+      return () => cancelAnimationFrame(id);
     } else {
       setVisible(false);
     }
@@ -54,7 +58,7 @@ export function BottomSheet({ isOpen, onClose, children, className }: BottomShee
         )}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex justify-center pt-3 pb-1">
+        <div className="flex justify-center pt-3">
           <div className="h-[5px] w-16 rounded-full bg-gray-30" />
         </div>
         {children}

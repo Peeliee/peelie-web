@@ -7,6 +7,8 @@ import { ChevronDownIcon } from '@/shared/ui/icons/ChevronDownIcon';
 import { MiniCharcterIcon } from '@/shared/ui/icons/MiniCharcterIcon';
 import { SearchIcon } from '@/shared/ui/icons/SearchIcon';
 
+import { FriendDeleteConfirmModal } from './FriendDeleteConfirmModal';
+
 interface FriendManageBottomSheetProps {
   isOpen: boolean;
   onClose: () => void;
@@ -14,15 +16,24 @@ interface FriendManageBottomSheetProps {
 
 export function FriendManageBottomSheet({ isOpen, onClose }: FriendManageBottomSheetProps) {
   const [search, setSearch] = useState('');
+  const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
   const { data: friends = [] } = useGetFriendshipsQuery();
   const { mutate: deleteFriend } = useDeleteFriendshipMutation();
 
   const filtered = friends.filter((f) => f.name.toLowerCase().includes(search.toLowerCase()));
 
+  const handleConfirmDelete = () => {
+    if (pendingDeleteId) {
+      deleteFriend(pendingDeleteId);
+    }
+    setPendingDeleteId(null);
+  };
+
   return (
-    <BottomSheet isOpen={isOpen} onClose={onClose}>
-      <div className="flex flex-col">
-        <div className="flex justify-center pb-4">
+    <>
+    <BottomSheet isOpen={isOpen} onClose={onClose} className="h-[70vh]">
+      <div className="flex flex-col h-full">
+        <div className="flex justify-center pb-7 pt-6">
           <span className="text-body-l-500 text-gray-99">친구 관리</span>
         </div>
 
@@ -47,7 +58,7 @@ export function FriendManageBottomSheet({ isOpen, onClose }: FriendManageBottomS
           </div>
         </div>
 
-        <div className="mt-3 flex max-h-72 flex-col gap-3 overflow-y-auto px-5 pb-1">
+        <div className="mt-3 flex max-h-72 flex-col gap-3 overflow-y-auto px-5 pb-20">
           {filtered.map((friend) => (
             <div key={friend.id} className="flex flex-col gap-3">
               <div className="flex items-center justify-between">
@@ -64,8 +75,8 @@ export function FriendManageBottomSheet({ isOpen, onClose }: FriendManageBottomS
                 </div>
                 <button
                   type="button"
-                  className="text-body-s-400 text-text-sub underline"
-                  onClick={() => deleteFriend(friend.id)}
+                  className="text-body-s-400 text-gray-59 underline underline-offset-4"
+                  onClick={() => setPendingDeleteId(friend.id)}
                 >
                   삭제하기
                 </button>
@@ -75,7 +86,7 @@ export function FriendManageBottomSheet({ isOpen, onClose }: FriendManageBottomS
           ))}
         </div>
 
-        <div className="px-5 py-4">
+        <div className="fixed bottom-4 left-5 right-5">
           <button
             type="button"
             onClick={onClose}
@@ -86,5 +97,11 @@ export function FriendManageBottomSheet({ isOpen, onClose }: FriendManageBottomS
         </div>
       </div>
     </BottomSheet>
+    <FriendDeleteConfirmModal
+      isOpen={pendingDeleteId !== null}
+      onClose={() => setPendingDeleteId(null)}
+      onConfirm={handleConfirmDelete}
+    />
+    </>
   );
 }

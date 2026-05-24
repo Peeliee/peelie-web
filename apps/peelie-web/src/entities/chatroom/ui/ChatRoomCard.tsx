@@ -7,6 +7,7 @@ import type { PersonalityType } from '../model';
 interface ChatRoomCardProps {
   userName: string;
   personality: PersonalityType;
+  isDeleted?: boolean;
   /** null 이면 미리보기 비움 (메시지 없음). */
   lastMessage: string | null;
   lastMessageAt: string;
@@ -17,6 +18,7 @@ interface ChatRoomCardProps {
 export function ChatRoomCard({
   userName,
   personality,
+  isDeleted,
   lastMessage,
   lastMessageAt,
   isUnread,
@@ -47,15 +49,21 @@ export function ChatRoomCard({
         <div className="flex min-w-0 flex-1 flex-col gap-1">
           {/* 뱃지 + 이름 + 안 읽음 도트 */}
           <div className="flex items-center gap-2">
-            <span
-              className={cn(
-                'rounded-xsmall bg-brand-main px-[6px] py-[2px]',
-                'text-caption-m-400 text-gray-70',
-              )}
-            >
-              {PERSONALITY_LABEL[personality]}
-            </span>
-            <span className="text-body-s-400 font-medium text-gray-99">{userName}</span>
+            {isDeleted ? (
+              <span className="text-body-s-400 font-medium text-text-disabled">탈퇴한 사용자</span>
+            ) : (
+              <>
+                <span
+                  className={cn(
+                    'rounded-xsmall bg-brand-main px-[6px] py-[2px]',
+                    'text-caption-m-400 text-gray-70',
+                  )}
+                >
+                  {PERSONALITY_LABEL[personality]}
+                </span>
+                <span className="text-body-s-400 font-medium text-gray-99">{userName}</span>
+              </>
+            )}
           </div>
 
           {/* 미리보기 + 시간 */}

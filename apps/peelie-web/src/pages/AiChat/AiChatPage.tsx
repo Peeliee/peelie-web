@@ -42,6 +42,7 @@ export default function AiChatPage() {
               <ChatRoomCard
                 userName={room.friend.name}
                 personality={room.friend.personality}
+                isDeleted={room.friend.isDeleted}
                 lastMessage={room.lastMessagePreview}
                 lastMessageAt={room.lastMessageAt}
                 isUnread={room.isUnread}
