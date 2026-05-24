@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom';
 
 import Toaster from '@/shared/ui/common/sonner';
 
+import ConsoleBridge from './provider/ConsoleBridge';
 import { BridgeProvider, QueryProvider, ThemeProvider } from './provider';
 
 export default function App() {
@@ -9,6 +10,7 @@ export default function App() {
     <ThemeProvider>
       <main>
         <BridgeProvider>
+          <ConsoleBridge />
           <QueryProvider>
             <Outlet />
           </QueryProvider>

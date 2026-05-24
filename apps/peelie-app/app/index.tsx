@@ -1,10 +1,10 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { WebView } from 'react-native-webview';
 import { SafeAreaView, SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StyleSheet, Platform } from 'react-native';
 import type { BridgeOptions } from '@peelie/bridge';
 import { useNativeBridge } from '@peelie/bridge/react-native';
-import { testContract } from '@peelie/bridge-contracts';
+import { appContract } from '@peelie/bridge-contracts';
 
 const bridgeOptions = {
   logger: console,
@@ -13,7 +13,7 @@ const bridgeOptions = {
 export default function HomeScreen() {
   const ref = useRef<WebView>(null);
 
-  const DEV_URL = 'http://172.20.10.11:5173/test';
+  const DEV_URL = 'http://172.30.1.48:5173/';
   const PROD_URL = 'https://peelie.vercel.app';
   const sourceUrl = __DEV__ ? DEV_URL : PROD_URL;
 
@@ -29,32 +29,17 @@ export default function HomeScreen() {
         true;
     `;
 
-  const { bridge, pushMessage } = useNativeBridge(
+  const { pushMessage } = useNativeBridge(
     ref,
-    testContract,
+    appContract,
     {
-      PING: () => ({ ok: true as const }),
-      ECHO: ({ message }) => ({ message: String(Date.now() + message + '응답임') }),
-      GET_TIME: () => ({ now: Date.now() }),
-      LOG: ({ message }) => {
-        console.log('[bridge:log]', message);
-      },
-      TRIGGER: () => {
-        console.log('[bridge:trigger]');
+      LOG: ({ level, args }) => {
+        const fn = console[level] ?? console.log;
+        fn('[web]', ...args);
       },
     },
     bridgeOptions,
   );
-
-  useEffect(() => {
-    let count = 0;
-    const tick = setInterval(() => {
-      count += 1;
-      bridge.emit('TICK', { count });
-      if (count <= 5) bridge.emit('APP_READY');
-    }, 1000);
-    return () => clearInterval(tick);
-  }, [bridge]);
 
   return (
     <SafeAreaProvider>
