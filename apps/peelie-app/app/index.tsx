@@ -3,6 +3,7 @@ import { WebView } from 'react-native-webview';
 import { SafeAreaView, SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { StyleSheet, Platform } from 'react-native';
 import * as AppleAuthentication from 'expo-apple-authentication';
+import { login as kakaoLogin } from '@react-native-seoul/kakao-login';
 import type { BridgeOptions } from '@peelie/bridge';
 import { useNativeBridge } from '@peelie/bridge/react-native';
 import { appContract } from '@peelie/bridge-contracts';
@@ -51,6 +52,10 @@ export default function HomeScreen() {
         }
         console.log(credential.authorizationCode);
         return { authorizationCode: credential.authorizationCode };
+      },
+      KAKAO_LOGIN: async () => {
+        const token = await kakaoLogin();
+        return { accessToken: token.accessToken };
       },
     },
     bridgeOptions,

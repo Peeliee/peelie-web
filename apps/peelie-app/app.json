@@ -32,6 +32,12 @@
             "expo-router",
             "expo-apple-authentication",
             [
+                "@react-native-seoul/kakao-login",
+                {
+                    "kakaoAppKey": "89422f338231d3c6ae20913566ccf7db"
+                }
+            ],
+            [
                 "expo-splash-screen",
                 {
                     "image": "./assets/peelieLogo.png",

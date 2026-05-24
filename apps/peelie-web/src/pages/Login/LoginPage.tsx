@@ -2,7 +2,11 @@ import { useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { useBridge } from '@/app/provider/BridgeProvider';
-import { useAppleAppLoginMutation, useKakaoWebLoginMutation } from '@/entities/auth';
+import {
+  useAppleAppLoginMutation,
+  useKakaoAppLoginMutation,
+  useKakaoWebLoginMutation,
+} from '@/entities/auth';
 import PATH from '@/shared/constants/path';
 import { isInWebView } from '@/shared/lib/isInWebView';
 import { cn } from '@/shared/lib/utils';
@@ -16,8 +20,9 @@ export default function LoginPage() {
   const code = searchParams.get('code');
   const exchangedCodeRef = useRef<string | null>(null);
   const bridge = useBridge();
-  const { mutateAsync: kakaoLogin } = useKakaoWebLoginMutation();
+  const { mutateAsync: kakaoWebLogin } = useKakaoWebLoginMutation();
   const { mutateAsync: appleLogin } = useAppleAppLoginMutation();
+  const { mutateAsync: kakaoAppLogin } = useKakaoAppLoginMutation();
   const inWebView = isInWebView();
 
   useEffect(() => {
@@ -26,7 +31,7 @@ export default function LoginPage() {
 
     const exchangeCode = async () => {
       try {
-        const data = await kakaoLogin({ code });
+        const data = await kakaoWebLogin({ code });
 
         if (data.type === 'login') {
           localStorage.setItem('accessToken', data.accessToken);
@@ -44,7 +49,28 @@ export default function LoginPage() {
     };
 
     void exchangeCode();
-  }, [code, kakaoLogin, navigate]);
+  }, [code, kakaoWebLogin, navigate]);
+
+  const handleKakaoNativeLogin = async () => {
+    try {
+      const { accessToken } = await bridge.request('KAKAO_LOGIN', undefined, {
+        timeout: 'none',
+      });
+      const data = await kakaoAppLogin({ accessToken });
+
+      if (data.type === 'login') {
+        localStorage.setItem('accessToken', data.accessToken);
+        localStorage.setItem('refreshToken', data.refreshToken);
+        navigate(PATH.HOME, { replace: true });
+        return;
+      }
+
+      localStorage.setItem('signupToken', data.signupToken);
+      navigate(PATH.ONBOARDING, { replace: true });
+    } catch (err) {
+      console.error('카카오 네이티브 로그인 실패:', err);
+    }
+  };
 
   const handleAppleLogin = async () => {
     try {
@@ -82,9 +108,13 @@ export default function LoginPage() {
         size="lg"
         radius="small"
         className="w-64 bg-[#FEE500] text-[#191919] hover:bg-[#FDD835]"
-        onClick={() => {
-          window.location.href = KAKAO_AUTH_URL;
-        }}
+        onClick={
+          inWebView
+            ? handleKakaoNativeLogin
+            : () => {
+                window.location.href = KAKAO_AUTH_URL;
+              }
+        }
       >
         카카오 로그인
       </Button>
