@@ -6,6 +6,8 @@ import { useGetChatRoomsQuery } from '@/entities/chatroom';
 import type { ChatRoomSort } from '@/entities/chatroom/model/chatRoom.type';
 import { ShareIcon } from '@/shared/ui/icons/ShareIcon';
 import { Header } from '@/widgets/header/Header';
+import { isInWebView } from '@/shared/lib/isInWebView';
+import { cn } from '@/shared/lib/utils';
 
 import { FriendDDayCard } from './ui/FriendDDayCard';
 import { SearchBar } from './ui/SearchBar';
@@ -22,6 +24,8 @@ const SORT_TO_API: Record<SortOrder, ChatRoomSort> = {
 };
 
 export default function HomePage() {
+  const inWebView = isInWebView();
+
   const { openFriendCodeModal } = useOutletContext<HomeOutletContext>();
   const [sortOrder, setSortOrder] = useState<SortOrder>('최신순');
 
@@ -30,6 +34,7 @@ export default function HomePage() {
 
   return (
     <SsgoiTransition id="/">
+      <div className={cn(inWebView && 'pt-10')} />
       <Header>
         <button type="button" onClick={openFriendCodeModal} aria-label="공유">
           <ShareIcon className="size-6 text-gray-70" />

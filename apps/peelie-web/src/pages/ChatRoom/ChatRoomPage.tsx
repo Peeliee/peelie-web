@@ -23,9 +23,10 @@ import {
   type RenderItem,
   type StreamingState,
 } from '@/entities/chatroom';
+import { cn } from '@/shared/lib/utils';
+import { isInWebView } from '@/shared/lib/isInWebView';
 
 import { ChatRoomHeader } from './ui/ChatRoomHeader';
-import { cn } from '@/shared/lib/utils';
 
 const NEAR_BOTTOM_THRESHOLD_PX = 80;
 const ROUTE_SCROLL_CONTAINER_ID = 'route-scroll-container';
@@ -71,6 +72,8 @@ function scrollRouteToBottom(
 }
 
 export default function ChatRoomPage() {
+  const inWebView = isInWebView();
+
   const { chatRoomId = '' } = useParams<{ chatRoomId: string }>();
 
   const { data: messagesData } = useGetChatMessagesQuery(chatRoomId);
@@ -180,7 +183,7 @@ export default function ChatRoomPage() {
     <SsgoiTransition id={`/chat-room/${chatRoomId}`}>
       <div
         aria-hidden
-        className="fixed inset-0 bg-cover bg-top"
+        className={cn("fixed inset-0 bg-cover bg-top")}
         style={{ backgroundImage: CHAT_ROOM_BACKGROUND_IMAGE }}
       />
       <div className="relative flex min-h-dvh w-full flex-col">
@@ -188,6 +191,7 @@ export default function ChatRoomPage() {
           className={cn(
             'sticky top-0 z-10 shrink-0 overflow-hidden',
             'bg-cover bg-top',
+            inWebView && 'pt-10'
           )}
           style={{ backgroundImage: CHAT_ROOM_BACKGROUND_IMAGE }}
         >
@@ -224,7 +228,7 @@ export default function ChatRoomPage() {
           onSubmit={handleSubmit}
           disabled={isBusy}
           position="static"
-          className="sticky bottom-0 z-10 shrink-0"
+          className={cn("sticky bottom-0 z-10 shrink-0", inWebView && 'pb-8')}
         />
       </div>
     </SsgoiTransition>

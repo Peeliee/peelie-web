@@ -63,31 +63,22 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView
-        style={[
-          styles.container,
-          {
-            paddingBottom: Platform.OS === 'ios' ? -20 : 0,
-          },
-        ]}
-      >
-        <WebView
-          ref={ref}
-          source={{ uri: sourceUrl }}
-          originWhitelist={['*']}
-          allowsInlineMediaPlayback
-          startInLoadingState
-          javaScriptEnabled
-          domStorageEnabled
-          mixedContentMode="always"
-          style={{ flex: 1 }}
-          onLoadStart={() => console.log('WebView 시작')}
-          onLoadEnd={() => console.log('WebView 완료')}
-          onError={(e) => console.log('WebView 오류:', e.nativeEvent)}
-          onMessage={(e) => pushMessage(e.nativeEvent.data)}
-          injectedJavaScript={injectedJavaScript}
-        />
-      </SafeAreaView>
+      <WebView
+        ref={ref}
+        source={{ uri: sourceUrl }}
+        originWhitelist={['*']}
+        allowsInlineMediaPlayback
+        startInLoadingState
+        javaScriptEnabled
+        domStorageEnabled
+        mixedContentMode="always"
+        style={{ flex: 1 }}
+        onLoadStart={() => console.log('WebView 시작')}
+        onLoadEnd={() => console.log('WebView 완료')}
+        onError={(e) => console.log('WebView 오류:', e.nativeEvent)}
+        onMessage={(e) => pushMessage(e.nativeEvent.data)}
+        injectedJavaScript={injectedJavaScript}
+      />
     </SafeAreaProvider>
   );
 }
