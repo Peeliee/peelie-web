@@ -28,7 +28,10 @@ export function UpcomingMeetCard() {
   const hasNext = meets.length >= 2;
   const showToggle = meets.length >= 3;
 
-  const goToChatRoom = () => navigate(PATH.CHAT_ROOM);
+  const goToChatRoom = () => {
+    if (!main) return;
+    navigate(`${PATH.CHAT_ROOM}/${main.chatRoomId}`);
+  };
   const handleToggle = () => setIsOpen((prev) => !prev);
 
   return (

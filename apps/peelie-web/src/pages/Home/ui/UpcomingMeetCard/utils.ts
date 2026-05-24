@@ -9,6 +9,7 @@ const MS_PER_DAY = 1000 * 60 * 60 * 24;
 export function toMeet(schedule: Schedule): Meet {
   return {
     id: schedule.id,
+    chatRoomId: schedule.chatRoom.id,
     date: schedule.meetDate,
     title: schedule.description,
     friend: {
