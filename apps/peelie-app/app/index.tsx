@@ -14,7 +14,7 @@ const bridgeOptions = {
 export default function HomeScreen() {
   const ref = useRef<WebView>(null);
 
-  const DEV_URL = 'http://172.30.1.95:5173';
+  const DEV_URL = 'http://192.168.1.16:5173';
   const PROD_URL = 'https://peelie.vercel.app';
   const sourceUrl = __DEV__ ? DEV_URL : PROD_URL;
 
