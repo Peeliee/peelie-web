@@ -5,14 +5,14 @@ export const ChatRoomsMock: { data: ChatRoomListItem[]; delay: number } = {
   data: [
     {
       chatRoomId: 'chr_001',
-      friend: { id: 'usr_001', name: '김나은', personality: 'STRAIGHT_SHOOTER' },
+      friend: { id: 'usr_001', name: '김나은', personality: 'STRAIGHT_SHOOTER', isWithdrawn: false },
       meetDate: '2026-05-20T00:00:00.000Z',
       registeredAt: '2026-05-10T00:00:00.000Z',
       lastMessageAt: '2026-05-13T03:52:35.610Z',
     },
     {
       chatRoomId: 'chr_002',
-      friend: { id: 'usr_002', name: '박지원', personality: 'QUIET_CHARMER' },
+      friend: { id: 'usr_002', name: '박지원', personality: 'QUIET_CHARMER', isWithdrawn: false },
       meetDate: '2026-05-18T00:00:00.000Z',
       registeredAt: '2026-05-08T00:00:00.000Z',
       lastMessageAt: '2026-05-12T18:24:11.100Z',
