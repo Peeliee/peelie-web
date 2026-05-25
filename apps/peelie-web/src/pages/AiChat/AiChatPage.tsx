@@ -5,11 +5,11 @@ import { SsgoiTransition } from '@ssgoi/react';
 import { Header } from '@/widgets/header/Header';
 import { ChatRoomCard, useGetChatListQuery } from '@/entities/chatroom';
 import PATH from '@/shared/constants/path';
+import { useDelayedSearch } from '@/shared/hooks';
 import { isInWebView } from '@/shared/lib/isInWebView';
 import { cn } from '@/shared/lib/utils';
 
 import { SearchInput } from './ui/SearchInput';
-import { useDelayedSearch } from './hooks';
 
 export default function AiChatPage() {
   const inWebView = isInWebView();

@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { useDeleteFriendshipMutation, useGetFriendshipsQuery } from '@/entities/friendship';
 import { PERSONALITY_LABEL } from '@/shared/constants/personality';
+import { useDelayedSearch } from '@/shared/hooks';
 import { BottomSheet } from '@/shared/ui/common/BottomSheet';
 import { ChevronDownIcon } from '@/shared/ui/icons/ChevronDownIcon';
 import { MiniCharcterIcon } from '@/shared/ui/icons/MiniCharcterIcon';
@@ -15,12 +16,16 @@ interface FriendManageBottomSheetProps {
 }
 
 export function FriendManageBottomSheet({ isOpen, onClose }: FriendManageBottomSheetProps) {
-  const [search, setSearch] = useState('');
+  const { keyWord, setKeyWord, query } = useDelayedSearch();
   const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
   const { data: friends = [] } = useGetFriendshipsQuery();
   const { mutate: deleteFriend } = useDeleteFriendshipMutation();
 
-  const filtered = friends.filter((f) => f.name.toLowerCase().includes(search.toLowerCase()));
+  const filtered = useMemo(() => {
+    const trimmed = query.trim().toLowerCase();
+    if (!trimmed) return friends;
+    return friends.filter((f) => f.name.toLowerCase().includes(trimmed));
+  }, [friends, query]);
 
   const handleConfirmDelete = () => {
     if (pendingDeleteId) {
@@ -50,8 +55,8 @@ export function FriendManageBottomSheet({ isOpen, onClose }: FriendManageBottomS
             <SearchIcon className="size-6 shrink-0 text-gray-39" />
             <input
               type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              value={keyWord}
+              onChange={(e) => setKeyWord(e.target.value)}
               placeholder="찾고 싶은 친구를 검색해주세요."
               className="flex-1 bg-transparent text-body-m-400 text-gray-99 outline-none placeholder:text-text-disabled"
             />

@@ -40,11 +40,7 @@ export default function SsgoiLayout() {
     const previousPathname = previousPathnameRef.current;
     const currentPathname = location.pathname;
 
-    if (
-      previousPathname !== currentPathname &&
-      NAV_ROUTE_SET.has(previousPathname) &&
-      NAV_ROUTE_SET.has(currentPathname)
-    ) {
+    if (previousPathname !== currentPathname && NAV_ROUTE_SET.has(currentPathname)) {
       routeScrollRef.current?.scrollTo({ top: 0, left: 0 });
     }
 

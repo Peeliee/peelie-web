@@ -18,7 +18,7 @@ export function ProfileBanner() {
 
       {/* 우측: 캐릭터 + 툴팁 + 편집 버튼 */}
       <div className="absolute right-5 top-1/2 -translate-y-1/2 flex flex-col items-center w-[112px]">
-        <div className="shadow-tooltip z-[2] mb-[-8px]">
+        <div className="z-[2] mb-[-8px]">
           <div className="bg-gray-70 rounded-xsmall px-2 py-1.5">
             <span className="text-caption-m-400 text-gray-01 whitespace-nowrap">
               나는 직진 본능파
