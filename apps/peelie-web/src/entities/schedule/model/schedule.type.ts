@@ -15,6 +15,7 @@ export interface Schedule {
     id: string;
     name: string;
     personality: PersonalityType;
+    isWithdrawn: boolean;
   };
   chatRoom: {
     id: string;
@@ -33,4 +34,19 @@ export type ScheduleOrder = 'asc' | 'desc';
 export interface ListSchedulesParams {
   filter?: ScheduleFilter;
   order?: ScheduleOrder;
+}
+
+export interface TodayDDayFriend {
+  id: string;
+  name: string;
+  personality: PersonalityType;
+}
+
+export interface TodayDDayItem {
+  scheduleId: string;
+  chatRoomId: string;
+  friend: TodayDDayFriend;
+  meetDate: string;
+  description: string;
+  summary: string | null;
 }

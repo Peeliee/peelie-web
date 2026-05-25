@@ -1,7 +1,12 @@
 import api from '@/shared/api/ky';
 import type { ApiResponse } from '@/shared/api/types';
 
-import type { CreateScheduleRequest, ListSchedulesParams, Schedule } from '../model/schedule.type';
+import type {
+  CreateScheduleRequest,
+  ListSchedulesParams,
+  Schedule,
+  TodayDDayItem,
+} from '../model/schedule.type';
 
 export const scheduleGet = {
   list: async (params?: ListSchedulesParams): Promise<Schedule[]> => {
@@ -18,6 +23,11 @@ export const scheduleGet = {
 
   detail: async (id: string): Promise<Schedule> => {
     const wrapped = await api.get(`schedules/${id}`).json<ApiResponse<Schedule>>();
+    return wrapped.data;
+  },
+
+  todayDday: async (): Promise<TodayDDayItem[]> => {
+    const wrapped = await api.get('today-dday').json<ApiResponse<TodayDDayItem[]>>();
     return wrapped.data;
   },
 };

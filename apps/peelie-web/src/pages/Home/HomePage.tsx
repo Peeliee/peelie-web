@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SsgoiTransition } from '@ssgoi/react';
 import { useOutletContext } from 'react-router-dom';
 
 import { useGetChatRoomsQuery } from '@/entities/chatroom';
 import type { ChatRoomSort } from '@/entities/chatroom/model/chatRoom.type';
+import { DDayModal, useGetTodayDDayQuery } from '@/entities/schedule';
+import { PERSONALITY_LABEL } from '@/shared/constants/personality';
+import Modal from '@/shared/ui/common/Modal/Modal';
 import { ShareIcon } from '@/shared/ui/icons/ShareIcon';
 import { Header } from '@/widgets/header/Header';
 import { isInWebView } from '@/shared/lib/isInWebView';
@@ -28,9 +31,34 @@ export default function HomePage() {
 
   const { openFriendCodeModal } = useOutletContext<HomeOutletContext>();
   const [sortOrder, setSortOrder] = useState<SortOrder>('최신순');
+  const [isDDayOpen, setIsDDayOpen] = useState(false);
 
   const { data } = useGetChatRoomsQuery({ sort: SORT_TO_API[sortOrder] });
   const chatRooms = data?.data ?? [];
+
+  const { data: todayDDayItems } = useGetTodayDDayQuery();
+  const items = (todayDDayItems ?? []).filter((item) => item.summary);
+  const [queueIndex, setQueueIndex] = useState(0);
+  const currentDday = items[queueIndex];
+
+  useEffect(() => {
+    if (items.length === 0) return;
+    const today = new Date().toISOString().slice(0, 10);
+    const key = `dday-shown-${today}`;
+    if (localStorage.getItem(key)) return;
+    setIsDDayOpen(true);
+    localStorage.setItem(key, '1');
+  }, [items.length]);
+
+  const handleDDayClose = () => {
+    setIsDDayOpen(false);
+    if (queueIndex + 1 < items.length) {
+      setTimeout(() => {
+        setQueueIndex((i) => i + 1);
+        setIsDDayOpen(true);
+      }, 350);
+    }
+  };
 
   return (
     <SsgoiTransition id="/">
@@ -78,6 +106,23 @@ export default function HomePage() {
           )}
         </div>
       </section>
+
+      {currentDday?.summary && (
+        <Modal
+          key={queueIndex}
+          isOpen={isDDayOpen}
+          onClose={handleDDayClose}
+          className="w-auto bg-transparent p-0"
+        >
+          <DDayModal
+            friendName={currentDday.friend.name}
+            friendPersonality={PERSONALITY_LABEL[currentDday.friend.personality]}
+            summaryDescription={currentDday.summary}
+            onHome={handleDDayClose}
+            onSaveImage={() => console.log('save image')}
+          />
+        </Modal>
+      )}
     </SsgoiTransition>
   );
 }

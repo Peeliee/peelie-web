@@ -1,7 +1,10 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import AppRouter from './router/AppRouter';
+import { initKakao } from '@/shared/lib/kakao';
 import '../global.css';
+
+initKakao();
 
 // if (process.env.NODE_ENV === 'development') {
 //   const { worker } = await import('@/mocks/browers');

@@ -1,7 +1,8 @@
 import { useMemo, useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { Ssgoi } from '@ssgoi/react';
-import { fade, snap } from '@ssgoi/react/view-transitions';
+import { fade, snap, drill } from '@ssgoi/react/view-transitions';
+import { useBridgeEvent } from '@/app/provider/BridgeProvider';
 import { NavigationBar } from '@/widgets/NavigationBar/NavigationBar';
 import { FriendCodeModal } from '@/widgets/FriendCodeModal';
 import { ScheduleModal } from '@/widgets/ScheduleModal';
@@ -25,6 +26,13 @@ export default function SsgoiLayout() {
   const routeScrollRef = useRef<HTMLDivElement>(null);
   const [isFriendCodeOpen, setIsFriendCodeOpen] = useState(false);
   const [isScheduleOpen, setIsScheduleOpen] = useState(false);
+  const [pendingInviteCode, setPendingInviteCode] = useState<string | null>(null);
+
+  useBridgeEvent('DEEP_LINK_INVITE', ({ code }) => {
+    console.log('[deeplink-web] received DEEP_LINK_INVITE code =', code);
+    setPendingInviteCode(code);
+    setIsFriendCodeOpen(true);
+  });
   const showNav = NAV_ROUTES.includes(location.pathname);
   const showHomeFloatingAction = location.pathname === '/';
 
@@ -40,11 +48,7 @@ export default function SsgoiLayout() {
     const previousPathname = previousPathnameRef.current;
     const currentPathname = location.pathname;
 
-    if (
-      previousPathname !== currentPathname &&
-      NAV_ROUTE_SET.has(previousPathname) &&
-      NAV_ROUTE_SET.has(currentPathname)
-    ) {
+    if (previousPathname !== currentPathname && NAV_ROUTE_SET.has(currentPathname)) {
       routeScrollRef.current?.scrollTo({ top: 0, left: 0 });
     }
 
@@ -57,7 +61,7 @@ export default function SsgoiLayout() {
         from: from.replace(/^\/chat-room\/[^/]+/, '/chat-room'),
         to: to.replace(/^\/chat-room\/[^/]+/, '/chat-room'),
       }),
-      experimentalPreserveScroll: true,
+      preserveScroll: false,
       transitions: [
         // 홈 <-> ai채팅
         {
@@ -87,7 +91,7 @@ export default function SsgoiLayout() {
         {
           from: '/',
           to: '/chat-room',
-          transition: fade(),
+          // transition: fade(),
         },
         {
           from: '/chat-room',
@@ -111,11 +115,13 @@ export default function SsgoiLayout() {
           from: '/ai-chat',
           to: '/chat-room',
           transition: fade(),
+          // transition: drill({direction: "enter"}),
         },
         {
           from: '/chat-room',
           to: '/ai-chat',
           transition: fade(),
+          // transition: drill({direction: "exit"}),
         },
       ],
       defaultTransition: snap(),
@@ -152,14 +158,21 @@ export default function SsgoiLayout() {
             className={cn(
               'fixed bottom-[60px] left-1/2 z-20 px-4',
               'animate-[home-fab-in_200ms_ease-in_200ms_both]',
-              inWebView && 'mb-8'
+              inWebView && 'mb-8',
             )}
           >
             일정 추가하기
           </Button>
         )}
         {showNav && <NavigationBar className="fixed bottom-0 left-0 right-0" />}
-        <FriendCodeModal isOpen={isFriendCodeOpen} onClose={() => setIsFriendCodeOpen(false)} />
+        <FriendCodeModal
+          isOpen={isFriendCodeOpen}
+          onClose={() => {
+            setIsFriendCodeOpen(false);
+            setPendingInviteCode(null);
+          }}
+          initialCode={pendingInviteCode ?? undefined}
+        />
         <ScheduleModal
           isOpen={isScheduleOpen}
           onClose={() => setIsScheduleOpen(false)}

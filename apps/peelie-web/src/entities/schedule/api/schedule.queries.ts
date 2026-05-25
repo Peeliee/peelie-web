@@ -12,4 +12,8 @@ export const scheduleQueries = createQueryKeys('schedule', {
     queryKey: [id],
     queryFn: () => scheduleGet.detail(id),
   }),
+  todayDday: () => ({
+    queryKey: ['today-dday'],
+    queryFn: () => scheduleGet.todayDday(),
+  }),
 });

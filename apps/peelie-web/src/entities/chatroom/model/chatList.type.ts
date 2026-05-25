@@ -4,6 +4,8 @@ export interface ChatListFriend {
   id: string;
   name: string;
   personality: PersonalityType;
+  isWithdrawn: boolean;
+  isFriend: boolean;
 }
 
 export interface ChatListItem {

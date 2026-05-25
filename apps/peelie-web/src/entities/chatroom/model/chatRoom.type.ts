@@ -4,6 +4,7 @@ export interface ChatRoomListFriend {
   id: string;
   name: string;
   personality: PersonalityType;
+  isWithdrawn: boolean;
 }
 
 export interface ChatRoomListItem {

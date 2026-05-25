@@ -5,15 +5,15 @@ import { greetingStore, startGreeting } from '../model/greetingStore';
 
 const GREETING_DELAY_MS = 1800;
 
-export function useGreeting(chatRoomId: string) {
+export function useGreeting(chatRoomId: string, enabled = true) {
   const snapshot = useSyncExternalStore(greetingStore.subscribe, greetingStore.getSnapshot);
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    if (!chatRoomId) return;
+    if (!chatRoomId || !enabled) return;
     const timer = setTimeout(() => startGreeting(chatRoomId, queryClient), GREETING_DELAY_MS);
     return () => clearTimeout(timer);
-  }, [chatRoomId, queryClient]);
+  }, [chatRoomId, queryClient, enabled]);
 
   const entry = snapshot.get(chatRoomId) ?? { turn: null, pending: false };
 

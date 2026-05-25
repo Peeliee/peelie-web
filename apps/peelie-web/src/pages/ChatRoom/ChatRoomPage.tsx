@@ -26,20 +26,16 @@ import {
 import { cn } from '@/shared/lib/utils';
 import { isInWebView } from '@/shared/lib/isInWebView';
 
+import { ChatBlockedModal } from './ui/ChatBlockedModal';
 import { ChatRoomHeader } from './ui/ChatRoomHeader';
+import { useChatGuard } from './hooks/useChatGuard';
 
 const NEAR_BOTTOM_THRESHOLD_PX = 80;
-const ROUTE_SCROLL_CONTAINER_ID = 'route-scroll-container';
+const CHAT_SCROLL_CONTAINER_ID = 'chat-room-scroll';
 const CHAT_ROOM_BACKGROUND_IMAGE = 'url(/chatroom-background.png)';
 
-function getRouteScrollContainer() {
-  return document.getElementById(ROUTE_SCROLL_CONTAINER_ID);
-}
-
-function syncRouteScrollPosition(scrollContainer: HTMLElement) {
-  // ssgoi 4.x stores scroll position from scroll events. A same-position
-  // programmatic scrollTo can skip that event, so explicitly publish it.
-  scrollContainer.dispatchEvent(new Event('scroll'));
+function getChatScrollContainer() {
+  return document.getElementById(CHAT_SCROLL_CONTAINER_ID);
 }
 
 const SMOOTH_SCROLL_DURATION_MS = 600;
@@ -48,40 +44,22 @@ function easeOutCubic(t: number) {
   return 1 - Math.pow(1 - t, 3);
 }
 
-function scrollRouteToBottom(
-  scrollContainer: HTMLElement,
-  behavior: ScrollBehavior = 'auto',
-  syncAfterTransition = false,
-) {
+function scrollToBottom(scrollContainer: HTMLElement, behavior: ScrollBehavior = 'auto') {
   if (behavior === 'auto') {
     scrollContainer.scrollTo({ top: scrollContainer.scrollHeight });
-    syncRouteScrollPosition(scrollContainer);
-    if (syncAfterTransition) {
-      window.setTimeout(() => {
-        scrollContainer.scrollTo({ top: scrollContainer.scrollHeight });
-        syncRouteScrollPosition(scrollContainer);
-      }, 200);
-    }
     return;
   }
 
   const start = scrollContainer.scrollTop;
   const end = scrollContainer.scrollHeight - scrollContainer.clientHeight;
   const distance = end - start;
-  if (distance <= 0) {
-    syncRouteScrollPosition(scrollContainer);
-    return;
-  }
+  if (distance <= 0) return;
 
   const startTime = performance.now();
   function step(now: number) {
     const t = Math.min((now - startTime) / SMOOTH_SCROLL_DURATION_MS, 1);
     scrollContainer.scrollTop = start + distance * easeOutCubic(t);
-    if (t < 1) {
-      requestAnimationFrame(step);
-      return;
-    }
-    syncRouteScrollPosition(scrollContainer);
+    if (t < 1) requestAnimationFrame(step);
   }
   requestAnimationFrame(step);
 }
@@ -100,8 +78,12 @@ export default function ChatRoomPage() {
   const { data: chatListData } = useGetChatListQuery();
   const currentRoom = chatListData?.data.find((r) => r.chatRoomId === chatRoomId);
 
-  const { turn: greetingTurn, pending: greetingPending } = useGreeting(chatRoomId);
   const { state: sendState, history, send } = useSendChatMessage(chatRoomId);
+  const { isBlocked, blockReason, guardedSend, modalOpen, closeModal } = useChatGuard({
+    currentRoom,
+    send,
+  });
+  const { turn: greetingTurn, pending: greetingPending } = useGreeting(chatRoomId, !isBlocked);
 
   useMarkRead({ chatRoomId, historyLength: history.length, greetingTurn });
 
@@ -126,8 +108,6 @@ export default function ChatRoomPage() {
 
   const isBusy = sendState.status === 'sending' || sendState.status === 'streaming';
 
-  // streaming pending 의 createdAt 은 매 호출마다 새로 만들면 key 가 흔들리니 한 번만 만든다.
-  // initialMessages/history 가 바뀌면 다시 계산.
   const items = useMemo(
     () =>
       buildRenderItems({
@@ -142,18 +122,17 @@ export default function ChatRoomPage() {
   );
 
   const isInitialScrolledRef = useRef(false);
-  // 사용자가 위로 스크롤하면 false. 그 외엔 true 유지하여 새 메시지에 항상 따라감.
   const stickToBottomRef = useRef(true);
 
   useEffect(() => {
     if (isInitialScrolledRef.current) return;
     if (!messagesData) return;
 
-    const scrollContainer = getRouteScrollContainer();
+    const scrollContainer = getChatScrollContainer();
     if (!scrollContainer) return;
 
     const rafId = requestAnimationFrame(() => {
-      scrollRouteToBottom(scrollContainer, 'auto', true);
+      scrollToBottom(scrollContainer);
       isInitialScrolledRef.current = true;
     });
 
@@ -161,7 +140,7 @@ export default function ChatRoomPage() {
   }, [messagesData]);
 
   useEffect(() => {
-    const scrollContainer = getRouteScrollContainer();
+    const scrollContainer = getChatScrollContainer();
     if (!scrollContainer) return;
 
     const handleUserScroll = () => {
@@ -182,18 +161,17 @@ export default function ChatRoomPage() {
   useEffect(() => {
     if (!isInitialScrolledRef.current) return;
     if (!stickToBottomRef.current) return;
-    // DOM reflow 직후 측정해야 새 버블 height 까지 반영된 scrollHeight 가 잡힌다.
     const rafId = requestAnimationFrame(() => {
-      const scrollContainer = getRouteScrollContainer();
+      const scrollContainer = getChatScrollContainer();
       if (!scrollContainer) return;
-      scrollRouteToBottom(scrollContainer, 'smooth');
+      scrollToBottom(scrollContainer, 'smooth');
     });
     return () => cancelAnimationFrame(rafId);
   }, [items]);
 
   const handleSubmit = () => {
     if (!input.trim()) return;
-    send(input);
+    guardedSend(input);
     setInput('');
   };
 
@@ -206,15 +184,15 @@ export default function ChatRoomPage() {
     <SsgoiTransition id={`/chat-room/${chatRoomId}`}>
       <div
         aria-hidden
-        className={cn("fixed inset-0 bg-cover bg-top")}
+        className="fixed inset-0 bg-cover bg-top"
         style={{ backgroundImage: CHAT_ROOM_BACKGROUND_IMAGE }}
       />
-      <div className="relative flex min-h-dvh w-full flex-col">
+      <div className="relative flex h-dvh w-full flex-col">
         <div
           className={cn(
-            'sticky top-0 z-10 shrink-0 overflow-hidden',
+            'shrink-0 overflow-hidden',
             'bg-cover bg-top',
-            inWebView && 'pt-10'
+            inWebView && 'pt-10',
           )}
           style={{ backgroundImage: CHAT_ROOM_BACKGROUND_IMAGE }}
         >
@@ -224,25 +202,30 @@ export default function ChatRoomPage() {
           />
         </div>
 
-        <div className={cn('flex flex-1 flex-col justify-end gap-1', 'px-4 py-2')}>
-          <div className="flex justify-center py-2">
-            <span className="px-4 py-1 text-caption-m-400 text-gray-01 text-center">
-              지금 대화는 AI를 통해 생성되었습니다.
-              <br /> 실제 친구가 하는 말과 차이가 있거나 부정확할 수 있습니다.
-            </span>
-          </div>
+        <div
+          id={CHAT_SCROLL_CONTAINER_ID}
+          className="flex-1 overflow-y-auto overflow-x-hidden"
+        >
+          <div className={cn('flex min-h-full flex-col justify-end gap-1', 'px-4 py-2')}>
+            <div className="flex justify-center py-2">
+              <span className="px-4 py-1 text-caption-m-400 text-gray-01 text-center">
+                지금 대화는 AI를 통해 생성되었습니다.
+                <br /> 실제 친구가 하는 말과 차이가 있거나 부정확할 수 있습니다.
+              </span>
+            </div>
 
-          {items.map((item, i) => {
-            const prev = items[i - 1];
-            const showDate =
-              !prev || !isSameDay(getRenderItemCreatedAt(prev), getRenderItemCreatedAt(item));
-            return (
-              <Fragment key={getRenderItemKey(item, i)}>
-                {showDate && <DateSeparator date={getRenderItemCreatedAt(item)} />}
-                {renderItem(item, handleSuggestionSelect, currentRoom?.friend.name)}
-              </Fragment>
-            );
-          })}
+            {items.map((item, i) => {
+              const prev = items[i - 1];
+              const showDate =
+                !prev || !isSameDay(getRenderItemCreatedAt(prev), getRenderItemCreatedAt(item));
+              return (
+                <Fragment key={getRenderItemKey(item, i)}>
+                  {showDate && <DateSeparator date={getRenderItemCreatedAt(item)} />}
+                  {renderItem(item, handleSuggestionSelect, currentRoom?.friend.name)}
+                </Fragment>
+              );
+            })}
+          </div>
         </div>
 
         <ChatInput
@@ -251,9 +234,12 @@ export default function ChatRoomPage() {
           onSubmit={handleSubmit}
           disabled={isBusy}
           position="static"
-          className={cn("sticky bottom-0 z-10 shrink-0", inWebView && 'pb-8')}
+          className={cn('shrink-0', inWebView && 'pb-8')}
         />
       </div>
+      {blockReason && (
+        <ChatBlockedModal isOpen={modalOpen} reason={blockReason} onClose={closeModal} />
+      )}
     </SsgoiTransition>
   );
 }
@@ -265,7 +251,7 @@ function renderItem(
 ) {
   switch (item.kind) {
     case 'message': {
-      const { message, isLastAvatarTurn, isGreeting } = item;
+      const { message, isLastAvatarTurn, isGreeting, isFromHistory } = item;
       if (message.role === 'USER') {
         return (
           <div className="flex justify-end">
@@ -287,7 +273,7 @@ function renderItem(
               suggestions={message.suggestions}
               onSelect={onSuggestionSelect}
               createdAt={message.createdAt}
-              className="chat-slide-up-in"
+              className={isFromHistory ? 'chat-slide-up-in' : undefined}
             />
           )}
         </>
@@ -300,8 +286,6 @@ function renderItem(
         </div>
       );
     case 'streaming-avatar':
-      // streaming 중 suggestions 가 도착해도 여기선 표시하지 않는다.
-      // done 직후 history 로 들어간 message 의 suggestions 가 0.5s 지연 후 표시됨.
       return (
         <AvatarMessage bubbles={item.bubbles} createdAt={item.createdAt} name={name} animate />
       );

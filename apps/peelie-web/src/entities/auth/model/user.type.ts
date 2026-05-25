@@ -12,3 +12,5 @@ export interface UpdateMeRequest {
   name?: string;
   personality?: PersonalityType;
 }
+
+export type WithdrawResponse = void;

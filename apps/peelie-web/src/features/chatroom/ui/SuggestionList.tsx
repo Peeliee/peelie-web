@@ -1,5 +1,6 @@
 import { cn } from '@/shared/lib/utils';
 import { formatChatTime } from '@/entities/chatroom';
+import { PenIcon } from '@/shared/ui/icons/PenIcon';
 
 interface SuggestionListProps {
   suggestions: string[];
@@ -29,7 +30,7 @@ export function SuggestionList({
             disabled={disabled}
             className="flex items-center gap-3"
           >
-            <EditIcon className="size-5 text-gray-01" />
+            <PenIcon className="size-5 text-gray-01" />
             <span
               className={cn(
                 'max-w-[65vw] rounded-small rounded-tr-none bg-gray-10 px-3',
@@ -47,25 +48,5 @@ export function SuggestionList({
         </time>
       )}
     </div>
-  );
-}
-
-function EditIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      aria-hidden
-    >
-      <path
-        d="M14.166 2.5a1.768 1.768 0 0 1 2.5 2.5L6.25 15.417 2.5 16.667l1.25-3.75L14.166 2.5Z"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
   );
 }
