@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { WebView } from 'react-native-webview';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as AppleAuthentication from 'expo-apple-authentication';
+import * as Linking from 'expo-linking';
 import { login as kakaoLogin } from '@react-native-seoul/kakao-login';
 import type { BridgeOptions } from '@peelie/bridge';
 import { useNativeBridge } from '@peelie/bridge/react-native';
@@ -10,6 +11,8 @@ import { appContract } from '@peelie/bridge-contracts';
 const bridgeOptions = {
   logger: console,
 } satisfies BridgeOptions;
+
+const EXTERNAL_SCHEME_PREFIXES = ['kakaotalk://', 'kakaolink://', 'intent://', 'peelieapp://'];
 
 export default function HomeScreen() {
   const ref = useRef<WebView>(null);
@@ -77,6 +80,13 @@ export default function HomeScreen() {
         onError={(e) => console.log('WebView 오류:', e.nativeEvent)}
         onMessage={(e) => pushMessage(e.nativeEvent.data)}
         injectedJavaScript={injectedJavaScript}
+        onShouldStartLoadWithRequest={(req) => {
+          if (EXTERNAL_SCHEME_PREFIXES.some((s) => req.url.startsWith(s))) {
+            Linking.openURL(req.url).catch(() => {});
+            return false;
+          }
+          return true;
+        }}
       />
     </SafeAreaProvider>
   );

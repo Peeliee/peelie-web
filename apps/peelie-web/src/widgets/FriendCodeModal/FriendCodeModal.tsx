@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
+import { useGetMeQuery } from '@/entities/auth';
 import type { FriendSummary } from '@/entities/friendship/model/friendship.type';
+import { shareFriendCode } from '@/shared/lib/kakao';
 import Modal from '@/shared/ui/common/Modal/Modal';
 import ToggleSelect from '@/shared/ui/common/ToggleSelect/ToggleSelect';
 import { XIcon } from '@/shared/ui/icons/XIcon';
@@ -24,6 +26,7 @@ export function FriendCodeModal({ isOpen, onClose }: FriendCodeModalProps) {
   const [step, setStep] = useState<Step>('input');
   const [tab, setTab] = useState<Tab>('share');
   const [friendName, setFriendName] = useState('');
+  const { data: me } = useGetMeQuery();
 
   // 모달 닫힘 애니메이션 종료 후 상태 초기화 (다음 열림에 Step 1부터)
   useEffect(() => {
@@ -37,7 +40,8 @@ export function FriendCodeModal({ isOpen, onClose }: FriendCodeModalProps) {
   }, [isOpen]);
 
   const handleShare = () => {
-    // TODO: 코드 공유 로직 (Web Share API 또는 클립보드 복사)
+    if (!me) return;
+    shareFriendCode({ name: me.name, code: me.friendCode });
   };
 
   const handleRegisterCode = (friend: FriendSummary) => {

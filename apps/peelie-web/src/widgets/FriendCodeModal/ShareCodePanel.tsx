@@ -2,6 +2,7 @@ import { useGetMeQuery } from '@/entities/auth';
 import { ModalCharacterIcon } from '@/shared/ui/icons/ModalCharacterIcon';
 import { ShareCodeIcon } from '@/shared/ui/icons/ShareCodeIcon';
 import { cn } from '@/shared/lib/utils';
+import { CopyIcon } from '@/shared/ui/icons/CopyIcon';
 
 interface ShareCodePanelProps {
   onShare: () => void;
@@ -27,11 +28,11 @@ export function ShareCodePanel({ onShare }: ShareCodePanelProps) {
       {/* 내 코드 */}
       <p
         className={cn(
-          'absolute left-1/2 top-[138px] -translate-x-1/2 whitespace-nowrap',
-          'text-title-l-600 text-gray-99',
+          'absolute flex flex-row items-center gap-2 left-1/2 top-[138px] -translate-x-1/2 whitespace-nowrap',
+          'text-[24px] leading-[34px] font-bold text-gray-99',
         )}
       >
-        {me?.friendCode}
+        {me?.friendCode} <CopyIcon />
       </p>
 
       {/* 캐릭터 + 말풍선 (이미지) */}
