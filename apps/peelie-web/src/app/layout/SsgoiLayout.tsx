@@ -1,7 +1,7 @@
 import { useMemo, useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { Ssgoi } from '@ssgoi/react';
-import { fade, snap, drill } from '@ssgoi/react/view-transitions';
+import { fade, snap } from '@ssgoi/react/view-transitions';
 import { useBridgeEvent } from '@/app/provider/BridgeProvider';
 import { NavigationBar } from '@/widgets/NavigationBar/NavigationBar';
 import { FriendCodeModal } from '@/widgets/FriendCodeModal';
@@ -91,7 +91,7 @@ export default function SsgoiLayout() {
         {
           from: '/',
           to: '/chat-room',
-          // transition: fade(),
+          transition: fade(),
         },
         {
           from: '/chat-room',

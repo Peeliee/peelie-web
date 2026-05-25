@@ -51,7 +51,7 @@ export function shareFriendCode({ name, code }: { name: string; code: string }) 
     objectType: 'feed',
     content: {
       title: `${name}님이 친구 코드를 공유했어요!`,
-      description: `친구 코드: ${code}\n${name}님을 추가하고 아바타와\n 대화해봐요`,
+      description: `친구 코드: ${code}\n${name}님과 친구가 되어보세요!`,
       imageUrl: `${APP_WEB_URL}/DDayModalCharacter.png`,
       link: {
         mobileWebUrl: APP_WEB_URL,
