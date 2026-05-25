@@ -1,3 +1,5 @@
+import { toast } from 'sonner';
+
 import { useGetMeQuery } from '@/entities/auth';
 import { ModalCharacterIcon } from '@/shared/ui/icons/ModalCharacterIcon';
 import { ShareCodeIcon } from '@/shared/ui/icons/ShareCodeIcon';
@@ -32,7 +34,17 @@ export function ShareCodePanel({ onShare }: ShareCodePanelProps) {
           'text-[24px] leading-[34px] font-bold text-gray-99',
         )}
       >
-        {me?.friendCode} <CopyIcon />
+        {me?.friendCode}{' '}
+        <button
+          type="button"
+          onClick={() => {
+            if (!me?.friendCode) return;
+            navigator.clipboard.writeText(me.friendCode);
+            toast('클립보드에 저장되었어요');
+          }}
+        >
+          <CopyIcon />
+        </button>
       </p>
 
       {/* 캐릭터 + 말풍선 (이미지) */}
