@@ -44,7 +44,7 @@ export function initKakao() {
 export function shareFriendCode({ name, code }: { name: string; code: string }) {
   if (!window.Kakao?.isInitialized()) return;
 
-  const inviteParams = `invite?code=${encodeURIComponent(code)}`;
+  const inviteParams = `code=${encodeURIComponent(code)}`;
   const inviteWebUrl = `${APP_WEB_URL}/?invite=${encodeURIComponent(code)}`;
 
   window.Kakao.Share.sendDefault({

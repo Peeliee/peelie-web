@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { WebView } from 'react-native-webview';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as AppleAuthentication from 'expo-apple-authentication';
@@ -33,7 +33,7 @@ export default function HomeScreen() {
         true;
     `;
 
-  const { pushMessage } = useNativeBridge(
+  const { bridge, pushMessage } = useNativeBridge(
     ref,
     appContract,
     {
@@ -63,6 +63,26 @@ export default function HomeScreen() {
     bridgeOptions,
   );
 
+  const url = Linking.useURL();
+  const [webReady, setWebReady] = useState(false);
+
+  useEffect(() => {
+    console.log('[deeplink] url =', url, 'webReady =', webReady);
+    if (!webReady || !url) return;
+    const parsed = Linking.parse(url);
+    const code = parsed.queryParams?.code;
+    if (typeof code !== 'string') {
+      console.log('[deeplink] no code in queryParams');
+      return;
+    }
+    // Wait for React mount (AuthGate → SsgoiLayout → useBridgeEvent register)
+    const t = setTimeout(() => {
+      console.log('[deeplink] emitting DEEP_LINK_INVITE with code =', code);
+      bridge.emit('DEEP_LINK_INVITE', { code });
+    }, 800);
+    return () => clearTimeout(t);
+  }, [url, bridge, webReady]);
+
   return (
     <SafeAreaProvider>
       <WebView
@@ -76,7 +96,10 @@ export default function HomeScreen() {
         mixedContentMode="always"
         style={{ flex: 1 }}
         onLoadStart={() => console.log('WebView 시작')}
-        onLoadEnd={() => console.log('WebView 완료')}
+        onLoadEnd={() => {
+          console.log('WebView 완료');
+          setWebReady(true);
+        }}
         onError={(e) => console.log('WebView 오류:', e.nativeEvent)}
         onMessage={(e) => pushMessage(e.nativeEvent.data)}
         injectedJavaScript={injectedJavaScript}

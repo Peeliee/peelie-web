@@ -20,13 +20,20 @@ const TABS = [
 interface FriendCodeModalProps {
   isOpen: boolean;
   onClose: () => void;
+  initialCode?: string;
 }
 
-export function FriendCodeModal({ isOpen, onClose }: FriendCodeModalProps) {
+export function FriendCodeModal({ isOpen, onClose, initialCode }: FriendCodeModalProps) {
   const [step, setStep] = useState<Step>('input');
   const [tab, setTab] = useState<Tab>('share');
   const [friendName, setFriendName] = useState('');
   const { data: me } = useGetMeQuery();
+
+  useEffect(() => {
+    if (isOpen && initialCode) {
+      setTab('enter');
+    }
+  }, [isOpen, initialCode]);
 
   // 모달 닫힘 애니메이션 종료 후 상태 초기화 (다음 열림에 Step 1부터)
   useEffect(() => {
@@ -65,7 +72,7 @@ export function FriendCodeModal({ isOpen, onClose }: FriendCodeModalProps) {
             {tab === 'share' ? (
               <ShareCodePanel onShare={handleShare} />
             ) : (
-              <EnterCodePanel onRegister={handleRegisterCode} />
+              <EnterCodePanel onRegister={handleRegisterCode} initialCode={initialCode} />
             )}
           </>
         )}

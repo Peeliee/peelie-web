@@ -2,6 +2,7 @@ import { useMemo, useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { Ssgoi } from '@ssgoi/react';
 import { fade, snap, drill } from '@ssgoi/react/view-transitions';
+import { useBridgeEvent } from '@/app/provider/BridgeProvider';
 import { NavigationBar } from '@/widgets/NavigationBar/NavigationBar';
 import { FriendCodeModal } from '@/widgets/FriendCodeModal';
 import { ScheduleModal } from '@/widgets/ScheduleModal';
@@ -25,6 +26,13 @@ export default function SsgoiLayout() {
   const routeScrollRef = useRef<HTMLDivElement>(null);
   const [isFriendCodeOpen, setIsFriendCodeOpen] = useState(false);
   const [isScheduleOpen, setIsScheduleOpen] = useState(false);
+  const [pendingInviteCode, setPendingInviteCode] = useState<string | null>(null);
+
+  useBridgeEvent('DEEP_LINK_INVITE', ({ code }) => {
+    console.log('[deeplink-web] received DEEP_LINK_INVITE code =', code);
+    setPendingInviteCode(code);
+    setIsFriendCodeOpen(true);
+  });
   const showNav = NAV_ROUTES.includes(location.pathname);
   const showHomeFloatingAction = location.pathname === '/';
 
@@ -157,7 +165,14 @@ export default function SsgoiLayout() {
           </Button>
         )}
         {showNav && <NavigationBar className="fixed bottom-0 left-0 right-0" />}
-        <FriendCodeModal isOpen={isFriendCodeOpen} onClose={() => setIsFriendCodeOpen(false)} />
+        <FriendCodeModal
+          isOpen={isFriendCodeOpen}
+          onClose={() => {
+            setIsFriendCodeOpen(false);
+            setPendingInviteCode(null);
+          }}
+          initialCode={pendingInviteCode ?? undefined}
+        />
         <ScheduleModal
           isOpen={isScheduleOpen}
           onClose={() => setIsScheduleOpen(false)}

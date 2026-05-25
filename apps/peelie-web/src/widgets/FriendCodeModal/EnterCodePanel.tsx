@@ -7,10 +7,11 @@ import { ModalCharacterIcon } from '@/shared/ui/icons/ModalCharacterIcon';
 
 interface EnterCodePanelProps {
   onRegister: (friend: FriendSummary) => void;
+  initialCode?: string;
 }
 
-export function EnterCodePanel({ onRegister }: EnterCodePanelProps) {
-  const [code, setCode] = useState('');
+export function EnterCodePanel({ onRegister, initialCode }: EnterCodePanelProps) {
+  const [code, setCode] = useState(initialCode ?? '');
   const { mutate: addFriendship, isPending } = useAddFriendshipMutation();
 
   return (
