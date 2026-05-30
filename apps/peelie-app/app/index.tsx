@@ -4,9 +4,9 @@ import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-cont
 import * as AppleAuthentication from 'expo-apple-authentication';
 import * as Linking from 'expo-linking';
 import { login as kakaoLogin } from '@react-native-seoul/kakao-login';
-import type { BridgeOptions } from '@peelie/bridge';
-import { useNativeBridge } from '@peelie/bridge/react-native';
-import { appContract } from '@peelie/bridge-contracts';
+import type { BridgeOptions } from 'webview-bridge-kit';
+import { useNativeBridge } from 'webview-bridge-kit/react-native';
+import { appContract } from './bridgeContract';
 
 const bridgeOptions = {
   logger: console,
@@ -17,7 +17,7 @@ const EXTERNAL_SCHEME_PREFIXES = ['kakaotalk://', 'kakaolink://', 'intent://', '
 export default function HomeScreen() {
   const ref = useRef<WebView>(null);
 
-  const DEV_URL = 'http://192.168.1.16:5173';
+  const DEV_URL = 'http://172.30.1.89:5173';
   const PROD_URL = 'https://peelie.vercel.app';
   const sourceUrl = __DEV__ ? DEV_URL : PROD_URL;
 
