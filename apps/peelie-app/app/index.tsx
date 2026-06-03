@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
+import { Platform } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import * as Linking from 'expo-linking';
 import { login as kakaoLogin } from '@react-native-seoul/kakao-login';
+import messaging from '@react-native-firebase/messaging';
 import type { BridgeOptions } from 'webview-bridge-kit';
 import { useNativeBridge } from 'webview-bridge-kit/react-native';
 import { appContract } from './bridgeContract';
@@ -58,6 +60,26 @@ export default function HomeScreen() {
       KAKAO_LOGIN: async () => {
         const token = await kakaoLogin();
         return { accessToken: token.accessToken };
+      },
+      GET_PUSH_TOKEN: async () => {
+        const authStatus = await messaging().requestPermission();
+        const granted =
+          authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+          authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+        if (!granted) return { status: 'denied' as const };
+
+        try {
+          await messaging().registerDeviceForRemoteMessages();
+          const token = await messaging().getToken();
+          if (!token) {
+            return { status: 'unavailable' as const, reason: 'no-apns' as const };
+          }
+          const platform = Platform.OS === 'ios' ? ('ios' as const) : ('android' as const);
+          return { status: 'granted' as const, token, platform };
+        } catch (error) {
+          console.log('[FCM] getToken failed:', error);
+          return { status: 'unavailable' as const, reason: 'unknown' as const };
+        }
       },
     },
     bridgeOptions,
