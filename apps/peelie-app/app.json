@@ -8,10 +8,18 @@
         "scheme": "peelieapp",
         "userInterfaceStyle": "automatic",
         "newArchEnabled": true,
+        "platforms": ["ios"],
         "ios": {
             "supportsTablet": true,
             "bundleIdentifier": "com.peelie.app",
-            "usesAppleSignIn": true
+            "usesAppleSignIn": true,
+            "googleServicesFile": "./GoogleService-Info.plist",
+            "infoPlist": {
+                "UIBackgroundModes": ["remote-notification"]
+            },
+            "entitlements": {
+                "aps-environment": "development"
+            }
         },
         "android": {
             "adaptiveIcon": {
@@ -31,6 +39,17 @@
         "plugins": [
             "expo-router",
             "expo-apple-authentication",
+            "@react-native-firebase/app",
+            "@react-native-firebase/messaging",
+            [
+                "expo-build-properties",
+                {
+                    "ios": {
+                        "useFrameworks": "static"
+                    }
+                }
+            ],
+            "./plugins/with-firebase-ios-pods",
             [
                 "@react-native-seoul/kakao-login",
                 {

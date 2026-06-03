@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "@lukemorales/query-key-factory": "^1.3.4",
-    "webview-bridge-kit": "link:../../../../webview-bridge-kit",
+    "webview-bridge-kit": "^0.1.0",
     "@peelie/form": "workspace:*",
     "@peelie/sse": "workspace:*",
     "@radix-ui/react-alert-dialog": "^1.1.15",
