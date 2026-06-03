@@ -1,6 +1,6 @@
-import { BridgeValidationError } from '@peelie/bridge';
-import { createBridgeClient } from '@peelie/bridge/react';
-import { appContract } from '@peelie/bridge-contracts';
+import { BridgeValidationError } from 'webview-bridge-kit';
+import { createBridgeClient } from 'webview-bridge-kit/react';
+import { appContract } from '@/shared/lib/bridgeContract';
 import { toast } from 'sonner';
 
 export const { BridgeProvider, useBridge, useBridgeEvent } = createBridgeClient(appContract, {

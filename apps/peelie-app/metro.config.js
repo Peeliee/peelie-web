@@ -13,6 +13,10 @@ config.resolver.nodeModulesPaths = [
     path.resolve(projectRoot, "node_modules"),
     path.resolve(monorepoRoot, "node_modules"),
 ];
+// pnpm은 symlink 기반으로 의존을 깔기 때문에 켜둠.
+config.resolver.unstable_enableSymlinks = true;
+// 외부 패키지(webview-bridge-kit 등)의 exports 필드(sub-entry: /react-native, /testing) 지원.
+config.resolver.unstable_enablePackageExports = true;
 
 // SVG 설정
 config.resolver.assetExts = config.resolver.assetExts.filter((ext) => ext !== "svg");

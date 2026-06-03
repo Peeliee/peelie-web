@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
+import { Platform } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import * as Linking from 'expo-linking';
 import { login as kakaoLogin } from '@react-native-seoul/kakao-login';
-import type { BridgeOptions } from '@peelie/bridge';
-import { useNativeBridge } from '@peelie/bridge/react-native';
-import { appContract } from '@peelie/bridge-contracts';
+import messaging from '@react-native-firebase/messaging';
+import type { BridgeOptions } from 'webview-bridge-kit';
+import { useNativeBridge } from 'webview-bridge-kit/react-native';
+import { appContract } from './bridgeContract';
 
 const bridgeOptions = {
   logger: console,
@@ -17,7 +19,7 @@ const EXTERNAL_SCHEME_PREFIXES = ['kakaotalk://', 'kakaolink://', 'intent://', '
 export default function HomeScreen() {
   const ref = useRef<WebView>(null);
 
-  const DEV_URL = 'http://192.168.1.16:5173';
+  const DEV_URL = 'http://192.168.1.61:5173';
   const PROD_URL = 'https://peelie.vercel.app';
   const sourceUrl = __DEV__ ? DEV_URL : PROD_URL;
 
@@ -58,6 +60,26 @@ export default function HomeScreen() {
       KAKAO_LOGIN: async () => {
         const token = await kakaoLogin();
         return { accessToken: token.accessToken };
+      },
+      GET_PUSH_TOKEN: async () => {
+        const authStatus = await messaging().requestPermission();
+        const granted =
+          authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+          authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+        if (!granted) return { status: 'denied' as const };
+
+        try {
+          await messaging().registerDeviceForRemoteMessages();
+          const token = await messaging().getToken();
+          if (!token) {
+            return { status: 'unavailable' as const, reason: 'no-apns' as const };
+          }
+          const platform = Platform.OS === 'ios' ? ('ios' as const) : ('android' as const);
+          return { status: 'granted' as const, token, platform };
+        } catch (error) {
+          console.log('[FCM] getToken failed:', error);
+          return { status: 'unavailable' as const, reason: 'unknown' as const };
+        }
       },
     },
     bridgeOptions,
